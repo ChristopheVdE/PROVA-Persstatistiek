@@ -54,8 +54,12 @@ if (interactive()) {
             
             # Main -------------------------------------------------------------
                 mainPanel(
+                    h3('Summary'),
                     verbatimTextOutput("summary"),
-                    tableOutput("table")
+                    h3("Table"),
+                    tableOutput("table"),
+                    h3('Persrerturn per Beleid'),
+                    plotOutput("Return per beleid")
                     
                 )
             )
@@ -71,6 +75,9 @@ if (interactive()) {
                 
             # Reading Excel ----------------------------------------------------
                 Excel <- read_excel(input$file$datapath, sheet = input$sheet, col_names = input$header)
+                
+            # check for and remove possible NA values --------------------------
+                Excel <- Excel[complete.cases(Excel),]
                 
             # Removing non-required columns ------------------------------------
                 Excel$Afzender <- NULL
@@ -133,15 +140,60 @@ if (interactive()) {
             }) 
 
             
-        # Return Table -----------------------------------------------------------------
+        # Summary of data ------------------------------------------------------    
+            output$summary <- renderText({
+                summary(Persstatistiek())
+            })
+            
+        # Render Original Table ------------------------------------------------
             output$table <- renderTable({
                 return(Persstatistiek())
             })
             
-            output$summary <- renderText({
-                return(summary(Persstatistiek()))
+        # Render Original Table ------------------------------------------------
+            output$table <- renderTable({
+                return(Persstatistiek())
             })
             
+        # Barplot: Persreturn/Beleid -------------------------------------------
+            output$"Return per beleid" <- renderPlot({
+                
+            # Create dataframe for barplot -------------------------------------
+                return.beleid <- data.frame(table(Persstatistiek()$Beleid,
+                                                  Persstatistiek()$Persreturn))
+            # Rename columns ---------------------------------------------------
+                colnames(return.beleid) <- c("Beleid", "Persreturn", "Freq")
+                
+            # Create barplot ---------------------------------------------------
+                colors <- brewer.pal(6,"Pastel1")
+                ggplot(data=return.beleid, aes(x=Beleid, y=Freq, fill=Persreturn)) + 
+                    geom_bar(position = "dodge", stat='identity') +
+                    xlab("Beleid") +
+                    ylab("Aantal") +
+                    ggtitle(c("Persreturn per beleid: ", input$rapport)) +
+                    geom_text(aes(label=Freq), 
+                              position=position_dodge(0.9), vjust=0) +
+                    theme_bw() +
+                    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+                    scale_fill_manual(values=colors[2:1])  
+            })
+
+        # Barplot: Persreturn (totaal)/Detail Beleid ---------------------------
+            
+        # Barplot: Persreturn (totaal)/Beleid ----------------------------------
+            
+        # Barplot: Persberichten/ kwartaal (jaarbasis) -------------------------
+            
+        # Barplot: type persbericht (Soort) / beleid ---------------------------
+            
+        # Barplot: persberichten/ maand ----------------------------------------
+            
+        # Barplot: persreturntype (Tv, Web) / beleid ---------------------------
+            
+        # Barplot: persberichten (totaal)/ beleid/ verzender -------------------
+            
+        # persberichten/ kwartaal/ beleid / verzender --------------------------
+        
         # Pdf aanmaak ----------------------------------------------------------
             output$report <- downloadHandler(
                 # For PDF output, change this to "report.pdf"
@@ -154,7 +206,7 @@ if (interactive()) {
                     file.copy("report.Rmd", tempReport, overwrite = TRUE)
                     
                     # Set up parameters to pass to Rmd document
-                    params <- list(n = input$slider)
+                    params <- list(n = Persstatistiek())
                     
                     # Knit the document, passing in the `params` list, and eval it in a
                     # child of the global environment (this isolates the code in the document

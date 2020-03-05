@@ -5,13 +5,43 @@ params:
   n: NA
 ---
 
-```{r}
+```{r include = FALSE}
+pkg <- installed.packages()[, "Package"]
+to.load <- c("RColorBrewer", "knitr", "ggplot2", "readxl")
+for (load in to.load) {
+    if(!(load %in% pkg)) {
+        install.packages(load, dependencies=TRUE)
+    }
+    library(load, character.only = TRUE )
+}
+```
+
+
+```{r echo = TRUE}
 # The `params` object is available in the document.
 params$n
 ```
 
 A plot of `params$n` random points.
 
-```{r}
-plot(rnorm(params$n), rnorm(params$n))
+```{r echo = FALSE}
+            # Create dataframe for barplot -------------------------------------
+                return.beleid <- data.frame(table(params$n$Beleid,
+                                                  params$n$Persreturn))
+            # Rename columns ---------------------------------------------------
+                colnames(return.beleid) <- c("Beleid", "Persreturn", "Freq")
+                
+            # Create barplot ---------------------------------------------------
+                colors <- brewer.pal(6,"Pastel1")
+                ggplot(data=return.beleid, aes(x=Beleid, y=Freq, fill=Persreturn)) + 
+                    geom_bar(position = "dodge", stat='identity') +
+                    xlab("Beleid") +
+                    ylab("Aantal") +
+                    ggtitle("Persreturn per beleid:") +
+                    geom_text(aes(label=Freq), 
+                              position=position_dodge(0.9), vjust=0) +
+                    theme_bw() +
+                    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+                    scale_fill_manual(values=colors[2:1])  
+            
 ```
