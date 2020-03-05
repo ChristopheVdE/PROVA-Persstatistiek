@@ -54,8 +54,8 @@ if (interactive()) {
             
             # Main -------------------------------------------------------------
                 mainPanel(
-                    #verbatimTextOutput("summary"),
-                    tableOutput("summary")
+                    verbatimTextOutput("summary"),
+                    tableOutput("table")
                     
                 )
             )
@@ -65,7 +65,7 @@ if (interactive()) {
         server <- function(input, output) {
             
         # Prepare dataset ------------------------------------------------------
-            output$summary <- renderTable({
+            Persstatistiek <- reactive({
                 
                 req(input$file)
                 
@@ -132,6 +132,16 @@ if (interactive()) {
                 return(Persstatistiek[[input$kwartaal]])
             }) 
 
+            
+        # Return Table -----------------------------------------------------------------
+            output$table <- renderTable({
+                return(Persstatistiek())
+            })
+            
+            output$summary <- renderText({
+                return(summary(Persstatistiek()))
+            })
+            
         # Pdf aanmaak ----------------------------------------------------------
             output$report <- downloadHandler(
                 # For PDF output, change this to "report.pdf"
