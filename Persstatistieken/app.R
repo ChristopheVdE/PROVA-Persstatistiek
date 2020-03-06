@@ -27,7 +27,7 @@ if (interactive()) {
                     
                     tags$hr(),
                     menuItem("Charts", tabname = "Charts", icon = icon("bar-chart-o"),
-                        menuSubItem("Charts1", tabName = "Charts1"),
+                        menuSubItem("Persreturn/ Beleid", tabName = "Charts1"),
                         menuSubItem("Charts2", tabName = "Charts2"),
                         menuSubItem("Charts3", tabName = "Charts3"),
                         menuSubItem("Charts4", tabName = "Charts4")
@@ -82,6 +82,24 @@ if (interactive()) {
                   # Charts ----------------------------------------------------
                     tabItem(
                         tabName = "Charts1",
+                        fluidRow(
+                            tabBox(
+                                title = "Persreturn per beleid",
+                                width = 12,
+                                tabPanel("Barplot", plotOutput("bar.return.beleid")),
+                                tabPanel("Tabel", tableOutput("return.beleid"))
+                                
+                            )
+                        )
+                    ),
+                    tabItem(
+                        tabName = "Charts2",
+                    ),
+                      tabItem(
+                        tabName = "Charts3",
+                    ),
+                    tabItem(
+                        tabName = "Charts4",
                     )
                 )
                 
@@ -180,28 +198,33 @@ if (interactive()) {
             output$table <- renderTable({
                 return(Persstatistiek())
             })
-            
-        # Render Original Table ------------------------------------------------
-            output$table <- renderTable({
-                return(Persstatistiek())
+    
+        # Prep: Persreturn/ Beleid --------------------------------------------
+            df.return.beleid <- reactive({
+              # Create dataframe for barplot -----------------------------------
+                return.beleid <- data.frame(table(Persstatistiek()$Beleid,
+                                                  Persstatistiek()$Persreturn))
+              # Rename columns -------------------------------------------------
+                colnames(return.beleid) <- c("Beleid", "Persreturn", "Freq")
+                
+                return(return.beleid)
+            })
+    
+        # Table: Persreturn/Beleid ---------------------------------------------
+            output$return.beleid <- renderTable({
+                df.return.beleid()
             })
             
         # Barplot: Persreturn/Beleid -------------------------------------------
-            output$"Return per beleid" <- renderPlot({
-                
-            # Create dataframe for barplot -------------------------------------
-                return.beleid <- data.frame(table(Persstatistiek()$Beleid,
-                                                  Persstatistiek()$Persreturn))
-            # Rename columns ---------------------------------------------------
-                colnames(return.beleid) <- c("Beleid", "Persreturn", "Freq")
-                
-            # Create barplot ---------------------------------------------------
+            output$bar.return.beleid <- renderPlot({
+
                 colors <- brewer.pal(6,"Pastel1")
-                ggplot(data=return.beleid, aes(x=Beleid, y=Freq, fill=Persreturn)) + 
+
+                ggplot(data=df.return.beleid(), aes(x=Beleid, y=Freq, fill=Persreturn)) + 
                     geom_bar(position = "dodge", stat='identity') +
                     xlab("Beleid") +
                     ylab("Aantal") +
-                    ggtitle(c("Persreturn per beleid: ", input$rapport)) +
+                    ggtitle(c("Persreturn per beleid:")) +
                     geom_text(aes(label=Freq), 
                               position=position_dodge(0.9), vjust=0) +
                     theme_bw() +
