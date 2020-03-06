@@ -1,6 +1,6 @@
 # Installing and loading packages
 pkg <- installed.packages()[, "Package"]
-to.load <- c("RColorBrewer", "knitr", "ggplot2", "readxl")
+to.load <- c("RColorBrewer", "knitr", "ggplot2", "readxl", "shinydashboard")
 for (load in to.load) {
     if(!(load %in% pkg)) {
         install.packages(load, dependencies=TRUE)
@@ -11,57 +11,88 @@ for (load in to.load) {
 if (interactive()) {
     shinyApp(
     # UI =======================================================================
-        ui = fluidPage(
-            # Title ------------------------------------------------------------
-            titlePanel(
-                "Persstatistiek"
+        ui = dashboardPage(
+          # Title ------------------------------------------------------------
+            dashboardHeader(
+                title = "Persstatistiek"
             ),
-            
-            # Input ------------------------------------------------------------
-            sidebarLayout(
-                sidebarPanel(
-                    # File INPUT -----------------------------------------------
-                    fileInput("file", 
-                              "Kies Excel document:", 
-                              multiple = FALSE, 
-                              accept = c(".xls", ".xlsx"), 
-                              #width = 900, 
-                              placeholder = "No file selected"),
-                    
-                    # Werkblad selectie ----------------------------------------
-                    textInput("sheet", "Te gebruiken Werkblad", value ="Hele organisatie", placeholder = "Hele organisatie" ),
-                    
-    
-                    
-                    # Headers --------------------------------------------------
-                    checkboxInput("header", "Eerste lijn bevat kolomnamen", TRUE),
-                    
-                    # Kwartaal selectie ----------------------------------------
-                    tags$hr(),
-                    selectInput("kwartaal", 
-                                "Selecteer kwartaal:", 
-                                choices = c("Q1", "Q2", "Q3", "Q4", "Jaar"), 
+          # Sidebar ---------------------------------------------------
+            dashboardSidebar(
+                sidebarMenu(
+                    menuItem("Input", tabName = "Input"),
+                        selectInput("kwartaal",
+                                "Selecteer kwartaal:",
+                                choices = c("Q1", "Q2", "Q3", "Q4", "Jaar"),
                                 selected = "Q1"),
                     
+                    tags$hr(),
+                    menuItem("Charts", tabname = "Charts", icon = icon("bar-chart-o"),
+                        menuSubItem("Charts1", tabName = "Charts1"),
+                        menuSubItem("Charts2", tabName = "Charts2"),
+                        menuSubItem("Charts3", tabName = "Charts3"),
+                        menuSubItem("Charts4", tabName = "Charts4")
+                    ),
                     
-                    # Ander
-                    sliderInput("slider", "Slider", 1, 100, 50),
-                    
-                    # Download pdf ---------------------------------------------
+                    tags$hr(),
                     downloadButton("report", "Generate report")
-                ),
-            
-            
-            # Main -------------------------------------------------------------
-                mainPanel(
-                    h3('Summary'),
-                    verbatimTextOutput("summary"),
-                    h3("Table"),
-                    tableOutput("table"),
-                    h3('Persrerturn per Beleid'),
-                    plotOutput("Return per beleid")
-                    
                 )
+            ),
+            
+          # Body -------------------------------------------------------------
+            dashboardBody(
+                tabItems(
+                  # Input scherm -----------------------------------------------
+                    tabItem(
+                        tabName = "Input",
+                        fluidRow(
+                            box(
+                                box(
+                                    fileInput("file", 
+                                              "Kies Excel document:",
+                                              multiple = FALSE,
+                                              accept = c(".xls", ".xlsx"),
+                                              width = 900,
+                                              placeholder = "No file selected"),
+                                    width = 6,
+                                    height = 100
+                                ),
+                                box(
+                                    textInput("sheet", "Te gebruiken Werkblad", value ="Hele organisatie", placeholder = "Hele organisatie" ),
+                                    width = 3,
+                                    height = 100
+                                ),
+                                box(
+                                    selectInput("kwartaal",
+                                                "Selecteer kwartaal:",
+                                                choices = c("Q1", "Q2", "Q3", "Q4", "Jaar"),
+                                                selected = "Q1"),
+                                    width = 3,
+                                    height = 100
+                                ),
+                                width = 12,
+                                height = 130
+                            ),
+                            box(
+                                tableOutput("table"),
+                                width = 12
+                            )
+                        )
+                    ),
+                  
+                  # Charts ----------------------------------------------------
+                    tabItem(
+                        tabName = "Charts1",
+                    )
+                )
+                
+                    # h3('Summary'),
+                    # verbatimTextOutput("summary"),
+                    # h3("Table"),
+                    # tableOutput("table"),
+                    # h3('Persrerturn per Beleid'),
+                    # plotOutput("Return per beleid")
+            #         
+            #     )
             )
         ),
         
@@ -74,7 +105,7 @@ if (interactive()) {
                 req(input$file)
                 
             # Reading Excel ----------------------------------------------------
-                Excel <- read_excel(input$file$datapath, sheet = input$sheet, col_names = input$header)
+                Excel <- read_excel(input$file$datapath, sheet = input$sheet)
                 
             # check for and remove possible NA values --------------------------
                 Excel <- Excel[complete.cases(Excel),]
