@@ -27,8 +27,8 @@ if (interactive()) {
                     
                     tags$hr(),
                     menuItem("Charts", tabname = "Charts", icon = icon("bar-chart-o"),
-                        menuSubItem("Persreturn/ Beleid", tabName = "Charts1"),
-                        menuSubItem("Charts2", tabName = "Charts2"),
+                        menuSubItem("Persberichten/ Beleid", tabName = "Persberichten"),
+                        menuSubItem("Persreturn/ Beleid", tabName = "Persreturn"),
                         menuSubItem("Charts3", tabName = "Charts3"),
                         menuSubItem("Charts4", tabName = "Charts4")
                     ),
@@ -38,7 +38,7 @@ if (interactive()) {
                 )
             ),
             
-          # Body -------------------------------------------------------------
+          # Body ---------------------------------------------------------------
             dashboardBody(
                 tabItems(
                   # Input scherm -----------------------------------------------
@@ -79,25 +79,131 @@ if (interactive()) {
                         )
                     ),
                   
-                  # Charts ----------------------------------------------------
+                  # Persreturn per beleid --------------------------------------
                     tabItem(
-                        tabName = "Charts1",
+                        tabName = "Persreturn",
                         fluidRow(
                             tabBox(
                                 title = "Persreturn per beleid",
                                 width = 12,
                                 tabPanel("Barplot", plotOutput("bar.return.beleid")),
                                 tabPanel("Tabel", tableOutput("return.beleid"))
-                                
+                            ),
+                            tabBox(
+                                title = "Persreturn: Economie",
+                                width = 6,
+                                tabPanel("Barplot"),
+                                tabPanel("Tabel", tableOutput("table.return.detail.Economie"))
+                            ),
+                            tabBox(
+                                title = "Persreturn: Gouverneur",
+                                width = 6,
+                                tabPanel("Barplot"),
+                                tabPanel("Tabel", tableOutput("table.return.detail.Gouverneur"))
+                            ),
+                            tabBox(
+                                title = "Persreturn: Leefmilieu",
+                                width = 6,
+                                tabPanel("Barplot"),
+                                tabPanel("Tabel", tableOutput("table.return.detail.Leefmilieu"))
+                            ),
+                            tabBox(
+                                title = "Persreturn: Mobiliteit",
+                                width = 6,
+                                tabPanel("Barplot"),
+                                tabPanel("Tabel", tableOutput("table.return.detail.Mobiliteit"))
+                            ),
+                            tabBox(
+                                title = "Persreturn: Onderwijs & Educatie",
+                                width = 6,
+                                tabPanel("Barplot"),
+                                tabPanel("Tabel", tableOutput("table.return.detail.Onderwijs & Educatie"))
+                            ),
+                            tabBox(
+                                title = "Persreturn: Provinciebestuur",
+                                width = 6,
+                                tabPanel("Barplot"),
+                                tabPanel("Tabel", tableOutput("table.return.detail.Provinciebestuur"))
+                            ),
+                            tabBox(
+                                title = "Persreturn: Ruimte",
+                                width = 6,
+                                tabPanel("Barplot"),
+                                tabPanel("Tabel", tableOutput("table.return.detail.Ruimte"))
+                            ),
+                            tabBox(
+                                title = "Persreturn: Vrije Tijd",
+                                width = 6,
+                                tabPanel("Barplot"),
+                                tabPanel("Tabel", tableOutput("table.return.detail.Vrije Tijd"))
                             )
                         )
                     ),
+                  # Persberichten per beleid -----------------------------------
                     tabItem(
-                        tabName = "Charts2",
+                        tabName = "Persberichten",
+                        fluidRow(
+                            tabBox(
+                                title = "Persberichten per beleid",
+                                width = 12,
+                                tabPanel("Barplot"),
+                                tabPanel("Tabel")
+                            ),
+                            tabBox(
+                                title = "Persberichten: Economie",
+                                width = 6,
+                                tabPanel("Barplot"),
+                                tabPanel("Tabel")
+                            ),
+                            tabBox(
+                                title = "Persberichten: Gouverneur",
+                                width = 6,
+                                tabPanel("Barplot"),
+                                tabPanel("Tabel")
+                            ),
+                            tabBox(
+                                title = "Persberichten: Leefmilieu",
+                                width = 6,
+                                tabPanel("Barplot"),
+                                tabPanel("Tabel")
+                            ),
+                            tabBox(
+                                title = "Persberichten: Mobiliteit",
+                                width = 6,
+                                tabPanel("Barplot"),
+                                tabPanel("Tabel")
+                            ),
+                            tabBox(
+                                title = "Persberichten: Onderwijs & Educatie",
+                                width = 6,
+                                tabPanel("Barplot"),
+                                tabPanel("Tabel")
+                            ),
+                            tabBox(
+                                title = "Persberichten: Provinciebestuur",
+                                width = 6,
+                                tabPanel("Barplot"),
+                                tabPanel("Tabel")
+                            ),
+                            tabBox(
+                                title = "Persberichten: Ruimte",
+                                width = 6,
+                                tabPanel("Barplot"),
+                                tabPanel("Tabel")
+                            ),
+                            tabBox(
+                                title = "Persberichten: Vrije Tijd",
+                                width = 6,
+                                tabPanel("Barplot"),
+                                tabPanel("Tabel")
+                            )
+                        )
                     ),
+                  # nog iets ---------------------------------------------------
                       tabItem(
                         tabName = "Charts3",
                     ),
+                  # en nog iets ------------------------------------------------
                     tabItem(
                         tabName = "Charts4",
                     )
@@ -116,7 +222,8 @@ if (interactive()) {
         
     # SERVER ===================================================================
         server <- function(input, output) {
-            
+      
+      # Data Preparation -------------------------------------------------------      
         # Prepare dataset ------------------------------------------------------
             Persstatistiek <- reactive({
                 
@@ -173,7 +280,7 @@ if (interactive()) {
                 Excel$Soort <- gsub("evenementenkalender", "Evenementenkalender", Excel$Soort, ignore.case = FALSE)
 
             # As factor --------------------------------------------------------
-                for (i in c("Kwartaal", "Verzender", "Pu bij Pb", "Persreturn", "Alleen web", "TV", "Beleid", "Detail beleid", "Soort", "Maand")) ({
+                for (i in c("Kwartaal", "Verzender", "Pu bij Pb", "Persreturn", "Alleen web", "TV", "Beleid", "Soort", "Maand")) ({
                     Excel[[i]] <- as.factor(Excel[[i]])
                 })
 
@@ -199,6 +306,9 @@ if (interactive()) {
                 return(Persstatistiek())
             })
     
+        
+      
+      # Persreturn / beleid ----------------------------------------------------
         # Prep: Persreturn/ Beleid --------------------------------------------
             df.return.beleid <- reactive({
               # Create dataframe for barplot -----------------------------------
@@ -232,10 +342,29 @@ if (interactive()) {
                     scale_fill_manual(values=colors[2:1])  
             })
 
+            
+      
+      # Persreturn/ Detail beleid ----------------------------------------------
+        # Prep: Persreturn (totaal)/Detail Beleid ------------------------------
+            return.detail <- reactive({
+                Persreturn <- split(Persstatistiek(), Persstatistiek()$Beleid)
+                return(Persreturn)
+            })
+                
+        # Table: Persreturn (totaal)/Detail Beleid -----------------------------
+            reactive ({
+                for (i in return.detail()) ({
+                    tablename <- paste("table.return.detail.", i, sep = "")
+                    output[[tablename]] <- renderTable({
+                        Persreturn <- table(return.detail[[i]]$"Detail beleid", return.detail[[i]]$Persreturn)
+                        colnames(Persreturn) <- c("Detail beleid", "Persreturn", "Freq")
+                        return(Persreturn)
+                    })
+                })
+            })
+            
         # Barplot: Persreturn (totaal)/Detail Beleid ---------------------------
-            
-        # Barplot: Persreturn (totaal)/Beleid ----------------------------------
-            
+  
         # Barplot: Persberichten/ kwartaal (jaarbasis) -------------------------
             
         # Barplot: type persbericht (Soort) / beleid ---------------------------

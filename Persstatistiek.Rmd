@@ -38,23 +38,23 @@ selectInput("rapport",
 
 
 ```{r load_excel, echo=FALSE}
-Excel <- read_excel("C:/Users/CVdEy/Desktop/Persstatistiek/Persstatistiek_2019.xlsx",
+Excel <- read_excel("D:/Documenten/GitHub/Persstatistiek/Persstatistiek_2019.xlsx",
                     sheet = "Hele organisatie")
 
 for (i in c("Kwartaal", "Verzender", "Pu bij Pb", "Persreturn", "Alleen web", "TV", "Beleid", "Detail beleid", "Soort", "Maand")) ({
           Excel[[i]] <- as.factor(Excel[[i]])
       })
 
-summary(Excel$Kwartaal)
-summary(Excel$Verzender)
-summary(Excel$"Pu bij Pb")
-summary(Excel$Persreturn)
-summary(Excel$"Alleen web")
-summary(Excel$TV)
-summary(Excel$Beleid)
-summary(Excel$"Detail beleid")
-summary(Excel$Soort)
-summary(Excel$Maand)
+# summary(Excel$Kwartaal)
+# summary(Excel$Verzender)
+# summary(Excel$"Pu bij Pb")
+# summary(Excel$Persreturn)
+# summary(Excel$"Alleen web")
+# summary(Excel$TV)
+# summary(Excel$Beleid)
+# summary(Excel$"Detail beleid")
+# summary(Excel$Soort)
+# summary(Excel$Maand)
 
 
 
@@ -78,6 +78,12 @@ if (exists("Excel")) {
 ```{r split_kwartaal, include=FALSE}
 if (exists("Excel")) {
     Persstatistiek <- split.data.frame(Excel, Excel$Kwartaal)
+    
+    for (i in Persstatistiek) ({
+      Persstatistiek[[i]] <- data.frame(Persstatistiek[[i]])
+    })
+    
+    View(Persstatistiek)
     Persstatistiek$Jaar <- Excel
 }
 ```
