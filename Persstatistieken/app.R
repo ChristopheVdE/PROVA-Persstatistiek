@@ -10,7 +10,7 @@ for (load in to.load) {
 
 
 
-source("./Modules/Persreturn_per_beleid.R")
+source("./Modules/Persberichten_per_beleid.R")
 
 
 
@@ -89,9 +89,6 @@ if (interactive()) {
               tabItem(
                   tabName = "Persreturn",
                   fluidRow(
-                    
-                      Persreturn.beleidOutput("test", title = "Persberichten per Beleid", width = "12"),
-
                       tabBox(
                           title = "Persreturn: Economie",
                           width = 6,
@@ -144,14 +141,9 @@ if (interactive()) {
               ),
             # Persberichten per beleid -----------------------------------
               tabItem(
-                  tabName = "Persberichten",
-                  fluidRow(
-                      tabBox(
-                          title = "Persberichten per beleid",
-                          width = 12,
-                          tabPanel("Barplot", plotOutput("bar.bericht.beleid")),
-                          tabPanel("Tabel", tableOutput("bericht.beleid"))
-                      ),
+                tabName = "Persberichten",
+                fluidRow(
+                  Persberichten.beleidOutput("test", title = "Persberichten per Beleid", width = "12"),
                       tabBox(
                           title = "Persberichten: Economie",
                           width = 6,
@@ -322,29 +314,8 @@ if (interactive()) {
             return(bericht.beleid)
           })
           
-        # Table: Persbericht/Beleid ---------------------------------------------
-          # output$bericht.beleid <- renderTable({
-          #   df.bericht.beleid()
-          # })
-          
-        # Barplot: Persbericht/Beleid -------------------------------------------
-          callModule(Persreturn.beleid, "test", reactive(df.bericht.beleid()), reactive("Persreturn per beleid"), reactive("Beleid"))
-          
-          # output$bar.bericht.beleid <- renderPlot({
-          # 
-          #   colors <- brewer.pal(8,"Pastel1")
-          # 
-          #   ggplot(data=df.bericht.beleid(), aes(x=Beleid, y=`Aantal Persberichten`, fill=Beleid)) +
-          #     geom_bar(position = "dodge", stat='identity') +
-          #     xlab("Beleid") +
-          #     ylab("Aantal") +
-          #     ggtitle(c("Persreturn per beleid:")) +
-          #     geom_text(aes(label=`Aantal Persberichten`),
-          #               position=position_dodge(0.9), vjust=0) +
-          #     theme_bw() +
-          #     theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-          #     scale_fill_manual(values=colors)
-          # })
+        # Barplot & Tabel: Persbericht/Beleid -------------------------------------------
+          callModule(Persberichten.beleid, "test", reactive(df.bericht.beleid()), plottitle = reactive("Persreturn per beleid"), type = reactive("Beleid"))
 
       # Persbericht/ Detail beleid ----------------------------------------------
         # Prep: Persbericht (totaal)/Detail Beleid ------------------------------
