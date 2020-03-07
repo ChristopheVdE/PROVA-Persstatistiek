@@ -325,7 +325,7 @@ if (interactive()) {
             bericht.beleid <- data.frame(table(Persstatistiek()$Beleid))
 
             # Rename columns ----------------------------------------------------
-            colnames(bericht.beleid) <- c("Beleid","Aantal Persberichten")
+            colnames(bericht.beleid) <- c("Beleid","Persberichten")
             return(bericht.beleid)
           })
           
@@ -335,7 +335,7 @@ if (interactive()) {
           # })
           
         # Barplot: Persbericht/Beleid -------------------------------------------
-          callModule(Persreturn.beleid, "test", reactive(df.bericht.beleid()), reactive("Beleid"), reactive("Persreturn per beleid"))
+          callModule(Persreturn.beleid, "test", reactive(df.bericht.beleid()), reactive("Persreturn per beleid"), reactive("Beleid"))
           
           # output$bar.bericht.beleid <- renderPlot({
           # 
