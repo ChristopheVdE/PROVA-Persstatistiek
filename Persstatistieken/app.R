@@ -90,15 +90,8 @@ if (interactive()) {
                   tabName = "Persreturn",
                   fluidRow(
                     
-                      Persreturn.beleidOutput("test"),
-                      # tabBox(
-                      #     title = "Persreturn per beleid",
-                      #     width = 12,
-                      #     Persreturn.beleidOutput("test")
-                      # 
-                      #     # tabPanel("Barplot", plotOutput("bar.return.beleid")),
-                      #     # tabPanel("Tabel", tableOutput("return.beleid"))
-                      # ),
+                      Persreturn.beleidOutput("test", title = "Persberichten per Beleid", width = "12"),
+
                       tabBox(
                           title = "Persreturn: Economie",
                           width = 6,
