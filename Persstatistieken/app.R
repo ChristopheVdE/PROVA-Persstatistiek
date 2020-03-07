@@ -8,6 +8,12 @@ for (load in to.load) {
     library(load, character.only = TRUE )
 }
 
+
+
+source("./Modules/Persreturn_per_beleid.R")
+
+
+
 if (interactive()) {
     shinyApp(
     # UI =======================================================================
@@ -83,12 +89,16 @@ if (interactive()) {
               tabItem(
                   tabName = "Persreturn",
                   fluidRow(
-                      tabBox(
-                          title = "Persreturn per beleid",
-                          width = 12,
-                          tabPanel("Barplot", plotOutput("bar.return.beleid")),
-                          tabPanel("Tabel", tableOutput("return.beleid"))
-                      ),
+                    
+                      Persreturn.beleidOutput("test"),
+                      # tabBox(
+                      #     title = "Persreturn per beleid",
+                      #     width = 12,
+                      #     Persreturn.beleidOutput("test")
+                      # 
+                      #     # tabPanel("Barplot", plotOutput("bar.return.beleid")),
+                      #     # tabPanel("Tabel", tableOutput("return.beleid"))
+                      # ),
                       tabBox(
                           title = "Persreturn: Economie",
                           width = 6,
@@ -311,41 +321,37 @@ if (interactive()) {
       # Persbericht / beleid ----------------------------------------------------
         # Prep: Persreturn/ Beleid ----------------------------------------------
           df.bericht.beleid <- reactive({
-            # Create dummy column to use for counting total "Persberichten" -----
-            temp <- Persstatistiek()
-            temp$dummy <- 1
-            
             # Create dataframe for barplot --------------------------------------
-            bericht.beleid <- data.frame(table(temp$Beleid,
-                                               temp$dummy))
-            
+            bericht.beleid <- data.frame(table(Persstatistiek()$Beleid))
+
             # Rename columns ----------------------------------------------------
-            colnames(bericht.beleid) <- c("Beleid", "Kwartaal", "Aantal Persberichten")
-            bericht.beleid$Kwartaal <- NULL
+            colnames(bericht.beleid) <- c("Beleid","Aantal Persberichten")
             return(bericht.beleid)
           })
           
         # Table: Persbericht/Beleid ---------------------------------------------
-          output$bericht.beleid <- renderTable({
-            df.bericht.beleid()
-          })
+          # output$bericht.beleid <- renderTable({
+          #   df.bericht.beleid()
+          # })
           
         # Barplot: Persbericht/Beleid -------------------------------------------
-          output$bar.bericht.beleid <- renderPlot({
-
-            colors <- brewer.pal(8,"Pastel1")
-
-            ggplot(data=df.bericht.beleid(), aes(x=Beleid, y=`Aantal Persberichten`, fill=Beleid)) +
-              geom_bar(position = "dodge", stat='identity') +
-              xlab("Beleid") +
-              ylab("Aantal") +
-              ggtitle(c("Persreturn per beleid:")) +
-              geom_text(aes(label=`Aantal Persberichten`),
-                        position=position_dodge(0.9), vjust=0) +
-              theme_bw() +
-              theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-              scale_fill_manual(values=colors)
-          })
+          callModule(Persreturn.beleid, "test", reactive(df.bericht.beleid()), reactive("Beleid"), reactive("Persreturn per beleid"))
+          
+          # output$bar.bericht.beleid <- renderPlot({
+          # 
+          #   colors <- brewer.pal(8,"Pastel1")
+          # 
+          #   ggplot(data=df.bericht.beleid(), aes(x=Beleid, y=`Aantal Persberichten`, fill=Beleid)) +
+          #     geom_bar(position = "dodge", stat='identity') +
+          #     xlab("Beleid") +
+          #     ylab("Aantal") +
+          #     ggtitle(c("Persreturn per beleid:")) +
+          #     geom_text(aes(label=`Aantal Persberichten`),
+          #               position=position_dodge(0.9), vjust=0) +
+          #     theme_bw() +
+          #     theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+          #     scale_fill_manual(values=colors)
+          # })
 
       # Persbericht/ Detail beleid ----------------------------------------------
         # Prep: Persbericht (totaal)/Detail Beleid ------------------------------
@@ -756,7 +762,7 @@ if (interactive()) {
             
             
         
-          # Barplot: Persberichten/ kwartaal (jaarbasis) -------------------------
+      # Barplot: Persberichten/ kwartaal (jaarbasis) -------------------------
             
         # Barplot: type persbericht (Soort) / beleid ---------------------------
             
