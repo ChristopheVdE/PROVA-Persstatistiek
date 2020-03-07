@@ -139,60 +139,20 @@ if (interactive()) {
                       )
                   )
               ),
-            # Persberichten per beleid -----------------------------------
+            # Persberichten per beleid ----------------------------------------
               tabItem(
                 tabName = "Persberichten",
                 fluidRow(
-                  Persberichten.beleidOutput("test", title = "Persberichten per Beleid", width = "12"),
-                      tabBox(
-                          title = "Persberichten: Economie",
-                          width = 6,
-                          tabPanel("Barplot", plotOutput("bar.bericht.detail.Economie")),
-                          tabPanel("Tabel", tableOutput("table.bericht.detail.Economie"))
-                      ),
-                      tabBox(
-                          title = "Persberichten: Gouverneur",
-                          width = 6,
-                          tabPanel("Barplot", plotOutput("bar.bericht.detail.Gouverneur")),
-                          tabPanel("Tabel", tableOutput("table.bericht.detail.Gouverneur"))
-                      ),
-                      tabBox(
-                          title = "Persberichten: Leefmilieu",
-                          width = 6,
-                          tabPanel("Barplot", plotOutput("bar.bericht.detail.Leefmilieu")),
-                          tabPanel("Tabel", tableOutput("table.bericht.detail.Leefmilieu"))
-                      ),
-                      tabBox(
-                          title = "Persberichten: Mobiliteit",
-                          width = 6,
-                          tabPanel("Barplot", plotOutput("bar.bericht.detail.Mobiliteit")),
-                          tabPanel("Tabel", tableOutput("table.bericht.detail.Mobiliteit"))
-                      ),
-                      tabBox(
-                          title = "Persberichten: Onderwijs & Educatie",
-                          width = 6,
-                          tabPanel("Barplot", plotOutput("bar.bericht.detail.Onderwijs en Educatie")),
-                          tabPanel("Tabel", tableOutput("table.bericht.detail.Onderwijs en Educatie"))
-                      ),
-                      tabBox(
-                          title = "Persberichten: Provinciebestuur",
-                          width = 6,
-                          tabPanel("Barplot", plotOutput("bar.bericht.detail.Provinciebestuur")),
-                          tabPanel("Tabel", tableOutput("table.bericht.detail.Provinciebestuur"))
-                      ),
-                      tabBox(
-                          title = "Persberichten: Ruimte",
-                          width = 6,
-                          tabPanel("Barplot", plotOutput("bar.bericht.detail.Ruimte")),
-                          tabPanel("Tabel", tableOutput("table.bericht.detail.Ruimte"))
-                      ),
-                      tabBox(
-                          title = "Persberichten: Vrije Tijd",
-                          width = 6,
-                          tabPanel("Barplot", plotOutput("bar.bericht.detail.Vrije Tijd")),
-                          tabPanel("Tabel", tableOutput("table.bericht.detail.Vrije Tijd"))
-                      )
-                  )
+                  Persberichten.beleidOutput("Beleid", title = "Persberichten per Beleid", width = "12"),
+                  Persberichten.beleidOutput("Economie", title = "Persberichten: Economie"),
+                  Persberichten.beleidOutput("Gouverneur", title = "Persberichten: Gouverneur"),
+                  Persberichten.beleidOutput("Leefmilieu", title = "Persberichten: Leefmilieu"),
+                  Persberichten.beleidOutput("Mobiliteit", title = "Persberichten: Mobiliteit"),
+                  Persberichten.beleidOutput("Onderwijs en Educatie", title = "Persberichten: Onderwijs en Educatie"),
+                  Persberichten.beleidOutput("Provinciebestuur", title = "Persberichten: Provinciebestuur"),
+                  Persberichten.beleidOutput("Ruimte", title = "Persberichten: Ruimte"),
+                  Persberichten.beleidOutput("Vrije Tijd", title = "Persberichten: Vrije Tijd")
+                )
               ),
             # nog iets ---------------------------------------------------
                 tabItem(
@@ -314,195 +274,31 @@ if (interactive()) {
             return(bericht.beleid)
           })
           
-        # Barplot & Tabel: Persbericht/Beleid -------------------------------------------
-          callModule(Persberichten.beleid, "test", reactive(df.bericht.beleid()), plottitle = reactive("Persreturn per beleid"), type = reactive("Beleid"))
+        # Barplot & Tables -------------------------------------------------------
+          callModule(Persberichten.beleid, "Beleid", reactive(df.bericht.beleid()), plottitle = reactive("Persberichten per beleid"), type = reactive("Beleid"))
 
       # Persbericht/ Detail beleid ----------------------------------------------
         # Prep: Persbericht (totaal)/Detail Beleid ------------------------------
           Persberichten <- reactive({
-            # Create dummy column to use for counting total "Persberichten" -----
-            temp <- Persstatistiek()
-            temp$dummy <- 1
-            Persberichten <- split(temp, temp$Beleid)
-            # Create dummy column to use for counting total "Persberichten" -----
+            Persberichten <- split(Persstatistiek(), Persstatistiek()$Beleid)
+
             for (i in levels(Persstatistiek()$Beleid)) ({
-              Persberichten[[i]] <- data.frame(table(Persberichten[[i]]$"Detail beleid", Persberichten[[i]]$dummy))
-              colnames(Persberichten[[i]]) <- c("Detail beleid", "Kwartaal", "Aantal Persberichten")
-              Persberichten[[i]]$Kwartaal <- NULL
+              Persberichten[[i]] <- data.frame(table(Persberichten[[i]]$"Detail beleid"))
+              Persberichten[[i]] <- cbind(Beleid = i, Persberichten[[i]])
+              colnames(Persberichten[[i]]) <- c("Beleid", "Detail","Persberichten")
             })
             return(Persberichten)
           })
-        # Economie -------------------------------------------------------------
-          # Table ------------------------------------------------------------
-          output$table.bericht.detail.Economie <- renderTable({
-            return(Persberichten()$Economie)
-          })
-          # Barplot ------------------------------------------------------------
-          output$bar.bericht.detail.Economie <- renderPlot({
+        # Barplots & Tables -------------------------------------------------------------
+          callModule(Persberichten.beleid, "Economie", reactive(Persberichten()$Economie), plottitle = reactive("Persberichten: Economie"), type = reactive("Detail"))
+          callModule(Persberichten.beleid, "Gouverneur", reactive(Persberichten()$Gouverneur), plottitle = reactive("Persberichten: Gouverneur"), type = reactive("Detail"))
+          callModule(Persberichten.beleid, "Leefmilieu", reactive(Persberichten()$Leefmilieu), plottitle = reactive("Persberichten: Leefmilieu"), type = reactive("Detail"))
+          callModule(Persberichten.beleid, "Mobiliteit", reactive(Persberichten()$Mobiliteit), plottitle = reactive("Persberichten: Milieu"), type = reactive("Detail"))
+          callModule(Persberichten.beleid, "Onderwijs en Educatie", reactive(Persberichten()$`Onderwijs en Educatie`), plottitle = reactive("Persberichten: Onderwijs en Educatie"), type = reactive("Detail"))
+          callModule(Persberichten.beleid, "Provinciebestuur", reactive(Persberichten()$Provinciebestuur), plottitle = reactive("Persberichten: Provinciebestuur"), type = reactive("Detail"))
+          callModule(Persberichten.beleid, "Ruimte", reactive(Persberichten()$Ruimte), plottitle = reactive("Persberichten: Ruimte"), type = reactive("Detail"))
+          callModule(Persberichten.beleid, "Vrije Tijd", reactive(Persberichten()$`Vrije Tijd`), plottitle = reactive("Persberichten: Vrije Tijd"), type = reactive("Detail"))
 
-            colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
-
-            ggplot(data=Persberichten()$Economie, aes(x=`Detail beleid`, y=`Aantal Persberichten`, fill=`Detail beleid`)) +
-              geom_bar(position = "dodge", stat='identity') +
-              xlab("Detail beleid") +
-              ylab("Aantal") +
-              ggtitle("PErsberichten: Economie") +
-              geom_text(aes(label=`Aantal Persberichten`),
-                        position=position_dodge(0.9), vjust=0) +
-              theme_bw() +
-              theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-              scale_fill_manual(values=colors)
-          })
-        # Gouverneur -----------------------------------------------------------
-          # Table ------------------------------------------------------------
-          output$table.bericht.detail.Gouverneur <- renderTable({
-            return(Persberichten()$Gouverneur)
-          })
-          # Barplot ------------------------------------------------------------
-          output$bar.bericht.detail.Gouverneur <- renderPlot({
-
-            colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
-
-            ggplot(data=Persberichten()$Gouverneur, aes(x=`Detail beleid`, y=`Aantal Persberichten`, fill=`Detail beleid`)) +
-              geom_bar(position = "dodge", stat='identity') +
-              xlab("Detail beleid") +
-              ylab("Aantal") +
-              ggtitle("Persberichten: Gouverneur") +
-              geom_text(aes(label=`Aantal Persberichten`),
-                        position=position_dodge(0.9), vjust=0) +
-              theme_bw() +
-              theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-              scale_fill_manual(values=colors)
-          })
-        # Leefmilieu -----------------------------------------------------------
-          # Table ------------------------------------------------------------
-          output$table.bericht.detail.Leefmilieu <- renderTable({
-            return(Persberichten()$Leefmilieu)
-          })
-          # Barplot ------------------------------------------------------------
-          output$bar.bericht.detail.Leefmilieu <- renderPlot({
-            
-            colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
-            
-            ggplot(data=Persberichten()$Leefmilieu, aes(x=`Detail beleid`, y=`Aantal Persberichten`, fill=`Detail beleid`)) +
-              geom_bar(position = "dodge", stat='identity') +
-              xlab("Detail beleid") +
-              ylab("Aantal") +
-              ggtitle("Persberichten: Leefmilieu") +
-              geom_text(aes(label=`Aantal Persberichten`),
-                        position=position_dodge(0.9), vjust=0) +
-              theme_bw() +
-              theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-              scale_fill_manual(values=colors)
-          })
-        # Mobiliteit -----------------------------------------------------------
-          # Table ------------------------------------------------------------
-          output$table.bericht.detail.Mobiliteit <- renderTable({
-            return(Persberichten()$Mobiliteit)
-          })
-          # Barplot ------------------------------------------------------------
-          output$bar.bericht.detail.Mobiliteit <- renderPlot({
-            
-            colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
-            
-            ggplot(data=Persberichten()$Mobiliteit, aes(x=`Detail beleid`, y=`Aantal Persberichten`, fill=`Detail beleid`)) +
-              geom_bar(position = "dodge", stat='identity') +
-              xlab("Detail beleid") +
-              ylab("Aantal") +
-              ggtitle("Persberichten: Mobiliteit") +
-              geom_text(aes(label=`Aantal Persberichten`),
-                        position=position_dodge(0.9), vjust=0) +
-              theme_bw() +
-              theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-              scale_fill_manual(values=colors)
-          })
-        # Onderwijs en Educatie ------------------------------------------------
-          # Table --------------------------------------------------------------
-          output$`table.bericht.detail.Onderwijs en Educatie` <- renderTable({
-            return(Persberichten()$"Onderwijs en Educatie")
-          })
-          # Barplot ------------------------------------------------------------
-          output$`bar.bericht.detail.Onderwijs en Educatie` <- renderPlot({
-            
-            colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
-            
-            ggplot(data=Persberichten()$"Onderwijs en Educatie", aes(x=`Detail beleid`, y=`Aantal Persberichten`, fill=`Detail beleid`)) +
-              geom_bar(position = "dodge", stat='identity') +
-              xlab("Detail beleid") +
-              ylab("Aantal") +
-              ggtitle("Persberichten: Onderwijs en Educatie") +
-              geom_text(aes(label=`Aantal Persberichten`),
-                        position=position_dodge(0.9), vjust=0) +
-              theme_bw() +
-              theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-              scale_fill_manual(values=colors)
-          })
-        # Provinciebestuur -----------------------------------------------------
-          # Table ------------------------------------------------------------
-          output$table.bericht.detail.Provinciebestuur <- renderTable({
-            return(Persberichten()$Provinciebestuur)
-          })
-          # Barplot ------------------------------------------------------------
-          output$bar.bericht.detail.Provinciebestuur <- renderPlot({
-            
-            colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
-            
-            ggplot(data=Persberichten()$Provinciebestuur, aes(x=`Detail beleid`, y=`Aantal Persberichten`, fill=`Detail beleid`)) +
-              geom_bar(position = "dodge", stat='identity') +
-              xlab("Detail beleid") +
-              ylab("Aantal") +
-              ggtitle("Persberichten: Provinciebestuur") +
-              geom_text(aes(label=`Aantal Persberichten`),
-                        position=position_dodge(0.9), vjust=0) +
-              theme_bw() +
-              theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-              scale_fill_manual(values=colors)
-          })
-        # Ruimte ---------------------------------------------------------------
-          # Table ------------------------------------------------------------
-          output$table.bericht.detail.Ruimte <- renderTable({
-            return(Persberichten()$Ruimte)
-          })
-          # Barplot ------------------------------------------------------------
-          output$bar.bericht.detail.Ruimte <- renderPlot({
-            
-            colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
-            
-            ggplot(data=Persberichten()$Ruimte, aes(x=`Detail beleid`, y=`Aantal Persberichten`, fill=`Detail beleid`)) +
-              geom_bar(position = "dodge", stat='identity') +
-              xlab("Detail beleid") +
-              ylab("Aantal") +
-              ggtitle("Persberichten: Ruimte") +
-              geom_text(aes(label=`Aantal Persberichten`),
-                        position=position_dodge(0.9), vjust=0) +
-              theme_bw() +
-              theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-              scale_fill_manual(values=colors)
-          })
-        # Vrije Tijd -----------------------------------------------------------
-          # Table ------------------------------------------------------------
-          output$`table.bericht.detail.Vrije Tijd` <- renderTable({
-            return(Persberichten()$"Vrije Tijd")
-          })
-          # Barplot ------------------------------------------------------------
-          output$`bar.bericht.detail.Vrije Tijd` <- renderPlot({
-            
-            colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
-            
-            ggplot(data=Persberichten()$"Vrije Tijd", aes(x=`Detail beleid`, y=`Aantal Persberichten`, fill=`Detail beleid`)) +
-              geom_bar(position = "dodge", stat='identity') +
-              xlab("Detail beleid") +
-              ylab("Aantal") +
-              ggtitle("Persberichten: Vrije Tijd") +
-              geom_text(aes(label=`Aantal Persberichten`),
-                        position=position_dodge(0.9), vjust=0) +
-              theme_bw() +
-              theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-              scale_fill_manual(values=colors)
-          })
-      
-      
-      
       # Persreturn / beleid ----------------------------------------------------
         # Prep: Persreturn/ Beleid --------------------------------------------
             df.return.beleid <- reactive({

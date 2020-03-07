@@ -27,7 +27,7 @@ Persberichten.beleid <- function(input, output, session, dataframe, plottitle, t
   
   # Create Barplot --------------------------------------------
   output$barplot <- renderPlot({
-    if (grep("Beleid", type())) {
+    if ("Beleid"==type()) {
       ggplot(data=dataframe(), aes(x=Beleid, y=Persberichten, fill=Beleid)) +
         geom_bar(position = "dodge", stat='identity') +
         xlab("Beleid") +
@@ -38,10 +38,10 @@ Persberichten.beleid <- function(input, output, session, dataframe, plottitle, t
         theme_bw() +
         theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
         scale_fill_manual(values=colors)
-    } else {
-      ggplot(data=dataframe(), aes(x=`Detail beleid`, y=Persberichten, fill=`Detail beleid`)) +
+    } else if ("Detail" == type()) {
+      ggplot(data=dataframe(), aes(x=Detail, y=Persberichten, fill=Detail)) +
         geom_bar(position = "dodge", stat='identity') +
-        xlab("Detail beleid") +
+        xlab("Detail") +
         ylab("Aantal") +
         ggtitle(plottitle()) +
         geom_text(aes(label=Persberichten),
