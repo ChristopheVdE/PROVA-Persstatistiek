@@ -15,6 +15,7 @@ source("./Modules/Persreturn_per_beleid.R")
 
 
 
+
 if (interactive()) {
     shinyApp(
     # UI =======================================================================
@@ -90,7 +91,7 @@ if (interactive()) {
                     )
                 ),
             
-            # Persberichten ---------------------------------------------
+            # Persberichten ----------------------------------------------------
               # Per beleid ----------------------------------------------
                 tabItem(
                   tabName = "Bericht_Beleid",
@@ -134,11 +135,34 @@ if (interactive()) {
                 tabItem(
                   tabName = "Bericht_Tijd",
                   fluidRow(
-                    
+                    tabBox(
+                      title = "Persberichten per Maand",
+                      width = 12,
+                      tabPanel("Barplot", plotOutput("berichten.barplot.maand")),
+                      tabPanel("Tabel", tableOutput("berichten.tabel.maand"))
+                    ),
+                    box(
+                      title = "Persberichten per Maand",
+                      width = 4,
+                      selectInput("maand", "Selecteer Maand", c("jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"), selected = "jan"),
+                      plotOutput("berichten.piechart.maand.detail")
+                    ),
+                    tabBox(
+                      title = "Persberichten per Kwartaal",
+                      width = 4,
+                      tabPanel("Barplot", plotOutput("berichten.barplot.kwartaal")),
+                      tabPanel("Tabel", tableOutput("berichten.tabel.kwartaal"))
+                    ),
+                    tabBox(
+                      title = "Persberichten per Jaar",
+                      width = 4,
+                      tabPanel("Scatterplot", plotOutput("berichten.scatterplot.jaar")),
+                      tabPanel("Tabel", tableOutput("berichten.tabel.jaar"))
+                    )  
                   )
                 ),
-            # Persreturn 
-              # Per beleid --------------------------------------
+            # Persreturn -------------------------------------------------------
+              # Per beleid -----------------------------------------------------
                 tabItem(
                   tabName = "Return_Beleid",
                   fluidRow(
@@ -152,13 +176,25 @@ if (interactive()) {
                     Persreturn.beleidOutput("Return.Ruimte", title = "Persreturn: Ruimte"),
                     Persreturn.beleidOutput("Return.Vrije Tijd", title = "Persreturn: Vrije Tijd")        
                   )
+                ),
+              # Per Platform -----------------------------------------------------
+                tabItem(
+                  tabName = "Return_Platform",
+                  fluidRow(
+                    tabBox(
+                      title = "Persreturn per platform",
+                      width = 12,
+                      tabPanel("Barplot", plotOutput("return.platform.barplot")),
+                      tabPanel("Tabel", tableOutput("return.platform.table"))
+                    )
+                  )
                 )
               )
             )
         ),
     
     # SERVER ===================================================================
-        server <- function(input, output) {
+      server <- function(input, output) {
       
       # Data Preparation -------------------------------------------------------      
         # Prepare dataset ------------------------------------------------------
@@ -217,7 +253,7 @@ if (interactive()) {
                 Excel$Soort <- gsub("evenementenkalender", "Evenementenkalender", Excel$Soort, ignore.case = FALSE)
 
             # As factor --------------------------------------------------------
-                for (i in c("Verzender", "Pu bij Pb", "Persreturn", "Alleen web", "TV", "Beleid", "Soort", "Maand")) ({
+                for (i in c("Verzender", "Pu bij Pb", "Persreturn", "Beleid", "Soort")) ({
                     Excel[[i]] <- as.factor(Excel[[i]])
                 })
 
@@ -327,9 +363,9 @@ if (interactive()) {
               # Specify color pallete
               colors <- brewer.pal(8,"Pastel2")
               # Create plot
-              ggplot(data=df.berichten.verzender(), aes(x=Beleid, y=Freq, fill=Verzender)) +
+              ggplot(data=df.berichten.verzender(), aes(x=Verzender, y=Freq, fill=Beleid)) +
                 geom_bar(position = "dodge", stat='identity') +
-                xlab("Beleid") +
+                xlab("Verzender") +
                 ylab("Aantal") +
                 ggtitle("Persberichten per Verzender") +
                 geom_text(aes(label=Freq),
@@ -340,6 +376,87 @@ if (interactive()) {
             })
             
       
+        # Per Tijd -------------------------------------------------------------
+          # Per Maand ----------------------------------------------------------
+            # Preparation ------------------------------------------------------
+              df.berichten.Maand <- reactive({
+                berichten <- data.frame(table(Persstatistiek()$Beleid, Persstatistiek()$Maand))
+                colnames(berichten) <- c("Beleid", "Maand", "Freq")
+                berichten$Maand <- factor(berichten$Maand, levels = c("jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"))
+                return(berichten)
+              })
+            # Table (Per Maand) --------------------------------------------------
+              output$berichten.tabel.maand <- renderTable({
+                df.berichten.Maand()
+              })
+            # Barplot (Per Maand) ------------------------------------------------
+              output$berichten.barplot.maand <- renderPlot({
+                # Specify color pallete
+                colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
+                # Create plot
+                ggplot(data=df.berichten.Maand(), aes(x=Maand, y=Freq, fill=Beleid)) +
+                  geom_bar(position = "dodge", stat='identity') +
+                  xlab("Maand") +
+                  ylab("Aantal") +
+                  ggtitle("Persberichten per Maand") +
+                  geom_text(aes(label=Freq),
+                            position=position_dodge(0.9), vjust=0) +
+                  theme_bw() +
+                  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+                  scale_fill_manual(values=colors)
+              })
+          # Per Maand (detail) -------------------------------------------------
+            # Preparation ------------------------------------------------------
+              df.berichten.Maand.detail <-  reactive({
+                split(df.berichten.Maand(), df.berichten.Maand()$Maand)
+                
+              })
+            # Piechart (Per Maand) ---------------------------------------------
+              output$berichten.piechart.maand.detail <- renderPlot({
+                try(
+                  {
+                    par(mar=c(2,0,2,10))
+                    pie(df.berichten.Maand.detail()[[input$maand]]$Freq, 
+                        labels = df.berichten.Maand.detail()[[input$maand]]$Freq, 
+                        col = brewer.pal(8,"Pastel2"),
+                        main = paste("Persberichten:", input$maand))
+                    par(mar=c(0,0,0,0))
+                    legend(1, 0.37, c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijs en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"), fill = brewer.pal(8,"Pastel2"))
+                  }, 
+                  silent = TRUE
+                )
+              })
+
+          # Per tijd (Kwartaal)  -----------------------------------------------
+            # Preparation ------------------------------------------------------
+              df.berichten.Kwartaal <-  reactive({
+                berichten <- data.frame(table(Persstatistiek()$Kwartaal))
+                colnames(berichten) <- c("Kwartaal", "Freq")
+                return(berichten)
+              })
+            # Tabel ------------------------------------------------------------
+              output$berichten.tabel.kwartaal <- renderTable({
+                df.berichten.Kwartaal()
+              })
+            # Barplot ----------------------------------------------------------
+              output$berichten.barplot.kwartaal <- renderPlot({
+                # Specify color pallete
+                colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
+                # Create plot
+                ggplot(data=df.berichten.Kwartaal(), aes(x=Kwartaal, y=Freq, fill=Kwartaal)) +
+                  geom_bar(position = "dodge", stat='identity') +
+                  xlab("Kwartaal") +
+                  ylab("Aantal") +
+                  ggtitle("Persberichten per Kwartaal") +
+                  geom_text(aes(label=Freq),
+                            position=position_dodge(0.9), vjust=0) +
+                  theme_bw() +
+                  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+                  scale_fill_manual(values=colors)
+              })
+
+            
+            
       # Persreturn -------------------------------------------------------------      
         # Per beleid -----------------------------------------------------------
           # Preparation --------------------------------------------------------
@@ -379,30 +496,75 @@ if (interactive()) {
             callModule(Persreturn.beleid, "Return.Ruimte", reactive(Persreturn()$Ruimte), plottitle = reactive("v: Ruimte"), type = reactive("Detail"))
             callModule(Persreturn.beleid, "Return.Vrije Tijd", reactive(Persreturn()$`Vrije Tijd`), plottitle = reactive("Persreturn: Vrije Tijd"), type = reactive("Detail"))
             
+        # Per platform ---------------------------------------------------------
+          # Preparation --------------------------------------------------------
+            df.return.platform <- reactive({
 
+              # create table: TV
+              TV <- split(Persstatistiek(), Persstatistiek()$TV)
+              TV <- TV$Ja
+              TV <- data.frame(table(TV$Beleid, TV$TV))
+              colnames(TV) <- c("Beleid", "TV", "Freq")
+              TV$TV <- "TV"
+
+              # create Table: Web
+              Web <- split(Persstatistiek(), Persstatistiek()$"Alleen web")
+              Web <- Web$Ja
+              Web$Ja <- "Web"
+              Web <- data.frame(table(Web$Beleid, Web$"Alleen web"))
+              colnames(Web) <- c("Beleid", "Web", "Freq")
+              Web$Web <- "Web"
+
+              # Merge dataframes
+              persreturn <- data.frame(Beleid = TV$Beleid,
+                                       Platfrom = c(TV$TV, Web$Web),
+                                       Persreturn = c(TV$Freq, Web$Freq))
+              return(persreturn)
+            })
+          # Table --------------------------------------------------------------
+            output$return.platform.table <-renderTable({
+              df.return.platform()
+            })
+          # Barplot ------------------------------------------------------------
+            output$return.platform.barplot <- renderPlot({
+              # Specify color pallete
+              colors <- brewer.pal(8,"Pastel2")
+              # Create plot
+              ggplot(data=df.return.platform(), aes(x=Beleid, y=Persreturn, fill=Platfrom)) +
+                geom_bar(position = "dodge", stat='identity') +
+                xlab("Beleid") +
+                ylab("Aantal") +
+                ggtitle("Persberichten per Type") +
+                geom_text(aes(label=Persreturn),
+                          position=position_dodge(0.9), vjust=0) +
+                theme_bw() +
+                theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+                scale_fill_manual(values=colors)
+            })
+          
       # Pdf aanmaak ----------------------------------------------------------
-            output$report <- downloadHandler(
-                # For PDF output, change this to "report.pdf"
-                filename = "report.pdf",
-                content = function(file) {
-                    # Copy the report file to a temporary directory before processing it, in
-                    # case we don't have write permissions to the current working dir (which
-                    # can happen when deployed).
-                    tempReport <- file.path(tempdir(), "report.Rmd")
-                    file.copy("report.Rmd", tempReport, overwrite = TRUE)
-                    
-                    # Set up parameters to pass to Rmd document
-                    params <- list(n = Persstatistiek())
-                    
-                    # Knit the document, passing in the `params` list, and eval it in a
-                    # child of the global environment (this isolates the code in the document
-                    # from the code in this app).
-                    rmarkdown::render(tempReport, output_file = file,
-                                      params = params,
-                                      envir = new.env(parent = globalenv())
-                    )
-                }
+        output$report <- downloadHandler(
+          # For PDF output, change this to "report.pdf"
+          filename = "report.pdf",
+          content = function(file) {
+            # Copy the report file to a temporary directory before processing it, in
+            # case we don't have write permissions to the current working dir (which
+            # can happen when deployed).
+            tempReport <- file.path(tempdir(), "report.Rmd")
+            file.copy("report.Rmd", tempReport, overwrite = TRUE)
+            
+            # Set up parameters to pass to Rmd document
+            params <- list(n = Persstatistiek())
+            
+            # Knit the document, passing in the `params` list, and eval it in a
+            # child of the global environment (this isolates the code in the document
+            # from the code in this app).
+            rmarkdown::render(tempReport, output_file = file,
+                              params = params,
+                              envir = new.env(parent = globalenv())
             )
-        }
+          }
+        )
+      }
     )
 }
