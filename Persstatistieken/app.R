@@ -12,6 +12,7 @@ for (load in to.load) {
 
 source("./Modules/Persberichten_per_beleid.R")
 source("./Modules/Persreturn_per_beleid.R")
+source("./Modules/tablesplit.R")
 
 
 
@@ -269,7 +270,7 @@ if (interactive()) {
                 Excel$Soort <- gsub("evenementenkalender", "Evenementenkalender", Excel$Soort, ignore.case = FALSE)
 
             # As factor --------------------------------------------------------
-                for (i in c("Verzender", "Pu bij Pb", "Beleid", "Soort")) ({
+                for (i in c("Verzender", "Pu bij Pb", "Beleid")) ({
                     Excel[[i]] <- as.factor(Excel[[i]])
                 })
 
@@ -340,11 +341,34 @@ if (interactive()) {
             df.berichten.type <- reactive({
               berichten <- data.frame(table(Persstatistiek()$Beleid, Persstatistiek()$Soort))
               colnames(berichten) <- c("Beleid", "Type", "Freq")
+              berichten$Type <- as.factor(berichten$Type)
+
+              for(i in c("Activiteitenkalender", "Agendatip", "Evenementenkalender", "Persagenda", "Persbericht", "Persuitnodiging")) {
+                if(!(i %in% levels(berichten$Type))) {
+                  temp <- data.frame(
+                    Beleid = c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijs en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"),
+                    Type = i,
+                    Freq = 0
+                  )
+                  berichten <- rbind(berichten, temp)
+                }
+              }
               return(berichten)
             })
           # Table --------------------------------------------------------------
             output$berichten.type.table <- renderTable({
-              df.berichten.type()
+              temp <- df.berichten.type()
+              temp <- split(df.berichten.type(), df.berichten.type()$Type)
+              temp <- data.frame(
+                        Beleid = c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijd en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"),
+                        Activiteitenkalender = temp$Activiteitenkalender$Freq,
+                        Agendatip = temp$Agendatip$Freq,
+                        Evenementenkalender = temp$Evenementenkalender$Freq,
+                        Persagenda = temp$Persagenda$Freq,
+                        Persbericht = temp$Persbericht$Freq,
+                        Persuitnodiging = temp$Persuitnodiging$Freq
+                      )
+              return(temp)
             })
           # Barplot ------------------------------------------------------------
             output$berichten.type.barplot <- renderPlot({
@@ -593,7 +617,8 @@ if (interactive()) {
                 scale_fill_manual(values=colors)
             })
 
-      # Pdf aanmaak ----------------------------------------------------------
+
+        # Pdf aanmaak ----------------------------------------------------------
         output$report <- downloadHandler(
           # For PDF output, change this to "report.pdf"
           filename = "report.pdf",
