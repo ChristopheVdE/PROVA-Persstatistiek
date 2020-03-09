@@ -119,7 +119,7 @@ if (interactive()) {
                       title = "Persberichten per Soort",
                       width = 12,
                       tabPanel("Barplot", plotOutput("berichten.type.barplot")),
-                      tabPanel("Table", tableOutput("berichten.type.table"))
+                      tabPanel("Tabel", tableOutput("berichten.type.table"))
                     )
                   )
                 ),
@@ -342,7 +342,7 @@ if (interactive()) {
               berichten <- data.frame(table(Persstatistiek()$Beleid, Persstatistiek()$Soort))
               colnames(berichten) <- c("Beleid", "Type", "Freq")
               berichten$Type <- as.factor(berichten$Type)
-
+            # Add in possible missing "Type"
               for(i in c("Activiteitenkalender", "Agendatip", "Evenementenkalender", "Persagenda", "Persbericht", "Persuitnodiging")) {
                 if(!(i %in% levels(berichten$Type))) {
                   temp <- data.frame(
@@ -353,6 +353,7 @@ if (interactive()) {
                   berichten <- rbind(berichten, temp)
                 }
               }
+            # Return dataset  
               return(berichten)
             })
           # Table --------------------------------------------------------------
@@ -392,11 +393,30 @@ if (interactive()) {
             df.berichten.verzender <- reactive({
               berichten <- data.frame(table(Persstatistiek()$Beleid, Persstatistiek()$Verzender))
               colnames(berichten) <- c("Beleid", "Verzender", "Freq")
+            # Add in possible missing "Verzender"
+              for(i in c("Persdienst", "Provincie", "Gouverneur", "Extern")) {
+                if(!(i %in% levels(berichten$Verzender))) {
+                  temp <- data.frame(
+                    Beleid = c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijs en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"),
+                    Verzender = i,
+                    Freq = 0
+                  )
+                  berichten <- rbind(berichten, temp)
+                }
+              }
+            # Return dataset
               return(berichten)
             })
           # Table --------------------------------------------------------------
             output$berichten.verzender.table <- renderTable({
-              df.berichten.verzender()
+              temp <- split(df.berichten.verzender(), df.berichten.verzender()$Verzender)
+              temp <- data.frame(
+                        Beleid = c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijd en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"),
+                        Persdienst = temp$Persdienst$Freq,
+                        Provincie = temp$Provincie$Freq,
+                        Gouverneur = temp$Gouverneur$Freq,
+                        Extern = temp$Extern$Freq
+              )
             })
           # Barplot ------------------------------------------------------------
             output$berichten.verzender.barplot <- renderPlot({
