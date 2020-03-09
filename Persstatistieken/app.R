@@ -38,7 +38,10 @@ if (interactive()) {
                               menuSubItem("Per Beleid", tabName = "Bericht_Beleid"),
                               menuSubItem("Per Type", tabName = "Bericht_Type"),
                               menuSubItem("Per Verzender", tabName = "Bericht_Verzender"),
-                              menuSubItem("Per Tijd", tabName = "Bericht_Tijd")
+                              menuItem("Per Tijd", tabname = "Bericht_Tijd", icon = icon("angle-double-right", lib = "font-awesome"),
+                                menuSubItem("Per Maand", tabName = "Bericht_Maand"),
+                                menuSubItem("Per Jaar", tabName = "Bericht_Jaar")
+                              ) 
                     ),
                     menuItem("Persreturn", tabname = "Persreturn", icon = icon("bar-chart-o"),
                              menuSubItem("Per Beleid", tabName = "Return_Beleid"),
@@ -131,36 +134,49 @@ if (interactive()) {
                     ) 
                   )
                 ),
-              # Per Tijd -------------------------------------------------
-                tabItem(
-                  tabName = "Bericht_Tijd",
-                  fluidRow(
-                    tabBox(
-                      title = "Persberichten per Maand",
-                      width = 12,
-                      tabPanel("Barplot", plotOutput("berichten.barplot.maand")),
-                      tabPanel("Tabel", tableOutput("berichten.tabel.maand"))
-                    ),
-                    box(
-                      title = "Persberichten per Maand",
-                      width = 4,
-                      selectInput("maand", "Selecteer Maand", c("jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"), selected = "jan"),
-                      plotOutput("berichten.piechart.maand.detail")
-                    ),
-                    tabBox(
-                      title = "Persberichten per Kwartaal",
-                      width = 4,
-                      tabPanel("Barplot", plotOutput("berichten.barplot.kwartaal")),
-                      tabPanel("Tabel", tableOutput("berichten.tabel.kwartaal"))
-                    ),
-                    tabBox(
-                      title = "Persberichten per Jaar",
-                      width = 4,
-                      tabPanel("Scatterplot", plotOutput("berichten.scatterplot.jaar")),
-                      tabPanel("Tabel", tableOutput("berichten.tabel.jaar"))
-                    )  
-                  )
-                ),
+              # Per Tijd -------------------------------------------------------
+                # Per Maand ----------------------------------------------------
+                  tabItem(
+                    tabName = "Bericht_Maand",
+                    fluidRow(
+                      tabBox(
+                        title = "Persberichten: Totaal per Maand",
+                        width = 12,
+                        tabPanel("Barplot", plotOutput("berichten.barplot.maand")),
+                        tabPanel("Tabel", tableOutput("berichten.tabel.maand"))
+                      ),
+                      box(
+                        title = "Persberichten: Maand (totaal) per Beleid",
+                        width = 6,
+                        selectInput("beleid", "Selecteer Beleid", c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijs en Educatie", "Provinciebestuur", "Ruimte", "Vrije tijd"), selected = "Economie"),
+                        plotOutput("barplot.berichten.Maand.totaal.per.Beleid")
+                      ),
+                      box(
+                        title = "Persberichten: Beleid per Maand",
+                        width = 6,
+                        selectInput("maand", "Selecteer Maand", c("jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"), selected = "jan"),
+                        plotOutput("piechart.berichten.Beleid.per.Maand")
+                      )
+                    )
+                  ),
+                # Per Jaar -----------------------------------------------------
+                  tabItem(
+                    tabName = "Bericht_Jaar",
+                    fluidRow(
+                      tabBox(
+                        title = "Persberichten per Kwartaal",
+                        width = 6,
+                        tabPanel("Barplot", plotOutput("berichten.barplot.kwartaal")),
+                        tabPanel("Tabel", tableOutput("berichten.tabel.kwartaal"))
+                      ),
+                      tabBox(
+                        title = "Persberichten per Jaar",
+                        width = 6,
+                        tabPanel("Scatterplot", plotOutput("berichten.scatterplot.jaar")),
+                        tabPanel("Tabel", tableOutput("berichten.tabel.jaar"))
+                      )  
+                    )
+                  ),
             # Persreturn -------------------------------------------------------
               # Per beleid -----------------------------------------------------
                 tabItem(
@@ -253,7 +269,7 @@ if (interactive()) {
                 Excel$Soort <- gsub("evenementenkalender", "Evenementenkalender", Excel$Soort, ignore.case = FALSE)
 
             # As factor --------------------------------------------------------
-                for (i in c("Verzender", "Pu bij Pb", "Persreturn", "Beleid", "Soort")) ({
+                for (i in c("Verzender", "Pu bij Pb", "Beleid", "Soort")) ({
                     Excel[[i]] <- as.factor(Excel[[i]])
                 })
 
@@ -378,46 +394,73 @@ if (interactive()) {
       
         # Per Tijd -------------------------------------------------------------
           # Per Maand ----------------------------------------------------------
-            # Preparation ------------------------------------------------------
-              df.berichten.Maand <- reactive({
+            # Totaal per Maand -------------------------------------------------
+              # Preparation ------------------------------------------------------
+                df.berichten.Maand <- reactive({
+                  berichten <- data.frame(table(Persstatistiek()$Maand))
+                  colnames(berichten) <- c("Maand", "Freq")
+                  berichten$Maand <- factor(berichten$Maand, levels = c("jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"))
+                  return(berichten)
+                })
+              # Table (Per Maand) --------------------------------------------------
+                output$berichten.tabel.maand <- renderTable({
+                  df.berichten.Maand()
+                })
+              # Barplot (Per Maand) ------------------------------------------------
+                output$berichten.barplot.maand <- renderPlot({
+                  # Specify color pallete
+                  colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
+                  # Create plot
+                  ggplot(data=df.berichten.Maand(), aes(x=Maand, y=Freq, fill=Maand)) +
+                    geom_bar(position = "dodge", stat='identity') +
+                    xlab("Maand") +
+                    ylab("Aantal") +
+                    ggtitle("Persberichten per Maand") +
+                    geom_text(aes(label=Freq),
+                              position=position_dodge(0.9), vjust=0) +
+                    theme_bw() +
+                    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+                    scale_fill_manual(values=colors)
+                })
+            # Totaal Maand per Beleid ) ----------------------------------------
+              # Preparation ------------------------------------------------------
+              df.berichten.Maand.totaal.per.Beleid <-  reactive({
                 berichten <- data.frame(table(Persstatistiek()$Beleid, Persstatistiek()$Maand))
                 colnames(berichten) <- c("Beleid", "Maand", "Freq")
                 berichten$Maand <- factor(berichten$Maand, levels = c("jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"))
-                return(berichten)
+                split(berichten, berichten$Beleid)
               })
-            # Table (Per Maand) --------------------------------------------------
-              output$berichten.tabel.maand <- renderTable({
-                df.berichten.Maand()
-              })
-            # Barplot (Per Maand) ------------------------------------------------
-              output$berichten.barplot.maand <- renderPlot({
+              # Piechart (Per Maand) ---------------------------------------------
+              output$barplot.berichten.Maand.totaal.per.Beleid <- renderPlot({
                 # Specify color pallete
                 colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
                 # Create plot
-                ggplot(data=df.berichten.Maand(), aes(x=Maand, y=Freq, fill=Beleid)) +
+                ggplot(data=df.berichten.Maand.totaal.per.Beleid()[[input$beleid]], aes(x=Beleid, y=Freq, fill=Maand)) +
                   geom_bar(position = "dodge", stat='identity') +
-                  xlab("Maand") +
+                  xlab("Beleid") +
                   ylab("Aantal") +
-                  ggtitle("Persberichten per Maand") +
+                  ggtitle("Persberichten: Maand (totaal) per Beleid") +
                   geom_text(aes(label=Freq),
                             position=position_dodge(0.9), vjust=0) +
                   theme_bw() +
-                  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+                  theme(axis.text.x = element_text(angle = 0, hjust = 0.5)) +
                   scale_fill_manual(values=colors)
               })
-          # Per Maand (detail) -------------------------------------------------
-            # Preparation ------------------------------------------------------
-              df.berichten.Maand.detail <-  reactive({
-                split(df.berichten.Maand(), df.berichten.Maand()$Maand)
-                
+            # Beleid per Maand -------------------------------------------------
+              # Preparation ------------------------------------------------------
+              df.berichten.Beleid.per.Maand <-  reactive({
+                berichten <- data.frame(table(Persstatistiek()$Beleid, Persstatistiek()$Maand))
+                colnames(berichten) <- c("Beleid", "Maand", "Freq")
+                berichten$Maand <- factor(berichten$Maand, levels = c("jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"))
+                split(berichten, berichten$Maand)
               })
-            # Piechart (Per Maand) ---------------------------------------------
-              output$berichten.piechart.maand.detail <- renderPlot({
+              # Piechart (Per Maand) ---------------------------------------------
+              output$piechart.berichten.Beleid.per.Maand <- renderPlot({
                 try(
                   {
                     par(mar=c(2,0,2,10))
-                    pie(df.berichten.Maand.detail()[[input$maand]]$Freq, 
-                        labels = df.berichten.Maand.detail()[[input$maand]]$Freq, 
+                    pie(df.berichten.Beleid.per.Maand()[[input$maand]]$Freq, 
+                        labels = df.berichten.Beleid.per.Maand()[[input$maand]]$Freq, 
                         col = brewer.pal(8,"Pastel2"),
                         main = paste("Persberichten:", input$maand))
                     par(mar=c(0,0,0,0))
@@ -426,37 +469,38 @@ if (interactive()) {
                   silent = TRUE
                 )
               })
-
-          # Per tijd (Kwartaal)  -----------------------------------------------
-            # Preparation ------------------------------------------------------
-              df.berichten.Kwartaal <-  reactive({
-                berichten <- data.frame(table(Persstatistiek()$Kwartaal))
-                colnames(berichten) <- c("Kwartaal", "Freq")
-                return(berichten)
-              })
-            # Tabel ------------------------------------------------------------
-              output$berichten.tabel.kwartaal <- renderTable({
-                df.berichten.Kwartaal()
-              })
-            # Barplot ----------------------------------------------------------
-              output$berichten.barplot.kwartaal <- renderPlot({
-                # Specify color pallete
-                colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
-                # Create plot
-                ggplot(data=df.berichten.Kwartaal(), aes(x=Kwartaal, y=Freq, fill=Kwartaal)) +
-                  geom_bar(position = "dodge", stat='identity') +
-                  xlab("Kwartaal") +
-                  ylab("Aantal") +
-                  ggtitle("Persberichten per Kwartaal") +
-                  geom_text(aes(label=Freq),
-                            position=position_dodge(0.9), vjust=0) +
-                  theme_bw() +
-                  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-                  scale_fill_manual(values=colors)
-              })
-
             
-            
+          # Per Jaar -----------------------------------------------------------
+            # Per tijd (Kwartaal)  ---------------------------------------------
+              # Preparation ------------------------------------------------------
+                df.berichten.Kwartaal <-  reactive({
+                  berichten <- data.frame(table(Persstatistiek()$Kwartaal))
+                  colnames(berichten) <- c("Kwartaal", "Freq")
+                  return(berichten)
+                })
+              # Tabel ------------------------------------------------------------
+                output$berichten.tabel.kwartaal <- renderTable({
+                  df.berichten.Kwartaal()
+                })
+              # Barplot ----------------------------------------------------------
+                output$berichten.barplot.kwartaal <- renderPlot({
+                  # Specify color pallete
+                  colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
+                  # Create plot
+                  ggplot(data=df.berichten.Kwartaal(), aes(x=Kwartaal, y=Freq, fill=Kwartaal)) +
+                    geom_bar(position = "dodge", stat='identity') +
+                    xlab("Kwartaal") +
+                    ylab("Aantal") +
+                    ggtitle("Persberichten per Kwartaal") +
+                    geom_text(aes(label=Freq),
+                              position=position_dodge(0.9), vjust=0) +
+                    theme_bw() +
+                    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+                    scale_fill_manual(values=colors)
+                })
+  
+              
+              
       # Persreturn -------------------------------------------------------------      
         # Per beleid -----------------------------------------------------------
           # Preparation --------------------------------------------------------
@@ -500,6 +544,13 @@ if (interactive()) {
           # Preparation --------------------------------------------------------
             df.return.platform <- reactive({
 
+              # Create table persreturn algemeen -------------------------------
+              Algemeen <- split(Persstatistiek(), Persstatistiek()$Persreturn)
+              Algemeen <- Algemeen$Ja
+              Algemeen <- data.frame(table(Algemeen$Beleid, Algemeen$Persreturn))
+              colnames(Algemeen) <- c("Beleid", "Algemeen", "Freq")
+              Algemeen$Algemeen <- "Algemeen"
+              
               # create table: TV
               TV <- split(Persstatistiek(), Persstatistiek()$TV)
               TV <- TV$Ja
@@ -517,8 +568,8 @@ if (interactive()) {
 
               # Merge dataframes
               persreturn <- data.frame(Beleid = TV$Beleid,
-                                       Platfrom = c(TV$TV, Web$Web),
-                                       Persreturn = c(TV$Freq, Web$Freq))
+                                       Platform = c(Algemeen$Algemeen, TV$TV, Web$Web),
+                                       Persreturn = c(Algemeen$Freq, TV$Freq, Web$Freq))
               return(persreturn)
             })
           # Table --------------------------------------------------------------
@@ -530,18 +581,18 @@ if (interactive()) {
               # Specify color pallete
               colors <- brewer.pal(8,"Pastel2")
               # Create plot
-              ggplot(data=df.return.platform(), aes(x=Beleid, y=Persreturn, fill=Platfrom)) +
+              ggplot(data=df.return.platform(), aes(x=Beleid, y=Persreturn, fill=Platform)) +
                 geom_bar(position = "dodge", stat='identity') +
                 xlab("Beleid") +
                 ylab("Aantal") +
-                ggtitle("Persberichten per Type") +
+                ggtitle("Persreturn per platform") +
                 geom_text(aes(label=Persreturn),
                           position=position_dodge(0.9), vjust=0) +
                 theme_bw() +
                 theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
                 scale_fill_manual(values=colors)
             })
-          
+
       # Pdf aanmaak ----------------------------------------------------------
         output$report <- downloadHandler(
           # For PDF output, change this to "report.pdf"
