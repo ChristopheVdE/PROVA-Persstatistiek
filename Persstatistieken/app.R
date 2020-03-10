@@ -81,18 +81,18 @@ if (interactive()) {
                           column(
                             width = 3,
                             tags$br(tags$b("Kwartaal")),
+                            tags$br(tags$b("Verzender")),
                             tags$br(tags$b("Beleid")),
                             tags$br(tags$b("Detail beleid")),
-                            tags$br(tags$b("Verzender")),
                             tags$br(tags$b("Type Persbericht"))
                           ),
                           column(
                             width = 3,
-                            selectInput("col.beleid", label = NULL, c("?", 1:20)),
-                            selectInput("col.detail", label = NULL, c("?", 1:20)),
-                            selectInput("col.kwartaal", label = NULL, c("?", 1:20)),
-                            selectInput("col.verzender", label = NULL, c("?", 1:20)),
-                            selectInput("col.type", label = NULL, c("?", 1:20))
+                            textInput("col.kwartaal", label = NULL, value = 1, placeholder = 1),
+                            textInput("col.verzender", label = NULL, value = 2, placeholder = 2),
+                            textInput("col.beleid", label = NULL, value = 9, placeholder = 3),
+                            textInput("col.detail", label = NULL, value = 10, placeholder = 4),
+                            textInput("col.type", label = NULL, value = 11, placeholder = 5)
                           ),
                           column(
                             width = 3,
@@ -103,10 +103,10 @@ if (interactive()) {
                           ),
                           column(
                             width = 3,
-                            selectInput("col.return.algemeen", label = NULL, c("?", 1:20)),
-                            selectInput("col.return.tv", label = NULL, c("?", 1:20)),
-                            selectInput("col.return.web", label = NULL, c("?", 1:20)),
-                            selectInput("col.maand", label = NULL, c("?", 1:20))
+                            textInput("col.return.algemeen", label = NULL, value = 6, placeholder = 6),
+                            textInput("col.return.web", label = NULL, value = 7, placeholder = 7),
+                            textInput("col.return.tv", label = NULL, value = 8, placeholder = 8),
+                            textInput("col.maand", label = NULL, value = 13, placeholder = 9)
                           )
                         ),
                         box(
@@ -242,35 +242,50 @@ if (interactive()) {
               
             # Reading Excel ----------------------------------------------------
                 Excel <- read_excel(input$file$datapath, sheet = input$sheet, col_names = input$headers)
-                
+
             # Fixing colnames --------------------------------------------------
-                cols <- c(input$col.beleid, input$col.detail, input$col.kwartaal, input$col.verzender, input$col.type, input$col.return.algemeen, input$col.return.tv, input$col.return.web, input$col.maand)
-                # cols.factor <- as.factor(cols)
-                
-                if(input$headers == FALSE) {
-                  # Catch errors  
-                    for(i in cols) {
-                      if( i == "?") {
+                  if(input$headers == FALSE) {
+                    col.selected <- c(input$col.beleid, input$col.detail, input$col.kwartaal, input$col.verzender, input$col.type, input$col.return.algemeen, input$col.return.web, input$col.return.tv, input$col.maand)
+                  
+                  # Catch errors
+                    for(i in col.selected) {
+                      if( i == "") {
                         stop("One or more columnsnames doesn't have a column assign to it")
-                      } else if (TRUE %in% duplicated(cols)) {
+                      } else if (TRUE %in% duplicated(col.selected)) {
                         stop("One or more columns are assigned to the same columnname")
                       }
                     }
+                  # prep  
+                    for (i in 1:length(col.selected)) {
+                      col.selected[i] <- paste0("...", col.selected[i])
+                    }
+                    
+                    
                   # Process columns & names
-                    colnames.temp <- colnames(Excel)
-                    # colnames.temp[[i]] <-
-
-                      
+                    Excel <- data.frame(
+                      Kwartaal = Excel[[col.selected[3]]],
+                      Verzender = Excel[[col.selected[4]]],
+                      Persreturn = Excel[[col.selected[6]]],
+                      Web = Excel[[col.selected[7]]],
+                      TV = Excel[[col.selected[8]]],
+                      Beleid = Excel[[col.selected[1]]],
+                      Detail = Excel[[col.selected[2]]],
+                      Soort = Excel[[col.selected[5]]],
+                      Maand = Excel[[col.selected[9]]]
+                    )
+                    colnames(Excel)[4] <- "Alleen web"
+                    colnames(Excel)[7] <- "Detail beleid"
                 }
                 
             # check for and remove possible NA values --------------------------
                 Excel <- Excel[complete.cases(Excel),]
                 
             # Removing non-required columns ------------------------------------
-                Excel$Afzender <- NULL
-                Excel$Onderwerp <- NULL
-                Excel$"Pu bij Pb" <- NULL
-                Excel$Datum <- NULL
+                for(i in colnames(Excel)) {
+                  if(!(i %in% c("Beleid", "Detail beleid", "Kwartaal", "Verzender", "Persreturn", "Alleen web", "TV", "Soort", "Maand"))) {
+                    Excel[[i]] <- NULL
+                  }
+                }
                 
             # Fixing Mistakes --------------------------------------------------
 
