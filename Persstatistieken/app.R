@@ -12,10 +12,6 @@ for (load in to.load) {
 
 source("./Modules/Persberichten_per_beleid.R")
 source("./Modules/Persreturn_per_beleid.R")
-source("./Modules/tablesplit.R")
-
-
-
 
 if (interactive()) {
     shinyApp(
@@ -62,31 +58,56 @@ if (interactive()) {
                   tabName = "Input",
                     fluidRow(
                         box(
-                            box(
-                                fileInput("file", 
-                                          "Kies Excel document:",
-                                          multiple = FALSE,
-                                          accept = c(".xls", ".xlsx"),
-                                          width = 900,
-                                          placeholder = "No file selected"),
-                                width = 6,
-                                height = 100
-                            ),
-                            box(
-                                textInput("sheet", "Te gebruiken Werkblad", value ="Hele organisatie", placeholder = "Hele organisatie" ),
-                                width = 3,
-                                height = 100
-                            ),
-                            box(
-                                selectInput("kwartaal",
-                                            "Selecteer kwartaal:",
-                                            choices = c("Q1", "Q2", "Q3", "Q4", "Jaar"),
-                                            selected = "Q1"),
-                                width = 3,
-                                height = 100
-                            ),
-                            width = 12,
-                            height = 130
+                          title = "File input",
+                          width = 5,
+                          fileInput("file", 
+                                    "Kies Excel document:",
+                                    multiple = FALSE,
+                                    accept = c(".xls", ".xlsx"),
+                                    width = 900,
+                                    placeholder = "No file selected"),
+
+                          textInput("sheet", "Te gebruiken Werkblad", value ="Hele organisatie", placeholder = "Hele organisatie" ),
+                          checkboxInput("headers", label = "Eerste rij bevat kolomnamen", value = TRUE),
+                          selectInput("kwartaal",
+                                      "Selecteer kwartaal:",
+                                      choices = c("Q1", "Q2", "Q3", "Q4", "Jaar"),
+                                      selected = "Q1")
+                          
+                        ),
+                        box(
+                          title = "Selecteer kolomen die overenkomen met kolominhoud (indien geen kolomnnamen in Excel)",
+                          width = 7,
+                          column(
+                            width = 3,
+                            tags$br(tags$b("Kwartaal")),
+                            tags$br(tags$b("Beleid")),
+                            tags$br(tags$b("Detail beleid")),
+                            tags$br(tags$b("Verzender")),
+                            tags$br(tags$b("Type Persbericht"))
+                          ),
+                          column(
+                            width = 3,
+                            selectInput("col.beleid", label = NULL, c("?", 1:20)),
+                            selectInput("col.detail", label = NULL, c("?", 1:20)),
+                            selectInput("col.kwartaal", label = NULL, c("?", 1:20)),
+                            selectInput("col.verzender", label = NULL, c("?", 1:20)),
+                            selectInput("col.type", label = NULL, c("?", 1:20))
+                          ),
+                          column(
+                            width = 3,
+                            tags$br(tags$b("Persreturn: Algemeen")),
+                            tags$br(tags$b("Persreturn: Web")),
+                            tags$br(tags$b("Persreturn: TV")),
+                            tags$br(tags$b("Maand")),
+                          ),
+                          column(
+                            width = 3,
+                            selectInput("col.return.algemeen", label = NULL, c("?", 1:20)),
+                            selectInput("col.return.tv", label = NULL, c("?", 1:20)),
+                            selectInput("col.return.web", label = NULL, c("?", 1:20)),
+                            selectInput("col.maand", label = NULL, c("?", 1:20))
+                          )
                         ),
                         box(
                             tableOutput("table"),
@@ -218,9 +239,29 @@ if (interactive()) {
             Persstatistiek <- reactive({
                 
                 req(input$file)
-                
+              
             # Reading Excel ----------------------------------------------------
-                Excel <- read_excel(input$file$datapath, sheet = input$sheet)
+                Excel <- read_excel(input$file$datapath, sheet = input$sheet, col_names = input$headers)
+                
+            # Fixing colnames --------------------------------------------------
+                cols <- c(input$col.beleid, input$col.detail, input$col.kwartaal, input$col.verzender, input$col.type, input$col.return.algemeen, input$col.return.tv, input$col.return.web, input$col.maand)
+                # cols.factor <- as.factor(cols)
+                
+                if(input$headers == FALSE) {
+                  # Catch errors  
+                    for(i in cols) {
+                      if( i == "?") {
+                        stop("One or more columnsnames doesn't have a column assign to it")
+                      } else if (TRUE %in% duplicated(cols)) {
+                        stop("One or more columns are assigned to the same columnname")
+                      }
+                    }
+                  # Process columns & names
+                    colnames.temp <- colnames(Excel)
+                    # colnames.temp[[i]] <-
+
+                      
+                }
                 
             # check for and remove possible NA values --------------------------
                 Excel <- Excel[complete.cases(Excel),]
@@ -228,8 +269,9 @@ if (interactive()) {
             # Removing non-required columns ------------------------------------
                 Excel$Afzender <- NULL
                 Excel$Onderwerp <- NULL
+                Excel$"Pu bij Pb" <- NULL
                 Excel$Datum <- NULL
-
+                
             # Fixing Mistakes --------------------------------------------------
 
               # Verzender ------------------------------------------------------
@@ -239,7 +281,7 @@ if (interactive()) {
                 Excel$Verzender <- gsub("provincie", "Provincie", Excel$Verzender, ignore.case = FALSE)
 
               # Pu bij Pb; Persreturn; Alleen web; TV --------------------------
-                for (i in c("Pu bij Pb", "Persreturn", "Alleen web", "TV")) ({
+                for (i in c("Persreturn", "Alleen web", "TV")) ({
                     Excel[[i]] <- gsub("Ja", "Ja", Excel[[i]], ignore.case = FALSE)
                     Excel[[i]] <- gsub("nee", "Nee", Excel[[i]], ignore.case = FALSE)
                 })
@@ -270,7 +312,7 @@ if (interactive()) {
                 Excel$Soort <- gsub("evenementenkalender", "Evenementenkalender", Excel$Soort, ignore.case = FALSE)
 
             # As factor --------------------------------------------------------
-                for (i in c("Verzender", "Pu bij Pb", "Beleid")) ({
+                for (i in c("Verzender", "Beleid")) ({
                     Excel[[i]] <- as.factor(Excel[[i]])
                 })
 
@@ -293,7 +335,8 @@ if (interactive()) {
             
         # Render Original Table ------------------------------------------------
             output$table <- renderTable({
-                return(Persstatistiek())
+                # return(Persstatistiek())
+              Persstatistiek()
             })
     
         
@@ -661,6 +704,18 @@ if (interactive()) {
             )
           }
         )
+            
+        # # Function
+        #     # number of columns
+        #     columns <- function(file) {
+        #       cols <- "?"
+        #       for (i in 1:reactive({ncol(file())})) {
+        #         cols <- c(cols, paste("column: ", i))
+        #       }
+        #       
+        #       return(cols)
+        #     }
       }
+
     )
 }
