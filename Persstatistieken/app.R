@@ -8,8 +8,6 @@ for (load in to.load) {
     library(load, character.only = TRUE )
 }
 
-
-
 source("./Modules/Persberichten_per_beleid.R")
 source("./Modules/Persreturn_per_beleid.R")
 
@@ -25,11 +23,11 @@ if (interactive()) {
             dashboardSidebar(
                 sidebarMenu(
                     menuItem("Input", tabName = "Input"),
-                    selectInput("kwartaal",
-                            "Selecteer kwartaal:",
-                            choices = c("Q1", "Q2", "Q3", "Q4", "Jaar"),
-                            selected = "Q1"),
-                    
+                    # selectInput("kwartaal",
+                    #         "Selecteer kwartaal:",
+                    #         choices = c("Q1", "Q2", "Q3", "Q4", "Jaar"),
+                    #         selected = "Q1"),
+                    # 
                     tags$hr(),
                     menuItem("Persberichten", tabname = "Persberichten", icon = icon("bar-chart-o"),
                               menuSubItem("Per Beleid", tabName = "Bericht_Beleid"),
@@ -260,7 +258,6 @@ if (interactive()) {
                       col.selected[i] <- paste0("...", col.selected[i])
                     }
                     
-                    
                   # Process columns & names
                     Excel <- data.frame(
                       Kwartaal = Excel[[col.selected[3]]],
@@ -275,6 +272,11 @@ if (interactive()) {
                     )
                     colnames(Excel)[4] <- "Alleen web"
                     colnames(Excel)[7] <- "Detail beleid"
+                  
+                  # Errorcatching kwartaal niet gevonden  
+                    if(!(input$kwartaal %in% levels(Excel$Kwartaal))) {
+                      stop("Verkeerde kolomnr gekoppeld aan kolom 'Kwartaal': kan geselecteerd kwartaal niet terugvinden in kolom. ")
+                    }
                 }
                 
             # check for and remove possible NA values --------------------------
@@ -699,7 +701,7 @@ if (interactive()) {
         # Pdf aanmaak ----------------------------------------------------------
         output$report <- downloadHandler(
           # For PDF output, change this to "report.pdf"
-          filename = "report.pdf",
+          filename = "report.html",
           content = function(file) {
             # Copy the report file to a temporary directory before processing it, in
             # case we don't have write permissions to the current working dir (which
@@ -708,7 +710,9 @@ if (interactive()) {
             file.copy("report.Rmd", tempReport, overwrite = TRUE)
             
             # Set up parameters to pass to Rmd document
-            params <- list(n = Persstatistiek())
+            params <- list(data = Persstatistiek(),
+                           jaar = "jaar",
+                           kwartaal = input$kwartaal)
             
             # Knit the document, passing in the `params` list, and eval it in a
             # child of the global environment (this isolates the code in the document
@@ -719,18 +723,6 @@ if (interactive()) {
             )
           }
         )
-            
-        # # Function
-        #     # number of columns
-        #     columns <- function(file) {
-        #       cols <- "?"
-        #       for (i in 1:reactive({ncol(file())})) {
-        #         cols <- c(cols, paste("column: ", i))
-        #       }
-        #       
-        #       return(cols)
-        #     }
       }
-
     )
 }

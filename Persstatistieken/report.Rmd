@@ -1,11 +1,19 @@
 ---
-title: "Dynamic report"
-output: pdf_document
+title: "Persstatistiek"
+output: 
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    toc_depth: 4
 params:
-  n: NA
+  data: NA
+  jaar: NA
+  kwartaal: NA
 ---
 
-```{r include = FALSE}
+```{r "Load required packages", include = FALSE}
 pkg <- installed.packages()[, "Package"]
 to.load <- c("RColorBrewer", "knitr", "ggplot2", "readxl")
 for (load in to.load) {
@@ -16,18 +24,222 @@ for (load in to.load) {
 }
 ```
 
+# `r paste("Persstatistiek: ", paste("jaar", params$kwartaal, sep= " "), sep = " ")`
+## 1 Persberichten
+### 1.1 Persberichten per beleidsdomein
+#### 1.1.1 Algemeen {.tabset .tabset-fade}
+##### Barplot
+```{r "Persberichten per beleid: algemeen - plot", echo = FALSE, align="center"}
+# Create dataframe
+df.bericht.beleid <- data.frame(table(params$data$Beleid))
+colnames(df.bericht.beleid) <- c("Beleid","Persberichten")
 
-```{r echo = TRUE}
-# The `params` object is available in the document.
-params$n
+# Specify color pallete
+colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
+
+# Create graph
+ggplot(data=df.bericht.beleid, aes(x=Beleid, y=Persberichten, fill=Beleid)) +
+  geom_bar(position = "dodge", stat='identity') +
+  xlab("Beleid") +
+  ylab("Aantal") +
+  ggtitle("Persberichten per Beleid") +
+  geom_text(aes(label=Persberichten),
+            position=position_dodge(0.9), vjust=0) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  scale_fill_manual(values=colors)
 ```
 
-A plot of `params$n` random points.
+##### Tabel
+```{r "Persberichten per beleid: algemeen - tabel", echo = FALSE}
+kable(df.bericht.beleid, caption = "Persberichten per Beleid")
+```
+
+#### 1.1.2 Detail
+```{r "Persberichten detail - vorbereiding", include = FALSE}
+df.bericht.detail <- split(params$data, params$data$Beleid)
+
+for (i in levels(params$data$Beleid)) ({
+  df.bericht.detail[[i]] <- data.frame(table(df.bericht.detail[[i]]$"Detail beleid"))
+  df.bericht.detail[[i]] <- cbind(Beleid = i, df.bericht.detail[[i]])
+  colnames(df.bericht.detail[[i]]) <- c("Beleid", "Detail","Persberichten")
+})
+```
+
+##### 1.1.2.1 Economie {.tabset .tabset-fade}
+###### Barplot
+```{r "Persberichten Economie: barplot", echo = FALSE}
+  ggplot(data=df.bericht.detail$Economie, aes(x=Detail, y=Persberichten, fill=Detail)) +
+    geom_bar(position = "dodge", stat='identity') +
+    xlab("Detail") +
+    ylab("Aantal") +
+    ggtitle("Persberichten: Economie") +
+    geom_text(aes(label=Persberichten),
+              position=position_dodge(0.9), vjust=0) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    scale_fill_manual(values=colors)
+```
+
+###### Tabel
+```{r "Persberichten Economie: tabel", echo = FALSE}
+kable(df.bericht.detail$Economie, caption = "Persberichten: Economie")
+```
+
+##### 1.1.2.2 Gouverneur {.tabset .tabset-fade}
+###### Barplot
+```{r "Persberichten Gouverneur: barplot", echo = FALSE}
+  ggplot(data=df.bericht.detail$Gouverneur, aes(x=Detail, y=Persberichten, fill=Detail)) +
+    geom_bar(position = "dodge", stat='identity') +
+    xlab("Detail") +
+    ylab("Aantal") +
+    ggtitle("Persberichten: Gouverneur") +
+    geom_text(aes(label=Persberichten),
+              position=position_dodge(0.9), vjust=0) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    scale_fill_manual(values=colors)
+```
+
+###### Tabel
+```{r "Persberichten Gouverneur: tabel", echo = FALSE}
+kable(df.bericht.detail$Gouverneur, caption = "Persberichten: Gouverneur")
+```
+
+##### 1.1.2.3 Leefmilieu {.tabset .tabset-fade}
+###### Barplot
+```{r "Persberichten Leefmilieu: barplot", echo = FALSE}
+  ggplot(data=df.bericht.detail$Leefmilieu, aes(x=Detail, y=Persberichten, fill=Detail)) +
+    geom_bar(position = "dodge", stat='identity') +
+    xlab("Detail") +
+    ylab("Aantal") +
+    ggtitle("Persberichten: Leefmilieu") +
+    geom_text(aes(label=Persberichten),
+              position=position_dodge(0.9), vjust=0) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    scale_fill_manual(values=colors)
+```
+
+###### Tabel
+```{r "Persberichten Leefmilieu: tabel", echo = FALSE}
+kable(df.bericht.detail$Leefmilieu, caption = "Persberichten: Leefmilieu")
+```
+
+##### 1.1.2.4 Mobiliteit {.tabset .tabset-fade}
+###### Barplot
+```{r "Persberichten Mobiliteit: barplot", echo = FALSE}
+  ggplot(data=df.bericht.detail$Mobiliteit, aes(x=Detail, y=Persberichten, fill=Detail)) +
+    geom_bar(position = "dodge", stat='identity') +
+    xlab("Detail") +
+    ylab("Aantal") +
+    ggtitle("Persberichten: Mobiliteit") +
+    geom_text(aes(label=Persberichten),
+              position=position_dodge(0.9), vjust=0) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    scale_fill_manual(values=colors)
+```
+
+###### Tabel
+```{r "Persberichten Mobiliteit: tabel", echo = FALSE}
+kable(df.bericht.detail$Mobiliteit, caption = "Persberichten: Mobiliteit")
+```
+
+##### 1.1.2.5 Onderwijs en Educatie {.tabset .tabset-fade}
+###### Barplot
+```{r "Persberichten Onderwijs en Educatie: barplot", echo = FALSE}
+  ggplot(data=df.bericht.detail$"Onderwijs en Educatie", aes(x=Detail, y=Persberichten, fill=Detail)) +
+    geom_bar(position = "dodge", stat='identity') +
+    xlab("Detail") +
+    ylab("Aantal") +
+    ggtitle("Persberichten: Onderwijs en Educatie") +
+    geom_text(aes(label=Persberichten),
+              position=position_dodge(0.9), vjust=0) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    scale_fill_manual(values=colors)
+```
+
+###### Tabel
+```{r "Persberichten Onderwijs en Educatie: tabel", echo = FALSE}
+kable(df.bericht.detail$"Onderwije en Educatie", caption = "Persberichten: Onderwijs en Educatie")
+```
+
+##### 1.1.2.6 Provinciebestuur {.tabset .tabset-fade}
+###### Barplot
+```{r "Persberichten Provinciebestuur: barplot", echo = FALSE}
+  ggplot(data=df.bericht.detail$Provinciebestuur, aes(x=Detail, y=Persberichten, fill=Detail)) +
+    geom_bar(position = "dodge", stat='identity') +
+    xlab("Detail") +
+    ylab("Aantal") +
+    ggtitle("Persberichten: Provinciebestuur") +
+    geom_text(aes(label=Persberichten),
+              position=position_dodge(0.9), vjust=0) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    scale_fill_manual(values=colors)
+```
+
+###### Tabel
+```{r "Persberichten Provinciebestuur: tabel", echo = FALSE}
+kable(df.bericht.detail$"Provinciebestuur", caption = "Persberichten: Provinciebestuur")
+```
+
+##### 1.1.2.7 Ruimte {.tabset .tabset-fade}
+###### Barplot
+```{r "Persberichten Ruimte: barplot", echo = FALSE}
+  ggplot(data=df.bericht.detail$Ruimte, aes(x=Detail, y=Persberichten, fill=Detail)) +
+    geom_bar(position = "dodge", stat='identity') +
+    xlab("Detail") +
+    ylab("Aantal") +
+    ggtitle("Persberichten: Ruimte") +
+    geom_text(aes(label=Persberichten),
+              position=position_dodge(0.9), vjust=0) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    scale_fill_manual(values=colors)
+```
+
+###### Tabel
+```{r "Persberichten Ruimte: tabel", echo = FALSE}
+kable(df.bericht.detail$Ruimte, caption = "Persberichten: Ruimte")
+```
+
+##### 1.1.2.8 Vrije Tijd {.tabset .tabset-fade}
+###### Barplot
+```{r "Persberichten Vrije Tijd: barplot", echo = FALSE}
+  ggplot(data=df.bericht.detail$"Vrije Tijd", aes(x=Detail, y=Persberichten, fill=Detail)) +
+    geom_bar(position = "dodge", stat='identity') +
+    xlab("Detail") +
+    ylab("Aantal") +
+    ggtitle("Persberichten: Vrije Tijd") +
+    geom_text(aes(label=Persberichten),
+              position=position_dodge(0.9), vjust=0) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    scale_fill_manual(values=colors)
+```
+
+###### Tabel
+```{r "Persberichten Vrije Tijd: tabel", echo = FALSE}
+kable(df.bericht.detail$"Vrije Tijd", caption = "Persberichten: Vrije Tijd")
+```
+
+### 1.2 Persberichten per maand
+
+```{r "Persberichten per maand", echo = FALSE}
+
+```
+
+### 1.3. Persberichten per beleidsdomein per maand
+
+## Persreturn
 
 ```{r echo = FALSE}
             # Create dataframe for barplot -------------------------------------
-                return.beleid <- data.frame(table(params$n$Beleid,
-                                                  params$n$Persreturn))
+                return.beleid <- data.frame(table(params$data$Beleid,
+                                                  params$data$Persreturn))
             # Rename columns ---------------------------------------------------
                 colnames(return.beleid) <- c("Beleid", "Persreturn", "Freq")
                 
