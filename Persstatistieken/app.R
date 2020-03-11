@@ -534,7 +534,7 @@ if (interactive()) {
                 berichten$Maand <- factor(berichten$Maand, levels = c("jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"))
                 split(berichten, berichten$Beleid)
               })
-              # Piechart (Per Maand) ---------------------------------------------
+              # Barplot (Per Maand) ---------------------------------------------
               output$barplot.berichten.Maand.totaal.per.Beleid <- renderPlot({
                 # Specify color pallete
                 colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
@@ -698,7 +698,7 @@ if (interactive()) {
             })
 
 
-        # Pdf aanmaak ----------------------------------------------------------
+        # HTML aanmaak ----------------------------------------------------------
         output$report <- downloadHandler(
           # For PDF output, change this to "report.pdf"
           filename = "report.html",
