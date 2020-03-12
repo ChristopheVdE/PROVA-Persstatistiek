@@ -8,10 +8,17 @@ for (load in to.load) {
     library(load, character.only = TRUE )
 }
 
-source("./Modules/Persberichten_per_beleid.R")
-source("./Modules/Persreturn_per_beleid.R")
-
 if (interactive()) {
+  # Modules
+    source("./Modules/Persberichten_per_beleid.R")
+    # source("./Modules/Persreturn_per_beleid.R")
+  
+  # Functions
+    source("./Functions/Persberichten_per_beleid_Table.R")
+    source("./Functions/Persreturn_per_beleid_Table.R")
+    source("./Functions/Persreturn_per_beleid_Barplot.R")
+  
+  # App
     shinyApp(
     # UI =======================================================================
         ui = dashboardPage(
@@ -202,15 +209,21 @@ if (interactive()) {
                 tabItem(
                   tabName = "Return_Beleid",
                   fluidRow(
-                    Persreturn.beleidOutput("Return.Beleid", title = "Persreturn per Beleid", width = 12),
-                    Persreturn.beleidOutput("Return.Economie", title = "Persreturn: Economie"),
-                    Persreturn.beleidOutput("Return.Gouverneur", title = "Persreturn: Gouverneur"),
-                    Persreturn.beleidOutput("Return.Leefmilieu", title = "Persreturn: Leefmilieu"),
-                    Persreturn.beleidOutput("Return.Mobiliteit", title = "Persreturn: Mobiliteit"),
-                    Persreturn.beleidOutput("Return.Onderwijs en Educatie", title = "Persreturn: Onderwijs en Educatie"),
-                    Persreturn.beleidOutput("Return.Provinciebestuur", title = "Persreturn: Provinciebestuur"),
-                    Persreturn.beleidOutput("Return.Ruimte", title = "Persreturn: Ruimte"),
-                    Persreturn.beleidOutput("Return.Vrije Tijd", title = "Persreturn: Vrije Tijd")        
+                    tabBox(
+                      width = 12,
+                      title = "Persreturn per beleid",
+                      tabPanel("Barplot", plotOutput("persreturn.beleid.barplot")),
+                      tabPanel("Tabel", tableOutput("persreturn.beleid.tabel"))
+                    )
+                    # Persreturn.beleidOutput("Return.Beleid", title = "Persreturn per Beleid", width = 12),
+                    # Persreturn.beleidOutput("Return.Economie", title = "Persreturn: Economie"),
+                    # Persreturn.beleidOutput("Return.Gouverneur", title = "Persreturn: Gouverneur"),
+                    # Persreturn.beleidOutput("Return.Leefmilieu", title = "Persreturn: Leefmilieu"),
+                    # Persreturn.beleidOutput("Return.Mobiliteit", title = "Persreturn: Mobiliteit"),
+                    # Persreturn.beleidOutput("Return.Onderwijs en Educatie", title = "Persreturn: Onderwijs en Educatie"),
+                    # Persreturn.beleidOutput("Return.Provinciebestuur", title = "Persreturn: Provinciebestuur"),
+                    # Persreturn.beleidOutput("Return.Ruimte", title = "Persreturn: Ruimte"),
+                    # Persreturn.beleidOutput("Return.Vrije Tijd", title = "Persreturn: Vrije Tijd")        
                   )
                 ),
               # Per Platform -----------------------------------------------------
@@ -635,7 +648,14 @@ if (interactive()) {
                   return(return.beleid)
               })
           # Barplot & Tables -------------------------------------------------------
-            callModule(Persreturn.beleid, "Return.Beleid", reactive(df.return.beleid()), plottitle = reactive("Persreturn per beleid"), type = reactive("Beleid"))
+            # callModule(Persreturn.beleid, "Return.Beleid", reactive(df.return.beleid()), plottitle = reactive("Persreturn per beleid"), type = reactive("Beleid"))
+            # persreturn.beleid <- Persreturn.beleid.tabel(reactive(df.return.beleid()), reactive("test"), reactive("Beleid"))
+            output$persreturn.beleid.barplot <- renderPlot({
+              Persreturn.beleid.barplot(reactive(df.return.beleid()), reactive("test"), reactive("Beleid"))()
+            })
+            output$persreturn.beleid.tabel <- renderTable({
+              Persreturn.beleid.tabel(reactive(df.return.beleid()), reactive("test"), reactive("Beleid"))()
+            })
   
         
         # Per beleid detail-----------------------------------------------------
@@ -652,14 +672,14 @@ if (interactive()) {
                   return(Persreturn)
               })
           # Barplots & Tables -------------------------------------------------------------
-            callModule(Persreturn.beleid, "Return.Economie", reactive(Persreturn()$Economie), plottitle = reactive("Persreturn: Economie"), type = reactive("Detail"))
-            callModule(Persreturn.beleid, "Return.Gouverneur", reactive(Persreturn()$Gouverneur), plottitle = reactive("Persreturn: Gouverneur"), type = reactive("Detail"))
-            callModule(Persreturn.beleid, "Return.Leefmilieu", reactive(Persreturn()$Leefmilieu), plottitle = reactive("Persreturn: Leefmilieu"), type = reactive("Detail"))
-            callModule(Persreturn.beleid, "Return.Mobiliteit", reactive(Persreturn()$Mobiliteit), plottitle = reactive("Persreturn: Milieu"), type = reactive("Detail"))
-            callModule(Persreturn.beleid, "Return.Onderwijs en Educatie", reactive(Persreturn()$`Onderwijs en Educatie`), plottitle = reactive("Persreturn: Onderwijs en Educatie"), type = reactive("Detail"))
-            callModule(Persreturn.beleid, "Return.Provinciebestuur", reactive(Persreturn()$Provinciebestuur), plottitle = reactive("Persreturn: Provinciebestuur"), type = reactive("Detail"))
-            callModule(Persreturn.beleid, "Return.Ruimte", reactive(Persreturn()$Ruimte), plottitle = reactive("v: Ruimte"), type = reactive("Detail"))
-            callModule(Persreturn.beleid, "Return.Vrije Tijd", reactive(Persreturn()$`Vrije Tijd`), plottitle = reactive("Persreturn: Vrije Tijd"), type = reactive("Detail"))
+            # callModule(Persreturn.beleid, "Return.Economie", reactive(Persreturn()$Economie), plottitle = reactive("Persreturn: Economie"), type = reactive("Detail"))
+            # callModule(Persreturn.beleid, "Return.Gouverneur", reactive(Persreturn()$Gouverneur), plottitle = reactive("Persreturn: Gouverneur"), type = reactive("Detail"))
+            # callModule(Persreturn.beleid, "Return.Leefmilieu", reactive(Persreturn()$Leefmilieu), plottitle = reactive("Persreturn: Leefmilieu"), type = reactive("Detail"))
+            # callModule(Persreturn.beleid, "Return.Mobiliteit", reactive(Persreturn()$Mobiliteit), plottitle = reactive("Persreturn: Milieu"), type = reactive("Detail"))
+            # callModule(Persreturn.beleid, "Return.Onderwijs en Educatie", reactive(Persreturn()$`Onderwijs en Educatie`), plottitle = reactive("Persreturn: Onderwijs en Educatie"), type = reactive("Detail"))
+            # callModule(Persreturn.beleid, "Return.Provinciebestuur", reactive(Persreturn()$Provinciebestuur), plottitle = reactive("Persreturn: Provinciebestuur"), type = reactive("Detail"))
+            # callModule(Persreturn.beleid, "Return.Ruimte", reactive(Persreturn()$Ruimte), plottitle = reactive("v: Ruimte"), type = reactive("Detail"))
+            # callModule(Persreturn.beleid, "Return.Vrije Tijd", reactive(Persreturn()$`Vrije Tijd`), plottitle = reactive("Persreturn: Vrije Tijd"), type = reactive("Detail"))
             
         # Per platform ---------------------------------------------------------
           # Preparation --------------------------------------------------------
