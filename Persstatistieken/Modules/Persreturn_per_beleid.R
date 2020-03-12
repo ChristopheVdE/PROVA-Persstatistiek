@@ -22,6 +22,24 @@ Persreturn.beleid <- function(input, output, session, dataframe, plottitle, type
   
   # Create Table ----------------------------------------------
   output$tabel <- renderTable({
+    if ("Beleid"==type()) {
+      temp <- split(dataframe(), dataframe()$Persreturn)
+      temp <- data.frame(Beleid = levels(dataframe()$Beleid),
+                         Ja = temp$Ja$Freq,
+                         Nee = temp$Nee$Freq
+              )
+      colnames(temp) <- c("Beleid", "Persreturn: Ja", "Persreturn: Nee")
+      return(temp)
+    } else if("Detail" == type()) {
+      temp <- split(dataframe(), dataframe()$Persreturn)
+      temp <- data.frame(Beleid = levels(dataframe()$Beleid),
+                         Detail = levels(dataframe()$Detail),
+                         Ja = temp$Ja$Freq,
+                         Nee = temp$Nee$Freq
+      )
+      colnames(temp) <- c("Beleid", "Detail beleid", "Persreturn: Ja", "Persreturn: Nee")
+      return(temp)
+    }
     dataframe()
   })
   

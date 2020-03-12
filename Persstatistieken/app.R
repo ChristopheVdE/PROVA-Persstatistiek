@@ -417,7 +417,7 @@ if (interactive()) {
               return(berichten)
             })
           # Table --------------------------------------------------------------
-            output$berichten.type.table <- renderTable({
+            berichten.type.table <- reactive({
               temp <- df.berichten.type()
               temp <- split(df.berichten.type(), df.berichten.type()$Type)
               temp <- data.frame(
@@ -431,8 +431,11 @@ if (interactive()) {
                       )
               return(temp)
             })
+            output$berichten.type.table <- renderTable({
+              berichten.type.table()
+            })
           # Barplot ------------------------------------------------------------
-            output$berichten.type.barplot <- renderPlot({
+            berichten.type.barplot <- reactive({
               # Specify color pallete
               colors <- brewer.pal(8,"Pastel2")
               # Create plot
@@ -447,7 +450,9 @@ if (interactive()) {
                 theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
                 scale_fill_manual(values=colors)
             })
-            
+            output$berichten.type.barplot <- renderPlot({
+              berichten.type.barplot()
+            })
         # Per Verzender --------------------------------------------------------
           # Preparation --------------------------------------------------------
             df.berichten.verzender <- reactive({
@@ -468,7 +473,7 @@ if (interactive()) {
               return(berichten)
             })
           # Table --------------------------------------------------------------
-            output$berichten.verzender.table <- renderTable({
+            berichten.verzender.table <- reactive({
               temp <- split(df.berichten.verzender(), df.berichten.verzender()$Verzender)
               temp <- data.frame(
                         Beleid = c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijd en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"),
@@ -478,8 +483,11 @@ if (interactive()) {
                         Extern = temp$Extern$Freq
               )
             })
+            output$berichten.verzender.table <- renderTable({
+              berichten.verzender.table()
+            })
           # Barplot ------------------------------------------------------------
-            output$berichten.verzender.barplot <- renderPlot({
+            berichten.verzender.barplot <- reactive({
               # Specify color pallete
               colors <- brewer.pal(8,"Pastel2")
               # Create plot
@@ -494,7 +502,9 @@ if (interactive()) {
                 theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
                 scale_fill_manual(values=colors)
             })
-            
+            output$berichten.verzender.barplot <- renderPlot({
+              berichten.verzender.barplot()
+            })
       
         # Per Tijd -------------------------------------------------------------
           # Per Maand ----------------------------------------------------------
@@ -506,12 +516,15 @@ if (interactive()) {
                   berichten$Maand <- factor(berichten$Maand, levels = c("jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"))
                   return(berichten)
                 })
-              # Table (Per Maand) --------------------------------------------------
-                output$berichten.tabel.maand <- renderTable({
+              # Table (Per Maand) ----------------------------------------------
+                berichten.tabel.maand <- reactive({
                   df.berichten.Maand()
                 })
-              # Barplot (Per Maand) ------------------------------------------------
-                output$berichten.barplot.maand <- renderPlot({
+                output$berichten.tabel.maand <- renderTable({
+                  berichten.tabel.maand()
+                })
+              # Barplot (Per Maand) --------------------------------------------
+                berichten.barplot.maand <- reactive({
                   # Specify color pallete
                   colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
                   # Create plot
@@ -526,6 +539,10 @@ if (interactive()) {
                     theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
                     scale_fill_manual(values=colors)
                 })
+                output$berichten.barplot.maand <- renderPlot({
+                  berichten.barplot.maand()
+                })
+            
             # Totaal Maand per Beleid ) ----------------------------------------
               # Preparation ------------------------------------------------------
               df.berichten.Maand.totaal.per.Beleid <-  reactive({
@@ -667,21 +684,31 @@ if (interactive()) {
               Web <- Web$Ja
               Web$Ja <- "Web"
               Web <- data.frame(table(Web$Beleid, Web$"Alleen web"))
-              colnames(Web) <- c("Beleid", "Web", "Freq")
-              Web$Web <- "Web"
+              colnames(Web) <- c("Beleid", "Alleen web", "Freq")
+              Web$"Alleen web" <- "Alleen web"
 
               # Merge dataframes
               persreturn <- data.frame(Beleid = TV$Beleid,
-                                       Platform = c(Algemeen$Algemeen, TV$TV, Web$Web),
+                                       Platform = c(Algemeen$Algemeen, TV$TV, Web$"Alleen web"),
                                        Persreturn = c(Algemeen$Freq, TV$Freq, Web$Freq))
               return(persreturn)
             })
           # Table --------------------------------------------------------------
+            return.platform.table <- reactive({
+              temp <- split(df.return.platform(), df.return.platform()$Platform)
+              temp <- data.frame(Beleid = c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijs en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"),
+                                 Algemeen = temp$Algemeen$Persreturn,
+                                 Web = temp$"Alleen web"$Persreturn,
+                                 TV = temp$TV$Persreturn
+                                 )
+              colnames(temp) <- c("Beleid", "Persreturn: Algemeen", "Persreturn: Alleen web", "Persreturn: TV")
+              return(temp)
+            })
             output$return.platform.table <-renderTable({
-              df.return.platform()
+              return.platform.table()
             })
           # Barplot ------------------------------------------------------------
-            output$return.platform.barplot <- renderPlot({
+            return.platform.barplot <- reactive({
               # Specify color pallete
               colors <- brewer.pal(8,"Pastel2")
               # Create plot
@@ -696,9 +723,11 @@ if (interactive()) {
                 theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
                 scale_fill_manual(values=colors)
             })
+            output$return.platform.barplot <- renderPlot({
+              return.platform.barplot()
+            })
 
-
-        # HTML aanmaak ----------------------------------------------------------
+      # HTML aanmaak ----------------------------------------------------------
         output$report <- downloadHandler(
           # For PDF output, change this to "report.pdf"
           filename = "report.html",
@@ -712,7 +741,15 @@ if (interactive()) {
             # Set up parameters to pass to Rmd document
             params <- list(data = Persstatistiek(),
                            jaar = "jaar",
-                           kwartaal = input$kwartaal)
+                           kwartaal = input$kwartaal,
+                           berichten.verzender.table = berichten.verzender.table(),
+                           berichten.verzender.barplot = berichten.verzender.barplot(),
+                           berichten.tabel.maand = berichten.tabel.maand(),
+                           berichten.barplot.maand = berichten.barplot.maand(),
+                           berichten.type.table = berichten.type.table(),
+                           berichten.type.barplot = berichten.type.barplot(),
+                           return.platform.table = return.platform.table(),
+                           return.platform.barplot = return.platform.barplot())
             
             # Knit the document, passing in the `params` list, and eval it in a
             # child of the global environment (this isolates the code in the document

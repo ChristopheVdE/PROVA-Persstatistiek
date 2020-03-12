@@ -11,6 +11,14 @@ params:
   data: NA
   jaar: NA
   kwartaal: NA
+  berichten.verzender.table: NA
+  berichten.verzender.barplot: NA
+  berichten.tabel.maand: NA
+  berichten.barplot.maand: NA
+  berichten.type.table: NA
+  berichten.type.barplot: NA
+  return.platform.table: NA
+  return.platform.barplot: NA
 ---
 
 ```{r "Load required packages", include = FALSE}
@@ -25,7 +33,6 @@ for (load in to.load) {
 ```
 
 # `r paste("Persstatistiek: ", paste("jaar", params$kwartaal, sep= " "), sep = " ")`
-
 
 ## 1 Persberichten
 ### 1.1 Persberichten per beleid
@@ -229,78 +236,28 @@ kable(df.bericht.detail$"Vrije Tijd", caption = "Persberichten: Vrije Tijd")
 ```
 
 
+
 ### 1.2 Persberichten per verzender {.tabset .tabset-fade}
-```{r "Persberichten per verzender - voorbereiding", include = FALSE}
-df.bericht.verzender <- data.frame(table(params$data$Beleid, params$data$Verzender))
-colnames(df.bericht.verzender) <- c("Beleid", "Verzender", "Freq")
-# Add in possible missing "Verzender"
-for(i in c("Persdienst", "Provincie", "Gouverneur", "Extern")) {
-  if(!(i %in% levels(df.bericht.verzender$Verzender))) {
-    temp <- data.frame(
-      Beleid = c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijs en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"),
-      Verzender = i,
-      Freq = 0
-    )
-    df.bericht.verzender <- rbind(df.bericht.verzender, temp)
-  }
-}
+#### Tabel
+```{r "Persberichten per verzender - Tabel", echo = FALSE}
+kable(params$berichten.verzender.table, caption="Persberichten per verzender")
 ```
 
 #### Barplot
 ```{r "Persberichten per verzender - Barplot", echo = FALSE}
-ggplot(data=df.bericht.verzender, aes(x=Verzender, y=Freq, fill=Beleid)) +
-  geom_bar(position = "dodge", stat='identity') +
-  xlab("Verzender") +
-  ylab("Aantal") +
-  ggtitle("Persberichten per Verzender") +
-  geom_text(aes(label=Freq),
-            position=position_dodge(0.9), vjust=0) +
-  theme_bw() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  scale_fill_manual(values=colors)
+params$berichten.verzender.barplot
 ```
-
-#### Tabel
-```{r "Persberichten per verzender - Tabel", echo = FALSE}
-temp <- split(df.bericht.verzender, df.bericht.verzender$Verzender)
-temp <- data.frame(
-          Beleid = c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijd en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"),
-          Persdienst = temp$Persdienst$Freq,
-          Provincie = temp$Provincie$Freq,
-          Gouverneur = temp$Gouverneur$Freq,
-          Extern = temp$Extern$Freq
-)
-
-kable(temp, caption="Persberichten per verzender")
-```
-
-
 
 ### 1.3 Persberichten per maand
 #### 1.3.1 Per maand {.tabset .tabset-fade}
-```{r "Persberichten per maand - voorbereiding", include = FALSE}
-df.bericht.maand <- data.frame(table(params$data$Maand))
-colnames(df.bericht.maand) <- c("Maand", "Freq")
-df.bericht.maand$Maand <- factor(df.bericht.maand$Maand, levels = c("jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"))
-```
-
 ##### Barplot
 ```{r "Persberichten per maand - barplot", echo = FALSE}
-ggplot(data=df.bericht.maand, aes(x=Maand, y=Freq, fill=Maand)) +
-  geom_bar(position = "dodge", stat='identity') +
-  xlab("Maand") +
-  ylab("Aantal") +
-  ggtitle("Persberichten per Maand") +
-  geom_text(aes(label=Freq),
-            position=position_dodge(0.9), vjust=0) +
-  theme_bw() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  scale_fill_manual(values=colors)
+params$berichten.barplot.maand
 ```
 
 ##### Tabel
 ```{r "Persberichten per maand: tabel", echo = FALSE}
-kable(df.bericht.maand, caption = "Persberichten per maand")
+kable(params$berichten.tabel.maand, caption = "Persberichten per maand")
 ```
 
 #### 1.3.2 Per beleidsdomein
@@ -471,52 +428,18 @@ ggplot(data=df.bericht.maand.beleid$"Vrije Tijd", aes(x=Beleid, y=Freq, fill=Maa
 kable(df.bericht.detail$Ruimte, caption = "Persberichten per maand: Vrije tijd")
 ```
 
+
 ### 1.4 Type persberichten {.tabset .tabset-fade}
-```{r "Persberichten per type - Voorbereiding", include = FALSE}
-df.bericht.type <- data.frame(table(params$data$Beleid, params$data$Soort))
-colnames(df.bericht.type) <- c("Beleid", "Type", "Freq")
-df.bericht.type$Type <- as.factor(df.bericht.type$Type)
-# Add in possible missing "Type"
-for(i in c("Activiteitenkalender", "Agendatip", "Evenementenkalender", "Persagenda", "Persbericht", "Persuitnodiging")) {
-  if(!(i %in% levels(df.bericht.type$Type))) {
-    temp <- data.frame(
-      Beleid = c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijs en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"),
-      Type = i,
-      Freq = 0
-    )
-    df.bericht.type <- rbind(df.bericht.type, temp)
-  }
-}
-```
 #### Tabel
 ```{r "Persberichten per type - Tabel", echo = FALSE}
-temp <- df.bericht.type
-temp <- split(df.bericht.type, df.bericht.type$Type)
-temp <- data.frame(
-          Beleid = c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijd en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"),
-          Activiteitenkalender = temp$Activiteitenkalender$Freq,
-          Agendatip = temp$Agendatip$Freq,
-          Evenementenkalender = temp$Evenementenkalender$Freq,
-          Persagenda = temp$Persagenda$Freq,
-          Persbericht = temp$Persbericht$Freq,
-          Persuitnodiging = temp$Persuitnodiging$Freq
-        )
-kable(temp, caption = "Persberichten per type")
+kable(params$berichten.type.table, caption = "Persberichten per type")
 ```
 
 #### Barplot
 ```{r "Persberichten per type - Barplot", echo = FALSE}
-ggplot(data=df.bericht.type, aes(x=Beleid, y=Freq, fill=Type)) +
-  geom_bar(position = "dodge", stat='identity') +
-  xlab("Beleid") +
-  ylab("Aantal") +
-  ggtitle("Persberichten per Type") +
-  geom_text(aes(label=Freq),
-            position=position_dodge(0.9), vjust=0) +
-  theme_bw() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  scale_fill_manual(values=colors)
+params$berichten.type.barplot
 ```
+
 
 ## 2 Persreturn
 ### 2.1 Persreturn per beleid
@@ -551,51 +474,14 @@ kable(return.beleid, caption= "Persreturn per beleid")
 #### 2.1.2 Detail
 
 ### 2.2 Persreturn per platform {.tabset .tabset-fade}
-```{r "Persreturn per platform", echo = FALSE}
-# Create table persreturn algemeen -------------------------------
-Algemeen <- split(params$data, params$data$Persreturn)
-Algemeen <- Algemeen$Ja
-Algemeen <- data.frame(table(Algemeen$Beleid, Algemeen$Persreturn))
-colnames(Algemeen) <- c("Beleid", "Algemeen", "Freq")
-Algemeen$Algemeen <- "Algemeen"
-
-# create table: TV
-TV <- split(params$data, params$data$TV)
-TV <- TV$Ja
-TV <- data.frame(table(TV$Beleid, TV$TV))
-colnames(TV) <- c("Beleid", "TV", "Freq")
-TV$TV <- "TV"
-
-# create Table: Web
-Web <- split(params$data, params$data$"Alleen web")
-Web <- Web$Ja
-Web$Ja <- "Web"
-Web <- data.frame(table(Web$Beleid, Web$"Alleen web"))
-colnames(Web) <- c("Beleid", "Web", "Freq")
-Web$Web <- "Web"
-
-# Merge dataframes
-df.persreturn.platform <- data.frame(Beleid = TV$Beleid,
-                         Platform = c(Algemeen$Algemeen, TV$TV, Web$Web),
-                         Persreturn = c(Algemeen$Freq, TV$Freq, Web$Freq))
-```
 #### Barplot
 ```{r "Persreturn per platform - barplot", echo = FALSE}
-ggplot(data=df.persreturn.platform, aes(x=Beleid, y=Persreturn, fill=Platform)) +
-  geom_bar(position = "dodge", stat='identity') +
-  xlab("Beleid") +
-  ylab("Aantal") +
-  ggtitle("Persreturn per platform") +
-  geom_text(aes(label=Persreturn),
-            position=position_dodge(0.9), vjust=0) +
-  theme_bw() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  scale_fill_manual(values=colors)
+params$return.platform.barplot
 ```
 
 #### Tabel
 ```{r "Persreturn per platform - tabel", echo = FALSE}
-kable(df.persreturn.platform, caption = "Persreturn per platform")
+kable(params$return.platform.table, caption = "Persreturn per platform")
 ```
 
 
