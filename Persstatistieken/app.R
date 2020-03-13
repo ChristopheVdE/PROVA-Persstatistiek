@@ -127,15 +127,69 @@ if (interactive()) {
                 tabItem(
                   tabName = "Bericht_Beleid",
                   fluidRow(
-                    Persberichten.beleidOutput("Bericht.Beleid", title = "Persberichten per Beleid", width = "12"),
-                    Persberichten.beleidOutput("Bericht.Economie", title = "Persberichten: Economie"),
-                    Persberichten.beleidOutput("Bericht.Gouverneur", title = "Persberichten: Gouverneur"),
-                    Persberichten.beleidOutput("Bericht.Leefmilieu", title = "Persberichten: Leefmilieu"),
-                    Persberichten.beleidOutput("Bericht.Mobiliteit", title = "Persberichten: Mobiliteit"),
-                    Persberichten.beleidOutput("Bericht.Onderwijs en Educatie", title = "Persberichten: Onderwijs en Educatie"),
-                    Persberichten.beleidOutput("Bericht.Provinciebestuur", title = "Persberichten: Provinciebestuur"),
-                    Persberichten.beleidOutput("Bericht.Ruimte", title = "Persberichten: Ruimte"),
-                    Persberichten.beleidOutput("Bericht.Vrije Tijd", title = "Persberichten: Vrije Tijd")
+                    tabBox(
+                      width = 12,
+                      title = "Persberichten per beleid",
+                      tabPanel("Barplot", plotOutput("persberichten.beleid.barplot")),
+                      tabPanel("Tabel", tableOutput("persberichten.beleid.tabel"))
+                    ),
+                    tabBox(
+                      width = 6,
+                      title = "Persberichten: Economie",
+                      tabPanel("Barplot", plotOutput("persberichten.beleid.economie.barplot")),
+                      tabPanel("Tabel", tableOutput("persberichten.beleid.economie.tabel"))
+                    ),
+                    tabBox(
+                      width = 6,
+                      title = "Persberichten: Gouverneur",
+                      tabPanel("Barplot", plotOutput("persberichten.beleid.gouverneur.barplot")),
+                      tabPanel("Tabel", tableOutput("persberichten.beleid.gouverneur.tabel"))
+                    ),
+                    tabBox(
+                      width = 6,
+                      title = "Persberichten: Leefmilieu",
+                      tabPanel("Barplot", plotOutput("persberichten.beleid.leefmilieu.barplot")),
+                      tabPanel("Tabel", tableOutput("persberichten.beleid.leefmilieu.tabel"))
+                    ),
+                    tabBox(
+                      width = 6,
+                      title = "Persberichten: Mobiliteit",
+                      tabPanel("Barplot", plotOutput("persberichten.beleid.mobiliteit.barplot")),
+                      tabPanel("Tabel", tableOutput("persberichten.beleid.mobiliteit.tabel"))
+                    ),
+                    tabBox(
+                      width = 6,
+                      title = "Persberichten: Onderwijs en Educatie",
+                      tabPanel("Barplot", plotOutput("persberichten.beleid.onderwijs.barplot")),
+                      tabPanel("Tabel", tableOutput("persberichten.beleid.onderwijs.tabel"))
+                    ),
+                    tabBox(
+                      width = 6,
+                      title = "Persberichten: Provinciebestuur",
+                      tabPanel("Barplot", plotOutput("persberichten.beleid.provinciebestuur.barplot")),
+                      tabPanel("Tabel", tableOutput("persberichten.beleid.provinciebestuur.tabel"))
+                    ),
+                    tabBox(
+                      width = 6,
+                      title = "Persberichten: Ruimte",
+                      tabPanel("Barplot", plotOutput("persberichten.beleid.ruimte.barplot")),
+                      tabPanel("Tabel", tableOutput("persberichten.beleid.ruimte.tabel"))
+                    ),
+                    tabBox(
+                      width = 6,
+                      title = "Persberichten: Vrije Tijd",
+                      tabPanel("Barplot", plotOutput("persberichten.beleid.vrijetijd.barplot")),
+                      tabPanel("Tabel", tableOutput("persberichten.beleid.vrijetijd.tabel"))
+                    )
+                    # Persberichten.beleidOutput("Bericht.Beleid", title = "Persberichten per Beleid", width = "12"),
+                    # Persberichten.beleidOutput("Bericht.Economie", title = "Persberichten: Economie"),
+                    # Persberichten.beleidOutput("Bericht.Gouverneur", title = "Persberichten: Gouverneur"),
+                    # Persberichten.beleidOutput("Bericht.Leefmilieu", title = "Persberichten: Leefmilieu"),
+                    # Persberichten.beleidOutput("Bericht.Mobiliteit", title = "Persberichten: Mobiliteit"),
+                    # Persberichten.beleidOutput("Bericht.Onderwijs en Educatie", title = "Persberichten: Onderwijs en Educatie"),
+                    # Persberichten.beleidOutput("Bericht.Provinciebestuur", title = "Persberichten: Provinciebestuur"),
+                    # Persberichten.beleidOutput("Bericht.Ruimte", title = "Persberichten: Ruimte"),
+                    # Persberichten.beleidOutput("Bericht.Vrije Tijd", title = "Persberichten: Vrije Tijd")
                   )
                 ),
               # Per Type -------------------------------------------------
@@ -264,15 +318,6 @@ if (interactive()) {
                       tabPanel("Barplot", plotOutput("persreturn.beleid.vrijetijd.barplot")),
                       tabPanel("Tabel", tableOutput("persreturn.beleid.vrijetijd.tabel"))
                     )
-                    # Persreturn.beleidOutput("Return.Beleid", title = "Persreturn per Beleid", width = 12),
-                    # Persreturn.beleidOutput("Return.Economie", title = "Persreturn: Economie"),
-                    # Persreturn.beleidOutput("Return.Gouverneur", title = "Persreturn: Gouverneur"),
-                    # Persreturn.beleidOutput("Return.Leefmilieu", title = "Persreturn: Leefmilieu"),
-                    # Persreturn.beleidOutput("Return.Mobiliteit", title = "Persreturn: Mobiliteit"),
-                    # Persreturn.beleidOutput("Return.Onderwijs en Educatie", title = "Persreturn: Onderwijs en Educatie"),
-                    # Persreturn.beleidOutput("Return.Provinciebestuur", title = "Persreturn: Provinciebestuur"),
-                    # Persreturn.beleidOutput("Return.Ruimte", title = "Persreturn: Ruimte"),
-                    # Persreturn.beleidOutput("Return.Vrije Tijd", title = "Persreturn: Vrije Tijd")        
                   )
                 ),
               # Per Platform -----------------------------------------------------
@@ -433,11 +478,21 @@ if (interactive()) {
             })
             
           # Barplot & Tables -------------------------------------------------------
-            callModule(Persberichten.beleid, "Bericht.Beleid", reactive(df.bericht.beleid()), plottitle = reactive("Persberichten per beleid"), type = reactive("Beleid"))
+            # callModule(Persberichten.beleid, "Bericht.Beleid", reactive(df.bericht.beleid()), plottitle = reactive("Persberichten per beleid"), type = reactive("Beleid"))
+            # Barplot ---------------------------------------------------------
+            persberichten.beleid.barplot <- Persberichten.beleid.barplot(reactive(df.bericht.beleid()), reactive("Persreturn per beleid"), reactive("Beleid"))
+            output$persberichten.beleid.barplot <- renderPlot({
+              persberichten.beleid.barplot()
+            })
+            # Table -----------------------------------------------------------
+            persberichten.beleid.tabel <- Persberichten.beleid.tabel(reactive(df.bericht.beleid()), reactive("Persreturn per beleid"), reactive("Beleid"))
+            output$persberichten.beleid.tabel <- renderTable({
+              persberichten.beleid.tabel()
+            })
   
         # Per beleid (detail) --------------------------------------------------
           # Preparation ---------------------------------------------------------
-            Persberichten <- reactive({
+            df.persberichten.beleid.detail <- reactive({
               Persberichten <- split(Persstatistiek(), Persstatistiek()$Beleid)
   
               for (i in levels(Persstatistiek()$Beleid)) ({
@@ -448,16 +503,95 @@ if (interactive()) {
               return(Persberichten)
             })
           # Barplots & Tables -------------------------------------------------------------
-            callModule(Persberichten.beleid, "Bericht.Economie", reactive(Persberichten()$Economie), plottitle = reactive("Persberichten: Economie"), type = reactive("Detail"))
-            callModule(Persberichten.beleid, "Bericht.Gouverneur", reactive(Persberichten()$Gouverneur), plottitle = reactive("Persberichten: Gouverneur"), type = reactive("Detail"))
-            callModule(Persberichten.beleid, "Bericht.Leefmilieu", reactive(Persberichten()$Leefmilieu), plottitle = reactive("Persberichten: Leefmilieu"), type = reactive("Detail"))
-            callModule(Persberichten.beleid, "Bericht.Mobiliteit", reactive(Persberichten()$Mobiliteit), plottitle = reactive("Persberichten: Milieu"), type = reactive("Detail"))
-            callModule(Persberichten.beleid, "Bericht.Onderwijs en Educatie", reactive(Persberichten()$`Onderwijs en Educatie`), plottitle = reactive("Persberichten: Onderwijs en Educatie"), type = reactive("Detail"))
-            callModule(Persberichten.beleid, "Bericht.Provinciebestuur", reactive(Persberichten()$Provinciebestuur), plottitle = reactive("Persberichten: Provinciebestuur"), type = reactive("Detail"))
-            callModule(Persberichten.beleid, "Bericht.Ruimte", reactive(Persberichten()$Ruimte), plottitle = reactive("Persberichten: Ruimte"), type = reactive("Detail"))
-            callModule(Persberichten.beleid, "Bericht.Vrije Tijd", reactive(Persberichten()$`Vrije Tijd`), plottitle = reactive("Persberichten: Vrije Tijd"), type = reactive("Detail"))
-  
-        
+            # Economie ---------------------------------------------------------
+              # Barplot ---------------------------------------------------------
+              persberichten.beleid.economie.barplot <- Persberichten.beleid.barplot(reactive(df.persberichten.beleid.detail()$Economie), reactive("Persreturn per beleid"), reactive("Detail"))
+              output$persberichten.beleid.economie.barplot <- renderPlot({
+                persberichten.beleid.economie.barplot()
+              })
+              # Table -----------------------------------------------------------
+              persberichten.beleid.economie.tabel <- Persberichten.beleid.tabel(reactive(df.persberichten.beleid.detail()$Economie), reactive("Persreturn per beleid"), reactive("Detail"))
+              output$persberichten.beleid.economie.tabel <- renderTable({
+                persberichten.beleid.economie.tabel()
+              })
+            # Gouverneur -------------------------------------------------------
+              # Barplot ---------------------------------------------------------
+              persberichten.beleid.gouverneur.barplot <- Persberichten.beleid.barplot(reactive(df.persberichten.beleid.detail()$Gouverneur), reactive("Persreturn per beleid"), reactive("Detail"))
+              output$persberichten.beleid.gouverneur.barplot <- renderPlot({
+                persberichten.beleid.gouverneur.barplot()
+              })
+              # Table -----------------------------------------------------------
+              persberichten.beleid.gouverneur.tabel <- Persberichten.beleid.tabel(reactive(df.persberichten.beleid.detail()$Gouverneur), reactive("Persreturn per beleid"), reactive("Detail"))
+              output$persberichten.beleid.gouverneur.tabel <- renderTable({
+                persberichten.beleid.gouverneur.tabel()
+              })
+            # Leefmilieu -------------------------------------------------------
+              # Barplot ---------------------------------------------------------
+              persberichten.beleid.leefmilieu.barplot <- Persberichten.beleid.barplot(reactive(df.persberichten.beleid.detail()$Leefmilieu), reactive("Persreturn per beleid"), reactive("Detail"))
+              output$persberichten.beleid.leefmilieu.barplot <- renderPlot({
+                persberichten.beleid.leefmilieu.barplot()
+              })
+              # Table -----------------------------------------------------------
+              persberichten.beleid.leefmilieu.tabel <- Persberichten.beleid.tabel(reactive(df.persberichten.beleid.detail()$Leefmilieu), reactive("Persreturn per beleid"), reactive("Detail"))
+              output$persberichten.beleid.leefmilieu.tabel <- renderTable({
+                persberichten.beleid.leefmilieu.tabel()
+              })
+            # Mobiliteit -------------------------------------------------------
+              # Barplot ---------------------------------------------------------
+              persberichten.beleid.mobiliteit.barplot <- Persberichten.beleid.barplot(reactive(df.persberichten.beleid.detail()$Mobiliteit), reactive("Persreturn per beleid"), reactive("Detail"))
+              output$persberichten.beleid.mobiliteit.barplot <- renderPlot({
+                persberichten.beleid.mobiliteit.barplot()
+              })
+              # Table -----------------------------------------------------------
+              persberichten.beleid.mobiliteit.tabel <- Persberichten.beleid.tabel(reactive(df.persberichten.beleid.detail()$Mobiliteit), reactive("Persreturn per beleid"), reactive("Detail"))
+              output$persberichten.beleid.mobiliteit.tabel <- renderTable({
+                persberichten.beleid.mobiliteit.tabel()
+              })
+            # Onderwijs en Educatie --------------------------------------------
+              # Barplot ---------------------------------------------------------
+              persberichten.beleid.onderwijs.barplot <- Persberichten.beleid.barplot(reactive(df.persberichten.beleid.detail()$"Onderwijs en Educatie"), reactive("Persreturn per beleid"), reactive("Detail"))
+              output$persberichten.beleid.onderwijs.barplot <- renderPlot({
+                persberichten.beleid.onderwijs.barplot()
+              })
+              # Table -----------------------------------------------------------
+              persberichten.beleid.onderwijs.tabel <- Persberichten.beleid.tabel(reactive(df.persberichten.beleid.detail()$"Onderwijs en Educatie"), reactive("Persreturn per beleid"), reactive("Detail"))
+              output$persberichten.beleid.onderwijs.tabel <- renderTable({
+                persberichten.beleid.onderwijs.tabel()
+              })
+            # Provinciebestuur -------------------------------------------------
+              # Barplot ---------------------------------------------------------
+              persberichten.beleid.provinciebestuur.barplot <- Persberichten.beleid.barplot(reactive(df.persberichten.beleid.detail()$Provinciebestuur), reactive("Persreturn per beleid"), reactive("Detail"))
+              output$persberichten.beleid.provinciebestuur.barplot <- renderPlot({
+                persberichten.beleid.provinciebestuur.barplot()
+              })
+              # Table -----------------------------------------------------------
+              persberichten.beleid.provinciebestuur.tabel <- Persberichten.beleid.tabel(reactive(df.persberichten.beleid.detail()$Provinciebestuur), reactive("Persreturn per beleid"), reactive("Detail"))
+              output$persberichten.beleid.provinciebestuur.tabel <- renderTable({
+                persberichten.beleid.provinciebestuur.tabel()
+              })
+            # Ruimte -----------------------------------------------------------
+              # Barplot ---------------------------------------------------------
+              persberichten.beleid.ruimte.barplot <- Persberichten.beleid.barplot(reactive(df.persberichten.beleid.detail()$Ruimte), reactive("Persreturn per beleid"), reactive("Detail"))
+              output$persberichten.beleid.ruimte.barplot <- renderPlot({
+                persberichten.beleid.ruimte.barplot()
+              })
+              # Table --------------------------------------------------------------
+              persberichten.beleid.ruimte.tabel <- Persberichten.beleid.tabel(reactive(df.persberichten.beleid.detail()$Ruimte), reactive("Persreturn per beleid"), reactive("Detail"))
+              output$persberichten.beleid.ruimte.tabel <- renderTable({
+                persberichten.beleid.ruimte.tabel()
+              })
+            # Vrije Tijd -------------------------------------------------------
+              # Barplot ------------------------------------------------------------
+              persberichten.beleid.vrijetijd.barplot <- Persberichten.beleid.barplot(reactive(df.persberichten.beleid.detail()$"Vrije Tijd"), reactive("Persreturn per beleid"), reactive("Detail"))
+              output$persberichten.beleid.vrijetijd.barplot <- renderPlot({
+                persberichten.beleid.vrijetijd.barplot()
+              })
+              # Table --------------------------------------------------------------
+              persberichten.beleid.vrijetijd.tabel <- Persberichten.beleid.tabel(reactive(df.persberichten.beleid.detail()$"Vrije Tijd"), reactive("Persreturn per beleid"), reactive("Detail"))
+              output$persberichten.beleid.vrijetijd.tabel <- renderTable({
+                persberichten.beleid.vrijetijd.tabel()
+              })
+            
         # Per type -------------------------------------------------------------
           # Preparation --------------------------------------------------------
             df.berichten.type <- reactive({
@@ -806,18 +940,6 @@ if (interactive()) {
               output$persreturn.beleid.vrijetijd.tabel <- renderTable({
                 persreturn.beleid.vrijetijd.tabel()
               })
-            
-            
-            
-            # callModule(Persreturn.beleid, "Return.Economie", reactive(Persreturn()$Economie), plottitle = reactive("Persreturn: Economie"), type = reactive("Detail"))
-            # callModule(Persreturn.beleid, "Return.Gouverneur", reactive(Persreturn()$Gouverneur), plottitle = reactive("Persreturn: Gouverneur"), type = reactive("Detail"))
-            # callModule(Persreturn.beleid, "Return.Leefmilieu", reactive(Persreturn()$Leefmilieu), plottitle = reactive("Persreturn: Leefmilieu"), type = reactive("Detail"))
-            # callModule(Persreturn.beleid, "Return.Mobiliteit", reactive(Persreturn()$Mobiliteit), plottitle = reactive("Persreturn: Milieu"), type = reactive("Detail"))
-            # callModule(Persreturn.beleid, "Return.Onderwijs en Educatie", reactive(Persreturn()$`Onderwijs en Educatie`), plottitle = reactive("Persreturn: Onderwijs en Educatie"), type = reactive("Detail"))
-            # callModule(Persreturn.beleid, "Return.Provinciebestuur", reactive(Persreturn()$Provinciebestuur), plottitle = reactive("Persreturn: Provinciebestuur"), type = reactive("Detail"))
-            # callModule(Persreturn.beleid, "Return.Ruimte", reactive(Persreturn()$Ruimte), plottitle = reactive("v: Ruimte"), type = reactive("Detail"))
-            # callModule(Persreturn.beleid, "Return.Vrije Tijd", reactive(Persreturn()$`Vrije Tijd`), plottitle = reactive("Persreturn: Vrije Tijd"), type = reactive("Detail"))
-            
         # Per platform ---------------------------------------------------------
           # Preparation --------------------------------------------------------
             df.return.platform <- reactive({
@@ -899,12 +1021,48 @@ if (interactive()) {
             params <- list(data = Persstatistiek(),
                            jaar = "jaar",
                            kwartaal = input$kwartaal,
+                           persberichten.beleid.barplot = persberichten.beleid.barplot(),
+                           persberichten.beleid.tabel = persberichten.beleid.tabel(),
+                           persberichten.beleid.economie.barplot = persberichten.beleid.economie.barplot(),
+                           persberichten.beleid.economie.tabel = persberichten.beleid.economie.tabel(),
+                           persberichten.beleid.gouverneur.barplot = persberichten.beleid.gouverneur.barplot(),
+                           persberichten.beleid.gouverneur.tabel = persberichten.beleid.gouverneur.tabel(),
+                           persberichten.beleid.leefmilieu.barplot = persberichten.beleid.leefmilieu.barplot(),
+                           persberichten.beleid.leefmilieu.tabel = persberichten.beleid.leefmilieu.tabel(),
+                           persberichten.beleid.mobiliteit.barplot = persberichten.beleid.mobiliteit.barplot(),
+                           persberichten.beleid.mobiliteit.tabel = persberichten.beleid.mobiliteit.tabel(),
+                           persberichten.beleid.onderwijs.barplot = persberichten.beleid.onderwijs.barplot(),
+                           persberichten.beleid.onderwijs.tabel = persberichten.beleid.onderwijs.tabel(),
+                           persberichten.beleid.provinciebestuur.barplot = persberichten.beleid.provinciebestuur.barplot(),
+                           persberichten.beleid.provinciebestuur.tabel = persberichten.beleid.provinciebestuur.tabel(),
+                           persberichten.beleid.ruimte.barplot = persberichten.beleid.ruimte.barplot(),
+                           persberichten.beleid.ruimte.tabel = persberichten.beleid.ruimte.tabel(),
+                           persberichten.beleid.vrijetijd.barplot = persberichten.beleid.vrijetijd.barplot(),
+                           persberichten.beleid.vrijetijd.tabel = persberichten.beleid.vrijetijd.tabel(),
                            berichten.verzender.table = berichten.verzender.table(),
                            berichten.verzender.barplot = berichten.verzender.barplot(),
                            berichten.tabel.maand = berichten.tabel.maand(),
                            berichten.barplot.maand = berichten.barplot.maand(),
                            berichten.type.table = berichten.type.table(),
                            berichten.type.barplot = berichten.type.barplot(),
+                           persreturn.beleid.barplot = persreturn.beleid.barplot(),
+                           persreturn.beleid.tabel = persreturn.beleid.tabel(),
+                           persreturn.beleid.economie.barplot = persreturn.beleid.economie.barplot(),
+                           persreturn.beleid.economie.tabel = persreturn.beleid.economie.tabel(),
+                           persreturn.beleid.gouverneur.barplot = persreturn.beleid.gouverneur.barplot(),
+                           persreturn.beleid.gouverneur.tabel = persreturn.beleid.gouverneur.tabel(),
+                           persreturn.beleid.leefmilieu.barplot = persreturn.beleid.leefmilieu.barplot(),
+                           persreturn.beleid.leefmilieu.tabel = persreturn.beleid.leefmilieu.tabel(),
+                           persreturn.beleid.mobiliteit.barplot = persreturn.beleid.mobiliteit.barplot(),
+                           persreturn.beleid.mobiliteit.tabel = persreturn.beleid.mobiliteit.tabel(),
+                           persreturn.beleid.onderwijs.barplot = persreturn.beleid.onderwijs.barplot(),
+                           persreturn.beleid.onderwijs.tabel = persreturn.beleid.onderwijs.tabel(),
+                           persreturn.beleid.provinciebestuur.barplot = persreturn.beleid.provinciebestuur.barplot(),
+                           persreturn.beleid.provinciebestuur.tabel = persreturn.beleid.provinciebestuur.tabel(),
+                           persreturn.beleid.ruimte.barplot = persreturn.beleid.ruimte.barplot(),
+                           persreturn.beleid.ruimte.tabel = persreturn.beleid.ruimte.tabel(),
+                           persreturn.beleid.vrijetijd.barplot = persreturn.beleid.vrijetijd.barplot(),
+                           persreturn.beleid.vrijetijd.tabel = persreturn.beleid.vrijetijd.tabel(),
                            return.platform.table = return.platform.table(),
                            return.platform.barplot = return.platform.barplot())
             
