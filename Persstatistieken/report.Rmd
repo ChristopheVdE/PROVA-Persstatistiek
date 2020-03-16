@@ -11,8 +11,46 @@ params:
   data: NA
   jaar: NA
   kwartaal: NA
-  persberichten.beleid.barplot: NA
-  persberichten.beleid.tabel: NA
+  # 1.1 Persberichten algemeen -------------------------
+    # 1.1.1 Kwartaal
+  persberichten.alg.kwartaal.tabel: NA
+  persberichten.alg.kwartaal.barplot: NA
+    # 1.1.2 Maand
+  persberichten.alg.maand.tabel: NA
+  persberichten.alg.maand.barplot: NA
+    # 1.1.3 Beleid
+  persberichten.alg.beleid.barplot: NA
+  persberichten.alg.beleid.tabel: NA
+  # 1.2 Persberichten per beleid
+    # 1.2.1 Economie
+      # 1.2.1.1 per maand
+  persberichten.beleid.maand.economie.barplot: NA
+    # 1.2.2 Gouverneur
+      # 1.2.2.1 per maand
+  persberichten.beleid.maand.gouverneur.barplot: NA
+    # 1.2.3 Leefmilieu
+      # 1.2.3.1 per maand
+  persberichten.beleid.maand.leefmilieu.barplot: NA
+    # 1.2.4 Mobilieteit
+      # 1.2.4.1 per maand
+  persberichten.beleid.maand.mobiliteit.barplot: NA
+    # 1.2.5 Onderwijs en Educatie
+      # 1.2.5.1 per maand
+  persberichten.beleid.maand.onderwijs.barplot: NA
+    # 1.2.6 Provinciebestuur
+      # 1.2.6.1 per maand
+  persberichten.beleid.maand.provinciebestuur.barplot: NA
+    # 1.2.7 Ruimte
+      # 1.2.7.1 per maand
+  persberichten.beleid.maand.ruimte.barplot: NA
+    # 1.2.8 Vrije Tijd
+      # 1.2.8.1 per maand
+  persberichten.beleid.maand.vrijetijd.barplot: NA
+
+
+
+
+
   persberichten.beleid.economie.barplot: NA
   persberichten.beleid.economie.tabel: NA
   persberichten.beleid.gouverneur.barplot: NA
@@ -31,8 +69,6 @@ params:
   persberichten.beleid.vrijetijd.tabel: NA
   berichten.verzender.table: NA
   berichten.verzender.barplot: NA
-  berichten.tabel.maand: NA
-  berichten.barplot.maand: NA
   berichten.type.table: NA
   berichten.type.barplot: NA
   persreturn.beleid.barplot: NA
@@ -59,7 +95,7 @@ params:
 
 ```{r "Load required packages", include = FALSE}
 pkg <- installed.packages()[, "Package"]
-to.load <- c("RColorBrewer", "knitr", "ggplot2", "readxl")
+to.load <- c("RColorBrewer", "knitr", "ggplot2")
 for (load in to.load) {
     if(!(load %in% pkg)) {
         install.packages(load, dependencies=TRUE)
@@ -70,31 +106,52 @@ for (load in to.load) {
 
 # `r paste("Persstatistiek: ", paste("jaar", params$kwartaal, sep= " "), sep = " ")`
 
-## 1 Persberichten
-### 1.1 Persberichten per beleid
-#### 1.1.1 Algemeen {.tabset .tabset-fade}
+## 1. Persberichten
+### 1.1. Algemeen
+#### 1.1.1. Per kwartaal {.tabset .tabset-fade}
+##### Barplot
+```{r "Persberichten algemeen: kwartaal - plot", echo = FALSE, align="center"}
+params$persberichten.alg.kwartaal.barplot
+```
+
+##### Tabel
+```{r "Persberichten algemeen: kwartaal - tabel", echo = FALSE}
+kable(params$persberichten.alg.kwartaal.tabel, caption = "Persberichten per Beleid")
+```
+
+
+#### 1.1.2. Per maand {.tabset .tabset-fade}
+##### Barplot
+```{r "Persberichten per maand - barplot", echo = FALSE}
+params$persberichten.alg.maand.barplot
+```
+
+##### Tabel
+```{r "Persberichten per maand: tabel", echo = FALSE}
+kable(params$persberichten.alg.maand.tabel, caption = "Persberichten per maand")
+```
+
+#### 1.2.3. Per beleid {.tabset .tabset-fade}
 ##### Barplot
 ```{r "Persberichten per beleid: algemeen - plot", echo = FALSE, align="center"}
-params$persberichten.beleid.barplot
+params$persberichten.alg.beleid.barplot
 ```
 
 ##### Tabel
 ```{r "Persberichten per beleid: algemeen - tabel", echo = FALSE}
-kable(params$persberichten.beleid.tabel, caption = "Persberichten per Beleid")
+kable(params$persberichten.alg.beleid.tabel, caption = "Persberichten per Beleid")
 ```
 
-#### 1.1.2 Detail
-```{r "Persberichten detail - voorbereiding", include = FALSE}
-df.bericht.detail <- split(params$data, params$data$Beleid)
-
-for (i in levels(params$data$Beleid)) ({
-  df.bericht.detail[[i]] <- data.frame(table(df.bericht.detail[[i]]$"Detail beleid"))
-  df.bericht.detail[[i]] <- cbind(Beleid = i, df.bericht.detail[[i]])
-  colnames(df.bericht.detail[[i]]) <- c("Beleid", "Detail","Persberichten")
-})
+### 1.2. Per beleid
+#### 1.2.1. Economie
+##### 1.2.1.1. Per maand {.tabset .tabset-fade}
+###### Barplot
+```{r "Persberichten Economie: barplot - maand", echo = FALSE}
+params$persberichten.beleid.maand.economie.barplot
 ```
 
-##### 1.1.2.1 Economie {.tabset .tabset-fade}
+
+##### 1.2.1.2. Per deelbeleid {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten Economie: barplot", echo = FALSE}
 params$persberichten.beleid.economie.barplot
@@ -105,7 +162,14 @@ params$persberichten.beleid.economie.barplot
 kable(params$persberichten.beleid.economie.tabel, caption = "Persberichten: Economie")
 ```
 
-##### 1.1.2.2 Gouverneur {.tabset .tabset-fade}
+#### 1.2.2. Gouverneur
+##### 1.2.2.1. Per maand {.tabset .tabset-fade}
+###### Barplot
+```{r "Persberichten Gouverneur: barplot - maand", echo = FALSE}
+params$persberichten.beleid.maand.gouverneur.barplot
+```
+
+##### 1.2.2.2. Per beleid {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten Gouverneur: barplot", echo = FALSE}
 params$persberichten.beleid.gouverneur.barplot
@@ -116,7 +180,14 @@ params$persberichten.beleid.gouverneur.barplot
 kable(params$persberichten.beleid.gouverneur.tabel, caption = "Persberichten: Gouverneur")
 ```
 
-##### 1.1.2.3 Leefmilieu {.tabset .tabset-fade}
+#### 1.2.3. Leefmilieu
+##### 1.2.3.1. Per maand {.tabset .tabset-fade}
+###### Barplot
+```{r "Persberichten Leefmilieu: barplot - maand", echo = FALSE}
+params$persberichten.beleid.maand.leefmilieu.barplot
+```
+
+##### 1.2.3.2. Per beleid {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten Leefmilieu: barplot", echo = FALSE}
 params$persberichten.beleid.leefmilieu.barplot
@@ -127,7 +198,15 @@ params$persberichten.beleid.leefmilieu.barplot
 kable(params$persberichten.beleid.leefmilieu.tabel, caption = "Persberichten: Leefmilieu")
 ```
 
-##### 1.1.2.4 Mobiliteit {.tabset .tabset-fade}
+#### 1.2.4. Mobiliteit
+##### 1.2.4.1. Per maand {.tabset .tabset-fade}
+###### Barplot
+```{r "Persberichten Mobiliteit: barplot - maand", echo = FALSE}
+params$persberichten.beleid.maand.mobiliteit.barplot
+```
+
+
+##### 1.2.4.2. Per beleid {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten Mobiliteit: barplot", echo = FALSE}
 params$persberichten.beleid.mobiliteit.barplot
@@ -138,7 +217,15 @@ params$persberichten.beleid.mobiliteit.barplot
 kable(params$persberichten.beleid.mobiliteit.tabel, caption = "Persberichten: Mobiliteit")
 ```
 
-##### 1.1.2.5 Onderwijs en Educatie {.tabset .tabset-fade}
+#### 1.2.5. Onderwijs en Educatie
+##### 1.2.5.1. Per maand {.tabset .tabset-fade}
+###### Barplot
+```{r "Persberichten Onderwijs en Educatie: barplot - maand", echo = FALSE}
+params$persberichten.beleid.maand.economie.barplot
+```
+
+
+##### 1.2.5.2. Per beleid {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten Onderwijs en Educatie: barplot", echo = FALSE}
 params$persberichten.beleid.onderwijs.barplot
@@ -149,7 +236,15 @@ params$persberichten.beleid.onderwijs.barplot
 kable(params$persberichten.beleid.onderwijs.tabel, caption = "Persberichten: Onderwijs en Educatie")
 ```
 
-##### 1.1.2.6 Provinciebestuur {.tabset .tabset-fade}
+#### 1.2.6. Provinciebestuur
+##### 1.2.6.1. Per maand {.tabset .tabset-fade}
+###### Barplot
+```{r "Persberichten Provinciebestuur: barplot - maand", echo = FALSE}
+params$persberichten.beleid.maand.provinciebestuur.barplot
+```
+
+
+##### 1.2.6.2. Per beleid {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten Provinciebestuur: barplot", echo = FALSE}
 params$persberichten.beleid.provinciebestuur.barplot
@@ -160,7 +255,15 @@ params$persberichten.beleid.provinciebestuur.barplot
 kable(params$persberichten.beleid.provinciebestuur.tabel, caption = "Persberichten: Provinciebestuur")
 ```
 
-##### 1.1.2.7 Ruimte {.tabset .tabset-fade}
+#### 1.2.7. Ruimte
+##### 1.2.7.1. Per maand {.tabset .tabset-fade}
+###### Barplot
+```{r "Persberichten Ruimte: barplot - maand", echo = FALSE}
+params$persberichten.beleid.maand.vrijetijd.barplot
+```
+
+
+##### 1.2.7.2. Per beleid {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten Ruimte: barplot", echo = FALSE}
 params$persberichten.beleid.ruimte.barplot
@@ -171,7 +274,14 @@ params$persberichten.beleid.ruimte.barplot
 kable(params$persberichten.beleid.ruimte.tabel, caption = "Persberichten: Ruimte")
 ```
 
-##### 1.1.2.8 Vrije Tijd {.tabset .tabset-fade}
+#### 1.2.8. Vrije tijd
+##### 1.2.8.1. Per maand {.tabset .tabset-fade}
+###### Barplot
+```{r "Persberichten Vrije Tijd: barplot - maand", echo = FALSE}
+params$persberichten.beleid.maand.ruimte.barplot
+```
+
+##### 1.2.8.2. Per beleid {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten Vrije Tijd: barplot", echo = FALSE}
 params$persberichten.beleid.vrijetijd.barplot
@@ -182,203 +292,19 @@ params$persberichten.beleid.vrijetijd.barplot
 kable(params$persberichten.beleid.vrijetijd.tabel, caption = "Persberichten: Vrije Tijd")
 ```
 
-
-
-
-### 1.2 Persberichten per verzender {.tabset .tabset-fade}
-#### Tabel
+### 1.3. Per verzender
+#### 1.3.1. Algemeen {.tabset .tabset-fade}
+##### Tabel
 ```{r "Persberichten per verzender - Tabel", echo = FALSE}
 kable(params$berichten.verzender.table, caption="Persberichten per verzender")
 ```
 
-#### Barplot
+##### Barplot
 ```{r "Persberichten per verzender - Barplot", echo = FALSE}
 params$berichten.verzender.barplot
 ```
-
-
-### 1.3 Persberichten per maand
-#### 1.3.1 Per maand {.tabset .tabset-fade}
-##### Barplot
-```{r "Persberichten per maand - barplot", echo = FALSE}
-params$berichten.barplot.maand
-```
-
-##### Tabel
-```{r "Persberichten per maand: tabel", echo = FALSE}
-kable(params$berichten.tabel.maand, caption = "Persberichten per maand")
-```
-
-<!-- #### 1.3.2 Per beleidsdomein -->
-<!-- ```{r "Persberichten per maand per beleid - voorbereiding", include = FALSE} -->
-<!-- df.bericht.maand.beleid <- data.frame(table(params$data$Beleid, params$data$Maand)) -->
-<!-- colnames(df.bericht.maand.beleid) <- c("Beleid", "Maand", "Freq") -->
-<!-- df.bericht.maand.beleid$Maand <- factor(df.bericht.maand.beleid$Maand, levels = c("jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec")) -->
-<!-- df.bericht.maand.beleid <- split(df.bericht.maand.beleid, df.bericht.maand.beleid$Beleid) -->
-<!-- ``` -->
-
-<!-- ##### 1.1.2.1 Economie {.tabset .tabset-fade} -->
-<!-- ###### Barplot -->
-<!-- ```{r "Persberichten per maand - Economie: barplot", echo = FALSE} -->
-<!-- ggplot(data=df.bericht.maand.beleid$Economie, aes(x=Beleid, y=Freq, fill=Maand)) + -->
-<!--   geom_bar(position = "dodge", stat='identity') + -->
-<!--   xlab("Beleid") + -->
-<!--   ylab("Aantal") + -->
-<!--   ggtitle("Persberichten: Maand (totaal) - Economie") + -->
-<!--   geom_text(aes(label=Freq), -->
-<!--             position=position_dodge(0.9), vjust=0) + -->
-<!--   theme_bw() + -->
-<!--   theme(axis.text.x = element_text(angle = 0, hjust = 0.5)) + -->
-<!--   scale_fill_manual(values=colors) -->
-<!-- ``` -->
-
-<!-- ###### Tabel -->
-<!-- ```{r "Persberichten per maand - Economie: tabel", echo = FALSE} -->
-<!-- kable(df.bericht.maand.beleid$Economie, caption = "Persberichten per maand: Economie") -->
-<!-- ``` -->
-
-<!-- ##### 1.1.2.2 Gouverneur {.tabset .tabset-fade} -->
-<!-- ###### Barplot -->
-<!-- ```{r "Persberichten per maand - Gouverneur: barplot", echo = FALSE} -->
-<!-- ggplot(data=df.bericht.maand.beleid$Gouverneur, aes(x=Beleid, y=Freq, fill=Maand)) + -->
-<!--   geom_bar(position = "dodge", stat='identity') + -->
-<!--   xlab("Beleid") + -->
-<!--   ylab("Aantal") + -->
-<!--   ggtitle("Persberichten: Maand (totaal) - Gouverneur") + -->
-<!--   geom_text(aes(label=Freq), -->
-<!--             position=position_dodge(0.9), vjust=0) + -->
-<!--   theme_bw() + -->
-<!--   theme(axis.text.x = element_text(angle = 0, hjust = 0.5)) + -->
-<!--   scale_fill_manual(values=colors) -->
-<!-- ``` -->
-
-<!-- ###### Tabel -->
-<!-- ```{r "Persberichten per maand - Gouverneur: tabel", echo = FALSE} -->
-<!-- kable(df.bericht.maand.beleid$Gouverneur, caption = "Persberichten per maand : Gouverneur") -->
-<!-- ``` -->
-
-<!-- ##### 1.1.2.3 Leefmilieu {.tabset .tabset-fade} -->
-<!-- ###### Barplot -->
-<!-- ```{r "Persberichten per maand - Leefmilieu: barplot", echo = FALSE} -->
-<!-- ggplot(data=df.bericht.maand.beleid$Leefmilieu, aes(x=Beleid, y=Freq, fill=Maand)) + -->
-<!--   geom_bar(position = "dodge", stat='identity') + -->
-<!--   xlab("Beleid") + -->
-<!--   ylab("Aantal") + -->
-<!--   ggtitle("Persberichten: Maand (totaal) - Leefmilieu") + -->
-<!--   geom_text(aes(label=Freq), -->
-<!--             position=position_dodge(0.9), vjust=0) + -->
-<!--   theme_bw() + -->
-<!--   theme(axis.text.x = element_text(angle = 0, hjust = 0.5)) + -->
-<!--   scale_fill_manual(values=colors) -->
-<!-- ``` -->
-
-<!-- ###### Tabel -->
-<!-- ```{r "Persberichten per maand - Leefmilieu: tabel", echo = FALSE} -->
-<!-- kable(df.bericht.maand.beleid$Leefmilieu, caption = "Persberichten per maand: Leefmilieu") -->
-<!-- ``` -->
-
-<!-- ##### 1.1.2.4 Mobiliteit {.tabset .tabset-fade} -->
-<!-- ###### Barplot -->
-<!-- ```{r "Persberichten per maand - Mobiliteit: barplot", echo = FALSE} -->
-<!-- ggplot(data=df.bericht.maand.beleid$Mobiliteit, aes(x=Beleid, y=Freq, fill=Maand)) + -->
-<!--   geom_bar(position = "dodge", stat='identity') + -->
-<!--   xlab("Beleid") + -->
-<!--   ylab("Aantal") + -->
-<!--   ggtitle("Persberichten: Maand (totaal) - Mobiliteit") + -->
-<!--   geom_text(aes(label=Freq), -->
-<!--             position=position_dodge(0.9), vjust=0) + -->
-<!--   theme_bw() + -->
-<!--   theme(axis.text.x = element_text(angle = 0, hjust = 0.5)) + -->
-<!--   scale_fill_manual(values=colors) -->
-<!-- ``` -->
-
-<!-- ###### Tabel -->
-<!-- ```{r "Persberichten per maand - Mobiliteit: tabel", echo = FALSE} -->
-<!-- kable(df.bericht.maand.beleid$Mobiliteit, caption = "Persberichten per maand: Mobiliteit") -->
-<!-- ``` -->
-
-<!-- ##### 1.1.2.5 Onderwijs en Educatie {.tabset .tabset-fade} -->
-<!-- ###### Barplot -->
-<!-- ```{r "Persberichten per maand - Onderwijs en Educatie: barplot", echo = FALSE} -->
-<!-- ggplot(data=df.bericht.maand.beleid$"Onderwijs en Educatie", aes(x=Beleid, y=Freq, fill=Maand)) + -->
-<!--   geom_bar(position = "dodge", stat='identity') + -->
-<!--   xlab("Beleid") + -->
-<!--   ylab("Aantal") + -->
-<!--   ggtitle("Persberichten: Maand (totaal) - Onderwijs en Educatie") + -->
-<!--   geom_text(aes(label=Freq), -->
-<!--             position=position_dodge(0.9), vjust=0) + -->
-<!--   theme_bw() + -->
-<!--   theme(axis.text.x = element_text(angle = 0, hjust = 0.5)) + -->
-<!--   scale_fill_manual(values=colors) -->
-<!-- ``` -->
-
-<!-- ###### Tabel -->
-<!-- ```{r "Persberichten per maand - Onderwijs en Educatie: tabel", echo = FALSE} -->
-<!-- kable(df.bericht.maand.beleid$"Onderwije en Educatie", caption = "Persberichten per maand: Onderwijs en Educatie") -->
-<!-- ``` -->
-
-<!-- ##### 1.1.2.6 Provinciebestuur {.tabset .tabset-fade} -->
-<!-- ###### Barplot -->
-<!-- ```{r "Persberichten per maand - Provinciebestuur: barplot", echo = FALSE} -->
-<!-- ggplot(data=df.bericht.maand.beleid$Provinciebestuur, aes(x=Beleid, y=Freq, fill=Maand)) + -->
-<!--   geom_bar(position = "dodge", stat='identity') + -->
-<!--   xlab("Beleid") + -->
-<!--   ylab("Aantal") + -->
-<!--   ggtitle("Persberichten: Maand (totaal) - Provinciebestuur") + -->
-<!--   geom_text(aes(label=Freq), -->
-<!--             position=position_dodge(0.9), vjust=0) + -->
-<!--   theme_bw() + -->
-<!--   theme(axis.text.x = element_text(angle = 0, hjust = 0.5)) + -->
-<!--   scale_fill_manual(values=colors) -->
-<!-- ``` -->
-
-<!-- ###### Tabel -->
-<!-- ```{r "Persberichten per maand - Provinciebestuur: tabel", echo = FALSE} -->
-<!-- kable(df.bericht.maand.beleid$"Provinciebestuur", caption = "Persberichten per maand: Provinciebestuur") -->
-<!-- ``` -->
-
-<!-- ##### 1.1.2.7 Ruimte {.tabset .tabset-fade} -->
-<!-- ###### Barplot -->
-<!-- ```{r "Persberichten per maand - Ruimte: barplot", echo = FALSE} -->
-<!-- ggplot(data=df.bericht.maand.beleid$Ruimte, aes(x=Beleid, y=Freq, fill=Maand)) + -->
-<!--   geom_bar(position = "dodge", stat='identity') + -->
-<!--   xlab("Beleid") + -->
-<!--   ylab("Aantal") + -->
-<!--   ggtitle("Persberichten: Maand (totaal) - Ruimte") + -->
-<!--   geom_text(aes(label=Freq), -->
-<!--             position=position_dodge(0.9), vjust=0) + -->
-<!--   theme_bw() + -->
-<!--   theme(axis.text.x = element_text(angle = 0, hjust = 0.5)) + -->
-<!--   scale_fill_manual(values=colors) -->
-<!-- ``` -->
-
-<!-- ###### Tabel -->
-<!-- ```{r "Persberichten per maand - Ruimte: tabel", echo = FALSE} -->
-<!-- kable(df.bericht.maand.beleid$Ruimte, caption = "Persberichten: Ruimte") -->
-<!-- ``` -->
-
-<!-- ##### 1.1.2.8 Vrije Tijd {.tabset .tabset-fade} -->
-<!-- ###### Barplot -->
-<!-- ```{r "Persberichten per maand - Vrije Tijd: barplot", echo = FALSE} -->
-<!-- ggplot(data=df.bericht.maand.beleid$"Vrije Tijd", aes(x=Beleid, y=Freq, fill=Maand)) + -->
-<!--   geom_bar(position = "dodge", stat='identity') + -->
-<!--   xlab("Beleid") + -->
-<!--   ylab("Aantal") + -->
-<!--   ggtitle("Persberichten: Maand (totaal) - Vrije Tijd") + -->
-<!--   geom_text(aes(label=Freq), -->
-<!--             position=position_dodge(0.9), vjust=0) + -->
-<!--   theme_bw() + -->
-<!--   theme(axis.text.x = element_text(angle = 0, hjust = 0.5)) + -->
-<!--   scale_fill_manual(values=colors) -->
-<!-- ``` -->
-
-<!-- ###### Tabel -->
-<!-- ```{r "Persberichten per maand - Vrije Tijd: tabel", echo = FALSE} -->
-<!-- kable(df.bericht.detail$Ruimte, caption = "Persberichten per maand: Vrije tijd") -->
-<!-- ``` -->
-
-
-### 1.4 Type persberichten {.tabset .tabset-fade}
+#### 1.3.2. Per maand {.tabset .tabset-fade}
+### 1.4. Type persberichten {.tabset .tabset-fade}
 #### Tabel
 ```{r "Persberichten per type - Tabel", echo = FALSE}
 kable(params$berichten.type.table, caption = "Persberichten per type")
