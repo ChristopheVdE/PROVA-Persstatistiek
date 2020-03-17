@@ -24,27 +24,35 @@ params:
   # 1.2 Persberichten per beleid
     # 1.2.1 Economie
       # 1.2.1.1 per maand
+  persberichten.beleid.maand.economie.tabel: NA
   persberichten.beleid.maand.economie.barplot: NA
     # 1.2.2 Gouverneur
       # 1.2.2.1 per maand
+  persberichten.beleid.maand.gouverneur.tabel: NA
   persberichten.beleid.maand.gouverneur.barplot: NA
     # 1.2.3 Leefmilieu
       # 1.2.3.1 per maand
+  persberichten.beleid.maand.leefmilieu.tabel: NA
   persberichten.beleid.maand.leefmilieu.barplot: NA
     # 1.2.4 Mobilieteit
       # 1.2.4.1 per maand
+  persberichten.beleid.maand.mobiliteit.tabel: NA
   persberichten.beleid.maand.mobiliteit.barplot: NA
     # 1.2.5 Onderwijs en Educatie
       # 1.2.5.1 per maand
+  persberichten.beleid.maand.onderwijs.tabel: NA
   persberichten.beleid.maand.onderwijs.barplot: NA
     # 1.2.6 Provinciebestuur
       # 1.2.6.1 per maand
+  persberichten.beleid.maand.provinciebestuur.tabel: NA
   persberichten.beleid.maand.provinciebestuur.barplot: NA
     # 1.2.7 Ruimte
       # 1.2.7.1 per maand
+  persberichten.beleid.maand.ruimte.tabel: NA
   persberichten.beleid.maand.ruimte.barplot: NA
     # 1.2.8 Vrije Tijd
       # 1.2.8.1 per maand
+  persberichten.beleid.maand.vrijetijd.tabel: NA
   persberichten.beleid.maand.vrijetijd.barplot: NA
 
 
@@ -150,6 +158,10 @@ kable(params$persberichten.alg.beleid.tabel, caption = "Persberichten per Beleid
 params$persberichten.beleid.maand.economie.barplot
 ```
 
+###### Tabel
+```{r "Persberichten Economie: tabel - maand", echo = FALSE}
+kable(params$persberichten.beleid.maand.economie.tabel, caption="Persberichten: Economie per maand")
+```
 
 ##### 1.2.1.2. Per deelbeleid {.tabset .tabset-fade}
 ###### Barplot
@@ -167,6 +179,11 @@ kable(params$persberichten.beleid.economie.tabel, caption = "Persberichten: Econ
 ###### Barplot
 ```{r "Persberichten Gouverneur: barplot - maand", echo = FALSE}
 params$persberichten.beleid.maand.gouverneur.barplot
+```
+
+###### Tabel
+```{r "Persberichten Gouverneur: tabel - maand", echo = FALSE}
+kable(params$persberichten.beleid.maand.gouverneur.tabel, caption="Persberichten: Gouverneur per maand")
 ```
 
 ##### 1.2.2.2. Per beleid {.tabset .tabset-fade}
@@ -187,6 +204,11 @@ kable(params$persberichten.beleid.gouverneur.tabel, caption = "Persberichten: Go
 params$persberichten.beleid.maand.leefmilieu.barplot
 ```
 
+###### Tabel
+```{r "Persberichten Leefmilieu: tabel - maand", echo = FALSE}
+kable(params$persberichten.beleid.maand.leefmilieu.tabel, caption="Persberichten: Leefmilieu per maand")
+```
+
 ##### 1.2.3.2. Per beleid {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten Leefmilieu: barplot", echo = FALSE}
@@ -205,6 +227,10 @@ kable(params$persberichten.beleid.leefmilieu.tabel, caption = "Persberichten: Le
 params$persberichten.beleid.maand.mobiliteit.barplot
 ```
 
+###### Tabel
+```{r "Persberichten Mobiliteit: tabel - maand", echo = FALSE}
+kable(params$persberichten.beleid.maand.mobiliteit.tabel, caption="Persberichten: Mobiliteit per maand")
+```
 
 ##### 1.2.4.2. Per beleid {.tabset .tabset-fade}
 ###### Barplot
@@ -221,9 +247,13 @@ kable(params$persberichten.beleid.mobiliteit.tabel, caption = "Persberichten: Mo
 ##### 1.2.5.1. Per maand {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten Onderwijs en Educatie: barplot - maand", echo = FALSE}
-params$persberichten.beleid.maand.economie.barplot
+params$persberichten.beleid.maand.onderwijs.barplot
 ```
 
+###### Tabel
+```{r "Persberichten Onderwijs en Educatie: tabel - maand", echo = FALSE}
+kable(params$persberichten.beleid.maand.onderwijs.tabel, caption="Persberichten: Onderwijs en Educatie per maand")
+```
 
 ##### 1.2.5.2. Per beleid {.tabset .tabset-fade}
 ###### Barplot
@@ -243,6 +273,10 @@ kable(params$persberichten.beleid.onderwijs.tabel, caption = "Persberichten: Ond
 params$persberichten.beleid.maand.provinciebestuur.barplot
 ```
 
+###### Tabel
+```{r "Persberichten Provinciebestuur: tabel - maand", echo = FALSE}
+kable(params$persberichten.beleid.maand.provinciebestuur.tabel, caption="Persberichten: Provinciebestuur per maand")
+```
 
 ##### 1.2.6.2. Per beleid {.tabset .tabset-fade}
 ###### Barplot
@@ -259,9 +293,13 @@ kable(params$persberichten.beleid.provinciebestuur.tabel, caption = "Persbericht
 ##### 1.2.7.1. Per maand {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten Ruimte: barplot - maand", echo = FALSE}
-params$persberichten.beleid.maand.vrijetijd.barplot
+params$persberichten.beleid.maand.ruimte.barplot
 ```
 
+###### Tabel
+```{r "Persberichten Ruimte: tabel - maand", echo = FALSE}
+kable(params$persberichten.beleid.maand.ruimte.tabel, caption="Persberichten: Ruimte per maand")
+```
 
 ##### 1.2.7.2. Per beleid {.tabset .tabset-fade}
 ###### Barplot
@@ -278,7 +316,12 @@ kable(params$persberichten.beleid.ruimte.tabel, caption = "Persberichten: Ruimte
 ##### 1.2.8.1. Per maand {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten Vrije Tijd: barplot - maand", echo = FALSE}
-params$persberichten.beleid.maand.ruimte.barplot
+params$persberichten.beleid.maand.vrijetijd.barplot
+```
+
+###### Tabel
+```{r "Persberichten Vrije Tijd: tabel - maand", echo = FALSE}
+kable(params$persberichten.beleid.maand.vrijetijd.tabel, caption="Persberichten: Vrije Tijd per maand")
 ```
 
 ##### 1.2.8.2. Per beleid {.tabset .tabset-fade}
@@ -303,7 +346,59 @@ kable(params$berichten.verzender.table, caption="Persberichten per verzender")
 ```{r "Persberichten per verzender - Barplot", echo = FALSE}
 params$berichten.verzender.barplot
 ```
-#### 1.3.2. Per maand {.tabset .tabset-fade}
+
+#### 1.3.2. Per maand
+##### 1.3.2.1. Januari {.tabset .tabset-fade}
+###### Barplot
+
+###### Tabel
+
+##### 1.3.2.1. Februari {.tabset .tabset-fade}
+###### Barplot
+
+###### Tabel
+
+##### 1.3.2.1. Maart {.tabset .tabset-fade}
+###### Barplot
+
+###### Tabel
+##### 1.3.2.1. April {.tabset .tabset-fade}
+###### Barplot
+
+###### Tabel
+##### 1.3.2.1. Mei {.tabset .tabset-fade}
+###### Barplot
+
+###### Tabel
+##### 1.3.2.1. Juni {.tabset .tabset-fade}
+###### Barplot
+
+###### Tabel
+##### 1.3.2.1. Juli {.tabset .tabset-fade}
+###### Barplot
+
+###### Tabel
+##### 1.3.2.1. Augustus {.tabset .tabset-fade}
+###### Barplot
+
+###### Tabel
+##### 1.3.2.1. September {.tabset .tabset-fade}
+###### Barplot
+
+###### Tabel
+##### 1.3.2.1. Oktober {.tabset .tabset-fade}
+###### Barplot
+
+###### Tabel
+##### 1.3.2.1. November {.tabset .tabset-fade}
+###### Barplot
+
+###### Tabel
+##### 1.3.2.1. December {.tabset .tabset-fade}
+###### Barplot
+
+###### Tabel
+
 ### 1.4. Type persberichten {.tabset .tabset-fade}
 #### Tabel
 ```{r "Persberichten per type - Tabel", echo = FALSE}
@@ -329,7 +424,7 @@ params$persreturn.beleid.barplot
 kable(params$persreturn.beleid.tabel, caption= "Persreturn per beleid")
 ```
 
-#### 2.1.2 Detail
+#### 2.1.2 Per beleid
 ##### 2.1.2.1 Economie {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persreturn Economie: barplot", echo = FALSE}

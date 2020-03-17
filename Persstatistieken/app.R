@@ -9,14 +9,12 @@ for (load in to.load) {
 }
 
 if (interactive()) {
-  # Modules
-    source("./Modules/Persberichten_per_beleid.R")
-    # source("./Modules/Persreturn_per_beleid.R")
-  
+
   # Functions
     source("./Functions/Persberichten_per_beleid_Table.R")
     source("./Functions/Persberichten_per_beleid_Barplot.R")
-    source("./Functions/Persberichten_per_maand_per_beleid.R")
+    source("./Functions/Persberichten_per_maand_per_beleid_Table.R")
+    source("./Functions/Persberichten_per_maand_per_beleid_Barplot.R")
     source("./Functions/Persreturn_per_beleid_Table.R")
     source("./Functions/Persreturn_per_beleid_Barplot.R")
   
@@ -32,11 +30,6 @@ if (interactive()) {
             dashboardSidebar(
                 sidebarMenu(
                     menuItem("Input", tabName = "Input"),
-                    # selectInput("kwartaal",
-                    #         "Selecteer kwartaal:",
-                    #         choices = c("Q1", "Q2", "Q3", "Q4", "Jaar"),
-                    #         selected = "Q1"),
-                    # 
                     tags$hr(),
                     menuItem("Persberichten", tabname = "Persberichten", icon = icon("bar-chart-o"),
                               menuSubItem("Per Beleid", tabName = "Bericht_Beleid"),
@@ -181,15 +174,6 @@ if (interactive()) {
                       tabPanel("Barplot", plotOutput("persberichten.beleid.vrijetijd.barplot")),
                       tabPanel("Tabel", tableOutput("persberichten.beleid.vrijetijd.tabel"))
                     )
-                    # Persberichten.beleidOutput("Bericht.Beleid", title = "Persberichten per Beleid", width = "12"),
-                    # Persberichten.beleidOutput("Bericht.Economie", title = "Persberichten: Economie"),
-                    # Persberichten.beleidOutput("Bericht.Gouverneur", title = "Persberichten: Gouverneur"),
-                    # Persberichten.beleidOutput("Bericht.Leefmilieu", title = "Persberichten: Leefmilieu"),
-                    # Persberichten.beleidOutput("Bericht.Mobiliteit", title = "Persberichten: Mobiliteit"),
-                    # Persberichten.beleidOutput("Bericht.Onderwijs en Educatie", title = "Persberichten: Onderwijs en Educatie"),
-                    # Persberichten.beleidOutput("Bericht.Provinciebestuur", title = "Persberichten: Provinciebestuur"),
-                    # Persberichten.beleidOutput("Bericht.Ruimte", title = "Persberichten: Ruimte"),
-                    # Persberichten.beleidOutput("Bericht.Vrije Tijd", title = "Persberichten: Vrije Tijd")
                   )
                 ),
               # Per Type -------------------------------------------------
@@ -501,7 +485,7 @@ if (interactive()) {
               })
               return(Persberichten)
             })
-          # Barplots & Tables -------------------------------------------------------------
+          # Barplots & Tables --------------------------------------------------
             # Economie ---------------------------------------------------------
               # Barplot ---------------------------------------------------------
               persberichten.beleid.economie.barplot <- Persberichten.beleid.barplot(reactive(df.persberichten.beleid.detail()$Economie), reactive("Persberichten: Economie"), reactive("Detail"))
@@ -739,7 +723,7 @@ if (interactive()) {
                 })
             
             # Totaal Maand per Beleid ------------------------------------------
-              # Preparation ------------------------------------------------------
+              # Preparation ----------------------------------------------------
               df.berichten.Maand.totaal.per.Beleid <-  reactive({
                 berichten <- data.frame(table(Persstatistiek()$Beleid, Persstatistiek()$Maand))
                 colnames(berichten) <- c("Beleid", "Maand", "Freq")
@@ -1021,7 +1005,7 @@ if (interactive()) {
               return.platform.barplot()
             })
 
-      # HTML aanmaak ----------------------------------------------------------
+      # HTML aanmaak -----------------------------------------------------------
         output$report <- downloadHandler(
           # For PDF output, change this to "report.pdf"
           filename = "report.html",
@@ -1049,49 +1033,57 @@ if (interactive()) {
                            # 1.2 Persberichten per beleid -----------------------
                             # 1.2.1 Economie ------------------------------------
                               # Per maand
-                                 persberichten.beleid.maand.economie.barplot = Persberichten.beleid.maand(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Economie"))(),
+                                 persberichten.beleid.maand.economie.barplot = Persberichten.beleid.maand.barplot(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Economie"))(),
+                                 persberichten.beleid.maand.economie.tabel = Persberichten.beleid.maand.tabel(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Economie"))(),
                               # Per deelbeleid
                                  persberichten.beleid.economie.barplot = persberichten.beleid.economie.barplot(),
                                  persberichten.beleid.economie.tabel = persberichten.beleid.economie.tabel(),
                             # 1.2.2 Gouverneur ----------------------------------
                               # Per maand
-                                 persberichten.beleid.maand.gouverneur.barplot = Persberichten.beleid.maand(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Gouverneur"))(),
+                                 persberichten.beleid.maand.gouverneur.barplot = Persberichten.beleid.maand.barplot(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Gouverneur"))(),
+                                 persberichten.beleid.maand.gouverneur.tabel = Persberichten.beleid.maand.tabel(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Gouverneur"))(),
                               # Per deelbeleid
                                  persberichten.beleid.gouverneur.barplot = persberichten.beleid.gouverneur.barplot(),
                                  persberichten.beleid.gouverneur.tabel = persberichten.beleid.gouverneur.tabel(),
                             # 1.2.3 Leefmilieu ----------------------------------
                               # Per maand
-                                persberichten.beleid.maand.leefmilieu.barplot = Persberichten.beleid.maand(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Leefmilieu"))(),
+                                persberichten.beleid.maand.leefmilieu.barplot = Persberichten.beleid.maand.barplot(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Leefmilieu"))(),
+                                persberichten.beleid.maand.leefmilieu.tabel = Persberichten.beleid.maand.tabel(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Leefmilieu"))(),
                               # Per deelbeleid
                                 persberichten.beleid.leefmilieu.barplot = persberichten.beleid.leefmilieu.barplot(),
                                 persberichten.beleid.leefmilieu.tabel = persberichten.beleid.leefmilieu.tabel(),
                             # 1.2.4 Mobiliteit ----------------------------------
                               # Per maand
-                                persberichten.beleid.maand.mobiliteit.barplot = Persberichten.beleid.maand(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Mobiliteit"))(),
+                                persberichten.beleid.maand.mobiliteit.barplot = Persberichten.beleid.maand.barplot(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Mobiliteit"))(),
+                                persberichten.beleid.maand.mobiliteit.tabel = Persberichten.beleid.maand.tabel(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Mobiliteit"))(),
                               # Per deelbeleid
                                 persberichten.beleid.mobiliteit.barplot = persberichten.beleid.mobiliteit.barplot(),
                                 persberichten.beleid.mobiliteit.tabel = persberichten.beleid.mobiliteit.tabel(),
                             # 1.2.5 Onderwijs en Educatie -----------------------
                               # Per maand
-                                persberichten.beleid.maand.onderwijs.barplot = Persberichten.beleid.maand(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Onderwijs en Educatie"))(),
+                                persberichten.beleid.maand.onderwijs.barplot = Persberichten.beleid.maand.barplot(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Onderwijs en Educatie"))(),
+                                persberichten.beleid.maand.onderwijs.tabel = Persberichten.beleid.maand.tabel(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Onderwijs en Educatie"))(),
                               # Per deelbeleid
                                 persberichten.beleid.onderwijs.barplot = persberichten.beleid.onderwijs.barplot(),
                                 persberichten.beleid.onderwijs.tabel = persberichten.beleid.onderwijs.tabel(),
                             # 1.2.6 Provinciebestuur ----------------------------
                               # Per maand
-                                persberichten.beleid.maand.provinciebestuur.barplot = Persberichten.beleid.maand(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Provinciebestuur"))(),
+                                persberichten.beleid.maand.provinciebestuur.barplot = Persberichten.beleid.maand.barplot(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Provinciebestuur"))(),
+                                persberichten.beleid.maand.provinciebestuur.tabel = Persberichten.beleid.maand.tabel(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Provinciebestuur"))(),
                               # Per deelbeleid
                                 persberichten.beleid.provinciebestuur.barplot = persberichten.beleid.provinciebestuur.barplot(),
                                 persberichten.beleid.provinciebestuur.tabel = persberichten.beleid.provinciebestuur.tabel(),
                             # 1.2.7 Ruimte --------------------------------------
                               # Per maand
-                                persberichten.beleid.maand.ruimte.barplot = Persberichten.beleid.maand(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Ruimte"))(),
+                                persberichten.beleid.maand.ruimte.barplot = Persberichten.beleid.maand.barplot(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Ruimte"))(),
+                                persberichten.beleid.maand.ruimte.tabel = Persberichten.beleid.maand.tabel(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Ruimte"))(),
                               # Per deelbeleid
                                 persberichten.beleid.ruimte.barplot = persberichten.beleid.ruimte.barplot(),
                                 persberichten.beleid.ruimte.tabel = persberichten.beleid.ruimte.tabel(),
                             # 1.2.8 Vrije Tijd ----------------------------------
                               # Per maand
-                                persberichten.beleid.maand.vrijetijd.barplot = Persberichten.beleid.maand(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Vrije Tijd"))(),
+                                persberichten.beleid.maand.vrijetijd.barplot = Persberichten.beleid.maand.barplot(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Vrije Tijd"))(),
+                                persberichten.beleid.maand.vrijetijd.tabel = Persberichten.beleid.maand.tabel(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Vrije Tijd"))(),
                               # Per deelbeleid
                                 persberichten.beleid.vrijetijd.barplot = persberichten.beleid.vrijetijd.barplot(),
                                 persberichten.beleid.vrijetijd.tabel = persberichten.beleid.vrijetijd.tabel(),

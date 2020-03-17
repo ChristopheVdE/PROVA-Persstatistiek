@@ -4,7 +4,7 @@ library(RColorBrewer)
 
 
 # Function: Persreturn per beleid ---------------------------------------------
-Persberichten.beleid.maand <- function(dataframe, beleid) {
+Persberichten.beleid.maand.barplot <- function(dataframe, beleid) {
   barplot.berichten.Maand.totaal.per.Beleid <- reactive({
     # Specify color pallete
     colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
