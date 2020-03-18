@@ -185,50 +185,50 @@ ui <- dashboardPage(
                 tabBox(
                   width = 6,
                   title = "Persberichten: Economie",
-                  tabPanel("Barplot", plotOutput("persberichten.beleid.economie.barplot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.economie.tabel"))
+                  tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.economie.plot")),
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.economie.tabel"))
                 ),
                 tabBox(
                   width = 6,
                   title = "Persberichten: Gouverneur",
-                  tabPanel("Barplot", plotOutput("persberichten.beleid.gouverneur.barplot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.gouverneur.tabel"))
+                  tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.gouverneur.plot")),
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.gouverneur.tabel"))
                 ),
                 tabBox(
                   width = 6,
                   title = "Persberichten: Leefmilieu",
-                  tabPanel("Barplot", plotOutput("persberichten.beleid.leefmilieu.barplot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.leefmilieu.tabel"))
+                  tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.leefmilieu.plot")),
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.leefmilieu.tabel"))
                 ),
                 tabBox(
                   width = 6,
                   title = "Persberichten: Mobiliteit",
-                  tabPanel("Barplot", plotOutput("persberichten.beleid.mobiliteit.barplot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.mobiliteit.tabel"))
+                  tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.mobiliteit.plot")),
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.mobiliteit.tabel"))
                 ),
                 tabBox(
                   width = 6,
                   title = "Persberichten: Onderwijs en Educatie",
-                  tabPanel("Barplot", plotOutput("persberichten.beleid.onderwijs.barplot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.onderwijs.tabel"))
+                  tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.onderwijs.plot")),
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.onderwijs.tabel"))
                 ),
                 tabBox(
                   width = 6,
                   title = "Persberichten: Provinciebestuur",
-                  tabPanel("Barplot", plotOutput("persberichten.beleid.provinciebestuur.barplot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.provinciebestuur.tabel"))
+                  tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.provinciebestuur.plot")),
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.provinciebestuur.tabel"))
                 ),
                 tabBox(
                   width = 6,
                   title = "Persberichten: Ruimte",
-                  tabPanel("Barplot", plotOutput("persberichten.beleid.ruimte.barplot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.ruimte.tabel"))
+                  tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.ruimte.plot")),
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.ruimte.tabel"))
                 ),
                 tabBox(
                   width = 6,
                   title = "Persberichten: Vrije Tijd",
-                  tabPanel("Barplot", plotOutput("persberichten.beleid.vrijetijd.barplot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.vrijetijd.tabel"))
+                  tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.vrijetijd.plot")),
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.vrijetijd.tabel"))
                 )
               )
             ),
