@@ -362,8 +362,8 @@ ui <- dashboardPage(
             tabBox(
               title = "Persreturn per platform",
               width = 12,
-              tabPanel("Barplot", plotOutput("return.platform.barplot")),
-              tabPanel("Tabel", tableOutput("return.platform.table"))
+              tabPanel("Barplot", plotOutput("persreturn.platform.plot")),
+              tabPanel("Tabel", tableOutput("persreturn.platform.tabel"))
             )
           )
         )

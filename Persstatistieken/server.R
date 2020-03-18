@@ -328,45 +328,24 @@ server <- function(input, output) {
   # PERSRETURN ================================================================
     # PER BELEID --------------------------------------------------------------
     # PER PLATFORM ------------------------------------------------------------
+      # Barplot ---------------------------------------------------------------
+      source("./Functions/Persreturn/Per_platform/return_platform_barplot.R")
+      persreturn.platform.plot <- return.platform.barplot(reactive(Persstatistiek()))
+      output$persreturn.platform.plot <- renderPlot(
+        persreturn.platform.plot()
+      )
+      # Tabel -----------------------------------------------------------------
+      source("./Functions/Persreturn/Per_platform/return_platform_tabel.R")
+      persreturn.platform.tabel <- return.platform.tabel(reactive(Persstatistiek()))
+      output$persreturn.platform.tabel <- renderTable(
+        persreturn.platform.tabel()
+      )
   # ===========================================================================
   
   # HTML RAPPORT AANMAAK ======================================================
   
   # ===========================================================================
   
-  
-  
-
-
-  
-  # Per Tijd -------------------------------------------------------------
-  # Per Maand ----------------------------------------------------------
-
-  
-
-  # Beleid per Maand -------------------------------------------------
-  # Preparation ------------------------------------------------------
-  df.berichten.Beleid.per.Maand <-  reactive({
-    berichten <- data.frame(table(Persstatistiek()$Beleid, Persstatistiek()$Maand))
-    colnames(berichten) <- c("Beleid", "Maand", "Freq")
-    berichten$Maand <- factor(berichten$Maand, levels = c("jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"))
-    split(berichten, berichten$Maand)
-  })
-  # Piechart (Per Maand) ---------------------------------------------
-  output$piechart.berichten.Beleid.per.Maand <- renderPlot({
-    try(
-      {
-        par(mar=c(2,0,2,10))
-        pie(df.berichten.Beleid.per.Maand()[[input$maand]]$Freq, 
-            labels = df.berichten.Beleid.per.Maand()[[input$maand]]$Freq, 
-            col = brewer.pal(8,"Pastel2"),
-            main = paste("Persberichten:", input$maand))
-        par(mar=c(0,0,0,0))
-        legend(1, 0.37, c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijs en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"), fill = brewer.pal(8,"Pastel2"))
-      }, 
-      silent = TRUE
-    )
-  })
   
 
   # Persreturn -------------------------------------------------------------      
@@ -507,72 +486,7 @@ server <- function(input, output) {
   output$persreturn.beleid.vrijetijd.tabel <- renderTable({
     persreturn.beleid.vrijetijd.tabel()
   })
-  # Per platform ---------------------------------------------------------
-  # Preparation --------------------------------------------------------
-  df.return.platform <- reactive({
-    
-    # Create table persreturn algemeen -------------------------------
-    Algemeen <- split(Persstatistiek(), Persstatistiek()$Persreturn)
-    Algemeen <- Algemeen$Ja
-    Algemeen <- data.frame(table(Algemeen$Beleid, Algemeen$Persreturn))
-    colnames(Algemeen) <- c("Beleid", "Algemeen", "Freq")
-    Algemeen$Algemeen <- "Algemeen"
-    
-    # create table: TV
-    TV <- split(Persstatistiek(), Persstatistiek()$TV)
-    TV <- TV$Ja
-    TV <- data.frame(table(TV$Beleid, TV$TV))
-    colnames(TV) <- c("Beleid", "TV", "Freq")
-    TV$TV <- "TV"
-    
-    # create Table: Web
-    Web <- split(Persstatistiek(), Persstatistiek()$"Alleen web")
-    Web <- Web$Ja
-    Web$Ja <- "Web"
-    Web <- data.frame(table(Web$Beleid, Web$"Alleen web"))
-    colnames(Web) <- c("Beleid", "Alleen web", "Freq")
-    Web$"Alleen web" <- "Alleen web"
-    
-    # Merge dataframes
-    persreturn <- data.frame(Beleid = TV$Beleid,
-                             Platform = c(Algemeen$Algemeen, TV$TV, Web$"Alleen web"),
-                             Persreturn = c(Algemeen$Freq, TV$Freq, Web$Freq))
-    return(persreturn)
-  })
-  # Table --------------------------------------------------------------
-  return.platform.table <- reactive({
-    temp <- split(df.return.platform(), df.return.platform()$Platform)
-    temp <- data.frame(Beleid = c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijs en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"),
-                       Algemeen = temp$Algemeen$Persreturn,
-                       Web = temp$"Alleen web"$Persreturn,
-                       TV = temp$TV$Persreturn
-    )
-    colnames(temp) <- c("Beleid", "Persreturn: Algemeen", "Persreturn: Alleen web", "Persreturn: TV")
-    return(temp)
-  })
-  output$return.platform.table <-renderTable({
-    return.platform.table()
-  })
-  # Barplot ------------------------------------------------------------
-  return.platform.barplot <- reactive({
-    # Specify color pallete
-    colors <- brewer.pal(8,"Pastel2")
-    # Create plot
-    ggplot(data=df.return.platform(), aes(x=Beleid, y=Persreturn, fill=Platform)) +
-      geom_bar(position = "dodge", stat='identity') +
-      xlab("Beleid") +
-      ylab("Aantal") +
-      ggtitle("Persreturn per platform") +
-      geom_text(aes(label=Persreturn),
-                position=position_dodge(0.9), vjust=0) +
-      theme_bw() +
-      theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-      scale_fill_manual(values=colors)
-  })
-  output$return.platform.barplot <- renderPlot({
-    return.platform.barplot()
-  })
-  
+
   # HTML aanmaak -----------------------------------------------------------
   output$report <- downloadHandler(
     # For PDF output, change this to "report.pdf"
