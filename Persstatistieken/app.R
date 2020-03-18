@@ -1,8 +1,5 @@
 # Loading packages
 library(shiny)
-library(shinydashboard)
-library(knitr)
-library(RColorBrewer)
 
 # Activating App
 if (interactive()) {

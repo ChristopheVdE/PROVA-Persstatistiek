@@ -4,11 +4,13 @@
 
 server <- function(input, output) {
   
+  # Packages
+  library(knitr)
+  library(RColorBrewer)
+  
   # Functions
   source("./Functions/Persberichten_per_beleid_Table.R")
   source("./Functions/Persberichten_per_beleid_Barplot.R")
-  source("./Functions/Persberichten_per_maand_per_beleid_Table.R")
-  source("./Functions/Persberichten_per_maand_per_beleid_Barplot.R")
   source("./Functions/Persreturn_per_beleid_Table.R")
   source("./Functions/Persreturn_per_beleid_Barplot.R")
   
@@ -77,8 +79,92 @@ server <- function(input, output) {
             persberichten.alg.beleid.tabel()
           )
     # PER BELEID --------------------------------------------------------------
-      # Per Maand
-      # Per Deelbeleid
+      # Per Maand -------------------------------------------------------------
+        # Barplot -------------------------------------------------------------
+          source("./Functions/Persberichten/Per_beleid/Per_maand/maand_beleid_barplot.R")
+          # Economie
+          persberichten.beleid.maand.economie.plot <- bericht.beleid.maand.barplot(reactive(Persstatistiek()), reactive("Economie"))
+          output$persberichten.beleid.maand.economie.plot <- renderPlot(
+            persberichten.beleid.maand.economie.plot()
+          )
+          # Gouverneur
+          persberichten.beleid.maand.gouverneur.plot <- bericht.beleid.maand.barplot(reactive(Persstatistiek()), reactive("Gouverneur"))
+          output$persberichten.beleid.maand.gouverneur.plot <- renderPlot(
+            persberichten.beleid.maand.gouverneur.plot()
+          )
+          # Leefmilieu
+          persberichten.beleid.maand.leefmilieu.plot <- bericht.beleid.maand.barplot(reactive(Persstatistiek()), reactive("Leefmilieu"))
+          output$persberichten.beleid.maand.leefmilieu.plot <- renderPlot(
+            persberichten.beleid.maand.leefmilieu.plot()
+          )
+          # Mobiliteit
+          persberichten.beleid.maand.mobiliteit.plot <- bericht.beleid.maand.barplot(reactive(Persstatistiek()), reactive("Mobiliteit"))
+          output$persberichten.beleid.maand.mobiliteit.plot <- renderPlot(
+            persberichten.beleid.maand.mobiliteit.plot()
+          )
+          # Onderwijs en Educatie
+          persberichten.beleid.maand.onderwijs.plot <- bericht.beleid.maand.barplot(reactive(Persstatistiek()), reactive("Onderwijs en Educatie"))
+          output$persberichten.beleid.maand.onderwijs.plot <- renderPlot(
+            persberichten.beleid.maand.onderwijs.plot()
+          )
+          # Provinciebestuur
+          persberichten.beleid.maand.provinciebestuur.plot <- bericht.beleid.maand.barplot(reactive(Persstatistiek()), reactive("Provinciebestuur"))
+          output$persberichten.beleid.maand.provinciebestuur.plot <- renderPlot(
+            persberichten.beleid.maand.provinciebestuur.plot()
+          )
+          # Ruimte
+          persberichten.beleid.maand.ruimte.plot <- bericht.beleid.maand.barplot(reactive(Persstatistiek()), reactive("Ruimte"))
+          output$persberichten.beleid.maand.ruimte.plot <- renderPlot(
+            persberichten.beleid.maand.ruimte.plot()
+          )
+          # Vrije Tijd
+          persberichten.beleid.maand.vrijetijd.plot <- bericht.beleid.maand.barplot(reactive(Persstatistiek()), reactive("Vrije Tijd"))
+          output$persberichten.beleid.maand.vrijetijd.plot <- renderPlot(
+            persberichten.beleid.maand.vrijetijd.plot()
+          )
+        # Tabel ---------------------------------------------------------------
+          source("./Functions/Persberichten/Per_beleid/Per_maand/maand_beleid_tabel.R")
+          # Economie
+          persberichten.beleid.maand.economie.tabel <- bericht.beleid.maand.tabel(reactive(Persstatistiek()), reactive("Economie"))
+          output$persberichten.beleid.maand.economie.tabel <- renderTable(
+            persberichten.beleid.maand.economie.tabel()
+          )
+          # Gouverneur
+          persberichten.beleid.maand.gouverneur.tabel <- bericht.beleid.maand.tabel(reactive(Persstatistiek()), reactive("Gouverneur"))
+          output$persberichten.beleid.maand.gouverneur.tabel <- renderTable(
+            persberichten.beleid.maand.gouverneur.tabel()
+          )
+          # Leefmilieu
+          persberichten.beleid.maand.leefmilieu.tabel <- bericht.beleid.maand.tabel(reactive(Persstatistiek()), reactive("Leefmilieu"))
+          output$persberichten.beleid.maand.leefmilieu.tabel <- renderTable(
+            persberichten.beleid.maand.leefmilieu.tabel()
+          )
+          # Mobiliteit
+          persberichten.beleid.maand.mobiliteit.tabel <- bericht.beleid.maand.tabel(reactive(Persstatistiek()), reactive("Mobiliteit"))
+          output$persberichten.beleid.maand.mobiliteit.tabel <- renderTable(
+            persberichten.beleid.maand.mobiliteit.tabel()
+          )
+          # Onderwijs en Educatie
+          persberichten.beleid.maand.onderwijs.tabel <- bericht.beleid.maand.tabel(reactive(Persstatistiek()), reactive("Onderwijs en Educatie"))
+          output$persberichten.beleid.maand.onderwijs.tabel <- renderTable(
+            persberichten.beleid.maand.onderwijs.tabel()
+          )
+          # Provinciebestuur
+          persberichten.beleid.maand.provinciebestuur.tabel <- bericht.beleid.maand.tabel(reactive(Persstatistiek()), reactive("Provinciebestuur"))
+          output$persberichten.beleid.maand.provinciebestuur.tabel <- renderTable(
+            persberichten.beleid.maand.provinciebestuur.tabel()
+          )
+          # Ruimte
+          persberichten.beleid.maand.ruimte.tabel <- bericht.beleid.maand.tabel(reactive(Persstatistiek()), reactive("Ruimte"))
+          output$persberichten.beleid.maand.ruimte.tabel <- renderTable(
+            persberichten.beleid.maand.ruimte.tabel()
+          )
+          # Vrije Tijd
+          persberichten.beleid.maand.vrijetijd.tabel <- bericht.beleid.maand.tabel(reactive(Persstatistiek()), reactive("Vrije Tijd"))
+          output$persberichten.beleid.maand.vrijetijd.tabel <- renderTable(
+            persberichten.beleid.maand.vrijetijd.tabel()
+          )
+      # Per Deelbeleid --------------------------------------------------------
     # PER VERZENDER -----------------------------------------------------------
       # Algemeen
       # Per Maand
@@ -380,30 +466,7 @@ server <- function(input, output) {
   # Per Maand ----------------------------------------------------------
 
   
-  # Totaal Maand per Beleid ------------------------------------------
-  # Preparation ----------------------------------------------------
-  df.berichten.Maand.totaal.per.Beleid <-  reactive({
-    berichten <- data.frame(table(Persstatistiek()$Beleid, Persstatistiek()$Maand))
-    colnames(berichten) <- c("Beleid", "Maand", "Freq")
-    berichten$Maand <- factor(berichten$Maand, levels = c("jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"))
-    split(berichten, berichten$Beleid)
-  })
-  # Barplot (Per Maand) ---------------------------------------------
-  output$barplot.berichten.Maand.totaal.per.Beleid <- renderPlot({
-    # Specify color pallete
-    colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
-    # Create plot
-    ggplot(data=df.berichten.Maand.totaal.per.Beleid()[[input$beleid]], aes(x=Beleid, y=Freq, fill=Maand)) +
-      geom_bar(position = "dodge", stat='identity') +
-      xlab("Beleid") +
-      ylab("Aantal") +
-      ggtitle("Persberichten: Maand (totaal) per Beleid") +
-      geom_text(aes(label=Freq),
-                position=position_dodge(0.9), vjust=0) +
-      theme_bw() +
-      theme(axis.text.x = element_text(angle = 0, hjust = 0.5)) +
-      scale_fill_manual(values=colors)
-  })
+
   # Beleid per Maand -------------------------------------------------
   # Preparation ------------------------------------------------------
   df.berichten.Beleid.per.Maand <-  reactive({

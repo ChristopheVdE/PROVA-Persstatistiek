@@ -1,3 +1,6 @@
+library(shiny)
+library(shinydashboard)
+
 # UI =======================================================================
 ui <- dashboardPage(
   # Title ------------------------------------------------------------
@@ -127,9 +130,51 @@ ui <- dashboardPage(
               fluidRow(
                 tabBox(
                   width = 6,
-                  title = "Januari",
-                  tabPanel("Barplot"),
-                  tabPanel("Tabel")
+                  title = "Economie",
+                  tabPanel("Barplot", plotOutput("persberichten.beleid.maand.economie.plot")),
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.economie.tabel"))
+                ),
+                tabBox(
+                  width = 6,
+                  title = "Gouverneur",
+                  tabPanel("Barplot", plotOutput("persberichten.beleid.maand.gouverneur.plot")),
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.gouverneur.tabel"))
+                ),
+                tabBox(
+                  width = 6,
+                  title = "Leefmilieu",
+                  tabPanel("Barplot", plotOutput("persberichten.beleid.maand.leefmilieu.plot")),
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.leefmilieu.tabel"))
+                ),
+                tabBox(
+                  width = 6,
+                  title = "Mobiliteit",
+                  tabPanel("Barplot", plotOutput("persberichten.beleid.maand.mobiliteit.plot")),
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.mobiliteit.tabel"))
+                ),
+                tabBox(
+                  width = 6,
+                  title = "Onderwijs en Educatie",
+                  tabPanel("Barplot", plotOutput("persberichten.beleid.maand.onderwijs.plot")),
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.onderwijs.tabel"))
+                ),
+                tabBox(
+                  width = 6,
+                  title = "Provinciebestuur",
+                  tabPanel("Barplot", plotOutput("persberichten.beleid.maand.provinciebestuur.plot")),
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.provinciebestuur.tabel"))
+                ),
+                tabBox(
+                  width = 6,
+                  title = "Ruimte",
+                  tabPanel("Barplot", plotOutput("persberichten.beleid.maand.ruimte.plot")),
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.ruimte.tabel"))
+                ),
+                tabBox(
+                  width = 6,
+                  title = "Vrije Tijd",
+                  tabPanel("Barplot", plotOutput("persberichten.beleid.maand.vrijetijd.plot")),
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.vrijetijd.tabel"))
                 )
               )
             ),
