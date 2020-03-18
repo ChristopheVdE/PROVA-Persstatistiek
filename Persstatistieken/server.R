@@ -9,8 +9,6 @@ server <- function(input, output) {
   library(RColorBrewer)
   
   # Functions
-  source("./Functions/Persberichten_per_beleid_Table.R")
-  source("./Functions/Persberichten_per_beleid_Barplot.R")
   source("./Functions/Persreturn_per_beleid_Table.R")
   source("./Functions/Persreturn_per_beleid_Barplot.R")
   
@@ -253,6 +251,18 @@ server <- function(input, output) {
       # Algemeen
       # Per Maand
     # PER TYPE ----------------------------------------------------------------
+      # Barplot ---------------------------------------------------------------
+      source("./Functions/Persberichten/Per_type/type_barplot.R")
+      persberichten.type.plot <- bericht.type.barplot(reactive(Persstatistiek()))
+      output$persberichten.type.plot <- renderPlot(
+        persberichten.type.plot()
+      )
+      # Tabel -----------------------------------------------------------------
+      source("./Functions/Persberichten/Per_type/type_tabel.R")
+      persberichten.type.tabel <- bericht.type.tabel(reactive(Persstatistiek()))
+      output$persberichten.type.tabel <- renderTable(
+        persberichten.type.tabel()
+      )
   # ===========================================================================
   
   # PERSRETURN ================================================================
@@ -266,167 +276,8 @@ server <- function(input, output) {
   
   
   
-  
 
-  # Per beleid (detail) --------------------------------------------------
-  # Preparation ---------------------------------------------------------
-  df.persberichten.beleid.detail <- reactive({
-    Persberichten <- split(Persstatistiek(), Persstatistiek()$Beleid)
-    
-    for (i in levels(Persstatistiek()$Beleid)) ({
-      Persberichten[[i]] <- data.frame(table(Persberichten[[i]]$"Detail beleid"))
-      Persberichten[[i]] <- cbind(Beleid = i, Persberichten[[i]])
-      colnames(Persberichten[[i]]) <- c("Beleid", "Detail","Persberichten")
-    })
-    return(Persberichten)
-  })
-  # Barplots & Tables --------------------------------------------------
-  # Economie ---------------------------------------------------------
-  # Barplot ---------------------------------------------------------
-  persberichten.beleid.economie.barplot <- Persberichten.beleid.barplot(reactive(df.persberichten.beleid.detail()$Economie), reactive("Persberichten: Economie"), reactive("Detail"))
-  output$persberichten.beleid.economie.barplot <- renderPlot({
-    persberichten.beleid.economie.barplot()
-  })
-  # Table -----------------------------------------------------------
-  persberichten.beleid.economie.tabel <- Persberichten.beleid.tabel(reactive(df.persberichten.beleid.detail()$Economie), reactive("Persberichten: Economie"), reactive("Detail"))
-  output$persberichten.beleid.economie.tabel <- renderTable({
-    persberichten.beleid.economie.tabel()
-  })
-  # Gouverneur -------------------------------------------------------
-  # Barplot ---------------------------------------------------------
-  persberichten.beleid.gouverneur.barplot <- Persberichten.beleid.barplot(reactive(df.persberichten.beleid.detail()$Gouverneur), reactive("Persberichten: Gouverneur"), reactive("Detail"))
-  output$persberichten.beleid.gouverneur.barplot <- renderPlot({
-    persberichten.beleid.gouverneur.barplot()
-  })
-  # Table -----------------------------------------------------------
-  persberichten.beleid.gouverneur.tabel <- Persberichten.beleid.tabel(reactive(df.persberichten.beleid.detail()$Gouverneur), reactive("Persberichten: Gouverneur"), reactive("Detail"))
-  output$persberichten.beleid.gouverneur.tabel <- renderTable({
-    persberichten.beleid.gouverneur.tabel()
-  })
-  # Leefmilieu -------------------------------------------------------
-  # Barplot ---------------------------------------------------------
-  persberichten.beleid.leefmilieu.barplot <- Persberichten.beleid.barplot(reactive(df.persberichten.beleid.detail()$Leefmilieu), reactive("Persberichten: Leefmilieu"), reactive("Detail"))
-  output$persberichten.beleid.leefmilieu.barplot <- renderPlot({
-    persberichten.beleid.leefmilieu.barplot()
-  })
-  # Table -----------------------------------------------------------
-  persberichten.beleid.leefmilieu.tabel <- Persberichten.beleid.tabel(reactive(df.persberichten.beleid.detail()$Leefmilieu), reactive("Persberichten: Leefmilieu"), reactive("Detail"))
-  output$persberichten.beleid.leefmilieu.tabel <- renderTable({
-    persberichten.beleid.leefmilieu.tabel()
-  })
-  # Mobiliteit -------------------------------------------------------
-  # Barplot ---------------------------------------------------------
-  persberichten.beleid.mobiliteit.barplot <- Persberichten.beleid.barplot(reactive(df.persberichten.beleid.detail()$Mobiliteit), reactive("Persberichten: Mobiliteit"), reactive("Detail"))
-  output$persberichten.beleid.mobiliteit.barplot <- renderPlot({
-    persberichten.beleid.mobiliteit.barplot()
-  })
-  # Table -----------------------------------------------------------
-  persberichten.beleid.mobiliteit.tabel <- Persberichten.beleid.tabel(reactive(df.persberichten.beleid.detail()$Mobiliteit), reactive("Persberichten: Mobiliteit"), reactive("Detail"))
-  output$persberichten.beleid.mobiliteit.tabel <- renderTable({
-    persberichten.beleid.mobiliteit.tabel()
-  })
-  # Onderwijs en Educatie --------------------------------------------
-  # Barplot ---------------------------------------------------------
-  persberichten.beleid.onderwijs.barplot <- Persberichten.beleid.barplot(reactive(df.persberichten.beleid.detail()$"Onderwijs en Educatie"), reactive("Persberichten: Onderwijs en Educatie"), reactive("Detail"))
-  output$persberichten.beleid.onderwijs.barplot <- renderPlot({
-    persberichten.beleid.onderwijs.barplot()
-  })
-  # Table -----------------------------------------------------------
-  persberichten.beleid.onderwijs.tabel <- Persberichten.beleid.tabel(reactive(df.persberichten.beleid.detail()$"Onderwijs en Educatie"), reactive("Persberichten: Onderwijs en Educatie"), reactive("Detail"))
-  output$persberichten.beleid.onderwijs.tabel <- renderTable({
-    persberichten.beleid.onderwijs.tabel()
-  })
-  # Provinciebestuur -------------------------------------------------
-  # Barplot ---------------------------------------------------------
-  persberichten.beleid.provinciebestuur.barplot <- Persberichten.beleid.barplot(reactive(df.persberichten.beleid.detail()$Provinciebestuur), reactive("Persberichten: Provinciebestuur"), reactive("Detail"))
-  output$persberichten.beleid.provinciebestuur.barplot <- renderPlot({
-    persberichten.beleid.provinciebestuur.barplot()
-  })
-  # Table -----------------------------------------------------------
-  persberichten.beleid.provinciebestuur.tabel <- Persberichten.beleid.tabel(reactive(df.persberichten.beleid.detail()$Provinciebestuur), reactive("Persberichten: Provinciebestuur"), reactive("Detail"))
-  output$persberichten.beleid.provinciebestuur.tabel <- renderTable({
-    persberichten.beleid.provinciebestuur.tabel()
-  })
-  # Ruimte -----------------------------------------------------------
-  # Barplot ---------------------------------------------------------
-  persberichten.beleid.ruimte.barplot <- Persberichten.beleid.barplot(reactive(df.persberichten.beleid.detail()$Ruimte), reactive("Persberichten: Ruimte"), reactive("Detail"))
-  output$persberichten.beleid.ruimte.barplot <- renderPlot({
-    persberichten.beleid.ruimte.barplot()
-  })
-  # Table --------------------------------------------------------------
-  persberichten.beleid.ruimte.tabel <- Persberichten.beleid.tabel(reactive(df.persberichten.beleid.detail()$Ruimte), reactive("Persberichten: Ruimte"), reactive("Detail"))
-  output$persberichten.beleid.ruimte.tabel <- renderTable({
-    persberichten.beleid.ruimte.tabel()
-  })
-  # Vrije Tijd -------------------------------------------------------
-  # Barplot ------------------------------------------------------------
-  persberichten.beleid.vrijetijd.barplot <- Persberichten.beleid.barplot(reactive(df.persberichten.beleid.detail()$"Vrije Tijd"), reactive("Persberichten: Vrije tijd"), reactive("Detail"))
-  output$persberichten.beleid.vrijetijd.barplot <- renderPlot({
-    persberichten.beleid.vrijetijd.barplot()
-  })
-  # Table --------------------------------------------------------------
-  persberichten.beleid.vrijetijd.tabel <- Persberichten.beleid.tabel(reactive(df.persberichten.beleid.detail()$"Vrije Tijd"), reactive("Persberichten: Vrije tijd"), reactive("Detail"))
-  output$persberichten.beleid.vrijetijd.tabel <- renderTable({
-    persberichten.beleid.vrijetijd.tabel()
-  })
-  
-  # Per type -------------------------------------------------------------
-  # Preparation --------------------------------------------------------
-  df.berichten.type <- reactive({
-    berichten <- data.frame(table(Persstatistiek()$Beleid, Persstatistiek()$Soort))
-    colnames(berichten) <- c("Beleid", "Type", "Freq")
-    berichten$Type <- as.factor(berichten$Type)
-    # Add in possible missing "Type"
-    for(i in c("Activiteitenkalender", "Agendatip", "Evenementenkalender", "Persagenda", "Persbericht", "Persuitnodiging")) {
-      if(!(i %in% levels(berichten$Type))) {
-        temp <- data.frame(
-          Beleid = c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijs en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"),
-          Type = i,
-          Freq = 0
-        )
-        berichten <- rbind(berichten, temp)
-      }
-    }
-    # Return dataset  
-    return(berichten)
-  })
-  # Table --------------------------------------------------------------
-  berichten.type.table <- reactive({
-    temp <- df.berichten.type()
-    temp <- split(df.berichten.type(), df.berichten.type()$Type)
-    temp <- data.frame(
-      Beleid = c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijd en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"),
-      Activiteitenkalender = temp$Activiteitenkalender$Freq,
-      Agendatip = temp$Agendatip$Freq,
-      Evenementenkalender = temp$Evenementenkalender$Freq,
-      Persagenda = temp$Persagenda$Freq,
-      Persbericht = temp$Persbericht$Freq,
-      Persuitnodiging = temp$Persuitnodiging$Freq
-    )
-    return(temp)
-  })
-  output$berichten.type.table <- renderTable({
-    berichten.type.table()
-  })
-  # Barplot ------------------------------------------------------------
-  berichten.type.barplot <- reactive({
-    # Specify color pallete
-    colors <- brewer.pal(8,"Pastel2")
-    # Create plot
-    ggplot(data=df.berichten.type(), aes(x=Beleid, y=Freq, fill=Type)) +
-      geom_bar(position = "dodge", stat='identity') +
-      xlab("Beleid") +
-      ylab("Aantal") +
-      ggtitle("Persberichten per Type") +
-      geom_text(aes(label=Freq),
-                position=position_dodge(0.9), vjust=0) +
-      theme_bw() +
-      theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-      scale_fill_manual(values=colors)
-  })
-  output$berichten.type.barplot <- renderPlot({
-    berichten.type.barplot()
-  })
+
   # Per Verzender --------------------------------------------------------
   # Algemeen -----------------------------------------------------------
   # Per beleid -------------------------------------------------------

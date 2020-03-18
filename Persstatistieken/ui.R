@@ -336,8 +336,8 @@ ui <- dashboardPage(
               tabBox(
                 title = "Persberichten per Soort",
                 width = 12,
-                tabPanel("Barplot", plotOutput("berichten.type.barplot")),
-                tabPanel("Tabel", tableOutput("berichten.type.table"))
+                tabPanel("Barplot", plotOutput("persberichten.type.plot")),
+                tabPanel("Tabel", tableOutput("persberichten.type.tabel"))
               )
             )
           ),
