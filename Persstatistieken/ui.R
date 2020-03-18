@@ -246,8 +246,8 @@ ui <- dashboardPage(
                 tabBox(
                   title = "Beleid per Verzender",
                   width = 12,
-                  tabPanel("Barplot", plotOutput("berichten.verzender.beleid.barplot")),
-                  tabPanel("Table", tableOutput("berichten.verzender.beleid.table"))
+                  tabPanel("Barplot", plotOutput("persberichten.verzender.alg.beleid.plot")),
+                  tabPanel("Table", tableOutput("persberichten.verzender.alg.beleid.tabel"))
                 )
               )
             ),
@@ -256,76 +256,28 @@ ui <- dashboardPage(
               tabName = "Persbericht-verzender-maand",
               fluidRow(
                 tabBox(
-                  title = "Januari",
+                  title = "Persdienst",
                   width = 6,
-                  tabPanel("Barplot", plotOutput("berichten.verzender.januari.barplot")),
-                  tabPanel("Table", tableOutput("berichten.verzender.januari.table"))
+                  tabPanel("Barplot", plotOutput("persberichten.verzender.maand.persdienst.plot")),
+                  tabPanel("Tabel", tableOutput("persberichten.verzender.maand.persdienst.tabel"))
                 ), 
                 tabBox(
-                  title = "Februari",
+                  title = "Provincie",
                   width = 6,
-                  tabPanel("Barplot", plotOutput("berichten.verzender.februari.barplot")),
-                  tabPanel("Table", tableOutput("berichten.verzender.februari.table"))
+                  tabPanel("Barplot", plotOutput("persberichten.verzender.maand.provincie.plot")),
+                  tabPanel("Tabel", tableOutput("persberichten.verzender.maand.provincie.tabel"))
                 ), 
                 tabBox(
-                  title = "Maart",
+                  title = "Gouverneur",
                   width = 6,
-                  tabPanel("Barplot", plotOutput("berichten.verzender.maart.barplot")),
-                  tabPanel("Table", tableOutput("berichten.verzender.maart.table"))
+                  tabPanel("Barplot", plotOutput("persberichten.verzender.maand.gouverneur.plot")),
+                  tabPanel("Tabel", tableOutput("persberichten.verzender.maand.gouverneur.tabel"))
                 ), 
                 tabBox(
-                  title = "April",
+                  title = "Extern",
                   width = 6,
-                  tabPanel("Barplot", plotOutput("berichten.verzender.april.barplot")),
-                  tabPanel("Table", tableOutput("berichten.verzender.april.table"))
-                ), 
-                tabBox(
-                  title = "Mei",
-                  width = 6,
-                  tabPanel("Barplot", plotOutput("berichten.verzender.mei.barplot")),
-                  tabPanel("Table", tableOutput("berichten.verzender.mei.table"))
-                ), 
-                tabBox(
-                  title = "Juni",
-                  width = 6,
-                  tabPanel("Barplot", plotOutput("berichten.verzender.juni.barplot")),
-                  tabPanel("Table", tableOutput("berichten.verzender.juni.table"))
-                ), 
-                tabBox(
-                  title = "Juli",
-                  width = 6,
-                  tabPanel("Barplot", plotOutput("berichten.verzender.juli.barplot")),
-                  tabPanel("Table", tableOutput("berichten.verzender.juli.table"))
-                ), 
-                tabBox(
-                  title = "Augustus",
-                  width = 6,
-                  tabPanel("Barplot", plotOutput("berichten.verzender.augustus.barplot")),
-                  tabPanel("Table", tableOutput("berichten.verzender.augustus.table"))
-                ), 
-                tabBox(
-                  title = "September",
-                  width = 6,
-                  tabPanel("Barplot", plotOutput("berichten.verzender.september.barplot")),
-                  tabPanel("Table", tableOutput("berichten.verzender.september.table"))
-                ), 
-                tabBox(
-                  title = "Oktober",
-                  width = 6,
-                  tabPanel("Barplot", plotOutput("berichten.verzender.oktober.barplot")),
-                  tabPanel("Table", tableOutput("berichten.verzender.oktober.table"))
-                ), 
-                tabBox(
-                  title = "November",
-                  width = 6,
-                  tabPanel("Barplot", plotOutput("berichten.verzender.november.barplot")),
-                  tabPanel("Table", tableOutput("berichten.verzender.november.table"))
-                ), 
-                tabBox(
-                  title = "December",
-                  width = 6,
-                  tabPanel("Barplot", plotOutput("berichten.verzender.december.barplot")),
-                  tabPanel("Table", tableOutput("berichten.verzender.december.table"))
+                  tabPanel("Barplot", plotOutput("persberichten.verzender.maand.extern.plot")),
+                  tabPanel("Tabel", tableOutput("persberichten.verzender.maand.extern.tabel"))
                 )
               )
             ),  

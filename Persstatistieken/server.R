@@ -248,8 +248,68 @@ server <- function(input, output) {
             persberichten.beleid.beleid.vrijetijd.tabel()
           )
     # PER VERZENDER -----------------------------------------------------------
-      # Algemeen
-      # Per Maand
+      # Algemeen --------------------------------------------------------------
+        # Totaal per Verzender
+          # Barplot
+          # Tabel
+        # Beleid per Verzender
+          # Barlot ------------------------------------------------------------
+          source("./Functions/Persberichten/Per_Verzender/Algemeen/Verzender_beleid/verzender_beleid_barplot.R")
+          persberichten.verzender.alg.beleid.plot <- bericht.verzender.alg.beleid.barplot(reactive(Persstatistiek()))
+          output$persberichten.verzender.alg.beleid.plot <- renderPlot(
+            persberichten.verzender.alg.beleid.plot()
+          )
+          # Tabel -------------------------------------------------------------
+          source("./Functions/Persberichten/Per_Verzender/Algemeen/Verzender_beleid/verzender_beleid_tabel.R")
+          persberichten.verzender.alg.beleid.tabel <- bericht.verzender.alg.beleid.tabel(reactive(Persstatistiek()))
+          output$persberichten.verzender.alg.beleid.tabel <- renderTable(
+            persberichten.verzender.alg.beleid.tabel()
+          )
+      # Per Maand -------------------------------------------------------------
+        # Barlot ------------------------------------------------------------
+          source("./Functions/Persberichten/Per_Verzender/Per_maand/verzender_maand_barplot.R")
+          # Persdienst
+          persberichten.verzender.maand.persdienst.plot <- bericht.verzender.maand.barplot(reactive(Persstatistiek()), reactive("Persdienst"))
+          output$persberichten.verzender.maand.persdienst.plot <- renderPlot(
+            persberichten.verzender.maand.persdienst.plot()
+          )
+          # Provincie
+          persberichten.verzender.maand.provincie.plot <- bericht.verzender.maand.barplot(reactive(Persstatistiek()), reactive("Provincie"))
+          output$persberichten.verzender.maand.provincie.plot <- renderPlot(
+            persberichten.verzender.maand.provincie.plot()
+          )
+          # Gouverneur
+          persberichten.verzender.maand.gouverneur.plot <- bericht.verzender.maand.barplot(reactive(Persstatistiek()), reactive("Gouverneur"))
+          output$persberichten.verzender.maand.gouverneur.plot <- renderPlot(
+            persberichten.verzender.maand.gouverneur.plot()
+          )
+          # Extern
+          persberichten.verzender.maand.extern.plot <- bericht.verzender.maand.barplot(reactive(Persstatistiek()), reactive("Extern"))
+          output$persberichten.verzender.maand.extern.plot <- renderPlot(
+            persberichten.verzender.maand.extern.plot()
+          )
+        # Tabel -------------------------------------------------------------
+          source("./Functions/Persberichten/Per_Verzender/Per_maand/verzender_maand_tabel.R")
+          # Persdienst
+          persberichten.verzender.maand.persdienst.tabel <- bericht.verzender.maand.tabel(reactive(Persstatistiek()), reactive("Persdienst"))
+          output$persberichten.verzender.maand.persdienst.tabel <- renderTable(
+            persberichten.verzender.maand.persdienst.tabel()
+          )
+          # Provincie
+          persberichten.verzender.maand.provincie.tabel <- bericht.verzender.maand.tabel(reactive(Persstatistiek()), reactive("Provincie"))
+          output$persberichten.verzender.maand.provincie.tabel <- renderTable(
+            persberichten.verzender.maand.provincie.tabel()
+          )
+          # Gouverneur
+          persberichten.verzender.maand.gouverneur.tabel <- bericht.verzender.maand.tabel(reactive(Persstatistiek()), reactive("Gouverneur"))
+          output$persberichten.verzender.maand.gouverneur.tabel <- renderTable(
+            persberichten.verzender.maand.gouverneur.tabel()
+          )
+          # Extern
+          persberichten.verzender.maand.extern.tabel <- bericht.verzender.maand.tabel(reactive(Persstatistiek()), reactive("Extern"))
+          output$persberichten.verzender.maand.extern.tabel <- renderTable(
+            persberichten.verzender.maand.extern.tabel()
+          )
     # PER TYPE ----------------------------------------------------------------
       # Barplot ---------------------------------------------------------------
       source("./Functions/Persberichten/Per_type/type_barplot.R")
@@ -278,103 +338,7 @@ server <- function(input, output) {
   
 
 
-  # Per Verzender --------------------------------------------------------
-  # Algemeen -----------------------------------------------------------
-  # Per beleid -------------------------------------------------------
-  # Preparation --------------------------------------------------------
-  df.berichten.verzender.beleid <- reactive({
-    berichten <- data.frame(table(Persstatistiek()$Beleid, Persstatistiek()$Verzender))
-    colnames(berichten) <- c("Beleid", "Verzender", "Freq")
-    # Add in possible missing "Verzender"
-    for(i in c("Persdienst", "Provincie", "Gouverneur", "Extern")) {
-      if(!(i %in% levels(berichten$Verzender))) {
-        temp <- data.frame(
-          Beleid = c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijs en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"),
-          Verzender = i,
-          Freq = 0
-        )
-        berichten <- rbind(berichten, temp)
-      }
-    }
-    # Return dataset
-    return(berichten)
-  })
-  # Table --------------------------------------------------------------
-  berichten.verzender.beleid.table <- reactive({
-    temp <- split(df.berichten.verzender.beleid(), df.berichten.verzender.beleid()$Verzender)
-    temp <- data.frame(
-      Beleid = c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijd en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"),
-      Persdienst = temp$Persdienst$Freq,
-      Provincie = temp$Provincie$Freq,
-      Gouverneur = temp$Gouverneur$Freq,
-      Extern = temp$Extern$Freq
-    )
-  })
-  output$berichten.verzender.beleid.table <- renderTable({
-    berichten.verzender.beleid.table()
-  })
-  # Barplot ------------------------------------------------------------
-  berichten.verzender.beleid.barplot <- reactive({
-    # Specify color pallete
-    colors <- brewer.pal(8,"Pastel2")
-    # Create plot
-    ggplot(data=df.berichten.verzender.beleid(), aes(x=Verzender, y=Freq, fill=Beleid)) +
-      geom_bar(position = "dodge", stat='identity') +
-      xlab("Verzender") +
-      ylab("Aantal") +
-      ggtitle("Persberichten per Verzender") +
-      geom_text(aes(label=Freq),
-                position=position_dodge(0.9), vjust=0) +
-      theme_bw() +
-      theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-      scale_fill_manual(values=colors)
-  })
-  output$berichten.verzender.beleid.barplot <- renderPlot({
-    berichten.verzender.beleid.barplot()
-  })
   
-  # Per maand ----------------------------------------------------------
-  # Preparation ------------------------------------------------------
-  df.berichten.verzender.maand <- reactive({
-    berichten <- data.frame(table(Persstatistiek()$Maand, Persstatistiek()$Verzender))
-    colnames(berichten) <- c("Maand", "Verzender", "Freq")
-    # Add in possible missing "Verzender"
-    for(i in c("Persdienst", "Provincie", "Gouverneur", "Extern")) {
-      if(!(i %in% levels(berichten$Verzender))) {
-        temp <- data.frame(
-          Maand = levels(berichten$Maand),
-          Verzender = i,
-          Freq = 0
-        )
-        berichten <- rbind(berichten, temp)
-      }
-    }
-    # Split on month
-    berichten <- split(berichten, berichten$Maand)
-    
-    # Return dataset
-    return(berichten)
-  })
-  # Table ------------------------------------------------------------
-  output$berichten.verzender.januari.table <- renderTable({
-    df.berichten.verzender.maand()$jan
-  })
-  # Barplot ----------------------------------------------------------
-  output$berichten.verzender.januari.barplot <- renderPlot({
-    # Specify color pallete
-    colors <- brewer.pal(8,"Pastel2")
-    # Create plot
-    ggplot(data=df.berichten.verzender.maand()$jan, aes(x=Maand, y=Freq, fill=Verzender)) +
-      geom_bar(position = "dodge", stat='identity') +
-      xlab("Verzender") +
-      ylab("Aantal") +
-      ggtitle("Persberichten per Verzender") +
-      geom_text(aes(label=Freq),
-                position=position_dodge(0.9), vjust=0) +
-      theme_bw() +
-      theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-      scale_fill_manual(values=colors)
-  })
   # Per Tijd -------------------------------------------------------------
   # Per Maand ----------------------------------------------------------
 
