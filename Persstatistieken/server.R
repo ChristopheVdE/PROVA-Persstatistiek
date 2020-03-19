@@ -2,15 +2,12 @@
 # SHINY APP (Persstatistiek): SERVER
 ###############################################################################
 
+# PACKAGES ====================================================================
+library(knitr)
+library(RColorBrewer)
+# =============================================================================
+
 server <- function(input, output) {
-  
-  # Packages
-  library(knitr)
-  library(RColorBrewer)
-  
-  # Functions
-  source("./Functions/Persreturn_per_beleid_Table.R")
-  source("./Functions/Persreturn_per_beleid_Barplot.R")
   
   # INPUT PROCESSING ==========================================================
   # Data Preparation --------------------------------------------------------
@@ -438,6 +435,87 @@ server <- function(input, output) {
       output$persreturn.platform.tabel <- renderTable(
         persreturn.platform.tabel()
       )
+  # ===========================================================================
+      
+  # VARIABLE COLLECTION FOR MARKDOWN (HTML) ===================================
+    # Persberichten -----------------------------------------------------------
+      # Algemeen --------------------------------------------------------------
+      Persberichten.alg <- list(kartaal.plot = reactive(persberichten.alg.kwartaal.plot()),
+                                kwartaal.tabel = reactive(persberichten.alg.kwartaal.tabel()),
+                                maand.plot = reactive(persberichten.alg.maand.plot()),
+                                maand.tabel = reactive(persberichten.alg.maand.tabel()),
+                                beleid.plot = reactive(persberichten.alg.beleid.plot()),
+                                beleid.tabel = reactive(persberichten.alg.beleid.tabel()))
+      # Per beleid ------------------------------------------------------------
+        # Maand ---------------------------------------------------------------
+        Persberichten.beleid.maand <- list(economie.plot = reactive(persberichten.beleid.maand.economie.plot()),
+                                           economie.tabel = reactive(persberichten.beleid.maand.economie.tabel()),
+                                           gouverneur.plot = reactive(persberichten.beleid.maand.gouverneur.plot()),
+                                           gouverneur.tabel = reactive(persberichten.beleid.maand.gouverneur.tabel()),
+                                           leefmilieu.plot = reactive(persberichten.beleid.maand.leefmilieu.plot()),
+                                           leefmilieu.tabel = reactive(persberichten.beleid.maand.leefmilieu.tabel()),
+                                           mobiliteit.plot = reactive(persberichten.beleid.maand.mobiliteit.plot()),
+                                           mobiliteit.tabel = reactive(persberichten.beleid.maand.mobiliteit.tabel()),
+                                           onderwijs.plot = reactive(persberichten.beleid.maand.onderwijs.plot()),
+                                           onderwijs.tabel = reactive(persberichten.beleid.maand.onderwijs.tabel()),
+                                           provinciebestuur.plot = reactive(persberichten.beleid.maand.provinciebestuur.plot()),
+                                           provinciebestuur.tabel = reactive(persberichten.beleid.maand.provinciebestuur.tabel()),
+                                           ruimte.plot = reactive(persberichten.beleid.maand.ruimte.plot()),
+                                           ruimte.tabel = reactive(persberichten.beleid.maand.ruimte.tabel()),
+                                           vrijetijd.plot = reactive(persberichten.beleid.maand.vrijetijd.plot()),
+                                           vrijetijd.tabel = reactive(persberichten.beleid.maand.vrijetijd.tabel()))
+        # Beleid --------------------------------------------------------------
+        Persberichten.beleid.beleid <- list(economie.plot = reactive(persberichten.beleid.beleid.economie.plot()),
+                                           economie.tabel = reactive(persberichten.beleid.beleid.economie.tabel()),
+                                           gouverneur.plot = reactive(persberichten.beleid.beleid.gouverneur.plot()),
+                                           gouverneur.tabel = reactive(persberichten.beleid.beleid.gouverneur.tabel()),
+                                           leefmilieu.plot = reactive(persberichten.beleid.beleid.leefmilieu.plot()),
+                                           leefmilieu.tabel = reactive(persberichten.beleid.beleid.leefmilieu.tabel()),
+                                           mobiliteit.plot = reactive(persberichten.beleid.beleid.mobiliteit.plot()),
+                                           mobiliteit.tabel = reactive(persberichten.beleid.beleid.mobiliteit.tabel()),
+                                           onderwijs.plot = reactive(persberichten.beleid.beleid.onderwijs.plot()),
+                                           onderwijs.tabel = reactive(persberichten.beleid.beleid.onderwijs.tabel()),
+                                           provinciebestuur.plot = reactive(persberichten.beleid.beleid.provinciebestuur.plot()),
+                                           provinciebestuur.tabel = reactive(persberichten.beleid.beleid.provinciebestuur.tabel()),
+                                           ruimte.plot = reactive(persberichten.beleid.beleid.ruimte.plot()),
+                                           ruimte.tabel = reactive(persberichten.beleid.beleid.ruimte.tabel()),
+                                           vrijetijd.plot = reactive(persberichten.beleid.beleid.vrijetijd.plot()),
+                                           vrijetijd.tabel = reactive(persberichten.beleid.beleid.vrijetijd.tabel()))
+        # Verzender -----------------------------------------------------------
+          # Algemeen ----------------------------------------------------------
+          # Per maand ---------------------------------------------------------
+          Persberichten.verzender.maand <- list(persdienst.plot = reactive(persberichten.verzender.maand.persdienst.plot()),
+                                                persdienst.tabel = reactive(persberichten.verzender.maand.persdienst.tabel()),
+                                                provincie.plot = reactive(persberichten.verzender.maand.provincie.plot()),
+                                                provincie.tabel = reactive(persberichten.verzender.maand.provincie.tabel()),
+                                                gouverneur.plot = reactive(persberichten.verzender.maand.gouverneur.plot()),
+                                                gouverneur.tabel = reactive(persberichten.verzender.maand.gouverneur.tabel()),
+                                                extern.plot = reactive(persberichten.verzender.maand.extern.plot()),
+                                                extern.tabel = reactive(persberichten.verzender.maand.extern.tabel()))
+        # Type ----------------------------------------------------------------
+        Persberichten.type <- list(type.plot = reactive(persberichten.type.plot()),
+                                   type.tabel = reactive(persberichten.type.tabel()))
+    # Persreturn --------------------------------------------------------------
+      # Beleid ----------------------------------------------------------------
+      Persreturn.beleid <- list(algemeend.plot = reactive(persreturn.beleid.alg.plot()),
+                                algemeen.tabel = reactive(persreturn.beleid.alg.tabel()),
+                                economie.plot = reactive(persreturn.beleid.economie.plot()),
+                                economie.tabel = reactive(persreturn.beleid.alg.tabel()),
+                                gouverneur.plot = reactive(persreturn.beleid.gouverneur.plot()),
+                                gouverneur.tabel = reactive(persreturn.beleid.gouverneur.tabel()),
+                                leefmilieu.plot = reactive(persreturn.beleid.leefmilieu.plot()),
+                                leefmilieu.tabel = reactive(persreturn.beleid.leefmilieu.tabel()),
+                                mobiliteit.plot = reactive(persreturn.beleid.mobiliteit.plot()),
+                                mobiliteit.tabel = reactive(persreturn.beleid.mobiliteit.tabel()),
+                                onderwijs.plot = reactive(persreturn.beleid.onderwijs.plot()),
+                                onderwijs.tabel = reactive(persreturn.beleid.onderwijs.tabel()),
+                                provinciebestuur.plot = reactive(persreturn.beleid.provinciebestuur.plot()),
+                                provinciebestuur.tabel = reactive(persreturn.beleid.provinciebestuur.tabel()),
+                                ruimte.plot = reactive(persreturn.beleid.ruimte.plot()),
+                                ruimte.tabel = reactive(persreturn.beleid.ruimte.tabel()),
+                                vrijetijd.plot = reactive(persreturn.beleid.vrijetijd.plot()),
+                                vrijetijd.tabel = reactive(persreturn.beleid.vrijetijd.tabel()))
+      # Platform --------------------------------------------------------------
   # ===========================================================================
   
   # HTML RAPPORT AANMAAK ======================================================

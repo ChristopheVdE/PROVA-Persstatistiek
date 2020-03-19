@@ -1,17 +1,25 @@
+###############################################################################
+# SHINY APP (Persstatistiek): UI
+###############################################################################
+
+# PACKAGES ====================================================================
 library(shiny)
 library(shinydashboard)
+# =============================================================================
 
-# UI =======================================================================
+
 ui <- dashboardPage(
-  # Title ------------------------------------------------------------
+  # TITLE =====================================================================
   dashboardHeader(
     title = "Persstatistiek"
   ),
-  # Sidebar ---------------------------------------------------
+  # SIDEBAR ===================================================================
   dashboardSidebar(
     sidebarMenu(
       tags$br(),
+    # Input -------------------------------------------------------------------
       menuItem("Input", tabName = "Input"),
+    # Persberichten -----------------------------------------------------------
       menuItem("Persberichten", tabname = "Persberichten", icon = icon("bar-chart-o"),
                menuSubItem("Algemeen", tabName = "Persbericht-algemeen"), 
                menuItem("Per Beleid", tabName = "Persbericht-beleid", icon = icon("angle-double-right", lib = "font-awesome"), 
@@ -24,22 +32,24 @@ ui <- dashboardPage(
                ),
                menuSubItem("Per Type", tabName = "Persbericht-type")
       ),
+    # Persreturn --------------------------------------------------------------
       menuItem("Persreturn", tabname = "Persreturn", icon = icon("bar-chart-o"),
                menuSubItem("Per Beleid", tabName = "Return_Beleid"),
                menuSubItem("Per Platform", tabName = "Return_Platform")
       ),
+    # Download ----------------------------------------------------------------
       menuItem("Download", tabName = "Download"),
-      
       downloadButton("report", "Generate report")
     )
   ),
-  # Body ---------------------------------------------------------------
+  # BODY ======================================================================
   dashboardBody(
     tabItems(
-      # Input scherm -----------------------------------------------
+      # Input scherm ----------------------------------------------------------
       tabItem(
         tabName = "Input",
         fluidRow(
+        # File input & options ------------------------------------------------
           box(
             title = "File input",
             width = 5,
@@ -57,6 +67,7 @@ ui <- dashboardPage(
                         choices = c("Q1", "Q2", "Q3", "Q4", "Jaar"),
                         selected = "Q1")
           ),
+        # Kolom selectie ------------------------------------------------------
           box(
             title = "Selecteer kolomen die overenkomen met kolominhoud (indien geen kolomnnamen in Excel)",
             width = 7,
@@ -91,6 +102,7 @@ ui <- dashboardPage(
               textInput("col.maand", label = NULL, value = 13, placeholder = 9)
             )
           ),
+        # Datatable visualisation ---------------------------------------------
           box(
             tableOutput("table"),
             width = 12
@@ -99,7 +111,7 @@ ui <- dashboardPage(
       ),
       
       # Persberichten ---------------------------------------------------------
-        # Algemeen -------------------------------------------------------
+        # Algemeen ------------------------------------------------------------
           tabItem(
             tabName = "Persbericht-algemeen",
             fluidRow(
@@ -124,7 +136,7 @@ ui <- dashboardPage(
             )
           ),
         # Per beleid ----------------------------------------------------------
-          # Per Maand ----------------------------------------------------
+          # Per Maand ---------------------------------------------------------
             tabItem(
               tabName = "Persbericht-beleid-maand",
               fluidRow(
@@ -178,7 +190,7 @@ ui <- dashboardPage(
                 )
               )
             ),
-          # Per Beleid ---------------------------------------------------
+          # Per Beleid --------------------------------------------------------
             tabItem(
               tabName = "Persbericht-beleid-beleid",
               fluidRow(
@@ -233,7 +245,7 @@ ui <- dashboardPage(
               )
             ),
         # Per Verzender -------------------------------------------------------
-          # Algemeen -----------------------------------------------
+          # Algemeen ----------------------------------------------------------
             tabItem(
               tabName = "Persbericht-verzender-algemeen",
               fluidRow(
@@ -251,7 +263,7 @@ ui <- dashboardPage(
                 )
               )
             ),
-          # Per maand ----------------------------------------------
+          # Per maand ---------------------------------------------------------
             tabItem(
               tabName = "Persbericht-verzender-maand",
               fluidRow(
@@ -281,7 +293,7 @@ ui <- dashboardPage(
                 )
               )
             ),  
-        # Per Type -------------------------------------------------
+        # Per Type ------------------------------------------------------------
           tabItem(
             tabName = "Persbericht-type",
             fluidRow(
@@ -299,14 +311,14 @@ ui <- dashboardPage(
           tabItem(
             tabName = "Return_Beleid",
             fluidRow(
-              # Algemeen ------------------------------------------------------
+            # Algemeen ------------------------------------------------------
               tabBox(
                 width = 12,
                 title = "Persreturn per beleid",
                 tabPanel("Barplot", plotOutput("persreturn.beleid.alg.plot")),
                 tabPanel("Tabel", tableOutput("persreturn.beleid.alg.tabel"))
               ),
-              # Detail --------------------------------------------------------
+            # Detail --------------------------------------------------------
               tabBox(
                 width = 6,
                 title = "Persreturn: Economie",
@@ -357,7 +369,7 @@ ui <- dashboardPage(
               )
             )
           ),
-      # Per Platform -----------------------------------------------------
+      # Per Platform ----------------------------------------------------------
         tabItem(
           tabName = "Return_Platform",
           fluidRow(
