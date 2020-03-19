@@ -252,8 +252,8 @@ ui <- dashboardPage(
                 tabBox(
                   title = "Persberichten per Verzender",
                   width = 12,
-                  tabPanel("Barplot", plotOutput("berichten.verzender.barplot")),
-                  tabPanel("Table", tableOutput("berichten.verzender.table"))
+                  tabPanel("Barplot", plotOutput("persberichten.verzender.alg.totaal.plot")),
+                  tabPanel("Table", tableOutput("persberichten.verzender.alg.totaal.tabel"))
                 ),
                 tabBox(
                   title = "Beleid per Verzender",

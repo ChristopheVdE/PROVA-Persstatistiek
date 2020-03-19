@@ -5,6 +5,7 @@
 # PACKAGES ====================================================================
 library(knitr)
 library(RColorBrewer)
+library(ggplot2)
 # =============================================================================
 
 server <- function(input, output) {
@@ -246,10 +247,20 @@ server <- function(input, output) {
           )
     # PER VERZENDER -----------------------------------------------------------
       # Algemeen --------------------------------------------------------------
-        # Totaal per Verzender
-          # Barplot
-          # Tabel
-        # Beleid per Verzender
+        # Totaal per Verzender ------------------------------------------------
+          # Barplot -----------------------------------------------------------
+          source("./Functions/Persberichten/Per_Verzender/Algemeen/Verzender_totaal/verzender_totaal_barplot.R")
+          persberichten.verzender.alg.totaal.plot <- bericht.verzender.alg.totaal.barplot(reactive(Persstatistiek()))
+          output$persberichten.verzender.alg.totaal.plot <- renderPlot(
+            persberichten.verzender.alg.totaal.plot()
+          )
+          # Tabel -------------------------------------------------------------
+          source("./Functions/Persberichten/Per_Verzender/Algemeen/Verzender_totaal/verzender_totaal_tabel.R")
+          persberichten.verzender.alg.totaal.tabel <- bericht.verzender.alg.totaal.tabel(reactive(Persstatistiek()))
+          output$persberichten.verzender.alg.totaal.tabel <- renderTable(
+            persberichten.verzender.alg.totaal.tabel()
+          )
+        # Beleid per Verzender ------------------------------------------------
           # Barlot ------------------------------------------------------------
           source("./Functions/Persberichten/Per_Verzender/Algemeen/Verzender_beleid/verzender_beleid_barplot.R")
           persberichten.verzender.alg.beleid.plot <- bericht.verzender.alg.beleid.barplot(reactive(Persstatistiek()))
