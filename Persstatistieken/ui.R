@@ -53,17 +53,25 @@ ui <- dashboardPage(
           box(
             title = "File input",
             width = 5,
+          # File input
             fileInput("file", 
                       "Kies Excel document:",
                       multiple = FALSE,
                       accept = c(".xls", ".xlsx"),
                       width = 900,
                       placeholder = "No file selected"),
-            
+          # Werkblad
             textInput("sheet", "Te gebruiken Werkblad", value ="Hele organisatie", placeholder = "Hele organisatie" ),
+          # Headers  
             checkboxInput("headers", label = "Eerste rij bevat kolomnamen", value = TRUE),
+          # Jaar
+            selectInput("jaar", 
+                        label = "Jaar", 
+                        choices = c(format(Sys.Date(), "%Y"):2010),
+                        selected = format(Sys.Date(), "%Y")),
+          # Kwartaal
             selectInput("kwartaal",
-                        "Selecteer kwartaal:",
+                        label = "Selecteer kwartaal:",
                         choices = c("Q1", "Q2", "Q3", "Q4", "Jaar"),
                         selected = "Q1")
           ),

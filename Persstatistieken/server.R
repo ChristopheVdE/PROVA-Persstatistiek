@@ -451,7 +451,7 @@ server <- function(input, output) {
   # VARIABLE COLLECTION FOR MARKDOWN (HTML) ===================================
     # Persberichten -----------------------------------------------------------
       # Algemeen --------------------------------------------------------------
-      Persberichten.alg <- list(kartaal.plot = reactive(persberichten.alg.kwartaal.plot()),
+      Persberichten.alg <- list(kwartaal.plot = reactive(persberichten.alg.kwartaal.plot()),
                                 kwartaal.tabel = reactive(persberichten.alg.kwartaal.tabel()),
                                 maand.plot = reactive(persberichten.alg.maand.plot()),
                                 maand.tabel = reactive(persberichten.alg.maand.tabel()),
@@ -494,6 +494,10 @@ server <- function(input, output) {
                                            vrijetijd.tabel = reactive(persberichten.beleid.beleid.vrijetijd.tabel()))
         # Verzender -----------------------------------------------------------
           # Algemeen ----------------------------------------------------------
+          Persberichten.verzender.alg <- list(totaal.plot = reactive(persberichten.verzender.alg.totaal.plot()),
+                                              totaal.tabel = reactive(persberichten.verzender.alg.totaal.tabel()),
+                                              beleid.plot = reactive(persberichten.verzender.alg.beleid.plot()),
+                                              beleid.tabel = reactive(persberichten.verzender.alg.beleid.plot()))
           # Per maand ---------------------------------------------------------
           Persberichten.verzender.maand <- list(persdienst.plot = reactive(persberichten.verzender.maand.persdienst.plot()),
                                                 persdienst.tabel = reactive(persberichten.verzender.maand.persdienst.tabel()),
@@ -508,7 +512,7 @@ server <- function(input, output) {
                                    type.tabel = reactive(persberichten.type.tabel()))
     # Persreturn --------------------------------------------------------------
       # Beleid ----------------------------------------------------------------
-      Persreturn.beleid <- list(algemeend.plot = reactive(persreturn.beleid.alg.plot()),
+      Persreturn.beleid <- list(algemeen.plot = reactive(persreturn.beleid.alg.plot()),
                                 algemeen.tabel = reactive(persreturn.beleid.alg.tabel()),
                                 economie.plot = reactive(persreturn.beleid.economie.plot()),
                                 economie.tabel = reactive(persreturn.beleid.alg.tabel()),
@@ -527,12 +531,14 @@ server <- function(input, output) {
                                 vrijetijd.plot = reactive(persreturn.beleid.vrijetijd.plot()),
                                 vrijetijd.tabel = reactive(persreturn.beleid.vrijetijd.tabel()))
       # Platform --------------------------------------------------------------
+      Persreturn.platform <- list(platform.plot = reactive(persreturn.platform.plot()),
+                                  platform.tabel = reactive(persreturn.platform.tabel()))
   # ===========================================================================
   
   # HTML RAPPORT AANMAAK ======================================================
   output$report <- downloadHandler(
     # For PDF output, change this to "report.pdf"
-    filename = "report.html",
+    filename = reactive(paste0("Persstatistiek_", paste0(input$jaar, paste0("_", paste0(input$kwartaal, ".html"))))),
     content = function(file) {
       # Copy the report file to a temporary directory before processing it, in
       # case we don't have write permissions to the current working dir (which
@@ -541,108 +547,16 @@ server <- function(input, output) {
       file.copy("report.Rmd", tempReport, overwrite = TRUE)
       
       # Set up parameters to pass to Rmd document
-      params <- list(data = Persstatistiek(),
-                     jaar = "jaar",
+      params <- list(jaar = input$jaar,
                      kwartaal = input$kwartaal,
-                     # 1.1 Persberichten algemeen -------------------------
-                     # 1.1.1 Kwartaal
-                     persberichten.alg.kwartaal.tabel = df.berichten.Kwartaal(),
-                     persberichten.alg.kwartaal.barplot = berichten.barplot.kwartaal(),
-                     # 1.1.2 Maand
-                     persberichten.alg.maand.tabel = berichten.tabel.maand(),
-                     persberichten.alg.maand.barplot = berichten.barplot.maand(),
-                     # 1.1.3 Beleid
-                     persberichten.alg.beleid.barplot = persberichten.beleid.barplot(),
-                     persberichten.alg.beleid.tabel = persberichten.beleid.tabel(),
-                     # 1.2 Persberichten per beleid -----------------------
-                     # 1.2.1 Economie ------------------------------------
-                     # Per maand
-                     persberichten.beleid.maand.economie.barplot = Persberichten.beleid.maand.barplot(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Economie"))(),
-                     persberichten.beleid.maand.economie.tabel = Persberichten.beleid.maand.tabel(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Economie"))(),
-                     # Per deelbeleid
-                     persberichten.beleid.economie.barplot = persberichten.beleid.economie.barplot(),
-                     persberichten.beleid.economie.tabel = persberichten.beleid.economie.tabel(),
-                     # 1.2.2 Gouverneur ----------------------------------
-                     # Per maand
-                     persberichten.beleid.maand.gouverneur.barplot = Persberichten.beleid.maand.barplot(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Gouverneur"))(),
-                     persberichten.beleid.maand.gouverneur.tabel = Persberichten.beleid.maand.tabel(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Gouverneur"))(),
-                     # Per deelbeleid
-                     persberichten.beleid.gouverneur.barplot = persberichten.beleid.gouverneur.barplot(),
-                     persberichten.beleid.gouverneur.tabel = persberichten.beleid.gouverneur.tabel(),
-                     # 1.2.3 Leefmilieu ----------------------------------
-                     # Per maand
-                     persberichten.beleid.maand.leefmilieu.barplot = Persberichten.beleid.maand.barplot(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Leefmilieu"))(),
-                     persberichten.beleid.maand.leefmilieu.tabel = Persberichten.beleid.maand.tabel(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Leefmilieu"))(),
-                     # Per deelbeleid
-                     persberichten.beleid.leefmilieu.barplot = persberichten.beleid.leefmilieu.barplot(),
-                     persberichten.beleid.leefmilieu.tabel = persberichten.beleid.leefmilieu.tabel(),
-                     # 1.2.4 Mobiliteit ----------------------------------
-                     # Per maand
-                     persberichten.beleid.maand.mobiliteit.barplot = Persberichten.beleid.maand.barplot(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Mobiliteit"))(),
-                     persberichten.beleid.maand.mobiliteit.tabel = Persberichten.beleid.maand.tabel(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Mobiliteit"))(),
-                     # Per deelbeleid
-                     persberichten.beleid.mobiliteit.barplot = persberichten.beleid.mobiliteit.barplot(),
-                     persberichten.beleid.mobiliteit.tabel = persberichten.beleid.mobiliteit.tabel(),
-                     # 1.2.5 Onderwijs en Educatie -----------------------
-                     # Per maand
-                     persberichten.beleid.maand.onderwijs.barplot = Persberichten.beleid.maand.barplot(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Onderwijs en Educatie"))(),
-                     persberichten.beleid.maand.onderwijs.tabel = Persberichten.beleid.maand.tabel(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Onderwijs en Educatie"))(),
-                     # Per deelbeleid
-                     persberichten.beleid.onderwijs.barplot = persberichten.beleid.onderwijs.barplot(),
-                     persberichten.beleid.onderwijs.tabel = persberichten.beleid.onderwijs.tabel(),
-                     # 1.2.6 Provinciebestuur ----------------------------
-                     # Per maand
-                     persberichten.beleid.maand.provinciebestuur.barplot = Persberichten.beleid.maand.barplot(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Provinciebestuur"))(),
-                     persberichten.beleid.maand.provinciebestuur.tabel = Persberichten.beleid.maand.tabel(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Provinciebestuur"))(),
-                     # Per deelbeleid
-                     persberichten.beleid.provinciebestuur.barplot = persberichten.beleid.provinciebestuur.barplot(),
-                     persberichten.beleid.provinciebestuur.tabel = persberichten.beleid.provinciebestuur.tabel(),
-                     # 1.2.7 Ruimte --------------------------------------
-                     # Per maand
-                     persberichten.beleid.maand.ruimte.barplot = Persberichten.beleid.maand.barplot(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Ruimte"))(),
-                     persberichten.beleid.maand.ruimte.tabel = Persberichten.beleid.maand.tabel(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Ruimte"))(),
-                     # Per deelbeleid
-                     persberichten.beleid.ruimte.barplot = persberichten.beleid.ruimte.barplot(),
-                     persberichten.beleid.ruimte.tabel = persberichten.beleid.ruimte.tabel(),
-                     # 1.2.8 Vrije Tijd ----------------------------------
-                     # Per maand
-                     persberichten.beleid.maand.vrijetijd.barplot = Persberichten.beleid.maand.barplot(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Vrije Tijd"))(),
-                     persberichten.beleid.maand.vrijetijd.tabel = Persberichten.beleid.maand.tabel(reactive(df.berichten.Maand.totaal.per.Beleid()), reactive("Vrije Tijd"))(),
-                     # Per deelbeleid
-                     persberichten.beleid.vrijetijd.barplot = persberichten.beleid.vrijetijd.barplot(),
-                     persberichten.beleid.vrijetijd.tabel = persberichten.beleid.vrijetijd.tabel(),
-                     # 1.3 Persberichten per verzender --------------------
-                     # 1.3.1 Algemeen
-                     berichten.verzender.beleid.table = berichten.verzender.beleid.table(),
-                     berichten.verzender.beleid.barplot = berichten.verzender.beleid.barplot(),
-                     # 1.3.2 Per maand
-                     # 1.4 Persberichten per type -------------------------
-                     berichten.type.table = berichten.type.table(),
-                     berichten.type.barplot = berichten.type.barplot(),
-                     # 2.1 Persreturn per beleid --------------------------
-                     # Algemeen ----------------------------------------
-                     persreturn.beleid.barplot = persreturn.beleid.barplot(),
-                     persreturn.beleid.tabel = persreturn.beleid.tabel(),
-                     # Per deelbeleid ----------------------------------
-                     persreturn.beleid.economie.barplot = persreturn.beleid.economie.barplot(),
-                     persreturn.beleid.economie.tabel = persreturn.beleid.economie.tabel(),
-                     persreturn.beleid.gouverneur.barplot = persreturn.beleid.gouverneur.barplot(),
-                     persreturn.beleid.gouverneur.tabel = persreturn.beleid.gouverneur.tabel(),
-                     persreturn.beleid.leefmilieu.barplot = persreturn.beleid.leefmilieu.barplot(),
-                     persreturn.beleid.leefmilieu.tabel = persreturn.beleid.leefmilieu.tabel(),
-                     persreturn.beleid.mobiliteit.barplot = persreturn.beleid.mobiliteit.barplot(),
-                     persreturn.beleid.mobiliteit.tabel = persreturn.beleid.mobiliteit.tabel(),
-                     persreturn.beleid.onderwijs.barplot = persreturn.beleid.onderwijs.barplot(),
-                     persreturn.beleid.onderwijs.tabel = persreturn.beleid.onderwijs.tabel(),
-                     persreturn.beleid.provinciebestuur.barplot = persreturn.beleid.provinciebestuur.barplot(),
-                     persreturn.beleid.provinciebestuur.tabel = persreturn.beleid.provinciebestuur.tabel(),
-                     persreturn.beleid.ruimte.barplot = persreturn.beleid.ruimte.barplot(),
-                     persreturn.beleid.ruimte.tabel = persreturn.beleid.ruimte.tabel(),
-                     persreturn.beleid.vrijetijd.barplot = persreturn.beleid.vrijetijd.barplot(),
-                     persreturn.beleid.vrijetijd.tabel = persreturn.beleid.vrijetijd.tabel(),
-                     # 2.2 Persreturn per platform ------------------------
-                     return.platform.table = return.platform.table(),
-                     return.platform.barplot = return.platform.barplot())
+                     Persberichten.alg = Persberichten.alg,
+                     Persberichten.beleid.maand = Persberichten.beleid.maand,
+                     Persberichten.beleid.beleid = Persberichten.beleid.beleid,
+                     Persberichten.verzender.alg = Persberichten.verzender.alg,
+                     Persberichten.verzender.maand = Persberichten.verzender.maand,
+                     Persberichten.type = Persberichten.type,
+                     Persreturn.beleid = Persreturn.beleid,
+                     Persreturn.platform = Persreturn.platform)
       
       # Knit the document, passing in the `params` list, and eval it in a
       # child of the global environment (this isolates the code in the document
