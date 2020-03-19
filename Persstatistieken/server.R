@@ -327,6 +327,104 @@ server <- function(input, output) {
   
   # PERSRETURN ================================================================
     # PER BELEID --------------------------------------------------------------
+      # Algemeen --------------------------------------------------------------
+        # Barplot -------------------------------------------------------------
+        source("./Functions/Persreturn/Per_beleid/Algemeen/return_beleid_barplot.R")
+        persreturn.beleid.alg.plot <- persreturn.beleid.barplot(reactive(Persstatistiek()))
+        output$persreturn.beleid.alg.plot <- renderPlot(
+          persreturn.beleid.alg.plot()
+        )
+        # Tabel ---------------------------------------------------------------
+        source("./Functions/Persreturn/Per_beleid/Algemeen/return_beleid_tabel.R")
+        persreturn.beleid.alg.tabel <- persreturn.beleid.tabel(reactive(Persstatistiek()))
+        output$persreturn.beleid.alg.tabel <- renderPlot(
+          persreturn.beleid.alg.tabel()
+        )
+      # Deelbeleid ------------------------------------------------------------
+        # Barplot -------------------------------------------------------------
+        source("./Functions/Persreturn/Per_beleid/Detail/return_deelbeleid_barplot.R")
+          # Economie
+          persreturn.beleid.economie.plot <- persreturn.deelbeleid.barplot(reactive(Persstatistiek()), reactive("Economie"))
+          output$persreturn.beleid.economie.plot <- renderPlot(
+            persreturn.beleid.economie.plot()
+          )
+          # Gouverneur
+          persreturn.beleid.gouverneur.plot <- persreturn.deelbeleid.barplot(reactive(Persstatistiek()), reactive("Gouverneur"))
+          output$persreturn.beleid.gouverneur.plot <- renderPlot(
+            persreturn.beleid.gouverneur.plot()
+          )
+          # Leefmilieu
+          persreturn.beleid.leefmilieu.plot <- persreturn.deelbeleid.barplot(reactive(Persstatistiek()), reactive("Leefmilieu"))
+          output$persreturn.beleid.leefmilieu.plot <- renderPlot(
+            persreturn.beleid.leefmilieu.plot()
+          )
+          # Mobiliteit
+          persreturn.beleid.mobiliteit.plot <- persreturn.deelbeleid.barplot(reactive(Persstatistiek()), reactive("Mobiliteit"))
+          output$persreturn.beleid.mobiliteit.plot <- renderPlot(
+            persreturn.beleid.mobiliteit.plot()
+          )
+          # Onderwijs en Educatie
+          persreturn.beleid.onderwijs.plot <- persreturn.deelbeleid.barplot(reactive(Persstatistiek()), reactive("Onderwijs en Educatie"))
+          output$persreturn.beleid.onderwijs.plot <- renderPlot(
+            persreturn.beleid.onderwijs.plot()
+          )
+          # Provinciebestuur
+          persreturn.beleid.provinciebestuur.plot <- persreturn.deelbeleid.barplot(reactive(Persstatistiek()), reactive("Provinciebestuur"))
+          output$persreturn.beleid.provinciebestuur.plot <- renderPlot(
+            persreturn.beleid.provinciebestuur.plot()
+          )
+          # Ruimte
+          persreturn.beleid.ruimte.plot <- persreturn.deelbeleid.barplot(reactive(Persstatistiek()), reactive("Ruimte"))
+          output$persreturn.beleid.ruimte.plot <- renderPlot(
+            persreturn.beleid.ruimte.plot()
+          )
+          # Vrije Tijd
+          persreturn.beleid.vrijetijd.plot <- persreturn.deelbeleid.barplot(reactive(Persstatistiek()), reactive("Vrije Tijd"))
+          output$persreturn.beleid.vrijetijd.plot <- renderPlot(
+            persreturn.beleid.vrijetijd.plot()
+          )
+        # Tabel ---------------------------------------------------------------
+        source("./Functions/Persreturn/Per_beleid/Detail/return_deelbeleid_tabel.R")
+          # Economie
+          persreturn.beleid.economie.tabel <- persreturn.deelbeleid.tabel(reactive(Persstatistiek()), reactive("Economie"))
+          output$persreturn.beleid.economie.tabel <- renderTable(
+            persreturn.beleid.economie.tabel()
+          )
+          # Gouverneur
+          persreturn.beleid.gouverneur.tabel <- persreturn.deelbeleid.tabel(reactive(Persstatistiek()), reactive("Gouverneur"))
+          output$persreturn.beleid.gouverneur.tabel <- renderTable(
+            persreturn.beleid.gouverneur.tabel()
+          )
+          # Leefmilieu
+          persreturn.beleid.leefmilieu.tabel <- persreturn.deelbeleid.tabel(reactive(Persstatistiek()), reactive("Leefmilieu"))
+          output$persreturn.beleid.leefmilieu.tabel <- renderTable(
+            persreturn.beleid.leefmilieu.tabel()
+          )
+          # Mobiliteit
+          persreturn.beleid.mobiliteit.tabel <- persreturn.deelbeleid.tabel(reactive(Persstatistiek()), reactive("Mobiliteit"))
+          output$persreturn.beleid.mobiliteit.tabel <- renderTable(
+            persreturn.beleid.mobiliteit.tabel()
+          )
+          # Onderwijs en Educatie
+          persreturn.beleid.onderwijs.tabel <- persreturn.deelbeleid.tabel(reactive(Persstatistiek()), reactive("Onderwijs en Educatie"))
+          output$persreturn.beleid.onderwijs.tabel <- renderTable(
+            persreturn.beleid.onderwijs.tabel()
+          )
+          # Provinciebestuur
+          persreturn.beleid.provinciebestuur.tabel <- persreturn.deelbeleid.tabel(reactive(Persstatistiek()), reactive("Provinciebestuur"))
+          output$persreturn.beleid.provinciebestuur.tabel <- renderTable(
+            persreturn.beleid.provinciebestuur.tabel()
+          )
+          # Ruimte
+          persreturn.beleid.ruimte.tabel <- persreturn.deelbeleid.tabel(reactive(Persstatistiek()), reactive("Ruimte"))
+          output$persreturn.beleid.ruimte.tabel <- renderTable(
+            persreturn.beleid.ruimte.tabel()
+          )
+          # Vrije Tijd
+          persreturn.beleid.vrijetijd.tabel <- persreturn.deelbeleid.tabel(reactive(Persstatistiek()), reactive("Vrije Tijd"))
+          output$persreturn.beleid.vrijetijd.tabel <- renderTable(
+            persreturn.beleid.vrijetijd.tabel()
+          )
     # PER PLATFORM ------------------------------------------------------------
       # Barplot ---------------------------------------------------------------
       source("./Functions/Persreturn/Per_platform/return_platform_barplot.R")
@@ -343,151 +441,6 @@ server <- function(input, output) {
   # ===========================================================================
   
   # HTML RAPPORT AANMAAK ======================================================
-  
-  # ===========================================================================
-  
-  
-
-  # Persreturn -------------------------------------------------------------      
-  # Per beleid -----------------------------------------------------------
-  # Preparation --------------------------------------------------------
-  df.return.beleid <- reactive({
-    # Create dataframe for barplot ---------------------------------
-    return.beleid <- data.frame(table(Persstatistiek()$Beleid,
-                                      Persstatistiek()$Persreturn))
-    # Rename columns -----------------------------------------------
-    colnames(return.beleid) <- c("Beleid", "Persreturn", "Freq")
-    
-    return(return.beleid)
-  })
-  # Barplot ------------------------------------------------------------
-  persreturn.beleid.barplot <- Persreturn.beleid.barplot(reactive(df.return.beleid()), reactive("Persreturn per beleid"), reactive("Beleid"))
-  output$persreturn.beleid.barplot <- renderPlot({
-    persreturn.beleid.barplot()
-  })
-  # Table --------------------------------------------------------------
-  persreturn.beleid.tabel <- Persreturn.beleid.tabel(reactive(df.return.beleid()), reactive("Persreturn per beleid"), reactive("Beleid"))
-  output$persreturn.beleid.tabel <- renderTable({
-    persreturn.beleid.tabel()
-  })
-  # Per beleid detail-----------------------------------------------------
-  # Preparation --------------------------------------------------------
-  df.Persreturn.beleid.detail <- reactive({
-    Persreturn <- split(Persstatistiek(), Persstatistiek()$Beleid)
-    
-    for (i in levels(Persstatistiek()$Beleid)) ({
-      Persreturn[[i]] <- data.frame(table(Persreturn[[i]]$"Detail beleid", Persreturn[[i]]$Persreturn))
-      Persreturn[[i]] <- cbind(Beleid = i, Persreturn[[i]])
-      colnames(Persreturn[[i]]) <- c("Beleid","Detail", "Persreturn", "Freq")
-      
-      # Fix missing freq
-      temp <- Persreturn[[i]]
-      temp$Persreturn <- as.factor(temp$Persreturn)
-      if(!("Ja" %in% levels(temp$Persreturn))) {
-        df.Ja <- Persreturn[[i]]
-        df.Ja$Persreturn <- "Ja"
-        df.Ja$Freq <- 0
-        Persreturn[[i]] <- rbind(df.Ja, Persreturn[[i]])
-      } else if(!("Nee" %in% levels(temp$Persreturn))) {
-        df.Nee <- Persreturn[[i]]
-        df.Nee$Persreturn <- "Nee"
-        df.Nee$Freq <- 0
-        Persreturn[[i]] <- rbind(df.Nee, Persreturn[[i]])
-      }
-    })
-    return(Persreturn)
-  })
-  # Barplots & Tables --------------------------------------------------
-  # Economie ---------------------------------------------------------
-  # Barplot ---------------------------------------------------------
-  persreturn.beleid.economie.barplot <- Persreturn.beleid.barplot(reactive(df.Persreturn.beleid.detail()$Economie), reactive("Persreturn: Economie"), reactive("Detail"))
-  output$persreturn.beleid.economie.barplot <- renderPlot({
-    persreturn.beleid.economie.barplot()
-  })
-  # Table -----------------------------------------------------------
-  persreturn.beleid.economie.tabel <- Persreturn.beleid.tabel(reactive(df.Persreturn.beleid.detail()$Economie), reactive("Persreturn: Economie"), reactive("Detail"))
-  output$persreturn.beleid.economie.tabel <- renderTable({
-    persreturn.beleid.economie.tabel()
-  })
-  # Gouverneur -------------------------------------------------------
-  # Barplot ---------------------------------------------------------
-  persreturn.beleid.gouverneur.barplot <- Persreturn.beleid.barplot(reactive(df.Persreturn.beleid.detail()$Gouverneur), reactive("Persreturn: Gouverneur"), reactive("Detail"))
-  output$persreturn.beleid.gouverneur.barplot <- renderPlot({
-    persreturn.beleid.gouverneur.barplot()
-  })
-  # Table -----------------------------------------------------------
-  persreturn.beleid.gouverneur.tabel <- Persreturn.beleid.tabel(reactive(df.Persreturn.beleid.detail()$Gouverneur), reactive("Persreturn: Gouverneur"), reactive("Detail"))
-  output$persreturn.beleid.gouverneur.tabel <- renderTable({
-    persreturn.beleid.gouverneur.tabel()
-  })
-  # Leefmilieu -------------------------------------------------------
-  # Barplot ---------------------------------------------------------
-  persreturn.beleid.leefmilieu.barplot <- Persreturn.beleid.barplot(reactive(df.Persreturn.beleid.detail()$Leefmilieu), reactive("Persreturn: Leefmilieu"), reactive("Detail"))
-  output$persreturn.beleid.leefmilieu.barplot <- renderPlot({
-    persreturn.beleid.leefmilieu.barplot()
-  })
-  # Table -----------------------------------------------------------
-  persreturn.beleid.leefmilieu.tabel <- Persreturn.beleid.tabel(reactive(df.Persreturn.beleid.detail()$Leefmilieu), reactive("Persreturn: Leefmilieu"), reactive("Detail"))
-  output$persreturn.beleid.leefmilieu.tabel <- renderTable({
-    persreturn.beleid.leefmilieu.tabel()
-  })
-  # Mobiliteit -------------------------------------------------------
-  # Barplot ---------------------------------------------------------
-  persreturn.beleid.mobiliteit.barplot <- Persreturn.beleid.barplot(reactive(df.Persreturn.beleid.detail()$Mobiliteit), reactive("Persreturn: Mobiliteit"), reactive("Detail"))
-  output$persreturn.beleid.mobiliteit.barplot <- renderPlot({
-    persreturn.beleid.mobiliteit.barplot()
-  })
-  # Table -----------------------------------------------------------
-  persreturn.beleid.mobiliteit.tabel <- Persreturn.beleid.tabel(reactive(df.Persreturn.beleid.detail()$Mobiliteit), reactive("Persreturn: Mobiliteit"), reactive("Detail"))
-  output$persreturn.beleid.mobiliteit.tabel <- renderTable({
-    persreturn.beleid.mobiliteit.tabel()
-  })
-  # Onderwijs en Educatie --------------------------------------------
-  # Barplot ---------------------------------------------------------
-  persreturn.beleid.onderwijs.barplot <- Persreturn.beleid.barplot(reactive(df.Persreturn.beleid.detail()$"Onderwijs en Educatie"), reactive("Persreturn: Onderwijs en Educatie"), reactive("Detail"))
-  output$persreturn.beleid.onderwijs.barplot <- renderPlot({
-    persreturn.beleid.onderwijs.barplot()
-  })
-  # Table -----------------------------------------------------------
-  persreturn.beleid.onderwijs.tabel <- Persreturn.beleid.tabel(reactive(df.Persreturn.beleid.detail()$"Onderwijs en Educatie"), reactive("Persreturn: Onderwijs en Educatie"), reactive("Detail"))
-  output$persreturn.beleid.onderwijs.tabel <- renderTable({
-    persreturn.beleid.onderwijs.tabel()
-  })
-  # Provinciebestuur -------------------------------------------------
-  # Barplot ---------------------------------------------------------
-  persreturn.beleid.provinciebestuur.barplot <- Persreturn.beleid.barplot(reactive(df.Persreturn.beleid.detail()$Provinciebestuur), reactive("Persreturn: Provinciebestuur"), reactive("Detail"))
-  output$persreturn.beleid.provinciebestuur.barplot <- renderPlot({
-    persreturn.beleid.provinciebestuur.barplot()
-  })
-  # Table -----------------------------------------------------------
-  persreturn.beleid.provinciebestuur.tabel <- Persreturn.beleid.tabel(reactive(df.Persreturn.beleid.detail()$Provinciebestuur), reactive("Persreturn: Provinciebestuur"), reactive("Detail"))
-  output$persreturn.beleid.provinciebestuur.tabel <- renderTable({
-    persreturn.beleid.provinciebestuur.tabel()
-  })
-  # Ruimte -----------------------------------------------------------
-  # Barplot ---------------------------------------------------------
-  persreturn.beleid.ruimte.barplot <- Persreturn.beleid.barplot(reactive(df.Persreturn.beleid.detail()$Ruimte), reactive("Persreturn: Ruimte"), reactive("Detail"))
-  output$persreturn.beleid.ruimte.barplot <- renderPlot({
-    persreturn.beleid.ruimte.barplot()
-  })
-  # Table --------------------------------------------------------------
-  persreturn.beleid.ruimte.tabel <- Persreturn.beleid.tabel(reactive(df.Persreturn.beleid.detail()$Ruimte), reactive("Persreturn: Ruimte"), reactive("Detail"))
-  output$persreturn.beleid.ruimte.tabel <- renderTable({
-    persreturn.beleid.ruimte.tabel()
-  })
-  # Vrije Tijd -------------------------------------------------------
-  # Barplot ------------------------------------------------------------
-  persreturn.beleid.vrijetijd.barplot <- Persreturn.beleid.barplot(reactive(df.Persreturn.beleid.detail()$"Vrije Tijd"), reactive("Persreturn: Vrije Tijd"), reactive("Detail"))
-  output$persreturn.beleid.vrijetijd.barplot <- renderPlot({
-    persreturn.beleid.vrijetijd.barplot()
-  })
-  # Table --------------------------------------------------------------
-  persreturn.beleid.vrijetijd.tabel <- Persreturn.beleid.tabel(reactive(df.Persreturn.beleid.detail()$"Vrije Tijd"), reactive("Persreturn: Vrije Tijd"), reactive("Detail"))
-  output$persreturn.beleid.vrijetijd.tabel <- renderTable({
-    persreturn.beleid.vrijetijd.tabel()
-  })
-
-  # HTML aanmaak -----------------------------------------------------------
   output$report <- downloadHandler(
     # For PDF output, change this to "report.pdf"
     filename = "report.html",
@@ -611,4 +564,5 @@ server <- function(input, output) {
       )
     }
   )
+  # ===========================================================================
 }

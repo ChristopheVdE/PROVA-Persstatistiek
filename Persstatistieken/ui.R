@@ -98,7 +98,7 @@ ui <- dashboardPage(
         )
       ),
       
-      # Persberichten ----------------------------------------------------
+      # Persberichten ---------------------------------------------------------
         # Algemeen -------------------------------------------------------
           tabItem(
             tabName = "Persbericht-algemeen",
@@ -123,7 +123,7 @@ ui <- dashboardPage(
               ),
             )
           ),
-        # Per beleid -----------------------------------------------------
+        # Per beleid ----------------------------------------------------------
           # Per Maand ----------------------------------------------------
             tabItem(
               tabName = "Persbericht-beleid-maand",
@@ -232,7 +232,7 @@ ui <- dashboardPage(
                 )
               )
             ),
-        # Per Verzender --------------------------------------------
+        # Per Verzender -------------------------------------------------------
           # Algemeen -----------------------------------------------
             tabItem(
               tabName = "Persbericht-verzender-algemeen",
@@ -294,63 +294,65 @@ ui <- dashboardPage(
             )
           ),
       
-      # Persreturn -------------------------------------------------------
-        # Per beleid -----------------------------------------------------
+      # Persreturn ------------------------------------------------------------
+        # Per beleid ----------------------------------------------------------
           tabItem(
             tabName = "Return_Beleid",
             fluidRow(
+              # Algemeen ------------------------------------------------------
               tabBox(
                 width = 12,
                 title = "Persreturn per beleid",
-                tabPanel("Barplot", plotOutput("persreturn.beleid.barplot")),
-                tabPanel("Tabel", tableOutput("persreturn.beleid.tabel"))
+                tabPanel("Barplot", plotOutput("persreturn.beleid.alg.plot")),
+                tabPanel("Tabel", tableOutput("persreturn.beleid.alg.tabel"))
               ),
+              # Detail --------------------------------------------------------
               tabBox(
                 width = 6,
                 title = "Persreturn: Economie",
-                tabPanel("Barplot", plotOutput("persreturn.beleid.economie.barplot")),
+                tabPanel("Barplot", plotOutput("persreturn.beleid.economie.plot")),
                 tabPanel("Tabel", tableOutput("persreturn.beleid.economie.tabel"))
               ),
               tabBox(
                 width = 6,
                 title = "Persreturn: Gouverneur",
-                tabPanel("Barplot", plotOutput("persreturn.beleid.gouverneur.barplot")),
+                tabPanel("Barplot", plotOutput("persreturn.beleid.gouverneur.plot")),
                 tabPanel("Tabel", tableOutput("persreturn.beleid.gouverneur.tabel"))
               ),
               tabBox(
                 width = 6,
                 title = "Persreturn: Leefmilieu",
-                tabPanel("Barplot", plotOutput("persreturn.beleid.leefmilieu.barplot")),
+                tabPanel("Barplot", plotOutput("persreturn.beleid.leefmilieu.plot")),
                 tabPanel("Tabel", tableOutput("persreturn.beleid.leefmilieu.tabel"))
               ),
               tabBox(
                 width = 6,
                 title = "Persreturn: Mobiliteit",
-                tabPanel("Barplot", plotOutput("persreturn.beleid.mobiliteit.barplot")),
+                tabPanel("Barplot", plotOutput("persreturn.beleid.mobiliteit.plot")),
                 tabPanel("Tabel", tableOutput("persreturn.beleid.mobiliteit.tabel"))
               ),
               tabBox(
                 width = 6,
                 title = "Persreturn: Onderwijs en Educatie",
-                tabPanel("Barplot", plotOutput("persreturn.beleid.onderwijs.barplot")),
+                tabPanel("Barplot", plotOutput("persreturn.beleid.onderwijs.plot")),
                 tabPanel("Tabel", tableOutput("persreturn.beleid.onderwijs.tabel"))
               ),
               tabBox(
                 width = 6,
                 title = "Persreturn: Provinciebestuur",
-                tabPanel("Barplot", plotOutput("persreturn.beleid.provinciebestuur.barplot")),
+                tabPanel("Barplot", plotOutput("persreturn.beleid.provinciebestuur.plot")),
                 tabPanel("Tabel", tableOutput("persreturn.beleid.provinciebestuur.tabel"))
               ),
               tabBox(
                 width = 6,
                 title = "Persreturn: Ruimte",
-                tabPanel("Barplot", plotOutput("persreturn.beleid.ruimte.barplot")),
+                tabPanel("Barplot", plotOutput("persreturn.beleid.ruimte.plot")),
                 tabPanel("Tabel", tableOutput("persreturn.beleid.ruimte.tabel"))
               ),
               tabBox(
                 width = 6,
                 title = "Persreturn: Vrije Tijd",
-                tabPanel("Barplot", plotOutput("persreturn.beleid.vrijetijd.barplot")),
+                tabPanel("Barplot", plotOutput("persreturn.beleid.vrijetijd.plot")),
                 tabPanel("Tabel", tableOutput("persreturn.beleid.vrijetijd.tabel"))
               )
             )
