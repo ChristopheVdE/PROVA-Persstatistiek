@@ -13,9 +13,9 @@ bericht.beleid.maand.barplot <- function(data, beleid) {
     # Specify color pallete
     colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
     # Create plot
-    ggplot(data=df.berichten.Maand.totaal.per.Beleid()[[beleid()]], aes(x=Beleid, y=Freq, fill=Maand)) +
+    ggplot(data=df.berichten.Maand.totaal.per.Beleid()[[beleid()]], aes(x=Maand, y=Freq, fill=Maand)) +
       geom_bar(position = "dodge", stat='identity') +
-      xlab("Beleid") +
+      xlab("Maand") +
       ylab("Aantal") +
       ggtitle(paste0("Persberichten: Maand per Beleid (", paste0(beleid(), ")"))) +
       geom_text(aes(label=Freq),

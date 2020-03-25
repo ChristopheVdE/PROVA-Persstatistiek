@@ -1,5 +1,4 @@
 ---
-title: "Persstatistiek"
 output: 
   html_document:
     toc: true
@@ -8,8 +7,7 @@ output:
       smooth_scroll: true
     toc_depth: 4
 params:
-  jaar: NA
-  kwartaal: NA
+  titel: NA
   Persberichten.alg: NA
   Persberichten.beleid.maand: NA
   Persberichten.beleid.beleid: NA
@@ -18,17 +16,21 @@ params:
   Persberichten.type: NA
   Persreturn.beleid: NA
   Persreturn.platform: NA
+  
+title: "`r params$titel`"
+author: "Provincie Antwerpen - Persdienst"
+date: "`r format(Sys.Date(), '%d %B %Y')`"
 ---
+
 
 ```{r "Load required packages", include = FALSE}
 library(knitr)
 ```
 
-# `r paste(params$jaar, params$kwartaal, sep= " - ")`
 
-## 1. Persberichten
-### 1.1. Algemeen
-#### 1.1.1. Per kwartaal {.tabset .tabset-fade}
+## 1. Verzonden persberichten
+### 1.1. Algemeen provincie
+#### 1.1.1. Persberichten per kwartaal {.tabset .tabset-fade}
 ##### Barplot
 ```{r "Persberichten algemeen: kwartaal - plot", echo = FALSE, align="center"}
 params$Persberichten.alg$kwartaal.plot()
@@ -40,7 +42,7 @@ kable(params$Persberichten.alg$kwartaal.tabel(), caption = "Persberichten per Be
 ```
 
 
-#### 1.1.2. Per maand {.tabset .tabset-fade}
+#### 1.1.2. Persberichten per maand {.tabset .tabset-fade}
 ##### Barplot
 ```{r "Persberichten per maand - barplot", echo = FALSE}
 params$Persberichten.alg$maand.plot()
@@ -51,7 +53,7 @@ params$Persberichten.alg$maand.plot()
 kable(params$Persberichten.alg$maand.tabel(), caption = "Persberichten per maand")
 ```
 
-#### 1.2.3. Per beleid {.tabset .tabset-fade}
+#### 1.2.3. Persberichten per beleid {.tabset .tabset-fade}
 ##### Barplot
 ```{r "Persberichten per beleid: algemeen - plot", echo = FALSE, align="center"}
 params$Persberichten.alg$beleid.plot()
@@ -62,8 +64,35 @@ params$Persberichten.alg$beleid.plot()
 kable(params$Persberichten.alg$beleid.tabel(), caption = "Persberichten per Beleid")
 ```
 
-### 1.2. Per beleid
-#### 1.2.1. Economie
+
+
+
+
+### 1.2. Beleid en deelbeleid
+#### 1.2.1. Provinciebestuur
+##### 1.2.6.1. Per maand {.tabset .tabset-fade}
+###### Barplot
+```{r "Persberichten Provinciebestuur: barplot - maand", echo = FALSE}
+params$Persberichten.beleid.maand$provinciebestuur.plot()
+```
+
+###### Tabel
+```{r "Persberichten Provinciebestuur: tabel - maand", echo = FALSE}
+kable(params$Persberichten.beleid.maand$provinciebestuur.tabel(), caption="Persberichten: Provinciebestuur per maand")
+```
+
+##### 1.2.6.2. Per thema {.tabset .tabset-fade}
+###### Barplot
+```{r "Persberichten Provinciebestuur: barplot", echo = FALSE}
+params$Persberichten.beleid.beleid$provinciebestuur.plot()
+```
+
+###### Tabel
+```{r "Persberichten Provinciebestuur: tabel", echo = FALSE}
+kable(params$Persberichten.beleid.beleid$provinciebestuur.tabel(), caption = "Persberichten: Provinciebestuur")
+```
+
+#### 1.2.2. Economie
 ##### 1.2.1.1. Per maand {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten Economie: barplot - maand", echo = FALSE}
@@ -75,7 +104,7 @@ params$Persberichten.beleid.maand$economie.plot()
 kable(params$Persberichten.beleid.maand$economie.tabel(), caption="Persberichten: Economie per maand")
 ```
 
-##### 1.2.1.2. Per beleid {.tabset .tabset-fade}
+##### 1.2.1.2. Deelbeleid: Economie {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten Economie: barplot", echo = FALSE}
 params$Persberichten.beleid.beleid$economie.plot()
@@ -84,29 +113,6 @@ params$Persberichten.beleid.beleid$economie.plot()
 ###### Tabel
 ```{r "Persberichten Economie: tabel", echo = FALSE}
 kable(params$Persberichten.beleid.beleid$economie.tabel(), caption = "Persberichten: Economie")
-```
-
-#### 1.2.2. Gouverneur
-##### 1.2.2.1. Per maand {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten Gouverneur: barplot - maand", echo = FALSE}
-params$Persberichten.beleid.maand$gouverneur.plot()
-```
-
-###### Tabel
-```{r "Persberichten Gouverneur: tabel - maand", echo = FALSE}
-kable(params$Persberichten.beleid.maand$gouverneur.tabel(), caption="Persberichten: Gouverneur per maand")
-```
-
-##### 1.2.2.2. Per beleid {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten Gouverneur: barplot", echo = FALSE}
-params$Persberichten.beleid.beleid$gouverneur.plot()
-```
-
-###### Tabel
-```{r "Persberichten Gouverneur: tabel", echo = FALSE}
-kable(params$Persberichten.beleid.beleid$gouverneur.tabel(), caption = "Persberichten: Gouverneur")
 ```
 
 #### 1.2.3. Leefmilieu
@@ -121,7 +127,7 @@ params$Persberichten.beleid.maand$leefmilieu.plot()
 kable(params$Persberichten.beleid.maand$leefmilieu.tabel(), caption="Persberichten: Leefmilieu per maand")
 ```
 
-##### 1.2.3.2. Per beleid {.tabset .tabset-fade}
+##### 1.2.3.2. Deelbeleid: Leefmilieu {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten Leefmilieu: barplot", echo = FALSE}
 params$Persberichten.beleid.beleid$leefmilieu.plot()
@@ -144,7 +150,7 @@ params$Persberichten.beleid.maand$mobiliteit.plot()
 kable(params$Persberichten.beleid.maand$mobiliteit.tabel(), caption="Persberichten: Mobiliteit per maand")
 ```
 
-##### 1.2.4.2. Per beleid {.tabset .tabset-fade}
+##### 1.2.4.2. Deelbeleid: Mobiliteit {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten Mobiliteit: barplot", echo = FALSE}
 params$Persberichten.beleid.beleid$mobiliteit.plot()
@@ -167,7 +173,7 @@ params$Persberichten.beleid.maand$onderwijs.plot()
 kable(params$Persberichten.beleid.maand$onderwijs.tabel(), caption="Persberichten: Onderwijs en Educatie per maand")
 ```
 
-##### 1.2.5.2. Per beleid {.tabset .tabset-fade}
+##### 1.2.5.2. Deelbeleid: Onderwijs en Educatie {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten Onderwijs en Educatie: barplot", echo = FALSE}
 params$Persberichten.beleid.beleid$onderwijs.plot()
@@ -178,30 +184,7 @@ params$Persberichten.beleid.beleid$onderwijs.plot()
 kable(params$Persberichten.beleid.beleid$onderwijs.tabel(), caption = "Persberichten: Onderwijs en Educatie")
 ```
 
-#### 1.2.6. Provinciebestuur
-##### 1.2.6.1. Per maand {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten Provinciebestuur: barplot - maand", echo = FALSE}
-params$Persberichten.beleid.maand$provinciebestuur.plot()
-```
-
-###### Tabel
-```{r "Persberichten Provinciebestuur: tabel - maand", echo = FALSE}
-kable(params$Persberichten.beleid.maand$provinciebestuur.tabel(), caption="Persberichten: Provinciebestuur per maand")
-```
-
-##### 1.2.6.2. Per beleid {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten Provinciebestuur: barplot", echo = FALSE}
-params$Persberichten.beleid.beleid$provinciebestuur.plot()
-```
-
-###### Tabel
-```{r "Persberichten Provinciebestuur: tabel", echo = FALSE}
-kable(params$Persberichten.beleid.beleid$provinciebestuur.tabel(), caption = "Persberichten: Provinciebestuur")
-```
-
-#### 1.2.7. Ruimte
+#### 1.2.6. Ruimte
 ##### 1.2.7.1. Per maand {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten Ruimte: barplot - maand", echo = FALSE}
@@ -213,7 +196,7 @@ params$Persberichten.beleid.maand$ruimte.plot()
 kable(params$Persberichten.beleid.maand$ruimte.tabel(), caption="Persberichten: Ruimte per maand")
 ```
 
-##### 1.2.7.2. Per beleid {.tabset .tabset-fade}
+##### 1.2.7.2. Deelbeleid Ruimte {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten Ruimte: barplot", echo = FALSE}
 params$Persberichten.beleid.beleid$ruimte.plot()
@@ -224,7 +207,7 @@ params$Persberichten.beleid.beleid$ruimte.plot()
 kable(params$Persberichten.beleid.beleid$ruimte.tabel(), caption = "Persberichten: Ruimte")
 ```
 
-#### 1.2.8. Vrije tijd
+#### 1.2.7. Vrije tijd
 ##### 1.2.8.1. Per maand {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten Vrije Tijd: barplot - maand", echo = FALSE}
@@ -236,7 +219,7 @@ params$Persberichten.beleid.maand$vrijetijd.plot()
 kable(params$Persberichten.beleid.maand$vrijetijd.tabel(), caption="Persberichten: Vrije Tijd per maand")
 ```
 
-##### 1.2.8.2. Per beleid {.tabset .tabset-fade}
+##### 1.2.8.2. Deelbeleid: Vrije tijd {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten Vrije Tijd: barplot", echo = FALSE}
 params$Persberichten.beleid.beleid$vrijetijd.plot()
@@ -246,6 +229,34 @@ params$Persberichten.beleid.beleid$vrijetijd.plot()
 ```{r "Persberichten Vrije Tijd: tabel", echo = FALSE}
 kable(params$Persberichten.beleid.beleid$vrijetijd.tabel(), caption = "Persberichten: Vrije Tijd")
 ```
+
+
+
+#### 1.2.8. Gouverneur
+##### 1.2.2.1. Per maand {.tabset .tabset-fade}
+###### Barplot
+```{r "Persberichten Gouverneur: barplot - maand", echo = FALSE}
+params$Persberichten.beleid.maand$gouverneur.plot()
+```
+
+###### Tabel
+```{r "Persberichten Gouverneur: tabel - maand", echo = FALSE}
+kable(params$Persberichten.beleid.maand$gouverneur.tabel(), caption="Persberichten: Gouverneur per maand")
+```
+
+##### 1.2.2.2. Deelbeleid: Gouverneur {.tabset .tabset-fade}
+###### Barplot
+```{r "Persberichten Gouverneur: barplot", echo = FALSE}
+params$Persberichten.beleid.beleid$gouverneur.plot()
+```
+
+###### Tabel
+```{r "Persberichten Gouverneur: tabel", echo = FALSE}
+kable(params$Persberichten.beleid.beleid$gouverneur.tabel(), caption = "Persberichten: Gouverneur")
+```
+
+
+
 
 ### 1.3. Per verzender
 #### 1.3.1. Algemeen {.tabset .tabset-fade}
@@ -261,7 +272,7 @@ kable(params$Persberichten.verzender.alg$totaal.tabel(), caption="Persberichten 
 
 
 #### 1.3.2. Per maand
-##### 1.3.2.1. Persdienst {.tabset .tabset-fade}
+##### 1.3.2.1. Verzonden door: Persdienst {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten per verzender - persdienst: Barplot", echo = FALSE}
 params$Persberichten.verzender.maand$persdienst.plot()
@@ -272,7 +283,7 @@ params$Persberichten.verzender.maand$persdienst.plot()
 kable(params$Persberichten.verzender.maand$persdienst.tabel(), caption="Persberichten: Persdienst")
 ```
 
-##### 1.3.2.1. Provincie {.tabset .tabset-fade}
+##### 1.3.2.1. Verzonden door: Provincie {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten per verzender - provincie: Barplot", echo = FALSE}
 params$Persberichten.verzender.maand$provincie.plot()
@@ -284,7 +295,7 @@ kable(params$Persberichten.verzender.maand$provincie.tabel(), caption="Persberic
 ```
 
 
-##### 1.3.2.1. Gouverneur {.tabset .tabset-fade}
+##### 1.3.2.1. Verzonden door: Gouverneur {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persberichten per verzender - gouverneur: Barplot", echo = FALSE}
 params$Persberichten.verzender.maand$gouverneur.plot()
@@ -307,6 +318,10 @@ kable(params$Persberichten.verzender.maand$extern.tabel(), caption="Persberichte
 ```
 
 
+
+
+
+
 ### 1.4. Type persberichten {.tabset .tabset-fade}
 #### Tabel
 ```{r "Persberichten per type - Tabel", echo = FALSE}
@@ -317,6 +332,8 @@ kable(params$Persberichten.type$type.tabel(), caption = "Persberichten per type"
 ```{r "Persberichten per type - Barplot", echo = FALSE}
 params$Persberichten.type$type.plot()
 ```
+
+
 
 
 
@@ -334,7 +351,18 @@ kable(params$Persreturn.beleid$algemeen.tabel(), caption= "Persreturn per beleid
 ```
 
 #### 2.1.2 Per beleid
-##### 2.1.2.1 Economie {.tabset .tabset-fade}
+##### 2.1.2.1 Provinciebestuur: overkoepelend {.tabset .tabset-fade}
+###### Barplot
+```{r "Persreturn Provinciebestuur: barplot", echo = FALSE}
+params$Persreturn.beleid$provinciebestuur.plot()
+```
+
+###### Tabel
+```{r "Persreturn Provinciebestuur: tabel", echo = FALSE}
+kable(params$Persreturn.beleid$provinciebestuur.tabel(), caption = "Persberichten: Provinciebestuur")
+```
+
+##### 2.1.2.2 Economie {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persreturn Economie: barplot", echo = FALSE}
 params$Persreturn.beleid$economie.plot()
@@ -343,17 +371,6 @@ params$Persreturn.beleid$economie.plot()
 ###### Tabel
 ```{r "Persreturn Economie: tabel", echo = FALSE}
 kable(params$Persreturn.beleid$economie.tabel(), caption = "Persberichten: Economie")
-```
-
-##### 2.1.2.2 Gouverneur {.tabset .tabset-fade}
-###### Barplot
-```{r "Persreturn Gouverneur: barplot", echo = FALSE}
-params$Persreturn.beleid$gouverneur.plot()
-```
-
-###### Tabel
-```{r "Persreturn Gouverneur: tabel", echo = FALSE}
-kable(params$Persreturn.beleid$gouverneur.tabel(), caption = "Persberichten: Gouverneur")
 ```
 
 ##### 2.1.2.3 Leefmilieu {.tabset .tabset-fade}
@@ -389,18 +406,7 @@ params$Persreturn.beleid$onderwijs.plot()
 kable(params$Persreturn.beleid$onderwijs.tabel(), caption = "Persberichten: Onderwijs en Educatie")
 ```
 
-##### 2.1.2.6 Provinciebestuur {.tabset .tabset-fade}
-###### Barplot
-```{r "Persreturn Provinciebestuur: barplot", echo = FALSE}
-params$Persreturn.beleid$provinciebestuur.plot()
-```
-
-###### Tabel
-```{r "Persreturn Provinciebestuur: tabel", echo = FALSE}
-kable(params$Persreturn.beleid$provinciebestuur.tabel(), caption = "Persberichten: Provinciebestuur")
-```
-
-##### 2.1.2.7 Ruimte {.tabset .tabset-fade}
+##### 2.1.2.6 Ruimte {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persreturn Ruimte: barplot", echo = FALSE}
 params$Persreturn.beleid$ruimte.plot()
@@ -411,7 +417,7 @@ params$Persreturn.beleid$ruimte.plot()
 kable(params$Persreturn.beleid$ruimte.tabel(), caption = "Persberichten: Ruimte")
 ```
 
-##### 2.1.2.8 Vrije Tijd {.tabset .tabset-fade}
+##### 2.1.2.7 Vrije Tijd {.tabset .tabset-fade}
 ###### Barplot
 ```{r "Persreturn Vrije Tijd: barplot", echo = FALSE}
 params$Persreturn.beleid$vrijetijd.plot()
@@ -422,15 +428,29 @@ params$Persreturn.beleid$vrijetijd.plot()
 kable(params$Persreturn.beleid$vrijetijd.tabel(), caption = "Persberichten: Vrije Tijd")
 ```
 
-### 2.2 Persreturn per platform {.tabset .tabset-fade}
+##### 2.1.2.8 Gouverneur {.tabset .tabset-fade}
+###### Barplot
+```{r "Persreturn Gouverneur: barplot", echo = FALSE}
+params$Persreturn.beleid$gouverneur.plot()
+```
+
+###### Tabel
+```{r "Persreturn Gouverneur: tabel", echo = FALSE}
+kable(params$Persreturn.beleid$gouverneur.tabel(), caption = "Persberichten: Gouverneur")
+```
+
+
+
+
+### 2.2 Persreturn per medium {.tabset .tabset-fade}
 #### Barplot
-```{r "Persreturn per platform - barplot", echo = FALSE}
+```{r "Persreturn per medium - barplot", echo = FALSE}
 params$Persreturn.platform$platform.plot()
 ```
 
 #### Tabel
-```{r "Persreturn per platform - tabel", echo = FALSE}
-kable(params$Persreturn.platform$platform.tabel(), caption = "Persreturn per platform")
+```{r "Persreturn per medium - tabel", echo = FALSE}
+kable(params$Persreturn.platform$platform.tabel(), caption = "Persreturn per medium")
 ```
 
 

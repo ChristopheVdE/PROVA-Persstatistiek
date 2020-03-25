@@ -27,9 +27,9 @@ bericht.verzender.maand.barplot <- function(data, verzender) {
     # Specify color pallete
     colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
     # Create plot
-    ggplot(data=df.berichten.verzender.maand(), aes(x=Verzender, y=Freq, fill=Maand)) +
+    ggplot(data=df.berichten.verzender.maand(), aes(x=Maand, y=Freq, fill=Maand)) +
       geom_bar(position = "dodge", stat='identity') +
-      xlab("Verzender") +
+      xlab("Maand") +
       ylab("Aantal") +
       ggtitle(paste0("Persberichten per Maand: ", verzender())) +
       geom_text(aes(label=Freq),

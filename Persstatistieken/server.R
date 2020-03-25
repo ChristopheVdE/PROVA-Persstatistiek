@@ -547,8 +547,7 @@ server <- function(input, output) {
       file.copy("report.Rmd", tempReport, overwrite = TRUE)
       
       # Set up parameters to pass to Rmd document
-      params <- list(jaar = input$jaar,
-                     kwartaal = input$kwartaal,
+      params <- list(titel = paste("Persstatistiek:", paste(input$jaar, input$kwartaal, sep= " - ")),
                      Persberichten.alg = Persberichten.alg,
                      Persberichten.beleid.maand = Persberichten.beleid.maand,
                      Persberichten.beleid.beleid = Persberichten.beleid.beleid,

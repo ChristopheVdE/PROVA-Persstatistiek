@@ -18,7 +18,9 @@ ui <- dashboardPage(
     sidebarMenu(
       tags$br(),
     # Input -------------------------------------------------------------------
-      menuItem("Input", tabName = "Input"),
+      menuItem("Input", tabName = "Input",
+               menuSubItem("Settings", tabName = "Settings", icon = icon("fas fa-cog", lib = "font-awesome")),
+               menuSubItem("Data", tabName = "Data", icon = icon("fas fa-table", lib = "font-awesome"))),
     # Persberichten -----------------------------------------------------------
       menuItem("Persberichten", tabname = "Persberichten", icon = icon("bar-chart-o"),
                menuSubItem("Algemeen", tabName = "Persbericht-algemeen"), 
@@ -47,7 +49,7 @@ ui <- dashboardPage(
     tabItems(
       # Input scherm ----------------------------------------------------------
       tabItem(
-        tabName = "Input",
+        tabName = "Settings",
         fluidRow(
         # File input & options ------------------------------------------------
           box(
@@ -109,15 +111,20 @@ ui <- dashboardPage(
               textInput("col.return.tv", label = NULL, value = 8, placeholder = 8),
               textInput("col.maand", label = NULL, value = 13, placeholder = 9)
             )
-          ),
-        # Datatable visualisation ---------------------------------------------
-          box(
-            tableOutput("table"),
-            width = 12
           )
         )
       ),
-      
+      # Datatable visualisation ---------------------------------------------
+      tabItem(
+        tabName = "Data",
+        fluidRow(
+          box(
+            title = "Processed uploaded data",
+            width = 12,
+            tableOutput("table"),
+          )
+        )
+      ),
       # Persberichten ---------------------------------------------------------
         # Algemeen ------------------------------------------------------------
           tabItem(

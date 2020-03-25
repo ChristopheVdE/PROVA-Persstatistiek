@@ -40,7 +40,7 @@ return.platform.barplot <- function(data) {
       geom_bar(position = "dodge", stat='identity') +
       xlab("Beleid") +
       ylab("Aantal") +
-      ggtitle("Persreturn per platform") +
+      ggtitle("Persreturn per medium") +
       geom_text(aes(label=Persreturn),
                 position=position_dodge(0.9), vjust=0) +
       theme_bw() +
