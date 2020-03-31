@@ -349,7 +349,7 @@ server <- function(input, output) {
         # Tabel ---------------------------------------------------------------
         source("./Functions/Persreturn/Per_beleid/Algemeen/return_beleid_tabel.R")
         persreturn.beleid.alg.tabel <- persreturn.beleid.tabel(reactive(Persstatistiek()))
-        output$persreturn.beleid.alg.tabel <- renderPlot(
+        output$persreturn.beleid.alg.tabel <- renderTable(
           persreturn.beleid.alg.tabel()
         )
       # Deelbeleid ------------------------------------------------------------
