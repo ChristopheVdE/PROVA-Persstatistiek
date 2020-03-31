@@ -62,9 +62,13 @@ server <- function(input, output) {
             persberichten.alg.maand.tabel()
           )
       # Per Beleid ------------------------------------------------------------
+        # Barplot module test
+          source("./Modules/beleid_barplot.R")
+          persberichten.alg.beleid.plot <- callModule(bericht.alg.beleid.plot, "test", reactive(Persstatistiek()))
+          
         # Barplot
-          source("./Functions/Persberichten/Algemeen/Per_beleid/beleid_barplot.R")
-          persberichten.alg.beleid.plot <- bericht.alg.beleid.barplot(reactive(Persstatistiek()))
+          # source("./Functions/Persberichten/Algemeen/Per_beleid/beleid_barplot.R")
+          # persberichten.alg.beleid.plot <- bericht.alg.beleid.barplot(reactive(Persstatistiek()))
           output$persberichten.alg.beleid.plot <- renderPlot(
             persberichten.alg.beleid.plot()
           )

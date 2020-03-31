@@ -7,6 +7,7 @@ library(shiny)
 library(shinydashboard)
 # =============================================================================
 
+source("./Modules/beleid_barplot.R")
 
 ui <- dashboardPage(
   # TITLE =====================================================================
@@ -146,7 +147,8 @@ ui <- dashboardPage(
                 width = 12,
                 title = "Persberichten per beleid",
                 tabPanel("Barplot", plotOutput("persberichten.alg.beleid.plot")),
-                tabPanel("Tabel", tableOutput("persberichten.alg.beleid.tabel"))
+                tabPanel("Tabel", tableOutput("persberichten.alg.beleid.tabel")),
+                bericht.alg.beleid.plotOutput("test", plottitle = "Persberichten per beleid")
               ),
             )
           ),

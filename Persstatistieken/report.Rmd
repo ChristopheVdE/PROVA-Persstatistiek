@@ -22,11 +22,16 @@ author: "Provincie Antwerpen - Persdienst"
 date: "`r format(Sys.Date(), '%d %B %Y')`"
 ---
 
-
 ```{r "Load required packages", include = FALSE}
 library(knitr)
+library(shiny)
 ```
 
+```{r "test", echo = FALSE}
+shiny::tabsetPanel(id = "test",
+                   shiny::tabPanel("test1", "tab1"),
+                   shiny::tabPanel("test2", "tab2"))
+```
 
 ## 1. Verzonden persberichten
 ### 1.1. Algemeen provincie
