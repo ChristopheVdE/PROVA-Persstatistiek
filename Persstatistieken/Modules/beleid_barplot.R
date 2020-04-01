@@ -15,14 +15,14 @@ bericht.alg.beleid.plotOutput <- function(id, plottitle) {
       column(
         width = 6,
         textInput(ns("title"), label = "Plot title", value = plottitle, placeholder = "Plot titel"),
-        textInput(ns("X-axis"), label = "X-as naam", value = "Beleid", placeholder = "Beleid"),
-        textInput(ns("Y-axis"), label = "Y-as naam", value = "Aantal", placeholder = "Aantal")
+        textInput(ns("Xaxis"), label = "X-as naam", value = "Beleid", placeholder = "Beleid"),
+        textInput(ns("Yaxis"), label = "Y-as naam", value = "Aantal", placeholder = "Aantal")
       ),
       column(
         width = 6,
-        selectInput(ns("plottype"), label = "Plot type", choices = c("Barplot", "Taartdiagram"), selected = "Barplot"),
+        selectInput(ns("type"), label = "Plot type", choices = c("Barplot", "Taartdiagram"), selected = "Barplot"),
         selectInput(ns("inhoud"), label = "Plot type", choices = c("Nummers", "Procentueel"), selected = "Nummers"),
-        checkboxInput(ns("X-labels"), label = "As labels (X-as)", value = TRUE),
+        checkboxInput(ns("Xlabels"), label = "As labels (X-as)", value = TRUE),
         checkboxInput(ns("legend"), label = "Legende", value = TRUE)
       )
     )
@@ -42,23 +42,41 @@ bericht.alg.beleid.plot <- function(input, output, session, data) {
     return(bericht.beleid)
   })
   
-  # Define color pallete --------------------------------------
+  # Define color pallete ------------------------------------------------------
   colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
   
-  # Barplot (Per beleid) --------------------------------------------
-  berichten.barplot.maand <- reactive( 
-    ggplot(data=df.bericht.beleid(), aes(x=Beleid, y=Persberichten, fill=Beleid)) +
-    geom_bar(position = "dodge", stat='identity') +
-    xlab("Beleid") +
-    ylab("Aantal") +
-    ggtitle("Persberichten per beleid") +
-    geom_text(aes(label=Persberichten),
-              position=position_dodge(0.9), vjust=0) +
-    theme_bw() +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-    scale_fill_manual(values=colors)
+  # Plot (Per beleid) ------------------------------------------------
+  berichten.plot.maand <- reactive(
+    (if (input$type == "Barplot") {
+    # Basic Barplot -----------------------------------------------------------  
+      ggplot(data=df.bericht.beleid(), aes(x = Beleid, y = Persberichten, fill = Beleid)) +
+             geom_bar(position = "dodge", stat = 'identity') +
+             geom_text(aes(label=Persberichten),
+                       position=position_dodge(0.9), vjust=0) +
+             theme_bw()
+    } else {
+    # Basic Piechart ----------------------------------------------------------
+      ggplot(data=df.bericht.beleid(), aes(x = "", y = Persberichten, fill = Beleid)) +
+             geom_bar(widht = 1, size = 1, color = "white", stat = 'identity') +
+             coord_polar("y", start = 0) +
+             geom_text(aes(label = Persberichten),
+                       position = position_stack(vjust = 0.5)) +
+             theme_minimal()
+    }) +
+    # Other options -----------------------------------------------------------
+       ggtitle(input$title) +
+       xlab(input$Xaxis) +
+       ylab(input$Yaxis) +
+       
+       scale_fill_manual(values=colors) + 
+
+       (if (input$Xlabels) {theme(axis.text.x = element_text(angle = 45, hjust = 1))} else {theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())}) +
+       (if (!(input$legend)) {theme(legend.position = "none")})
   )
+  # # Frequencie-numbers --------------------------------------------------------
+
+  # )
     
-  return(reactive(berichten.barplot.maand()))
+  return(reactive(berichten.plot.maand()))
   
 }
