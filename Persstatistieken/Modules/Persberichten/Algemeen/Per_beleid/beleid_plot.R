@@ -21,7 +21,7 @@ bericht.alg.beleid.plotOutput <- function(id, plottitle) {
       column(
         width = 6,
         selectInput(ns("type"), label = "Plot type", choices = c("Barplot", "Taartdiagram"), selected = "Barplot"),
-        selectInput(ns("inhoud"), label = "Plot type", choices = c("Nummers", "Procentueel"), selected = "Nummers"),
+        selectInput(ns("inhoud"), label = "Plot type", choices = c("Aantal", "Procentueel"), selected = "Aantal"),
         checkboxInput(ns("Xlabels"), label = "As labels (X-as)", value = TRUE),
         checkboxInput(ns("legend"), label = "Legende", value = TRUE)
       )
@@ -45,19 +45,19 @@ bericht.alg.beleid.plot <- function(input, output, session, data) {
   # Define color pallete ------------------------------------------------------
   colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
   
-  # Plot (Per beleid) ------------------------------------------------
+  # Plot (Per beleid) ---------------------------------------------------------
   berichten.plot.maand <- reactive(
     (if (input$type == "Barplot") {
     # Basic Barplot -----------------------------------------------------------  
-      ggplot(data=df.bericht.beleid(), aes(x = Beleid, y = Persberichten, fill = Beleid)) +
+      ggplot(data = df.bericht.beleid(), aes(x = Beleid, y = Persberichten, fill = Beleid)) +
              geom_bar(position = "dodge", stat = 'identity') +
              geom_text(aes(label=Persberichten),
                        position=position_dodge(0.9), vjust=0) +
              theme_bw()
     } else {
     # Basic Piechart ----------------------------------------------------------
-      ggplot(data=df.bericht.beleid(), aes(x = "", y = Persberichten, fill = Beleid)) +
-             geom_bar(widht = 1, size = 1, color = "white", stat = 'identity') +
+      ggplot(data = df.bericht.beleid(), aes(x = "", y = Persberichten, fill = Beleid)) +
+             geom_bar(width = 1, size = 1, color = "white", stat = 'identity') +
              coord_polar("y", start = 0) +
              geom_text(aes(label = Persberichten),
                        position = position_stack(vjust = 0.5)) +
@@ -73,10 +73,5 @@ bericht.alg.beleid.plot <- function(input, output, session, data) {
        (if (input$Xlabels) {theme(axis.text.x = element_text(angle = 45, hjust = 1))} else {theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())}) +
        (if (!(input$legend)) {theme(legend.position = "none")})
   )
-  # # Frequencie-numbers --------------------------------------------------------
-
-  # )
-    
   return(reactive(berichten.plot.maand()))
-  
 }
