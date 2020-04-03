@@ -62,7 +62,7 @@ bericht.alg.beleid.plot <- function(input, output, session, data) {
   colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
   
   # Plot (Per beleid) ---------------------------------------------------------
-  berichten.plot.maand <- reactive(
+  berichten.plot.beleid <- reactive(
     (if (input$type == "Barplot") {
     # Basic Barplot -----------------------------------------------------------  
       ggplot(data = df.bericht.beleid(), aes(x = Beleid, y = Persberichten, fill = Beleid)) +
@@ -84,8 +84,9 @@ bericht.alg.beleid.plot <- function(input, output, session, data) {
        xlab(input$Xaxis) +
        ylab(input$Yaxis) +
        scale_fill_manual(values=colors) + 
+       (if (input$inhoud == "Procentueel") {ylim(c(0,100))}) +
        (if (input$Xlabels) {theme(axis.text.x = element_text(angle = 45, hjust = 1))} else {theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())}) +
        (if (!(input$legend)) {theme(legend.position = "none")})
   )
-  return(reactive(berichten.plot.maand()))
+  return(reactive(berichten.plot.beleid()))
 }
