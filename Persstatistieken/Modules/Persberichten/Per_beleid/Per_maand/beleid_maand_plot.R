@@ -1,5 +1,5 @@
 ###############################################################################
-# MODULE: Persberichten - Algemeen: Beleidsplot
+# MODULE: Persberichten - Algemeen: Beleid per maand
 ###############################################################################
 
 library(shiny)
@@ -8,7 +8,7 @@ library(RColorBrewer)
 library(scales)
 
 # UI ==========================================================================
-bericht.beleid.maand.plotOutput <- function(id, plottitle) {
+bericht.beleid.beleid.plotOutput <- function(id, plottitle) {
   ns <- NS(id)
   tabPanel(
     "Opties",
@@ -31,7 +31,7 @@ bericht.beleid.maand.plotOutput <- function(id, plottitle) {
 }
 
 # SERVER ======================================================================
-bericht.beleid.maand.plot <- function(input, output, session, data, beleid) {
+bericht.beleid.beleid.plot <- function(input, output, session, data, beleid) {
 
   # Preparation ---------------------------------------------------------------  
   df.berichten.Maand.totaal.per.Beleid <-  reactive({
@@ -58,8 +58,6 @@ bericht.beleid.maand.plot <- function(input, output, session, data, beleid) {
     }
     return(berichten)
   })
-
-  
   
   # Define color pallete ------------------------------------------------------
   colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
@@ -77,7 +75,7 @@ bericht.beleid.maand.plot <- function(input, output, session, data, beleid) {
     # Basic Piechart ----------------------------------------------------------
       ggplot(data = df.berichten.Maand.totaal.per.Beleid(), aes(x = "", y = Persberichten, fill = Maand)) +
         geom_bar(width = 1, size = 1, color = "white", stat = 'identity') +
-        coord_polar("y", start = 0) +
+        coord_polar("y", start = 0, direction = -1) +
         geom_text(aes(label = if(input$inhoud == "Aantal") {Persberichten} else {percent(Persberichten, accuracy = 0.1, scale = 1)}),
                   position = position_stack(vjust = 0.5)) +
         theme_minimal()

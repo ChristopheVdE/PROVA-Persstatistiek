@@ -1,5 +1,5 @@
 ###############################################################################
-# MODULE: Persberichten - Algemeen: per maand plot
+# MODULE: Persberichten - Algemeen: Beleid per deelbeleid
 ###############################################################################
 
 library(shiny)
@@ -8,7 +8,7 @@ library(RColorBrewer)
 library(scales)
 
 # UI ==========================================================================
-bericht.alg.maand.plotOutput <- function(id, plottitle) {
+bericht.beleid.maand.plotOutput <- function(id, plottitle) {
   ns <- NS(id)
   tabPanel(
     "Opties",
@@ -16,7 +16,7 @@ bericht.alg.maand.plotOutput <- function(id, plottitle) {
       column(
         width = 6,
         textInput(ns("title"), label = "Plot title", value = plottitle, placeholder = "Plot titel"),
-        textInput(ns("Xaxis"), label = "X-as naam", value = "Maand", placeholder = "Maand"),
+        textInput(ns("Xaxis"), label = "X-as naam", value = "Deelbeleid", placeholder = "Deelbeleid"),
         textInput(ns("Yaxis"), label = "Y-as naam", value = "Aantal", placeholder = "Aantal")
       ),
       column(
@@ -31,16 +31,16 @@ bericht.alg.maand.plotOutput <- function(id, plottitle) {
 }
 
 # SERVER ======================================================================
-bericht.alg.maand.plot <- function(input, output, session, data) {
-  
-  # Preparation ---------------------------------------------------------------
-  df.bericht.maand <- reactive({
+bericht.beleid.beleid.plot <- function(input, output, session, data, beleid) {
+
+  # Preparation ---------------------------------------------------------
+  df.persberichten.beleid.detail <- reactive({
     # Create basic dataframe --------------------------------------------------
-    berichten <- data.frame(table(data()$Maand))
-    colnames(berichten) <- c("Maand", "Persberichten")
-    berichten$Maand <- factor(berichten$Maand, levels = c("jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"))
+    berichten <- split(data(), data()$Beleid)
+    berichten <- data.frame(table(berichten[[beleid()]]$"Detail beleid"))
+    colnames(berichten) <- c("Deelbeleid","Persberichten")
     
-    # Calculate percentages ---------------------------------------------------
+    # Calculate percentages -----------------------------------------------------
     if (input$inhoud == "Procentueel") {
       total <- sum(berichten$Persberichten)
       for (i in 0:length(berichten$Persberichten)) {
@@ -48,38 +48,37 @@ bericht.alg.maand.plot <- function(input, output, session, data) {
           column <- NULL
         } else {
           column <- c(column,
-                     (as.numeric(berichten$Persberichten[[i]]) / total * 100)
+                      (as.numeric(berichten$Persberichten[[i]]) / total * 100)
           )
         }
       }
       berichten$Persberichten <- column
     }
-    
-    # Return dataframe --------------------------------------------------------
     return(berichten)
   })
   
-  # Define color pallete ------------------------------------------------------
+  # Define color pallete --------------------------------------
   colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
-  # Plot (Per maand) ----------------------------------------------------------
-  berichten.maand.plot <- reactive(
+  
+  # Plot (beleid per deelbeleid) ---------------------------------------------------
+  berichten.plot.beleid <- reactive(
     (if (input$type == "Barplot") {
-    # Basic Barplot -----------------------------------------------------------
-      ggplot(data = df.bericht.maand(), aes(x = Maand, y = Persberichten, fill = Maand)) +
+      # Basic Barplot -----------------------------------------------------------
+      ggplot(data = df.persberichten.beleid.detail(), aes(x = Deelbeleid, y = Persberichten, fill = Deelbeleid)) +
         geom_bar(position = "dodge", stat = 'identity') +
         geom_text(aes(label = if(input$inhoud == "Aantal") {Persberichten} else {percent(Persberichten, accuracy = 0.1, scale = 1)}),
                   position = position_dodge(0.9), vjust=0) +
         theme_bw()
     } else {
-    # Basic Piechart ----------------------------------------------------------
-      ggplot(data = df.bericht.maand(), aes(x = "", y = Persberichten, fill = Maand)) +
+      # Basic Piechart ----------------------------------------------------------
+      ggplot(data = df.persberichten.beleid.detail(), aes(x = "", y = Persberichten, fill = Deelbeleid)) +
         geom_bar(width = 1, size = 1, color = "white", stat = 'identity') +
         coord_polar("y", start = 0, direction = -1) +
         geom_text(aes(label = if(input$inhoud == "Aantal") {Persberichten} else {percent(Persberichten, accuracy = 0.1, scale = 1)}),
                   position = position_stack(vjust = 0.5)) +
         theme_minimal()
     }) +
-    # Other options -----------------------------------------------------------
+      # Other options -----------------------------------------------------------
     ggtitle(input$title) +
       xlab(input$Xaxis) +
       ylab(input$Yaxis) +
@@ -88,5 +87,5 @@ bericht.alg.maand.plot <- function(input, output, session, data) {
       (if (input$Xlabels) {theme(axis.text.x = element_text(angle = 45, hjust = 1))} else {theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())}) +
       (if (!(input$legend)) {theme(legend.position = "none")})
   )
-  return(berichten.maand.plot)
+  return(berichten.plot.beleid)
 }

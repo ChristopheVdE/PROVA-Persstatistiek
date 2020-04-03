@@ -10,6 +10,7 @@ library(shinydashboard)
 source("./Modules/Persberichten/Algemeen/Per_maand/maand_plot.R")
 source("./Modules/Persberichten/Algemeen/Per_beleid/beleid_plot.R")
 source("./Modules/Persberichten/Per_Beleid/Per_maand/beleid_maand_plot.R")
+source("./Modules/Persberichten/Per_Beleid/Per_beleid/beleid_detail_plot.R")
 
 # UI ==========================================================================
 ui <- dashboardPage(
@@ -227,49 +228,57 @@ ui <- dashboardPage(
                   width = 6,
                   title = "Persberichten: Economie",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.economie.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.economie.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.economie.tabel")),
+                  bericht.beleid.beleid.plotOutput("bericht.beleid.beleid.plot.economie", plottitle = "Persberichten: Deelbeleid per beleid (Economie)")
                 ),
                 tabBox(
                   width = 6,
                   title = "Persberichten: Gouverneur",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.gouverneur.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.gouverneur.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.gouverneur.tabel")),
+                  bericht.beleid.beleid.plotOutput("bericht.beleid.beleid.plot.gouverneur", plottitle = "Persberichten: Deelbeleid per beleid (Gouverneur)")
                 ),
                 tabBox(
                   width = 6,
                   title = "Persberichten: Leefmilieu",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.leefmilieu.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.leefmilieu.tabel"))
-                ),
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.leefmilieu.tabel")),
+                  bericht.beleid.beleid.plotOutput("bericht.beleid.beleid.plot.leefmilieu", plottitle = "Persberichten: per deelbeleid (Leefmilieu)")
+                ),  
                 tabBox(
                   width = 6,
                   title = "Persberichten: Mobiliteit",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.mobiliteit.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.mobiliteit.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.mobiliteit.tabel")),
+                  bericht.beleid.beleid.plotOutput("bericht.beleid.beleid.plot.mobiliteit", plottitle = "Persberichten: per deelbeleid (Mobiliteit)")
                 ),
                 tabBox(
                   width = 6,
                   title = "Persberichten: Onderwijs en Educatie",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.onderwijs.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.onderwijs.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.onderwijs.tabel")),
+                  bericht.beleid.beleid.plotOutput("bericht.beleid.beleid.plot.onderwijs", plottitle = "Persberichten: per deelbeleid (Onderwijs en Educatie)")
                 ),
                 tabBox(
                   width = 6,
                   title = "Persberichten: Provinciebestuur",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.provinciebestuur.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.provinciebestuur.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.provinciebestuur.tabel")),
+                  bericht.beleid.beleid.plotOutput("bericht.beleid.beleid.plot.provinciebestuur", plottitle = "Persberichten: per deelbeleid (Provinciebestuur)")
                 ),
                 tabBox(
                   width = 6,
                   title = "Persberichten: Ruimte",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.ruimte.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.ruimte.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.ruimte.tabel")),
+                  bericht.beleid.beleid.plotOutput("bericht.beleid.beleid.plot.ruimte", plottitle = "Persberichten: per deelbeleid (Ruimte)")
                 ),
                 tabBox(
                   width = 6,
                   title = "Persberichten: Vrije Tijd",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.vrijetijd.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.vrijetijd.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.vrijetijd.tabel")),
+                  bericht.beleid.beleid.plotOutput("bericht.beleid.beleid.plot.vrijetijd", plottitle = "Persberichten: per deelbeleid (Vrije Tijd)")
                 )
               )
             ),

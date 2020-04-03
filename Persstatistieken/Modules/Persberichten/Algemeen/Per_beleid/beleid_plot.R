@@ -74,7 +74,7 @@ bericht.alg.beleid.plot <- function(input, output, session, data) {
     # Basic Piechart ----------------------------------------------------------
       ggplot(data = df.bericht.beleid(), aes(x = "", y = Persberichten, fill = Beleid)) +
              geom_bar(width = 1, size = 1, color = "white", stat = 'identity') +
-             coord_polar("y", start = 0) +
+             coord_polar("y", start = 0, direction = -1) +
              geom_text(aes(label = if(input$inhoud == "Aantal") {Persberichten} else {percent(Persberichten, accuracy = 0.1, scale = 1)}),
                        position = position_stack(vjust = 0.5)) +
              theme_minimal()
