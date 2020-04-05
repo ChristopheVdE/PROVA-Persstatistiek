@@ -76,92 +76,91 @@ server <- function(input, output) {
           )
     # PER BELEID --------------------------------------------------------------
       # Per Maand -------------------------------------------------------------
-        # Barplot -------------------------------------------------------------
-          source("./Modules/Persberichten/Per_Beleid/Per_maand/beleid_maand_plot.R")
-          # Economie
-          persberichten.beleid.maand.economie.plot <- callModule(bericht.beleid.maand.plot, "bericht.beleid.maand.plot.economie", reactive(Persstatistiek()), reactive("Economie"))
+        source("./Modules/Persberichten/Per_Beleid/Per_maand/beleid_maand_plot.R")
+        # Economie ------------------------------------------------------------
+        persberichten.beleid.maand.economie <- callModule(bericht.beleid.maand, "bericht.beleid.maand.plot.economie", Persstatistiek, "Economie")
+          # Plot
           output$persberichten.beleid.maand.economie.plot <- renderPlot(
-            persberichten.beleid.maand.economie.plot()
+            persberichten.beleid.maand.economie$plot()
           )
-          # Gouverneur
-          persberichten.beleid.maand.gouverneur.plot <- callModule(bericht.beleid.maand.plot, "bericht.beleid.maand.plot.gouverneur", reactive(Persstatistiek()), reactive("Gouverneur"))
-          output$persberichten.beleid.maand.gouverneur.plot <- renderPlot(
-            persberichten.beleid.maand.gouverneur.plot()
-          )
-          # Leefmilieu
-          persberichten.beleid.maand.leefmilieu.plot <- callModule(bericht.beleid.maand.plot, "bericht.beleid.maand.plot.leefmilieu", reactive(Persstatistiek()), reactive("Leefmilieu"))
-          output$persberichten.beleid.maand.leefmilieu.plot <- renderPlot(
-            persberichten.beleid.maand.leefmilieu.plot()
-          )
-          # Mobiliteit
-          persberichten.beleid.maand.mobiliteit.plot <- callModule(bericht.beleid.maand.plot, "bericht.beleid.maand.plot.mobiliteit", reactive(Persstatistiek()), reactive("Mobiliteit"))
-          output$persberichten.beleid.maand.mobiliteit.plot <- renderPlot(
-            persberichten.beleid.maand.mobiliteit.plot()
-          )
-          # Onderwijs en Educatie
-          persberichten.beleid.maand.onderwijs.plot <- callModule(bericht.beleid.maand.plot, "bericht.beleid.maand.plot.onderwijs", reactive(Persstatistiek()), reactive("Onderwijs en Educatie"))
-          output$persberichten.beleid.maand.onderwijs.plot <- renderPlot(
-            persberichten.beleid.maand.onderwijs.plot()
-          )
-          # Provinciebestuur
-          persberichten.beleid.maand.provinciebestuur.plot <- callModule(bericht.beleid.maand.plot, "bericht.beleid.maand.plot.provinciebestuur", reactive(Persstatistiek()), reactive("Provinciebestuur"))
-          output$persberichten.beleid.maand.provinciebestuur.plot <- renderPlot(
-            persberichten.beleid.maand.provinciebestuur.plot()
-          )
-          # Ruimte
-          persberichten.beleid.maand.ruimte.plot <- callModule(bericht.beleid.maand.plot, "bericht.beleid.maand.plot.ruimte", reactive(Persstatistiek()), reactive("Ruimte"))
-          output$persberichten.beleid.maand.ruimte.plot <- renderPlot(
-            persberichten.beleid.maand.ruimte.plot()
-          )
-          # Vrije Tijd
-          persberichten.beleid.maand.vrijetijd.plot <- callModule(bericht.beleid.maand.plot, "bericht.beleid.maand.plot.vrijetijd", reactive(Persstatistiek()), reactive("Vrije Tijd"))
-          output$persberichten.beleid.maand.vrijetijd.plot <- renderPlot(
-            persberichten.beleid.maand.vrijetijd.plot()
-          )
-        # Tabel ---------------------------------------------------------------
-          source("./Functions/Persberichten/Per_beleid/Per_maand/maand_beleid_tabel.R")
-          # Economie
-          persberichten.beleid.maand.economie.tabel <- bericht.beleid.maand.tabel(reactive(Persstatistiek()), reactive("Economie"))
+          # Table
           output$persberichten.beleid.maand.economie.tabel <- renderTable(
-            persberichten.beleid.maand.economie.tabel()
+            persberichten.beleid.maand.economie$tabel()
           )
-          # Gouverneur
-          persberichten.beleid.maand.gouverneur.tabel <- bericht.beleid.maand.tabel(reactive(Persstatistiek()), reactive("Gouverneur"))
+        # Gouverneur ----------------------------------------------------------
+        persberichten.beleid.maand.gouverneur <- callModule(bericht.beleid.maand, "bericht.beleid.maand.plot.gouverneur", Persstatistiek, "Gouverneur")
+          # Plot  
+          output$persberichten.beleid.maand.gouverneur.plot <- renderPlot(
+            persberichten.beleid.maand.gouverneur$plot()
+          )
+          # Table
           output$persberichten.beleid.maand.gouverneur.tabel <- renderTable(
-            persberichten.beleid.maand.gouverneur.tabel()
+            persberichten.beleid.maand.gouverneur$tabel()
           )
-          # Leefmilieu
-          persberichten.beleid.maand.leefmilieu.tabel <- bericht.beleid.maand.tabel(reactive(Persstatistiek()), reactive("Leefmilieu"))
+          
+        # Leefmilieu ----------------------------------------------------------
+        persberichten.beleid.maand.leefmilieu <- callModule(bericht.beleid.maand, "bericht.beleid.maand.plot.leefmilieu", Persstatistiek, "Leefmilieu")
+          # Plot
+          output$persberichten.beleid.maand.leefmilieu.plot <- renderPlot(
+            persberichten.beleid.maand.leefmilieu$plot()
+          )
+          # Table
           output$persberichten.beleid.maand.leefmilieu.tabel <- renderTable(
-            persberichten.beleid.maand.leefmilieu.tabel()
+            persberichten.beleid.maand.leefmilieu$tabel()
           )
-          # Mobiliteit
-          persberichten.beleid.maand.mobiliteit.tabel <- bericht.beleid.maand.tabel(reactive(Persstatistiek()), reactive("Mobiliteit"))
+        # Mobiliteit ----------------------------------------------------------
+        persberichten.beleid.maand.mobiliteit <- callModule(bericht.beleid.maand, "bericht.beleid.maand.plot.mobiliteit", Persstatistiek, "Mobiliteit")
+          # Plot  
+          output$persberichten.beleid.maand.mobiliteit.plot <- renderPlot(
+            persberichten.beleid.maand.mobiliteit$plot()
+          )
+          # Table
           output$persberichten.beleid.maand.mobiliteit.tabel <- renderTable(
-            persberichten.beleid.maand.mobiliteit.tabel()
+            persberichten.beleid.maand.mobiliteit$tabel()
           )
-          # Onderwijs en Educatie
-          persberichten.beleid.maand.onderwijs.tabel <- bericht.beleid.maand.tabel(reactive(Persstatistiek()), reactive("Onderwijs en Educatie"))
+        # Onderwijs en Educatie -----------------------------------------------
+        persberichten.beleid.maand.onderwijs <- callModule(bericht.beleid.maand, "bericht.beleid.maand.plot.onderwijs", Persstatistiek, "Onderwijs en Educatie")
+          # Plot  
+          output$persberichten.beleid.maand.onderwijs.plot <- renderPlot(
+            persberichten.beleid.maand.onderwijs$plot()
+          )
+          # Tabel
           output$persberichten.beleid.maand.onderwijs.tabel <- renderTable(
-            persberichten.beleid.maand.onderwijs.tabel()
+            persberichten.beleid.maand.onderwijs$tabel()
           )
-          # Provinciebestuur
-          persberichten.beleid.maand.provinciebestuur.tabel <- bericht.beleid.maand.tabel(reactive(Persstatistiek()), reactive("Provinciebestuur"))
+        # Provinciebestuur ----------------------------------------------------
+        persberichten.beleid.maand.provinciebestuur <- callModule(bericht.beleid.maand, "bericht.beleid.maand.plot.provinciebestuur", Persstatistiek, "Provinciebestuur")
+          # Plot  
+          output$persberichten.beleid.maand.provinciebestuur.plot <- renderPlot(
+            persberichten.beleid.maand.provinciebestuur$plot()
+          )
+          # Table
           output$persberichten.beleid.maand.provinciebestuur.tabel <- renderTable(
-            persberichten.beleid.maand.provinciebestuur.tabel()
+            persberichten.beleid.maand.provinciebestuur$tabel()
           )
-          # Ruimte
-          persberichten.beleid.maand.ruimte.tabel <- bericht.beleid.maand.tabel(reactive(Persstatistiek()), reactive("Ruimte"))
+        # Ruimte --------------------------------------------------------------
+        persberichten.beleid.maand.ruimte <- callModule(bericht.beleid.maand, "bericht.beleid.maand.plot.ruimte", Persstatistiek, "Ruimte")
+          # Plot  
+          output$persberichten.beleid.maand.ruimte.plot <- renderPlot(
+            persberichten.beleid.maand.ruimte$plot()
+          )
+          # Table
           output$persberichten.beleid.maand.ruimte.tabel <- renderTable(
-            persberichten.beleid.maand.ruimte.tabel()
+            persberichten.beleid.maand.ruimte$tabel()
           )
-          # Vrije Tijd
-          persberichten.beleid.maand.vrijetijd.tabel <- bericht.beleid.maand.tabel(reactive(Persstatistiek()), reactive("Vrije Tijd"))
+        # Vrije Tijd ----------------------------------------------------------
+        persberichten.beleid.maand.vrijetijd <- callModule(bericht.beleid.maand, "bericht.beleid.maand.plot.vrijetijd", Persstatistiek, "Vrije Tijd")
+          # Plot  
+          output$persberichten.beleid.maand.vrijetijd.plot <- renderPlot(
+            persberichten.beleid.maand.vrijetijd$plot()
+          )
+          # Table
           output$persberichten.beleid.maand.vrijetijd.tabel <- renderTable(
-            persberichten.beleid.maand.vrijetijd.tabel()
+            persberichten.beleid.maand.vrijetijd$tabel()
           )
+
       # Per Deelbeleid --------------------------------------------------------
-        # Barplot -------------------------------------------------------------
+        # Plot -------------------------------------------------------------
           source("./Modules/Persberichten/Per_Beleid/Per_beleid/beleid_detail_plot.R")
           # Economie
           persberichten.beleid.beleid.economie.plot <- callModule(bericht.beleid.beleid.plot, "bericht.beleid.beleid.plot.economie", reactive(Persstatistiek()), reactive("Economie"))

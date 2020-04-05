@@ -8,7 +8,7 @@ library(RColorBrewer)
 library(scales)
 
 # UI ==========================================================================
-bericht.beleid.maand.plotOutput <- function(id, plottitle) {
+bericht.beleid.beleid.plotOutput <- function(id, plottitle) {
   ns <- NS(id)
   tabPanel(
     "Opties",

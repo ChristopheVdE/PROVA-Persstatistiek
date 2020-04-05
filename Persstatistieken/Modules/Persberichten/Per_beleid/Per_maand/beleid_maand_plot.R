@@ -8,7 +8,7 @@ library(RColorBrewer)
 library(scales)
 
 # UI ==========================================================================
-bericht.beleid.beleid.plotOutput <- function(id, plottitle) {
+bericht.beleid.maandOutput <- function(id, plottitle) {
   ns <- NS(id)
   tabPanel(
     "Opties",
@@ -31,32 +31,26 @@ bericht.beleid.beleid.plotOutput <- function(id, plottitle) {
 }
 
 # SERVER ======================================================================
-bericht.beleid.beleid.plot <- function(input, output, session, data, beleid) {
+bericht.beleid.maand <- function(input, output, session, data, beleid) {
 
-  # Preparation ---------------------------------------------------------------  
+  # Data preparation ---------------------------------------------------------- 
   df.berichten.Maand.totaal.per.Beleid <-  reactive({
+    
     # Create basic dataframe --------------------------------------------------
     berichten <- data.frame(table(data()$Beleid, data()$Maand))
     colnames(berichten) <- c("Beleid", "Maand", "Persberichten")
-    berichten$Maand <- factor(berichten$Maand, levels = c("jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"))
+    berichten$Maand <- factor(berichten$Maand, levels = c("jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec", "Totaal"))
     berichten <- split(berichten, berichten$Beleid)
-    berichten <- berichten[[beleid()]]
+    berichten <- berichten[[beleid]]
     
-    # Calculate percentages -----------------------------------------------------
-    if (input$inhoud == "Procentueel") {
-      total <- sum(berichten$Persberichten)
-      for (i in 0:length(berichten$Persberichten)) {
-        if (i == 0) {
-          column <- NULL
-        } else {
-          column <- c(column,
-                     (as.numeric(berichten$Persberichten[[i]]) / total * 100)
-          )
-        }
-      }
-      berichten$Persberichten <- column
-    }
-    return(berichten)
+    # Calculate percentages ---------------------------------------------------
+    source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functies/percentages.R")
+    berichten <- data.frame(
+      Beleid = berichten$Beleid,
+      Maand = berichten$Maand,
+      Persberichten = berichten$Persberichten,
+      Procentueel = calc_percentages(berichten)
+    )
   })
   
   # Define color pallete ------------------------------------------------------
@@ -64,33 +58,44 @@ bericht.beleid.beleid.plot <- function(input, output, session, data, beleid) {
   
   # Plot (beleid per maand) ---------------------------------------------------
   berichten.plot.beleid <- reactive(
-    (if (input$type == "Barplot") {
-    # Basic Barplot -----------------------------------------------------------
-      ggplot(data = df.berichten.Maand.totaal.per.Beleid(), aes(x = Maand, y = Persberichten, fill = Maand)) +
-        geom_bar(position = "dodge", stat = 'identity') +
-        geom_text(aes(label = if(input$inhoud == "Aantal") {Persberichten} else {percent(Persberichten, accuracy = 0.1, scale = 1)}),
-                  position = position_dodge(0.9), vjust=0) +
-        theme_bw()
-    } else {
-    # Basic Piechart ----------------------------------------------------------
-      ggplot(data = df.berichten.Maand.totaal.per.Beleid(), aes(x = "", y = Persberichten, fill = Maand)) +
-        geom_bar(width = 1, size = 1, color = "white", stat = 'identity') +
-        coord_polar("y", start = 0, direction = -1) +
-        geom_text(aes(label = if(input$inhoud == "Aantal") {Persberichten} else {percent(Persberichten, accuracy = 0.1, scale = 1)}),
-                  position = position_stack(vjust = 0.5)) +
-        theme_minimal()
-    }) +
-    # Other options -----------------------------------------------------------
-    ggtitle(input$title) +
-      xlab(input$Xaxis) +
-      ylab(input$Yaxis) +
-      scale_fill_manual(values=colors) + 
-      (if (input$inhoud == "Procentueel") {ylim(c(0,100))}) +
-      (if (input$Xlabels) {theme(axis.text.x = element_text(angle = 45, hjust = 1))} else {theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())}) +
-      (if (!(input$legend)) {theme(legend.position = "none")})
+    # Barplot -----------------------------------------------------------------
+    if (input$type == "Barplot") {
+      source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functies/simple_barplot.R")
+      simple_barplot(df.berichten.Maand.totaal.per.Beleid, 
+                      input$inhoud, 
+                      input$title, 
+                      input$Xaxis, 
+                      input$Yaxis, 
+                      input$Xlabels, 
+                      input$legend, 
+                      colors)
+    } 
+    # Piechart ----------------------------------------------------------------
+    else {
+      source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functies/simple_piechart.R")
+      simple_piechart(df.berichten.Maand.totaal.per.Beleid, 
+                      input$inhoud, 
+                      input$title, 
+                      input$Xaxis, 
+                      input$Yaxis, 
+                      input$Xlabels, 
+                      input$legend, 
+                      colors)
+    }
   )
-  return(berichten.plot.beleid)
-}
+
+  # Table ---------------------------------------------------------------------
+  tabel <- reactive(
+    rbind(df.berichten.Maand.totaal.per.Beleid(),
+          c(beleid,
+           "Totaal",
+           sum(df.berichten.Maand.totaal.per.Beleid()$Persberichten),
+           sum(df.berichten.Maand.totaal.per.Beleid()$Procentueel)
+          ))
+  )
+  
+  return(list(plot = berichten.plot.beleid, tabel = tabel))
+  }
 
 
 
