@@ -8,7 +8,7 @@ calc_percentages <- function(data) {
   column <- NULL
   for (i in 1:length(data$Persberichten)) {
     column <- c(column,
-               (as.numeric(data$Persberichten[[i]]) / total * 100))
+               round(as.numeric(data$Persberichten[[i]] / total * 100), digits = 2))
   }
   return(column)
 }

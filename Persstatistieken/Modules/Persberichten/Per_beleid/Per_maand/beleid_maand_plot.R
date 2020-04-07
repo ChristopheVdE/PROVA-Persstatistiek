@@ -45,12 +45,8 @@ bericht.beleid.maand <- function(input, output, session, data, beleid) {
     
     # Calculate percentages ---------------------------------------------------
     source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functies/percentages.R")
-    berichten <- data.frame(
-      Beleid = berichten$Beleid,
-      Maand = berichten$Maand,
-      Persberichten = berichten$Persberichten,
-      Procentueel = calc_percentages(berichten)
-    )
+    berichten <- data.frame(berichten, 
+                            "Procentueel" = calc_percentages(berichten))
   })
   
   # Define color pallete ------------------------------------------------------
@@ -61,14 +57,14 @@ bericht.beleid.maand <- function(input, output, session, data, beleid) {
     # Barplot -----------------------------------------------------------------
     if (input$type == "Barplot") {
       source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functies/simple_barplot.R")
-      simple_barplot(df.berichten.Maand.totaal.per.Beleid, 
-                      input$inhoud, 
-                      input$title, 
-                      input$Xaxis, 
-                      input$Yaxis, 
-                      input$Xlabels, 
-                      input$legend, 
-                      colors)
+      simple_barplot(data = df.berichten.Maand.totaal.per.Beleid, 
+                     visual = input$inhoud, 
+                     title = input$title, 
+                     Xtitle = input$Xaxis, 
+                     Ytitle = input$Yaxis, 
+                     Xlabels = input$Xlabels, 
+                     legend = input$legend, 
+                     colors = colors)
     } 
     # Piechart ----------------------------------------------------------------
     else {
@@ -90,8 +86,9 @@ bericht.beleid.maand <- function(input, output, session, data, beleid) {
           c(beleid,
            "Totaal",
            sum(df.berichten.Maand.totaal.per.Beleid()$Persberichten),
-           sum(df.berichten.Maand.totaal.per.Beleid()$Procentueel)
-          ))
+           100
+          )
+        )
   )
   
   return(list(plot = berichten.plot.beleid, tabel = tabel))
