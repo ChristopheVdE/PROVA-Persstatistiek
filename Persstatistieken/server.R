@@ -78,7 +78,7 @@ server <- function(input, output) {
       # Per Maand -------------------------------------------------------------
         source("./Modules/Persberichten/Per_Beleid/Per_maand/beleid_maand_plot.R")
         # Economie ------------------------------------------------------------
-        persberichten.beleid.maand.economie <- callModule(bericht.beleid, "bericht.beleid.maand.plot.economie", Persstatistiek, "Economie", "Maand", "Maand")
+        persberichten.beleid.maand.economie <- callModule(bericht.beleid, "bericht.beleid.maand.plot.economie", data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", beleid = "Economie")
           # Plot
           output$persberichten.beleid.maand.economie.plot <- renderPlot(
             persberichten.beleid.maand.economie$plot()
@@ -88,7 +88,7 @@ server <- function(input, output) {
             persberichten.beleid.maand.economie$tabel()
           )
         # Gouverneur ----------------------------------------------------------
-        persberichten.beleid.maand.gouverneur <- callModule(bericht.beleid, "bericht.beleid.maand.plot.gouverneur", Persstatistiek, "Gouverneur", "Maand", "Maand")
+        persberichten.beleid.maand.gouverneur <- callModule(bericht.beleid, "bericht.beleid.maand.plot.gouverneur", data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", beleid = "Gouverneur")
           # Plot  
           output$persberichten.beleid.maand.gouverneur.plot <- renderPlot(
             persberichten.beleid.maand.gouverneur$plot()
@@ -99,7 +99,7 @@ server <- function(input, output) {
           )
           
         # Leefmilieu ----------------------------------------------------------
-        persberichten.beleid.maand.leefmilieu <- callModule(bericht.beleid, "bericht.beleid.maand.plot.leefmilieu", Persstatistiek, "Leefmilieu", "Maand", "Maand")
+        persberichten.beleid.maand.leefmilieu <- callModule(bericht.beleid, "bericht.beleid.maand.plot.leefmilieu", data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", beleid = "Leefmilieu")
           # Plot
           output$persberichten.beleid.maand.leefmilieu.plot <- renderPlot(
             persberichten.beleid.maand.leefmilieu$plot()
@@ -109,7 +109,7 @@ server <- function(input, output) {
             persberichten.beleid.maand.leefmilieu$tabel()
           )
         # Mobiliteit ----------------------------------------------------------
-        persberichten.beleid.maand.mobiliteit <- callModule(bericht.beleid, "bericht.beleid.maand.plot.mobiliteit", Persstatistiek, "Mobiliteit", "Maand", "Maand")
+        persberichten.beleid.maand.mobiliteit <- callModule(bericht.beleid, "bericht.beleid.maand.plot.mobiliteit", data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", beleid = "Mobiliteit")
           # Plot  
           output$persberichten.beleid.maand.mobiliteit.plot <- renderPlot(
             persberichten.beleid.maand.mobiliteit$plot()
@@ -119,7 +119,7 @@ server <- function(input, output) {
             persberichten.beleid.maand.mobiliteit$tabel()
           )
         # Onderwijs en Educatie -----------------------------------------------
-        persberichten.beleid.maand.onderwijs <- callModule(bericht.beleid, "bericht.beleid.maand.plot.onderwijs", Persstatistiek, "Onderwijs en Educatie", "Maand", "Maand")
+        persberichten.beleid.maand.onderwijs <- callModule(bericht.beleid, "bericht.beleid.maand.plot.onderwijs", data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", beleid = "Onderwijs en Educatie")
           # Plot  
           output$persberichten.beleid.maand.onderwijs.plot <- renderPlot(
             persberichten.beleid.maand.onderwijs$plot()
@@ -129,7 +129,7 @@ server <- function(input, output) {
             persberichten.beleid.maand.onderwijs$tabel()
           )
         # Provinciebestuur ----------------------------------------------------
-        persberichten.beleid.maand.provinciebestuur <- callModule(bericht.beleid, "bericht.beleid.maand.plot.provinciebestuur", Persstatistiek, "Provinciebestuur", "Maand", "Maand")
+        persberichten.beleid.maand.provinciebestuur <- callModule(bericht.beleid, "bericht.beleid.maand.plot.provinciebestuur", data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", beleid = "Provinciebestuur")
           # Plot  
           output$persberichten.beleid.maand.provinciebestuur.plot <- renderPlot(
             persberichten.beleid.maand.provinciebestuur$plot()
@@ -139,7 +139,7 @@ server <- function(input, output) {
             persberichten.beleid.maand.provinciebestuur$tabel()
           )
         # Ruimte --------------------------------------------------------------
-        persberichten.beleid.maand.ruimte <- callModule(bericht.beleid, "bericht.beleid.maand.plot.ruimte", Persstatistiek, "Ruimte", "Maand", "Maand")
+        persberichten.beleid.maand.ruimte <- callModule(bericht.beleid, "bericht.beleid.maand.plot.ruimte", data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", beleid = "Ruimte")
           # Plot  
           output$persberichten.beleid.maand.ruimte.plot <- renderPlot(
             persberichten.beleid.maand.ruimte$plot()
@@ -149,7 +149,7 @@ server <- function(input, output) {
             persberichten.beleid.maand.ruimte$tabel()
           )
         # Vrije Tijd ----------------------------------------------------------
-        persberichten.beleid.maand.vrijetijd <- callModule(bericht.beleid, "bericht.beleid.maand.plot.vrijetijd", Persstatistiek, "Vrije Tijd", "Maand", "Maand")
+        persberichten.beleid.maand.vrijetijd <- callModule(bericht.beleid, "bericht.beleid.maand.plot.vrijetijd", data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", beleid = "Vrije Tijd")
           # Plot  
           output$persberichten.beleid.maand.vrijetijd.plot <- renderPlot(
             persberichten.beleid.maand.vrijetijd$plot()
@@ -161,7 +161,7 @@ server <- function(input, output) {
 
       # Per Deelbeleid --------------------------------------------------------
         # Economie ------------------------------------------------------------
-        persberichten.beleid.beleid.economie <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.economie", Persstatistiek, "Economie", "Deelbeleid", "Deelbeleid")
+        persberichten.beleid.beleid.economie <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.economie", Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", beleid = "Economie")
           # Plot
           output$persberichten.beleid.beleid.economie.plot <- renderPlot(
             persberichten.beleid.beleid.economie$plot()
@@ -171,7 +171,7 @@ server <- function(input, output) {
             persberichten.beleid.beleid.economie$tabel()
           )
         # Gouverneur ----------------------------------------------------------
-        persberichten.beleid.beleid.gouverneur <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.gouverneur", Persstatistiek, "Gouverneur", "Deelbeleid", "Deelbeleid")
+        persberichten.beleid.beleid.gouverneur <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.gouverneur", Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", beleid = "Gouverneur")
           # Plot  
           output$persberichten.beleid.beleid.gouverneur.plot <- renderPlot(
             persberichten.beleid.beleid.gouverneur$plot()
@@ -181,7 +181,7 @@ server <- function(input, output) {
             persberichten.beleid.beleid.gouverneur$tabel()
           )
         # Leefmilieu ----------------------------------------------------------
-        persberichten.beleid.beleid.leefmilieu <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.leefmilieu", Persstatistiek, "Leefmilieu", "Deelbeleid", "Deelbeleid")
+        persberichten.beleid.beleid.leefmilieu <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.leefmilieu", Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", beleid = "Leefmilieu")
           # Plot
           output$persberichten.beleid.beleid.leefmilieu.plot <- renderPlot(
             persberichten.beleid.beleid.leefmilieu$plot()
@@ -191,7 +191,7 @@ server <- function(input, output) {
             persberichten.beleid.beleid.leefmilieu$tabel()
           )
         # Mobiliteit ----------------------------------------------------------
-        persberichten.beleid.beleid.mobiliteit <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.mobiliteit", Persstatistiek, "Mobiliteit", "Deelbeleid", "Deelbeleid")
+        persberichten.beleid.beleid.mobiliteit <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.mobiliteit", Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", beleid = "Mobiliteit")
           # Plot  
           output$persberichten.beleid.beleid.mobiliteit.plot <- renderPlot(
             persberichten.beleid.beleid.mobiliteit$plot()
@@ -201,7 +201,7 @@ server <- function(input, output) {
             persberichten.beleid.beleid.mobiliteit$tabel()
           )
         # Onderwijs en Educatie -----------------------------------------------
-        persberichten.beleid.beleid.onderwijs <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.onderwijs", Persstatistiek, "Onderwijs en Educatie", "Deelbeleid", "Deelbeleid")
+        persberichten.beleid.beleid.onderwijs <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.onderwijs", Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", beleid = "Onderwijs en Educatie")
           # Plot  
           output$persberichten.beleid.beleid.onderwijs.plot <- renderPlot(
             persberichten.beleid.beleid.onderwijs$plot()
@@ -211,7 +211,7 @@ server <- function(input, output) {
             persberichten.beleid.beleid.onderwijs$tabel()
           )
         # Provinciebestuur ----------------------------------------------------
-        persberichten.beleid.beleid.provinciebestuur <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.provinciebestuur", Persstatistiek, "Provinciebestuur", "Deelbeleid", "Deelbeleid")
+        persberichten.beleid.beleid.provinciebestuur <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.provinciebestuur", Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", beleid = "Provinciebestuur")
           # Plot  
           output$persberichten.beleid.beleid.provinciebestuur.plot <- renderPlot(
             persberichten.beleid.beleid.provinciebestuur$plot()
@@ -221,7 +221,7 @@ server <- function(input, output) {
             persberichten.beleid.beleid.provinciebestuur$tabel()
           )
         # Ruimte --------------------------------------------------------------
-        persberichten.beleid.beleid.ruimte <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.ruimte", Persstatistiek, "Ruimte", "Deelbeleid", "Deelbeleid")
+        persberichten.beleid.beleid.ruimte <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.ruimte", Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", beleid = "Ruimte")
           # Plot  
           output$persberichten.beleid.beleid.ruimte.plot <- renderPlot(
             persberichten.beleid.beleid.ruimte$plot()
@@ -231,7 +231,7 @@ server <- function(input, output) {
             persberichten.beleid.beleid.ruimte$tabel()
         )
         # Vrije Tijd ----------------------------------------------------------
-        persberichten.beleid.beleid.vrijetijd <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.vrijetijd", Persstatistiek, "Vrije Tijd", "Deelbeleid", "Deelbeleid")
+        persberichten.beleid.beleid.vrijetijd <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.vrijetijd", Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", beleid = "Vrije Tijd")
           # Plot  
           output$persberichten.beleid.beleid.vrijetijd.plot <- renderPlot(
             persberichten.beleid.beleid.vrijetijd$plot()

@@ -31,14 +31,12 @@ bericht.beleidOutput <- function(id, plottitle, Xaxis) {
 }
 
 # SERVER ======================================================================
-bericht.beleid <- function(input, output, session, data, beleid, Xaxis, Fill) {
+bericht.beleid <- function(input, output, session, data, Xaxis, Fill, beleid = NULL) {
 
   # Data preparation ---------------------------------------------------------- 
   df.berichten <-  reactive({
     
     # Create basic dataframe --------------------------------------------------
-    # berichten <- split(data(), data()$Beleid)
-    # berichten <- data.frame(berichten, berichten)
     if (Xaxis == "Maand") {
       berichten <- data.frame(table(data()$Beleid, data()[[Xaxis]]))
       colnames(berichten) <- c("Beleid", Xaxis, "Persberichten")
@@ -54,9 +52,6 @@ bericht.beleid <- function(input, output, session, data, beleid, Xaxis, Fill) {
       colnames(berichten) <- c("Beleid", "Deelbeleid","Persberichten")
       levels(berichten$Deelbeleid) <- c(levels(berichten$Deelbeleid), "Totaal")
     }
-    
-    
-
     
     # Calculate percentages ---------------------------------------------------
     source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functies/percentages.R")
@@ -86,14 +81,6 @@ bericht.beleid <- function(input, output, session, data, beleid, Xaxis, Fill) {
     # Piechart ----------------------------------------------------------------
     else {
       source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functies/simple_piechart.R")
-      # simple_piechart(df.berichten, 
-      #                 input$inhoud, 
-      #                 input$title, 
-      #                 input$Xaxis, 
-      #                 input$Yaxis, 
-      #                 input$Xlabels, 
-      #                 input$legend, 
-      #                 colors)
       simple_piechart(data = df.berichten, 
                       Fill = Fill,
                       visual = input$inhoud, 
