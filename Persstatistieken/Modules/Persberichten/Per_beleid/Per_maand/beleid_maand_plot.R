@@ -31,28 +31,15 @@ bericht.beleidOutput <- function(id, plottitle, Xaxis) {
 }
 
 # SERVER ======================================================================
-bericht.beleid <- function(input, output, session, data, Xaxis, Fill, beleid = NULL) {
+bericht.beleid <- function(input, output, session, Id, data, Xaxis, Fill, beleid = NULL) {
 
   # Data preparation ---------------------------------------------------------- 
   df.berichten <-  reactive({
     
     # Create basic dataframe --------------------------------------------------
-    if (Xaxis == "Maand") {
-      berichten <- data.frame(table(data()$Beleid, data()[[Xaxis]]))
-      colnames(berichten) <- c("Beleid", Xaxis, "Persberichten")
-      for (i in 0:length(levels(berichten[[Xaxis]]))) {
-        levels(berichten[[Xaxis]])[i] <- month.abb[i]
-      }
-      berichten[[Xaxis]] <- factor(berichten$Maand, levels = c(month.abb, "Totaal"))
-      berichten <- split(berichten, berichten$Beleid)
-      berichten <- berichten[[beleid]]
-    } else {
-      berichten <- split(data(), data()$Beleid)
-      berichten <- data.frame("Beleid" = beleid, table(berichten[[beleid]]$"Deelbeleid"))
-      colnames(berichten) <- c("Beleid", "Deelbeleid","Persberichten")
-      levels(berichten$Deelbeleid) <- c(levels(berichten$Deelbeleid), "Totaal")
-    }
-    
+    source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functies/dataframe_prep.R")
+    berichten <- df.prep(Id, data, Xaxis, beleid)
+
     # Calculate percentages ---------------------------------------------------
     source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functies/percentages.R")
     berichten <- data.frame(berichten, 
