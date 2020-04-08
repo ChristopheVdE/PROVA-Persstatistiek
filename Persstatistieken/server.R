@@ -78,7 +78,7 @@ server <- function(input, output) {
       # Per Maand -------------------------------------------------------------
         source("./Modules/Persberichten/Per_Beleid/Per_maand/beleid_maand_plot.R")
         # Economie ------------------------------------------------------------
-        persberichten.beleid.maand.economie <- callModule(bericht.beleid.maand, "bericht.beleid.maand.plot.economie", Persstatistiek, "Economie")
+        persberichten.beleid.maand.economie <- callModule(bericht.beleid, "bericht.beleid.maand.plot.economie", Persstatistiek, "Economie", "Maand", "Maand")
           # Plot
           output$persberichten.beleid.maand.economie.plot <- renderPlot(
             persberichten.beleid.maand.economie$plot()
@@ -88,7 +88,7 @@ server <- function(input, output) {
             persberichten.beleid.maand.economie$tabel()
           )
         # Gouverneur ----------------------------------------------------------
-        persberichten.beleid.maand.gouverneur <- callModule(bericht.beleid.maand, "bericht.beleid.maand.plot.gouverneur", Persstatistiek, "Gouverneur")
+        persberichten.beleid.maand.gouverneur <- callModule(bericht.beleid, "bericht.beleid.maand.plot.gouverneur", Persstatistiek, "Gouverneur", "Maand", "Maand")
           # Plot  
           output$persberichten.beleid.maand.gouverneur.plot <- renderPlot(
             persberichten.beleid.maand.gouverneur$plot()
@@ -99,7 +99,7 @@ server <- function(input, output) {
           )
           
         # Leefmilieu ----------------------------------------------------------
-        persberichten.beleid.maand.leefmilieu <- callModule(bericht.beleid.maand, "bericht.beleid.maand.plot.leefmilieu", Persstatistiek, "Leefmilieu")
+        persberichten.beleid.maand.leefmilieu <- callModule(bericht.beleid, "bericht.beleid.maand.plot.leefmilieu", Persstatistiek, "Leefmilieu", "Maand", "Maand")
           # Plot
           output$persberichten.beleid.maand.leefmilieu.plot <- renderPlot(
             persberichten.beleid.maand.leefmilieu$plot()
@@ -109,7 +109,7 @@ server <- function(input, output) {
             persberichten.beleid.maand.leefmilieu$tabel()
           )
         # Mobiliteit ----------------------------------------------------------
-        persberichten.beleid.maand.mobiliteit <- callModule(bericht.beleid.maand, "bericht.beleid.maand.plot.mobiliteit", Persstatistiek, "Mobiliteit")
+        persberichten.beleid.maand.mobiliteit <- callModule(bericht.beleid, "bericht.beleid.maand.plot.mobiliteit", Persstatistiek, "Mobiliteit", "Maand", "Maand")
           # Plot  
           output$persberichten.beleid.maand.mobiliteit.plot <- renderPlot(
             persberichten.beleid.maand.mobiliteit$plot()
@@ -119,7 +119,7 @@ server <- function(input, output) {
             persberichten.beleid.maand.mobiliteit$tabel()
           )
         # Onderwijs en Educatie -----------------------------------------------
-        persberichten.beleid.maand.onderwijs <- callModule(bericht.beleid.maand, "bericht.beleid.maand.plot.onderwijs", Persstatistiek, "Onderwijs en Educatie")
+        persberichten.beleid.maand.onderwijs <- callModule(bericht.beleid, "bericht.beleid.maand.plot.onderwijs", Persstatistiek, "Onderwijs en Educatie", "Maand", "Maand")
           # Plot  
           output$persberichten.beleid.maand.onderwijs.plot <- renderPlot(
             persberichten.beleid.maand.onderwijs$plot()
@@ -129,7 +129,7 @@ server <- function(input, output) {
             persberichten.beleid.maand.onderwijs$tabel()
           )
         # Provinciebestuur ----------------------------------------------------
-        persberichten.beleid.maand.provinciebestuur <- callModule(bericht.beleid.maand, "bericht.beleid.maand.plot.provinciebestuur", Persstatistiek, "Provinciebestuur")
+        persberichten.beleid.maand.provinciebestuur <- callModule(bericht.beleid, "bericht.beleid.maand.plot.provinciebestuur", Persstatistiek, "Provinciebestuur", "Maand", "Maand")
           # Plot  
           output$persberichten.beleid.maand.provinciebestuur.plot <- renderPlot(
             persberichten.beleid.maand.provinciebestuur$plot()
@@ -139,7 +139,7 @@ server <- function(input, output) {
             persberichten.beleid.maand.provinciebestuur$tabel()
           )
         # Ruimte --------------------------------------------------------------
-        persberichten.beleid.maand.ruimte <- callModule(bericht.beleid.maand, "bericht.beleid.maand.plot.ruimte", Persstatistiek, "Ruimte")
+        persberichten.beleid.maand.ruimte <- callModule(bericht.beleid, "bericht.beleid.maand.plot.ruimte", Persstatistiek, "Ruimte", "Maand", "Maand")
           # Plot  
           output$persberichten.beleid.maand.ruimte.plot <- renderPlot(
             persberichten.beleid.maand.ruimte$plot()
@@ -149,7 +149,7 @@ server <- function(input, output) {
             persberichten.beleid.maand.ruimte$tabel()
           )
         # Vrije Tijd ----------------------------------------------------------
-        persberichten.beleid.maand.vrijetijd <- callModule(bericht.beleid.maand, "bericht.beleid.maand.plot.vrijetijd", Persstatistiek, "Vrije Tijd")
+        persberichten.beleid.maand.vrijetijd <- callModule(bericht.beleid, "bericht.beleid.maand.plot.vrijetijd", Persstatistiek, "Vrije Tijd", "Maand", "Maand")
           # Plot  
           output$persberichten.beleid.maand.vrijetijd.plot <- renderPlot(
             persberichten.beleid.maand.vrijetijd$plot()
@@ -160,89 +160,85 @@ server <- function(input, output) {
           )
 
       # Per Deelbeleid --------------------------------------------------------
-        # Plot -------------------------------------------------------------
-          source("./Modules/Persberichten/Per_Beleid/Per_beleid/beleid_detail_plot.R")
-          # Economie
-          persberichten.beleid.beleid.economie.plot <- callModule(bericht.beleid.beleid.plot, "bericht.beleid.beleid.plot.economie", reactive(Persstatistiek()), reactive("Economie"))
+        # Economie ------------------------------------------------------------
+        persberichten.beleid.beleid.economie <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.economie", Persstatistiek, "Economie", "Deelbeleid", "Deelbeleid")
+          # Plot
           output$persberichten.beleid.beleid.economie.plot <- renderPlot(
-            persberichten.beleid.beleid.economie.plot()
+            persberichten.beleid.beleid.economie$plot()
           )
-          # Gouverneur
-          persberichten.beleid.beleid.gouverneur.plot <- callModule(bericht.beleid.beleid.plot, "bericht.beleid.beleid.plot.gouverneur", reactive(Persstatistiek()), reactive("Gouverneur"))
-          output$persberichten.beleid.beleid.gouverneur.plot <- renderPlot(
-            persberichten.beleid.beleid.gouverneur.plot()
-          )
-          # Leefmilieu
-          persberichten.beleid.beleid.leefmilieu.plot <- callModule(bericht.beleid.beleid.plot, "bericht.beleid.beleid.plot.leefmilieu", reactive(Persstatistiek()), reactive("Leefmilieu"))
-          output$persberichten.beleid.beleid.leefmilieu.plot <- renderPlot(
-            persberichten.beleid.beleid.leefmilieu.plot()
-          )
-          # Mobiliteit
-          persberichten.beleid.beleid.mobiliteit.plot <- callModule(bericht.beleid.beleid.plot, "bericht.beleid.beleid.plot.mobiliteit", reactive(Persstatistiek()), reactive("Mobiliteit"))
-          output$persberichten.beleid.beleid.mobiliteit.plot <- renderPlot(
-            persberichten.beleid.beleid.mobiliteit.plot()
-          )
-          # Onderwijs en Educatie
-          persberichten.beleid.beleid.onderwijs.plot <- callModule(bericht.beleid.beleid.plot, "bericht.beleid.beleid.plot.onderwijs", reactive(Persstatistiek()), reactive("Onderwijs en Educatie"))
-          output$persberichten.beleid.beleid.onderwijs.plot <- renderPlot(
-            persberichten.beleid.beleid.onderwijs.plot()
-          )
-          # Provinciebestuur
-          persberichten.beleid.beleid.provinciebestuur.plot <- callModule(bericht.beleid.beleid.plot, "bericht.beleid.beleid.plot.provinciebestuur", reactive(Persstatistiek()), reactive("Provinciebestuur"))
-          output$persberichten.beleid.beleid.provinciebestuur.plot <- renderPlot(
-            persberichten.beleid.beleid.provinciebestuur.plot()
-          )
-          # Ruimte
-          persberichten.beleid.beleid.ruimte.plot <- callModule(bericht.beleid.beleid.plot, "bericht.beleid.beleid.plot.ruimte", reactive(Persstatistiek()), reactive("Ruimte"))
-          output$persberichten.beleid.beleid.ruimte.plot <- renderPlot(
-            persberichten.beleid.beleid.ruimte.plot()
-          )
-          # Vrije Tijd
-          persberichten.beleid.beleid.vrijetijd.plot <- callModule(bericht.beleid.beleid.plot, "bericht.beleid.beleid.plot.vrijetijd", reactive(Persstatistiek()), reactive("Vrije Tijd"))
-          output$persberichten.beleid.beleid.vrijetijd.plot <- renderPlot(
-            persberichten.beleid.beleid.vrijetijd.plot()
-          )
-        # Tabel ---------------------------------------------------------------
-          source("./Functions/Persberichten/Per_beleid/Per_beleid/beleid_detail_tabel.R")
-          # Economie
-          persberichten.beleid.beleid.economie.tabel <- bericht.beleid.beleid.tabel(reactive(Persstatistiek()), reactive("Economie"))
+          # Table
           output$persberichten.beleid.beleid.economie.tabel <- renderTable(
-            persberichten.beleid.beleid.economie.tabel()
+            persberichten.beleid.beleid.economie$tabel()
           )
-          # Gouverneur
-          persberichten.beleid.beleid.gouverneur.tabel <- bericht.beleid.beleid.tabel(reactive(Persstatistiek()), reactive("Gouverneur"))
+        # Gouverneur ----------------------------------------------------------
+        persberichten.beleid.beleid.gouverneur <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.gouverneur", Persstatistiek, "Gouverneur", "Deelbeleid", "Deelbeleid")
+          # Plot  
+          output$persberichten.beleid.beleid.gouverneur.plot <- renderPlot(
+            persberichten.beleid.beleid.gouverneur$plot()
+          )
+          # Table
           output$persberichten.beleid.beleid.gouverneur.tabel <- renderTable(
-            persberichten.beleid.beleid.gouverneur.tabel()
+            persberichten.beleid.beleid.gouverneur$tabel()
           )
-          # Leefmilieu
-          persberichten.beleid.beleid.leefmilieu.tabel <- bericht.beleid.beleid.tabel(reactive(Persstatistiek()), reactive("Leefmilieu"))
+        # Leefmilieu ----------------------------------------------------------
+        persberichten.beleid.beleid.leefmilieu <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.leefmilieu", Persstatistiek, "Leefmilieu", "Deelbeleid", "Deelbeleid")
+          # Plot
+          output$persberichten.beleid.beleid.leefmilieu.plot <- renderPlot(
+            persberichten.beleid.beleid.leefmilieu$plot()
+          )
+          # Table
           output$persberichten.beleid.beleid.leefmilieu.tabel <- renderTable(
-            persberichten.beleid.beleid.leefmilieu.tabel()
+            persberichten.beleid.beleid.leefmilieu$tabel()
           )
-          # Mobiliteit
-          persberichten.beleid.beleid.mobiliteit.tabel <- bericht.beleid.beleid.tabel(reactive(Persstatistiek()), reactive("Mobiliteit"))
+        # Mobiliteit ----------------------------------------------------------
+        persberichten.beleid.beleid.mobiliteit <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.mobiliteit", Persstatistiek, "Mobiliteit", "Deelbeleid", "Deelbeleid")
+          # Plot  
+          output$persberichten.beleid.beleid.mobiliteit.plot <- renderPlot(
+            persberichten.beleid.beleid.mobiliteit$plot()
+          )
+          # Table
           output$persberichten.beleid.beleid.mobiliteit.tabel <- renderTable(
-            persberichten.beleid.beleid.mobiliteit.tabel()
+            persberichten.beleid.beleid.mobiliteit$tabel()
           )
-          # Onderwijs en Educatie
-          persberichten.beleid.beleid.onderwijs.tabel <- bericht.beleid.beleid.tabel(reactive(Persstatistiek()), reactive("Onderwijs en Educatie"))
+        # Onderwijs en Educatie -----------------------------------------------
+        persberichten.beleid.beleid.onderwijs <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.onderwijs", Persstatistiek, "Onderwijs en Educatie", "Deelbeleid", "Deelbeleid")
+          # Plot  
+          output$persberichten.beleid.beleid.onderwijs.plot <- renderPlot(
+            persberichten.beleid.beleid.onderwijs$plot()
+          )
+          # Tabel
           output$persberichten.beleid.beleid.onderwijs.tabel <- renderTable(
-            persberichten.beleid.beleid.onderwijs.tabel()
+            persberichten.beleid.beleid.onderwijs$tabel()
           )
-          # Provinciebestuur
-          persberichten.beleid.beleid.provinciebestuur.tabel <- bericht.beleid.beleid.tabel(reactive(Persstatistiek()), reactive("Provinciebestuur"))
+        # Provinciebestuur ----------------------------------------------------
+        persberichten.beleid.beleid.provinciebestuur <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.provinciebestuur", Persstatistiek, "Provinciebestuur", "Deelbeleid", "Deelbeleid")
+          # Plot  
+          output$persberichten.beleid.beleid.provinciebestuur.plot <- renderPlot(
+            persberichten.beleid.beleid.provinciebestuur$plot()
+          )
+          # Table
           output$persberichten.beleid.beleid.provinciebestuur.tabel <- renderTable(
-            persberichten.beleid.beleid.provinciebestuur.tabel()
+            persberichten.beleid.beleid.provinciebestuur$tabel()
           )
-          # Ruimte
-          persberichten.beleid.beleid.ruimte.tabel <- bericht.beleid.beleid.tabel(reactive(Persstatistiek()), reactive("Ruimte"))
+        # Ruimte --------------------------------------------------------------
+        persberichten.beleid.beleid.ruimte <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.ruimte", Persstatistiek, "Ruimte", "Deelbeleid", "Deelbeleid")
+          # Plot  
+          output$persberichten.beleid.beleid.ruimte.plot <- renderPlot(
+            persberichten.beleid.beleid.ruimte$plot()
+          )
+          # Table
           output$persberichten.beleid.beleid.ruimte.tabel <- renderTable(
-            persberichten.beleid.beleid.ruimte.tabel()
+            persberichten.beleid.beleid.ruimte$tabel()
+        )
+        # Vrije Tijd ----------------------------------------------------------
+        persberichten.beleid.beleid.vrijetijd <- callModule(bericht.beleid, "bericht.beleid.beleid.plot.vrijetijd", Persstatistiek, "Vrije Tijd", "Deelbeleid", "Deelbeleid")
+          # Plot  
+          output$persberichten.beleid.beleid.vrijetijd.plot <- renderPlot(
+            persberichten.beleid.beleid.vrijetijd$plot()
           )
-          # Vrije Tijd
-          persberichten.beleid.beleid.vrijetijd.tabel <- bericht.beleid.beleid.tabel(reactive(Persstatistiek()), reactive("Vrije Tijd"))
+          # Table
           output$persberichten.beleid.beleid.vrijetijd.tabel <- renderTable(
-            persberichten.beleid.beleid.vrijetijd.tabel()
+            persberichten.beleid.beleid.vrijetijd$tabel()
           )
     # PER VERZENDER -----------------------------------------------------------
       # Algemeen --------------------------------------------------------------
@@ -458,39 +454,39 @@ server <- function(input, output) {
                                 beleid.tabel = reactive(persberichten.alg.beleid.tabel()))
       # Per beleid ------------------------------------------------------------
         # Maand ---------------------------------------------------------------
-        Persberichten.beleid.maand <- list(economie.plot = reactive(persberichten.beleid.maand.economie.plot()),
-                                           economie.tabel = reactive(persberichten.beleid.maand.economie.tabel()),
-                                           gouverneur.plot = reactive(persberichten.beleid.maand.gouverneur.plot()),
-                                           gouverneur.tabel = reactive(persberichten.beleid.maand.gouverneur.tabel()),
-                                           leefmilieu.plot = reactive(persberichten.beleid.maand.leefmilieu.plot()),
-                                           leefmilieu.tabel = reactive(persberichten.beleid.maand.leefmilieu.tabel()),
-                                           mobiliteit.plot = reactive(persberichten.beleid.maand.mobiliteit.plot()),
-                                           mobiliteit.tabel = reactive(persberichten.beleid.maand.mobiliteit.tabel()),
-                                           onderwijs.plot = reactive(persberichten.beleid.maand.onderwijs.plot()),
-                                           onderwijs.tabel = reactive(persberichten.beleid.maand.onderwijs.tabel()),
-                                           provinciebestuur.plot = reactive(persberichten.beleid.maand.provinciebestuur.plot()),
-                                           provinciebestuur.tabel = reactive(persberichten.beleid.maand.provinciebestuur.tabel()),
-                                           ruimte.plot = reactive(persberichten.beleid.maand.ruimte.plot()),
-                                           ruimte.tabel = reactive(persberichten.beleid.maand.ruimte.tabel()),
-                                           vrijetijd.plot = reactive(persberichten.beleid.maand.vrijetijd.plot()),
-                                           vrijetijd.tabel = reactive(persberichten.beleid.maand.vrijetijd.tabel()))
+        Persberichten.beleid.maand <- list(economie.plot = reactive(persberichten.beleid.maand.economie$plot()),
+                                           economie.tabel = reactive(persberichten.beleid.maand.economie$tabel()),
+                                           gouverneur.plot = reactive(persberichten.beleid.maand.gouverneur$plot()),
+                                           gouverneur.tabel = reactive(persberichten.beleid.maand.gouverneur$tabel()),
+                                           leefmilieu.plot = reactive(persberichten.beleid.maand.leefmilieu$plot()),
+                                           leefmilieu.tabel = reactive(persberichten.beleid.maand.leefmilieu$tabel()),
+                                           mobiliteit.plot = reactive(persberichten.beleid.maand.mobiliteit$plot()),
+                                           mobiliteit.tabel = reactive(persberichten.beleid.maand.mobiliteit$tabel()),
+                                           onderwijs.plot = reactive(persberichten.beleid.maand.onderwijs$plot()),
+                                           onderwijs.tabel = reactive(persberichten.beleid.maand.onderwijs$tabel()),
+                                           provinciebestuur.plot = reactive(persberichten.beleid.maand.provinciebestuur$plot()),
+                                           provinciebestuur.tabel = reactive(persberichten.beleid.maand.provinciebestuur$tabel()),
+                                           ruimte.plot = reactive(persberichten.beleid.maand.ruimte$plot()),
+                                           ruimte.tabel = reactive(persberichten.beleid.maand.ruimte$tabel()),
+                                           vrijetijd.plot = reactive(persberichten.beleid.maand.vrijetijd$plot()),
+                                           vrijetijd.tabel = reactive(persberichten.beleid.maand.vrijetijd$tabel()))
         # Beleid --------------------------------------------------------------
-        Persberichten.beleid.beleid <- list(economie.plot = reactive(persberichten.beleid.beleid.economie.plot()),
-                                           economie.tabel = reactive(persberichten.beleid.beleid.economie.tabel()),
-                                           gouverneur.plot = reactive(persberichten.beleid.beleid.gouverneur.plot()),
-                                           gouverneur.tabel = reactive(persberichten.beleid.beleid.gouverneur.tabel()),
-                                           leefmilieu.plot = reactive(persberichten.beleid.beleid.leefmilieu.plot()),
-                                           leefmilieu.tabel = reactive(persberichten.beleid.beleid.leefmilieu.tabel()),
-                                           mobiliteit.plot = reactive(persberichten.beleid.beleid.mobiliteit.plot()),
-                                           mobiliteit.tabel = reactive(persberichten.beleid.beleid.mobiliteit.tabel()),
-                                           onderwijs.plot = reactive(persberichten.beleid.beleid.onderwijs.plot()),
-                                           onderwijs.tabel = reactive(persberichten.beleid.beleid.onderwijs.tabel()),
-                                           provinciebestuur.plot = reactive(persberichten.beleid.beleid.provinciebestuur.plot()),
-                                           provinciebestuur.tabel = reactive(persberichten.beleid.beleid.provinciebestuur.tabel()),
-                                           ruimte.plot = reactive(persberichten.beleid.beleid.ruimte.plot()),
-                                           ruimte.tabel = reactive(persberichten.beleid.beleid.ruimte.tabel()),
-                                           vrijetijd.plot = reactive(persberichten.beleid.beleid.vrijetijd.plot()),
-                                           vrijetijd.tabel = reactive(persberichten.beleid.beleid.vrijetijd.tabel()))
+        Persberichten.beleid.beleid <- list(economie.plot = reactive(persberichten.beleid.beleid.economie$plot()),
+                                           economie.tabel = reactive(persberichten.beleid.beleid.economie$tabel()),
+                                           gouverneur.plot = reactive(persberichten.beleid.beleid.gouverneur$plot()),
+                                           gouverneur.tabel = reactive(persberichten.beleid.beleid.gouverneur$tabel()),
+                                           leefmilieu.plot = reactive(persberichten.beleid.beleid.leefmilieu$plot()),
+                                           leefmilieu.tabel = reactive(persberichten.beleid.beleid.leefmilieu$tabel()),
+                                           mobiliteit.plot = reactive(persberichten.beleid.beleid.mobiliteit$plot()),
+                                           mobiliteit.tabel = reactive(persberichten.beleid.beleid.mobiliteit$tabel()),
+                                           onderwijs.plot = reactive(persberichten.beleid.beleid.onderwijs$plot()),
+                                           onderwijs.tabel = reactive(persberichten.beleid.beleid.onderwijs$tabel()),
+                                           provinciebestuur.plot = reactive(persberichten.beleid.beleid.provinciebestuur$plot()),
+                                           provinciebestuur.tabel = reactive(persberichten.beleid.beleid.provinciebestuur$tabel()),
+                                           ruimte.plot = reactive(persberichten.beleid.beleid.ruimte$plot()),
+                                           ruimte.tabel = reactive(persberichten.beleid.beleid.ruimte$tabel()),
+                                           vrijetijd.plot = reactive(persberichten.beleid.beleid.vrijetijd$plot()),
+                                           vrijetijd.tabel = reactive(persberichten.beleid.beleid.vrijetijd$tabel()))
         # Verzender -----------------------------------------------------------
           # Algemeen ----------------------------------------------------------
           Persberichten.verzender.alg <- list(totaal.plot = reactive(persberichten.verzender.alg.totaal.plot()),
