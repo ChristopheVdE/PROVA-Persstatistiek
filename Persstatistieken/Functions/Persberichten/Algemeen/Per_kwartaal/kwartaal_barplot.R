@@ -4,6 +4,12 @@ bericht.alg.kwartaal.barplot <- function(data) {
   df.berichten.Kwartaal <-  reactive({
     berichten <- data.frame(table(data()$Kwartaal))
     colnames(berichten) <- c("Kwartaal", "Freq")
+    berichten$Kwartaal <- factor(berichten$Kwartaal, c("Q1", "Q2", "Q3", "Q4"))
+    for (i in c("Q1", "Q2", "Q3", "Q4")) {
+      if (!(i %in% berichten$Kwartaal)) {
+        berichten <- rbind(berichten, c(i, 0))
+      }
+    }
     return(berichten)
   })
   

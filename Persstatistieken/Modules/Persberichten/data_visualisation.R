@@ -1,5 +1,5 @@
 ###############################################################################
-# MODULE: Persberichten - Algemeen: Beleid per maand
+# MODULE: Data visualisation (plot and table creation)
 ###############################################################################
 
 library(shiny)
@@ -8,7 +8,7 @@ library(RColorBrewer)
 library(scales)
 
 # UI ==========================================================================
-bericht.beleidOutput <- function(id, plottitle, Xaxis) {
+data.visualOutput <- function(id, plottitle, Xaxis) {
   ns <- NS(id)
   tabPanel(
     "Opties",
@@ -31,18 +31,18 @@ bericht.beleidOutput <- function(id, plottitle, Xaxis) {
 }
 
 # SERVER ======================================================================
-bericht.beleid <- function(input, output, session, Id, data, Xaxis, Fill, beleid = NULL) {
+data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = NULL) {
 
   # Data preparation ---------------------------------------------------------- 
   df.berichten <-  reactive({
     
     # Create basic dataframe --------------------------------------------------
     source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functies/dataframe_prep.R")
-    berichten <- df.prep(Id, data, Xaxis, beleid)
+    berichten <- df.prep(Id, data, beleid)
 
     # Calculate percentages ---------------------------------------------------
     source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functies/percentages.R")
-    berichten <- data.frame(berichten, 
+    berichten <- data.frame(berichten,
                             "Procentueel" = calc_percentages(berichten))
   })
   
@@ -82,7 +82,12 @@ bericht.beleid <- function(input, output, session, Id, data, Xaxis, Fill, beleid
 
   # Table ---------------------------------------------------------------------
   tabel <- reactive(
-             rbind(df.berichten(), c(beleid, "Totaal", sum(df.berichten()$Persberichten), 100))
+            if (is.null(beleid)) {
+              # df.berichten()
+              rbind(df.berichten(), c(beleid, "Totaal", sum(df.berichten()$Persberichten), 100))
+            } else {
+              rbind(df.berichten(), c(beleid, "Totaal", sum(df.berichten()$Persberichten), 100))
+            }
            )
   
   return(list(plot = berichten.plot, tabel = tabel))
