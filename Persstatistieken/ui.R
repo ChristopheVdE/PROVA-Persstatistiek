@@ -146,14 +146,15 @@ ui <- dashboardPage(
                 width = 6,
                 tabPanel("Barplot", plotOutput("persberichten.alg.maand.plot")),
                 tabPanel("Tabel", tableOutput("persberichten.alg.maand.tabel")),
-                bericht.alg.maand.plotOutput("bericht.alg.maand.plot", plottitle = "Persberichten per maand")
+                data.visualOutput("bericht.alg.maand", plottitle = "Persberichten per maand", Xaxis = "Maand")
               ),
               tabBox(
                 width = 12,
                 title = "Persberichten per beleid",
                 tabPanel("Barplot", plotOutput("persberichten.alg.beleid.plot")),
                 tabPanel("Tabel", tableOutput("persberichten.alg.beleid.tabel")),
-                bericht.alg.beleid.plotOutput("bericht.alg.beleid.plot", plottitle = "Persberichten per beleid")
+                data.visualOutput("bericht.alg.beleid", plottitle = "Persberichten per beleid", Xaxis = "Beleid")
+                # data.visualOutput("bericht.alg.beleid.plot", plottitle = "Persberichten per beleid")
               ),
             )
           ),

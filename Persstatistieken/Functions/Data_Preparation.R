@@ -56,8 +56,7 @@ data.preparation <- function(file, sheet, headers, manual.headers, kwartaal) {
       }
     }
     
-    # Fixing Mistakes --------------------------------------------------
-    
+  # Fixing Mistakes --------------------------------------------------
     # Verzender ------------------------------------------------------
     Excel$Verzender <- gsub("extern", "Extern", Excel$Verzender, ignore.case = FALSE)
     Excel$Verzender <- gsub("gouverneur", "Gouverneur", Excel$Verzender, ignore.case = FALSE)
@@ -95,19 +94,23 @@ data.preparation <- function(file, sheet, headers, manual.headers, kwartaal) {
     Excel$Soort <- gsub("activiteitenkalender", "Activiteitenkalender", Excel$Soort, ignore.case = FALSE)
     Excel$Soort <- gsub("evenementenkalender", "Evenementenkalender", Excel$Soort, ignore.case = FALSE)
     
-    # As factor --------------------------------------------------------
+  # As factor --------------------------------------------------------
     for (i in c("Verzender", "Beleid")) ({
       Excel[[i]] <- as.factor(Excel[[i]])
     })
     
-    # Split ------------------------------------------------------------
+    Excel$Maand <- factor(Excel$Maand, c("jan", "feb", "mrt", "apr", "mei","jun","jul","aug","sep","okt","nov","dec"))
+    levels(Excel$Maand) <- month.abb
+    
+    
+  # Split ------------------------------------------------------------
     Persstatistiek <- split.data.frame(Excel, Excel$Kwartaal)
     Persstatistiek$Jaar <- Excel
     
-    # Removing Excel ---------------------------------------------------
+  # Removing Excel ---------------------------------------------------
     Excel <- NULL
     
-    # Return dataset ---------------------------------------------------
+  # Return dataset ---------------------------------------------------
     return(Persstatistiek[[kwartaal()]])
   })
 }

@@ -34,46 +34,43 @@ server <- function(input, output) {
   # ===========================================================================
   
   # PERSBERICHTEN =============================================================
-  source("./Modules/Persberichten/data_visualisation.R")
+    source("./Modules/Persberichten/data_visualisation.R")
     # ALGEMEEN ----------------------------------------------------------------
       # Per Kwartaal ----------------------------------------------------------
         persberichten.alg.kwartaal <- callModule(data.visual, "bericht.alg.kwartaal", Id = "alg.kwartaal", data = Persstatistiek, Xaxis = "Kwartaal", Fill = "Kwartaal")      
         # Barplot
-          # source("./Functions/Persberichten/Algemeen/Per_kwartaal/kwartaal_barplot.R")
           output$persberichten.alg.kwartaal.plot <- renderPlot(
             persberichten.alg.kwartaal$plot()
           )
         # Tabel
-          # source("./Functions/Persberichten/Algemeen/Per_kwartaal/kwartaal_tabel.R")
-          # persberichten.alg.kwartaal.tabel <- bericht.alg.kwartaal.tabel(reactive(Persstatistiek()))
           output$persberichten.alg.kwartaal.tabel <- renderTable(
             persberichten.alg.kwartaal$tabel()
           )
       # Per Maand -------------------------------------------------------------
         # Plot
-          source("./Modules/Persberichten/Algemeen/Per_maand/maand_plot.R")
-          persberichten.alg.maand.plot <- callModule(bericht.alg.maand.plot, "bericht.alg.maand.plot", reactive(Persstatistiek()))
+          # source("./Modules/Persberichten/Algemeen/Per_maand/maand_plot.R")
+          persberichten.alg.maand <- callModule(data.visual, "bericht.alg.maand", Id = "alg.maand", data = Persstatistiek, Xaxis = "Maand", Fill = "Maand")  
           output$persberichten.alg.maand.plot <- renderPlot(
-            persberichten.alg.maand.plot()
+            persberichten.alg.maand$plot()
           )
         # Tabel
-          source("./Functions/Persberichten/Algemeen/Per_maand/maand_tabel.R")
-          persberichten.alg.maand.tabel <- bericht.alg.maand.tabel(reactive(Persstatistiek()))
+          # source("./Functions/Persberichten/Algemeen/Per_maand/maand_tabel.R")
+          # persberichten.alg.maand.tabel <- bericht.alg.maand.tabel(reactive(Persstatistiek()))
           output$persberichten.alg.maand.tabel <- renderTable(
-            persberichten.alg.maand.tabel()
+            persberichten.alg.maand$tabel()
           )
       # Per Beleid ------------------------------------------------------------
         # Plot
-          source("./Modules/Persberichten/Algemeen/Per_beleid/beleid_plot.R")
-          persberichten.alg.beleid.plot <- callModule(bericht.alg.beleid.plot, "bericht.alg.beleid.plot", reactive(Persstatistiek()))
+          # source("./Modules/Persberichten/Algemeen/Per_beleid/beleid_plot.R")
+          persberichten.alg.beleid <- callModule(data.visual, "bericht.alg.beleid", Id = "alg.beleid", data = Persstatistiek, Xaxis = "Beleid", Fill = "Beleid")   
           output$persberichten.alg.beleid.plot <- renderPlot(
-            persberichten.alg.beleid.plot()
+            persberichten.alg.beleid$plot()
           )
         # Tabel
-          source("./Functions/Persberichten/Algemeen/Per_beleid/beleid_tabel.R")
-          persberichten.alg.beleid.tabel <- bericht.alg.beleid.tabel(reactive(Persstatistiek()))
+          # source("./Functions/Persberichten/Algemeen/Per_beleid/beleid_tabel.R")
+          # persberichten.alg.beleid.tabel <- bericht.alg.beleid.tabel(reactive(Persstatistiek()))
           output$persberichten.alg.beleid.tabel <- renderTable(
-            persberichten.alg.beleid.tabel()
+            persberichten.alg.beleid$tabel()
           )
     # PER BELEID --------------------------------------------------------------
       # Per Maand -------------------------------------------------------------
