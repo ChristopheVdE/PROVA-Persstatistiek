@@ -3,13 +3,24 @@
 ###############################################################################
 
 # Calculate barplot ===========================================================
-simple_barplot <- function(data, Xaxis, Fill, visual, title, Xtitle, Ytitle, Xlabels, legend, colors) {
+simple_barplot <- function(Id, data, Xaxis, Fill, visual, title, Xtitle, Ytitle, Xlabels, legend, colors) {
+  
+  Y <- reactive(
+    if (visual == "Aantal") {
+      if(Id == "return.beleid.alg" || Id == "return.beleid.beleid" || Id == "return.medium") {
+        data()$Aantal
+      } else {
+        data()$Persberichten
+      }
+    }
+  )
+  
   plot <- reactive(
     ggplot(data(), aes(x = data()[[Xaxis]], 
-                       y  = (if (visual == "Aantal") {Persberichten} else {Procentueel}), 
+                       y  = (if(visual == "Aantal") {Y()} else {Procentueel}), 
                        fill = data()[[Fill]])) +
       geom_bar(position = "dodge", stat = 'identity') +
-      geom_text(aes(label = if(visual == "Aantal") {Persberichten} else {percent(Procentueel, accuracy = 0.1, scale = 1)}),
+      geom_text(aes(label = if(visual == "Aantal") {Y()} else {percent(Procentueel, accuracy = 0.1, scale = 1)}),
                 position = position_dodge(0.9), 
                 vjust=0) +
       theme_bw() +

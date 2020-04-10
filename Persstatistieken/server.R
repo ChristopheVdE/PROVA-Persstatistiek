@@ -34,7 +34,7 @@ server <- function(input, output) {
   # ===========================================================================
   
   # PERSBERICHTEN =============================================================
-    source("./Modules/Persberichten/data_visualisation.R")
+    source("./Modules/data_visualisation.R")
     # ALGEMEEN ----------------------------------------------------------------
       # Per Kwartaal ----------------------------------------------------------
         persberichten.alg.kwartaal <- callModule(data.visual, "bericht.alg.kwartaal", Id = "alg.kwartaal", data = Persstatistiek, Xaxis = "Kwartaal", Fill = "Kwartaal")      
@@ -250,17 +250,14 @@ server <- function(input, output) {
             persberichten.verzender.alg.totaal$tabel()
           )
         # Beleid per Verzender ------------------------------------------------
-          # Barlot ------------------------------------------------------------
-          source("./Functions/Persberichten/Per_Verzender/Algemeen/Verzender_beleid/verzender_beleid_barplot.R")
-          persberichten.verzender.alg.beleid.plot <- bericht.verzender.alg.beleid.barplot(reactive(Persstatistiek()))
+          # Plot
+          persberichten.verzender.alg.beleid <- callModule(data.visual, "bericht.verzender.alg.beleid", Id = "verzender.alg.beleid" , Persstatistiek, Xaxis = "Verzender", Fill = "Beleid")
           output$persberichten.verzender.alg.beleid.plot <- renderPlot(
-            persberichten.verzender.alg.beleid.plot()
+            persberichten.verzender.alg.beleid$plot()
           )
-          # Tabel -------------------------------------------------------------
-          source("./Functions/Persberichten/Per_Verzender/Algemeen/Verzender_beleid/verzender_beleid_tabel.R")
-          persberichten.verzender.alg.beleid.tabel <- bericht.verzender.alg.beleid.tabel(reactive(Persstatistiek()))
+          # Tabel
           output$persberichten.verzender.alg.beleid.tabel <- renderTable(
-            persberichten.verzender.alg.beleid.tabel()
+            persberichten.verzender.alg.beleid$tabel()
           )
       # Per Maand -------------------------------------------------------------
         # Persdienst ----------------------------------------------------------
@@ -304,132 +301,119 @@ server <- function(input, output) {
             persberichten.verzender.maand.extern$tabel()
           )
     # PER TYPE ----------------------------------------------------------------
-      # Barplot ---------------------------------------------------------------
-      source("./Functions/Persberichten/Per_type/type_barplot.R")
-      persberichten.type.plot <- bericht.type.barplot(reactive(Persstatistiek()))
+      # Plot
+      persberichten.type <- callModule(data.visual, "bericht.type", Id = "type" , Persstatistiek, Xaxis = "Beleid", Fill = "Type")
       output$persberichten.type.plot <- renderPlot(
-        persberichten.type.plot()
+        persberichten.type$plot()
       )
-      # Tabel -----------------------------------------------------------------
-      source("./Functions/Persberichten/Per_type/type_tabel.R")
-      persberichten.type.tabel <- bericht.type.tabel(reactive(Persstatistiek()))
+      # Tabel
       output$persberichten.type.tabel <- renderTable(
-        persberichten.type.tabel()
+        persberichten.type$tabel()
       )
   # ===========================================================================
   
   # PERSRETURN ================================================================
     # PER BELEID --------------------------------------------------------------
       # Algemeen --------------------------------------------------------------
-        # Barplot -------------------------------------------------------------
-        source("./Functions/Persreturn/Per_beleid/Algemeen/return_beleid_barplot.R")
-        persreturn.beleid.alg.plot <- persreturn.beleid.barplot(reactive(Persstatistiek()))
+        # Plot
+        persreturn.beleid.alg <- callModule(data.visual, "return.beleid.alg", Id = "return.beleid.alg" , Persstatistiek, Xaxis = "Beleid", Fill = "Persreturn")
         output$persreturn.beleid.alg.plot <- renderPlot(
-          persreturn.beleid.alg.plot()
+          persreturn.beleid.alg$plot()
         )
-        # Tabel ---------------------------------------------------------------
-        source("./Functions/Persreturn/Per_beleid/Algemeen/return_beleid_tabel.R")
-        persreturn.beleid.alg.tabel <- persreturn.beleid.tabel(reactive(Persstatistiek()))
+        # Tabel 
         output$persreturn.beleid.alg.tabel <- renderTable(
-          persreturn.beleid.alg.tabel()
+          persreturn.beleid.alg$tabel()
         )
       # Deelbeleid ------------------------------------------------------------
-        # Barplot -------------------------------------------------------------
-        source("./Functions/Persreturn/Per_beleid/Detail/return_deelbeleid_barplot.R")
-          # Economie
-          persreturn.beleid.economie.plot <- persreturn.deelbeleid.barplot(reactive(Persstatistiek()), reactive("Economie"))
-          output$persreturn.beleid.economie.plot <- renderPlot(
-            persreturn.beleid.economie.plot()
+        # Economie ------------------------------------------------------------
+        persreturn.beleid.beleid.economie <- callModule(data.visual, "return.beleid.beleid.economie", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", beleid = "Economie")
+          # Plot
+          output$persreturn.beleid.beleid.economie.plot <- renderPlot(
+            persreturn.beleid.beleid.economie$plot()
           )
-          # Gouverneur
-          persreturn.beleid.gouverneur.plot <- persreturn.deelbeleid.barplot(reactive(Persstatistiek()), reactive("Gouverneur"))
-          output$persreturn.beleid.gouverneur.plot <- renderPlot(
-            persreturn.beleid.gouverneur.plot()
+          # Table
+          output$persreturn.beleid.beleid.economie.tabel <- renderTable(
+            persreturn.beleid.beleid.economie$tabel()
           )
-          # Leefmilieu
-          persreturn.beleid.leefmilieu.plot <- persreturn.deelbeleid.barplot(reactive(Persstatistiek()), reactive("Leefmilieu"))
-          output$persreturn.beleid.leefmilieu.plot <- renderPlot(
-            persreturn.beleid.leefmilieu.plot()
+        # Gouverneur ----------------------------------------------------------
+        persreturn.beleid.beleid.gouverneur <- callModule(data.visual, "return.beleid.beleid.gouverneur", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", beleid = "Gouverneur")
+          # Plot  
+          output$persreturn.beleid.beleid.gouverneur.plot <- renderPlot(
+            persreturn.beleid.beleid.gouverneur$plot()
           )
-          # Mobiliteit
-          persreturn.beleid.mobiliteit.plot <- persreturn.deelbeleid.barplot(reactive(Persstatistiek()), reactive("Mobiliteit"))
-          output$persreturn.beleid.mobiliteit.plot <- renderPlot(
-            persreturn.beleid.mobiliteit.plot()
+          # Table
+          output$persreturn.beleid.beleid.gouverneur.tabel <- renderTable(
+            persreturn.beleid.beleid.gouverneur$tabel()
           )
-          # Onderwijs en Educatie
-          persreturn.beleid.onderwijs.plot <- persreturn.deelbeleid.barplot(reactive(Persstatistiek()), reactive("Onderwijs en Educatie"))
-          output$persreturn.beleid.onderwijs.plot <- renderPlot(
-            persreturn.beleid.onderwijs.plot()
+        # Leefmilieu ----------------------------------------------------------
+        persreturn.beleid.beleid.leefmilieu <- callModule(data.visual, "return.beleid.beleid.leefmilieu", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", beleid = "Leefmilieu")
+          # Plot
+          output$persreturn.beleid.beleid.leefmilieu.plot <- renderPlot(
+            persreturn.beleid.beleid.leefmilieu$plot()
           )
-          # Provinciebestuur
-          persreturn.beleid.provinciebestuur.plot <- persreturn.deelbeleid.barplot(reactive(Persstatistiek()), reactive("Provinciebestuur"))
-          output$persreturn.beleid.provinciebestuur.plot <- renderPlot(
-            persreturn.beleid.provinciebestuur.plot()
+          # Table
+          output$persreturn.beleid.beleid.leefmilieu.tabel <- renderTable(
+            persreturn.beleid.beleid.leefmilieu$tabel()
           )
-          # Ruimte
-          persreturn.beleid.ruimte.plot <- persreturn.deelbeleid.barplot(reactive(Persstatistiek()), reactive("Ruimte"))
-          output$persreturn.beleid.ruimte.plot <- renderPlot(
-            persreturn.beleid.ruimte.plot()
+        # Mobiliteit ----------------------------------------------------------
+        persreturn.beleid.beleid.mobiliteit <- callModule(data.visual, "return.beleid.beleid.mobiliteit", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", beleid = "Mobiliteit")
+          # Plot  
+          output$persreturn.beleid.beleid.mobiliteit.plot <- renderPlot(
+            persreturn.beleid.beleid.mobiliteit$plot()
           )
-          # Vrije Tijd
-          persreturn.beleid.vrijetijd.plot <- persreturn.deelbeleid.barplot(reactive(Persstatistiek()), reactive("Vrije Tijd"))
-          output$persreturn.beleid.vrijetijd.plot <- renderPlot(
-            persreturn.beleid.vrijetijd.plot()
+          # Table
+          output$persreturn.beleid.beleid.mobiliteit.tabel <- renderTable(
+            persreturn.beleid.beleid.mobiliteit$tabel()
           )
-        # Tabel ---------------------------------------------------------------
-        source("./Functions/Persreturn/Per_beleid/Detail/return_deelbeleid_tabel.R")
-          # Economie
-          persreturn.beleid.economie.tabel <- persreturn.deelbeleid.tabel(reactive(Persstatistiek()), reactive("Economie"))
-          output$persreturn.beleid.economie.tabel <- renderTable(
-            persreturn.beleid.economie.tabel()
+        # Onderwijs en Educatie -----------------------------------------------
+        persreturn.beleid.beleid.onderwijs <- callModule(data.visual, "return.beleid.beleid.onderwijs", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", beleid = "Onderwijs en Educatie")
+          # Plot  
+          output$persreturn.beleid.beleid.onderwijs.plot <- renderPlot(
+            persreturn.beleid.beleid.onderwijs$plot()
           )
-          # Gouverneur
-          persreturn.beleid.gouverneur.tabel <- persreturn.deelbeleid.tabel(reactive(Persstatistiek()), reactive("Gouverneur"))
-          output$persreturn.beleid.gouverneur.tabel <- renderTable(
-            persreturn.beleid.gouverneur.tabel()
+          # Tabel
+          output$persreturn.beleid.beleid.onderwijs.tabel <- renderTable(
+            persreturn.beleid.beleid.onderwijs$tabel()
           )
-          # Leefmilieu
-          persreturn.beleid.leefmilieu.tabel <- persreturn.deelbeleid.tabel(reactive(Persstatistiek()), reactive("Leefmilieu"))
-          output$persreturn.beleid.leefmilieu.tabel <- renderTable(
-            persreturn.beleid.leefmilieu.tabel()
+        # Provinciebestuur ----------------------------------------------------
+        persreturn.beleid.beleid.provinciebestuur <- callModule(data.visual, "return.beleid.beleid.provinciebestuur", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", beleid = "Provinciebestuur")
+          # Plot  
+          output$persreturn.beleid.beleid.provinciebestuur.plot <- renderPlot(
+            persreturn.beleid.beleid.provinciebestuur$plot()
           )
-          # Mobiliteit
-          persreturn.beleid.mobiliteit.tabel <- persreturn.deelbeleid.tabel(reactive(Persstatistiek()), reactive("Mobiliteit"))
-          output$persreturn.beleid.mobiliteit.tabel <- renderTable(
-            persreturn.beleid.mobiliteit.tabel()
+          # Table
+          output$persreturn.beleid.beleid.provinciebestuur.tabel <- renderTable(
+            persreturn.beleid.beleid.provinciebestuur$tabel()
           )
-          # Onderwijs en Educatie
-          persreturn.beleid.onderwijs.tabel <- persreturn.deelbeleid.tabel(reactive(Persstatistiek()), reactive("Onderwijs en Educatie"))
-          output$persreturn.beleid.onderwijs.tabel <- renderTable(
-            persreturn.beleid.onderwijs.tabel()
+        # Ruimte --------------------------------------------------------------
+        persreturn.beleid.beleid.ruimte <- callModule(data.visual, "return.beleid.beleid.ruimte", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", beleid = "Ruimte")
+          # Plot  
+          output$persreturn.beleid.beleid.ruimte.plot <- renderPlot(
+            persreturn.beleid.beleid.ruimte$plot()
           )
-          # Provinciebestuur
-          persreturn.beleid.provinciebestuur.tabel <- persreturn.deelbeleid.tabel(reactive(Persstatistiek()), reactive("Provinciebestuur"))
-          output$persreturn.beleid.provinciebestuur.tabel <- renderTable(
-            persreturn.beleid.provinciebestuur.tabel()
+          # Table
+          output$persreturn.beleid.beleid.ruimte.tabel <- renderTable(
+            persreturn.beleid.beleid.ruimte$tabel()
           )
-          # Ruimte
-          persreturn.beleid.ruimte.tabel <- persreturn.deelbeleid.tabel(reactive(Persstatistiek()), reactive("Ruimte"))
-          output$persreturn.beleid.ruimte.tabel <- renderTable(
-            persreturn.beleid.ruimte.tabel()
+        # Vrije Tijd ----------------------------------------------------------
+        persreturn.beleid.beleid.vrijetijd <- callModule(data.visual, "return.beleid.beleid.vrijetijd", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", beleid = "Vrije Tijd")
+          # Plot  
+          output$persreturn.beleid.beleid.vrijetijd.plot <- renderPlot(
+            persreturn.beleid.beleid.vrijetijd$plot()
           )
-          # Vrije Tijd
-          persreturn.beleid.vrijetijd.tabel <- persreturn.deelbeleid.tabel(reactive(Persstatistiek()), reactive("Vrije Tijd"))
-          output$persreturn.beleid.vrijetijd.tabel <- renderTable(
-            persreturn.beleid.vrijetijd.tabel()
+          # Table
+          output$persreturn.beleid.beleid.vrijetijd.tabel <- renderTable(
+            persreturn.beleid.beleid.vrijetijd$tabel()
           )
     # PER PLATFORM ------------------------------------------------------------
-      # Barplot ---------------------------------------------------------------
-      source("./Functions/Persreturn/Per_platform/return_platform_barplot.R")
-      persreturn.platform.plot <- return.platform.barplot(reactive(Persstatistiek()))
-      output$persreturn.platform.plot <- renderPlot(
-        persreturn.platform.plot()
+      # Barplot
+      persreturn.medium <- callModule(data.visual, "return.medium", Id = "return.medium" , Persstatistiek, Xaxis = "Beleid", Fill = "Platform")
+      output$persreturn.medium.plot <- renderPlot(
+        persreturn.medium$plot()
       )
-      # Tabel -----------------------------------------------------------------
-      source("./Functions/Persreturn/Per_platform/return_platform_tabel.R")
-      persreturn.platform.tabel <- return.platform.tabel(reactive(Persstatistiek()))
-      output$persreturn.platform.tabel <- renderTable(
-        persreturn.platform.tabel()
+      # Tabel
+      output$persreturn.medium.tabel <- renderTable(
+        persreturn.medium$tabel()
       )
   # ===========================================================================
       

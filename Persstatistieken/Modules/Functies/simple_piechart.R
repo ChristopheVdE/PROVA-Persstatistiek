@@ -3,14 +3,25 @@
 ###############################################################################
 
 # Calculate barplot ===========================================================
-simple_piechart <- function(data, Fill, visual, title, Xtitle, Ytitle, Xlabels, legend, colors) {
+simple_piechart <- function(Id, data, Fill, visual, title, Xtitle, Ytitle, Xlabels, legend, colors) {
+  
+  Y <- reactive(
+        if (visual == "Aantal") {
+          if(Id == "return.beleid.alg" || Id == "return.beleid.beleid" || Id == "return.medium") {
+            data()$Aantal
+          } else {
+            data()$Persberichten
+          }
+        }
+      )
+  
   plot <- reactive(
     ggplot(data(), aes(x = "", 
-                       y  = (if (visual == "Aantal") {Persberichten} else {Procentueel}), 
+                       y  = (if(visual == "Aantal") {Y()} else {Procentueel}),
                        fill = data()[[Fill]])) +
       geom_bar(width = 1, size = 1, color = "white", stat = 'identity') +
       coord_polar("y", start = 0, direction = -1) +
-      geom_text(aes(label = if(visual == "Aantal") {Persberichten} else {percent(Procentueel, accuracy = 0.1, scale = 1)}),
+      geom_text(aes(label = if(visual == "Aantal") {Y()} else {percent(Procentueel, accuracy = 0.1, scale = 1)}),
                 position = position_stack(vjust = 0.5)) +
       theme_minimal() +
       ggtitle(title) +
