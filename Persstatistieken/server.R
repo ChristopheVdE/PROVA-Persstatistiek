@@ -240,17 +240,14 @@ server <- function(input, output) {
     # PER VERZENDER -----------------------------------------------------------
       # Algemeen --------------------------------------------------------------
         # Totaal per Verzender ------------------------------------------------
-          # Barplot -----------------------------------------------------------
-          source("./Functions/Persberichten/Per_Verzender/Algemeen/Verzender_totaal/verzender_totaal_barplot.R")
-          persberichten.verzender.alg.totaal.plot <- bericht.verzender.alg.totaal.barplot(reactive(Persstatistiek()))
+          # Plot
+          persberichten.verzender.alg.totaal <- callModule(data.visual, "bericht.verzender.alg.totaal", Id = "verzender.alg.verzender" , Persstatistiek, Xaxis = "Verzender", Fill = "Verzender")
           output$persberichten.verzender.alg.totaal.plot <- renderPlot(
-            persberichten.verzender.alg.totaal.plot()
+            persberichten.verzender.alg.totaal$plot()
           )
-          # Tabel -------------------------------------------------------------
-          source("./Functions/Persberichten/Per_Verzender/Algemeen/Verzender_totaal/verzender_totaal_tabel.R")
-          persberichten.verzender.alg.totaal.tabel <- bericht.verzender.alg.totaal.tabel(reactive(Persstatistiek()))
+          # Tabel
           output$persberichten.verzender.alg.totaal.tabel <- renderTable(
-            persberichten.verzender.alg.totaal.tabel()
+            persberichten.verzender.alg.totaal$tabel()
           )
         # Beleid per Verzender ------------------------------------------------
           # Barlot ------------------------------------------------------------
@@ -266,49 +263,45 @@ server <- function(input, output) {
             persberichten.verzender.alg.beleid.tabel()
           )
       # Per Maand -------------------------------------------------------------
-        # Barlot ------------------------------------------------------------
-          source("./Functions/Persberichten/Per_Verzender/Per_maand/verzender_maand_barplot.R")
-          # Persdienst
-          persberichten.verzender.maand.persdienst.plot <- bericht.verzender.maand.barplot(reactive(Persstatistiek()), reactive("Persdienst"))
+        # Persdienst ----------------------------------------------------------
+          # Plot
+          persberichten.verzender.maand.persdienst <- callModule(data.visual, "bericht.verzender.maand.persdienst", Id = "verzender.maand" , Persstatistiek, Xaxis = "Maand", Fill = "Maand", verzender = "Persdienst")
           output$persberichten.verzender.maand.persdienst.plot <- renderPlot(
-            persberichten.verzender.maand.persdienst.plot()
+            persberichten.verzender.maand.persdienst$plot()
           )
-          # Provincie
-          persberichten.verzender.maand.provincie.plot <- bericht.verzender.maand.barplot(reactive(Persstatistiek()), reactive("Provincie"))
-          output$persberichten.verzender.maand.provincie.plot <- renderPlot(
-            persberichten.verzender.maand.provincie.plot()
-          )
-          # Gouverneur
-          persberichten.verzender.maand.gouverneur.plot <- bericht.verzender.maand.barplot(reactive(Persstatistiek()), reactive("Gouverneur"))
-          output$persberichten.verzender.maand.gouverneur.plot <- renderPlot(
-            persberichten.verzender.maand.gouverneur.plot()
-          )
-          # Extern
-          persberichten.verzender.maand.extern.plot <- bericht.verzender.maand.barplot(reactive(Persstatistiek()), reactive("Extern"))
-          output$persberichten.verzender.maand.extern.plot <- renderPlot(
-            persberichten.verzender.maand.extern.plot()
-          )
-        # Tabel -------------------------------------------------------------
-          source("./Functions/Persberichten/Per_Verzender/Per_maand/verzender_maand_tabel.R")
-          # Persdienst
-          persberichten.verzender.maand.persdienst.tabel <- bericht.verzender.maand.tabel(reactive(Persstatistiek()), reactive("Persdienst"))
+          # Tabel
           output$persberichten.verzender.maand.persdienst.tabel <- renderTable(
-            persberichten.verzender.maand.persdienst.tabel()
+            persberichten.verzender.maand.persdienst$tabel()
           )
-          # Provincie
-          persberichten.verzender.maand.provincie.tabel <- bericht.verzender.maand.tabel(reactive(Persstatistiek()), reactive("Provincie"))
+        # Provincie -----------------------------------------------------------
+          # Plot 
+          persberichten.verzender.maand.provincie <- callModule(data.visual, "bericht.verzender.maand.provincie", Id = "verzender.maand" , Persstatistiek, Xaxis = "Maand", Fill = "Maand", verzender = "Provincie")
+          output$persberichten.verzender.maand.provincie.plot <- renderPlot(
+            persberichten.verzender.maand.provincie$plot()
+          )
+          # Tabel
           output$persberichten.verzender.maand.provincie.tabel <- renderTable(
-            persberichten.verzender.maand.provincie.tabel()
+            persberichten.verzender.maand.provincie$tabel()
           )
-          # Gouverneur
-          persberichten.verzender.maand.gouverneur.tabel <- bericht.verzender.maand.tabel(reactive(Persstatistiek()), reactive("Gouverneur"))
+        # Gouverneur ----------------------------------------------------------
+          # Plot
+          persberichten.verzender.maand.gouverneur <- callModule(data.visual, "bericht.verzender.maand.gouverneur", Id = "verzender.maand" , Persstatistiek, Xaxis = "Maand", Fill = "Maand", verzender = "Gouverneur")
+          output$persberichten.verzender.maand.gouverneur.plot <- renderPlot(
+            persberichten.verzender.maand.gouverneur$plot()
+          )
+          # Tabel
           output$persberichten.verzender.maand.gouverneur.tabel <- renderTable(
-            persberichten.verzender.maand.gouverneur.tabel()
+            persberichten.verzender.maand.gouverneur$tabel()
           )
-          # Extern
-          persberichten.verzender.maand.extern.tabel <- bericht.verzender.maand.tabel(reactive(Persstatistiek()), reactive("Extern"))
+        # Extern --------------------------------------------------------------
+          # Plot
+          persberichten.verzender.maand.extern <- callModule(data.visual, "bericht.verzender.maand.extern", Id = "verzender.maand" , Persstatistiek, Xaxis = "Maand", Fill = "Maand", verzender = "Extern")
+          output$persberichten.verzender.maand.extern.plot <- renderPlot(
+            persberichten.verzender.maand.extern$plot()
+          )
+          # Tabel
           output$persberichten.verzender.maand.extern.tabel <- renderTable(
-            persberichten.verzender.maand.extern.tabel()
+            persberichten.verzender.maand.extern$tabel()
           )
     # PER TYPE ----------------------------------------------------------------
       # Barplot ---------------------------------------------------------------

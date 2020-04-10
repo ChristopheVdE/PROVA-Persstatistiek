@@ -31,7 +31,7 @@ data.visualOutput <- function(id, plottitle, Xaxis) {
 }
 
 # SERVER ======================================================================
-data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = NULL) {
+data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = NULL, verzender = NULL) {
 
   # Data preparation ---------------------------------------------------------- 
     df.berichten <- reactive(
@@ -57,11 +57,7 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
       # Create table
         berichten <- data.frame(table(data()$Maand))
         colnames(berichten) <- c("Maand", "Persberichten")
-      # Fix month names (and sorting in tables)
-        for (i in 0:length(levels(berichten$Maand))) {
-          levels(berichten$Maand)[i] <- month.abb[i]
-        }
-      # Add "Totaal to levels"
+      # Add "Totaal" to levels
         berichten$Maand <- factor(berichten$Maand, levels = c(month.abb, "Totaal"))
       # Return df
         berichten
@@ -76,26 +72,60 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
       } 
     # Per beleid: Maand ---------------------------------------------------------
       else if (Id == "beleid.maand") {
+      # Create table
         berichten <- data.frame(table(data()$Beleid, data()$Maand))
         colnames(berichten) <- c("Beleid", "Maand", "Persberichten")
-        for (i in 0:length(levels(berichten$Maand))) {
-          levels(berichten$Maand)[i] <- month.abb[i]
-        }
+      # Add "Totaal" to levels
         berichten$Maand <- factor(berichten$Maand, levels = c(month.abb, "Totaal"))
+      # Split dataframe on "Beleid"
         berichten <- split(berichten, berichten$Beleid)
         berichten <- berichten[[beleid]]
       }
-      # Per beleid: Deelbeleid ----------------------------------------------------
+    # Per beleid: Deelbeleid ----------------------------------------------------
       else if (Id == "beleid.beleid") {
-        berichten <- split(data(), data()$Beleid)
-        berichten <- data.frame("Beleid" = beleid, table(berichten[[beleid]]$"Deelbeleid"))
-        colnames(berichten) <- c("Beleid", "Deelbeleid","Persberichten")
+      # Specify "deelbeleid" per "Beleid"
+        if(beleid == "Economie") {
+          deelbeleid <- c("Economie, Innovatie en Samenleving", "Europa", "Financien", "Havencentrum", "Hooibeekhoeve", "Innovant", "Interreg", "Landbouw", "Logistiek", "Mondiaal beleid", "Plattelandsbeleid", "POM Antwerpen", "Sociale economie")
+        } else if(beleid == "Gouverneur") {
+          deelbeleid <- c("Toezicht gemeenten", "Veiligheid")
+        } else if(beleid == "Leefmilieu") {
+          deelbeleid <- c("Bosgroepen", "Duurzaam milieu en natuurgebied", "Kamp C", "Klimaatstrijd", "Landschap", "Milieu en natuur", "MOS", "PIH", "Regionale landschappen", "Waterbeleid")
+        } else if(beleid == "Mobiliteit") {
+          deelbeleid <- c("Fietsbeleid", "Fietseducatie")
+        } else if(beleid == "Onderwijs en Educatie") {
+          deelbeleid <- c("Avant", "Campus Vesta", "CVO Vivant", "Onderwijs", "PITO Starbroek", "PIVA", "PTS Boom", "Suske en Wiske", "Veiligheidsinstituut", "Vormingscentrum")
+        } else if(beleid == "Provinciebestuur") {
+          deelbeleid <- c("Activiteitenkalender", "Pers", "Persagenda", "Provincieraad")
+        } else if(beleid == "Ruimte") {
+          deelbeleid <- c("Erfgoed", "Ruimtelijke planning")
+        } else if(beleid == "Vrije Tijd") {
+          deelbeleid <- c("Arboretum", "De Nekker", "De Schorre", "de Warande", "Kasteel d'Ursel", "Kempens Landschap", "PGRA", "PGRA - M - K", "PGRK", "PGRM", "Terra Nova", "Toerisme Provincie Antwerpen", "Zilvermeer")
+        }
+      # Create dummy dataframes
+        berichten <- data.frame(
+          Beleid = beleid,
+          Deelbeleid = deelbeleid,
+          Persberichten = 0
+        )
+      # Create actual table for chose "beleid"
+        temp <- split(data(), data()$Beleid)
+        temp <- data.frame("Beleid" = beleid, table(temp[[beleid]]$"Deelbeleid"))
+        colnames(temp) <- c("Beleid", "Deelbeleid","Persberichten")
+      # Update values of dummy dataframe
+        for (i in temp$Deelbeleid) {
+          berichten$Persberichten[grepl(i, berichten$Deelbeleid)] <- temp$Persberichten[grepl(i, temp$Deelbeleid)]
+        }
+      # Add "Totaal" to levels
         levels(berichten$Deelbeleid) <- c(levels(berichten$Deelbeleid), "Totaal")
+      # Return
+        berichten
       } 
-      # Verzender Algemeen - Verzender --------------------------------------------
+    # Verzender Algemeen - Verzender --------------------------------------------
       else if (Id == "verzender.alg.verzender") {
+      # Create table
         berichten <- data.frame(table(data()$Verzender))
         colnames(berichten) <- c("Verzender", "Persberichten")
+      # Add missing "Verzender"
         for(i in c("Persdienst", "Provincie", "Gouverneur", "Extern")) {
           if(!(i %in% levels(berichten$Verzender))) {
             temp <- data.frame(
@@ -105,8 +135,10 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
             berichten <- rbind(berichten, temp)
           }
         }
+      # Return
+        berichten
       } 
-      # Verzender Algemeen - Beleid -----------------------------------------------
+    # Verzender Algemeen - Beleid -----------------------------------------------
       else if (Id == "verzender.alg.beleid") {
         berichten <- data.frame(table(data()$Beleid, data()$Verzender))
         colnames(berichten) <- c("Beleid", "Verzender", "Persberichten")
@@ -121,7 +153,7 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
           }
         }
       }
-      # Verzender: Maand ----------------------------------------------------------
+    # Verzender: Maand ----------------------------------------------------------
       else if (Id == "verzender.maand") {
         berichten <- data.frame(table(data()$Verzender, data()$Maand))
         colnames(berichten) <- c("Verzender", "Maand", "Persberichten")
@@ -136,9 +168,9 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
           }
         }
         berichten <- split(berichten, berichten$Verzender)
-        berichten <- berichten[[verzender()]]
+        berichten <- berichten[[verzender]]
       } 
-      # Type ----------------------------------------------------------------------
+    # Type ----------------------------------------------------------------------
       else if (Id == "type") {
         berichten <- data.frame(table(data()$Beleid, data()$Soort))
         colnames(berichten) <- c("Beleid", "Type", "Persbereichten")

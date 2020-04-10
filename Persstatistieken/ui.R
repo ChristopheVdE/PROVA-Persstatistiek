@@ -292,7 +292,8 @@ ui <- dashboardPage(
                   title = "Persberichten per Verzender",
                   width = 12,
                   tabPanel("Barplot", plotOutput("persberichten.verzender.alg.totaal.plot")),
-                  tabPanel("Table", tableOutput("persberichten.verzender.alg.totaal.tabel"))
+                  tabPanel("Table", tableOutput("persberichten.verzender.alg.totaal.tabel")),
+                  data.visualOutput("bericht.verzender.alg.totaal", plottitle = "Persberichten per Verzender", Xaxis = "Verzender")
                 ),
                 tabBox(
                   title = "Beleid per Verzender",
@@ -310,25 +311,29 @@ ui <- dashboardPage(
                   title = "Persdienst",
                   width = 6,
                   tabPanel("Barplot", plotOutput("persberichten.verzender.maand.persdienst.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.verzender.maand.persdienst.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.verzender.maand.persdienst.tabel")),
+                  data.visualOutput("bericht.verzender.maand.persdienst", plottitle = "Persberichten per Maand: Persdienst", Xaxis = "Maand")
                 ), 
                 tabBox(
                   title = "Provincie",
                   width = 6,
                   tabPanel("Barplot", plotOutput("persberichten.verzender.maand.provincie.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.verzender.maand.provincie.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.verzender.maand.provincie.tabel")),
+                  data.visualOutput("bericht.verzender.maand.provincie", plottitle = "Persberichten per Maand: Provincie", Xaxis = "Maand")
                 ), 
                 tabBox(
                   title = "Gouverneur",
                   width = 6,
                   tabPanel("Barplot", plotOutput("persberichten.verzender.maand.gouverneur.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.verzender.maand.gouverneur.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.verzender.maand.gouverneur.tabel")),
+                  data.visualOutput("bericht.verzender.maand.gouverneur", plottitle = "Persberichten per Maand: Gouvereur", Xaxis = "Maand")
                 ), 
                 tabBox(
                   title = "Extern",
                   width = 6,
                   tabPanel("Barplot", plotOutput("persberichten.verzender.maand.extern.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.verzender.maand.extern.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.verzender.maand.extern.tabel")),
+                  data.visualOutput("bericht.verzender.maand.extern", plottitle = "Persberichten per Maand: Extern", Xaxis = "Maand")
                 )
               )
             ),  
