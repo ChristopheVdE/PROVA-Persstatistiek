@@ -285,12 +285,13 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
           }
         # Merge dummy dataframes
           berichten <- rbind(berichten.Ja, berichten.Nee)
+          berichten <- berichten[order(berichten$Deelbeleid),]
         # Add percentages
-          # berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
+          berichten <- data.frame(berichten[order(berichten$Deelbeleid),], "Procentueel" = calc_percentages(Id, berichten))
         # Return
           berichten
         }
-      # Per platform ----------------------------------------------------------
+      # Per Medium ----------------------------------------------------------
         else if (Id == "return.medium") {
         # Create table: persreturn algemeen
           Algemeen <- split(data(), data()$Persreturn)
@@ -319,7 +320,7 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
                                   Medium = c(Algemeen$Algemeen, TV$TV, Web$"Alleen web"),
                                   Aantal = c(Algemeen$Freq, TV$Freq, Web$Freq))
         # Add percentages
-          # berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
+          berichten <- data.frame(berichten[order(berichten$Beleid),], "Procentueel" = calc_percentages(Id, berichten))
         # Return
           berichten
         }

@@ -16,180 +16,123 @@ calc_percentages <- function(Id, data) {
   } 
 # Persberichten per beleid per verzender --------------------------------------
   else if (Id == "verzender.alg.beleid") {
-    # split dataframe on "Verzender"
-      temp <- split(data, data$Verzender)
-    # Create empty dummy columns
-      column.Extern <- NULL
-      column.Gouverneur <- NULL
-      column.Persdienst <- NULL
-      column.Provincie <- NULL
-    # Calculate totals
-      total.Extern <- sum(temp[["Extern"]]$Persberichten)
-      total.Gouverneur <- sum(temp[["Gouverneur"]]$Persberichten)
-      total.Persdiest <- sum(temp[["Persdienst"]]$Persberichten)
-      total.Provincie <- sum(temp[["Provincie"]]$Persberichten)
-    # Calculate percentages  
-      # Extern
-      for (i in 1:length(temp[["Extern"]]$Persberichten)) {
-        column.Extern <- c(column.Extern,
-                           round(as.numeric(temp[["Extern"]]$Persberichten[[i]] / total.Extern * 100), digits = 2))
+    # Split dataframe on "Beleid
+    df.split <- split(data, data$Verzender)
+    # Create empty list
+    column <- NULL
+    # Calculate percentages
+    for (verzender in levels(data$Verzender)) {
+      percentages <- NULL
+      for (i in 1:length(df.split[[verzender]]$Persberichten)) {
+        percentages <- c(percentages,
+                         round(as.numeric(df.split[[verzender]]$Persberichten[[i]] / sum(df.split[[verzender]]$Persberichten) * 100), digits = 2))
       }
-      # Gouverneur
-      for (i in 1:length(temp[["Gouverneur"]]$Persberichten)) {
-        column.Gouverneur <- c(column.Gouverneur,
-                               round(as.numeric(temp[["Gouverneur"]]$Persberichten[[i]] / total.Gouverneur * 100), digits = 2))
+      column <- c(column, percentages)
+    }
+    # Fix NA values
+    for(i in 1:length(column)) {
+      if (is.na(column[[i]])) {
+        column[[i]] <- 0
       }
-      # Persdienst
-      for (i in 1:length(temp[["Persdienst"]]$Persberichten)) {
-        column.Persdienst <- c(column.Persdienst,
-                               round(as.numeric(temp[["Persdienst"]]$Persberichten[[i]] / total.Persdiest * 100), digits = 2))
-      }
-      # Provincie
-      for (i in 1:length(temp[["Provincie"]]$Persberichten)) {
-        column.Provincie <- c(column.Provincie,
-                              round(as.numeric(temp[["Provincie"]]$Persberichten[[i]] / total.Provincie * 100), digits = 2))
-      }
-
-    # Merge
-      column <- c(column.Extern, column.Gouverneur, column.Persdienst, column.Provincie)
+    }
     # Return
-      return(column)
+    return(column)
   }
 # Persberichten per type ------------------------------------------------------
   else if (Id == "type") {
-  # split dataframe on "Verzender"
-    temp <- split(data, data$Beleid)
-  # Create empty dummy columns
-    column.Economie <- NULL
-    column.Gouverneur <- NULL
-    column.Leefmilieu <- NULL
-    column.Mobiliteit <- NULL
-    column.Onderwijs <- NULL
-    column.Provinciebestuur <- NULL
-    column.Ruimte <- NULL
-    column.VrijeTijd <- NULL
-  # Calculate totals
-    total.Economie <- sum(temp[["Economie"]]$Persberichten)
-    total.Gouverneur <- sum(temp[["Gouverneur"]]$Persberichten)
-    total.Leefmilieu <- sum(temp[["Leefmilieu"]]$Persberichten)
-    total.Mobiliteit <- sum(temp[["Mobiliteit"]]$Persberichten)
-    total.Onderwijs <- sum(temp[["Onderwijs en Educatie"]]$Persberichten)
-    total.Provinciebestuur <- sum(temp[["Provinciebestuur"]]$Persberichten)
-    total.Ruimte <- sum(temp[["Ruimte"]]$Persberichten)
-    total.VrijeTijd <- sum(temp[["Vrije Tijd"]]$Persberichten)
-  # Calculate percentages  
-    # Economie
-    for (i in 1:length(temp[["Economie"]]$Persberichten)) {
-      column.Economie <- c(column.Economie,
-                         round(as.numeric(temp[["Economie"]]$Persberichten[[i]] / total.Economie* 100), digits = 2))
+    # Split dataframe on "Beleid
+    df.split <- split(data, data$Beleid)
+    # Create empty list
+    column <- NULL
+    # Calculate percentages
+    for (beleid in levels(data$Beleid)) {
+      percentages <- NULL
+      for (i in 1:length(df.split[[beleid]]$Persberichten)) {
+        percentages <- c(percentages,
+                         round(as.numeric(df.split[[beleid]]$Persberichten[[i]] / sum(df.split[[beleid]]$Persberichten) * 100), digits = 2))
+      }
+      column <- c(column, percentages)
     }
-    # Gouverneur
-    for (i in 1:length(temp[["Gouverneur"]]$Persberichten)) {
-      column.Gouverneur <- c(column.Gouverneur,
-                             round(as.numeric(temp[["Gouverneur"]]$Persberichten[[i]] / total.Gouverneur * 100), digits = 2))
+    # Fix NA values
+    for(i in 1:length(column)) {
+      if (is.na(column[[i]])) {
+        column[[i]] <- 0
+      }
     }
-    # Leefmilieu
-    for (i in 1:length(temp[["Leefmilieu"]]$Persberichten)) {
-      column.Leefmilieu <- c(column.Leefmilieu,
-                             round(as.numeric(temp[["Leefmilieu"]]$Persberichten[[i]] / total.Leefmilieu * 100), digits = 2))
-    }
-    # Mobiliteit
-    for (i in 1:length(temp[["Mobiliteit"]]$Persberichten)) {
-      column.Mobiliteit <- c(column.Mobiliteit,
-                            round(as.numeric(temp[["Mobiliteit"]]$Persberichten[[i]] / total.Mobiliteit * 100), digits = 2))
-    }
-    # Onderwijs
-    for (i in 1:length(temp[["Onderwijs en Educatie"]]$Persberichten)) {
-      column.Onderwijs <- c(column.Onderwijs,
-                            round(as.numeric(temp[["Onderwijs en Educatie"]]$Persberichten[[i]] / total.Onderwijs * 100), digits = 2))
-    }
-    # Provinciebestuur
-    for (i in 1:length(temp[["Provinciebestuur"]]$Persberichten)) {
-      column.Provinciebestuur <- c(column.Provinciebestuur,
-                            round(as.numeric(temp[["Provinciebestuur"]]$Persberichten[[i]] / total.Provinciebestuur * 100), digits = 2))
-    }
-    # Ruimte
-    for (i in 1:length(temp[["Ruimte"]]$Persberichten)) {
-      column.Ruimte <- c(column.Ruimte,
-                         round(as.numeric(temp[["Ruimte"]]$Persberichten[[i]] / total.Ruimte * 100), digits = 2))
-    }
-    # Vrije Tijd
-    for (i in 1:length(temp[["Vrije Tijd"]]$Persberichten)) {
-      column.VrijeTijd <- c(column.VrijeTijd,
-                                   round(as.numeric(temp[["Vrije Tijd"]]$Persberichten[[i]] / total.VrijeTijd * 100), digits = 2))
-    }
-  # Merge
-    column <- c(column.Economie, column.Gouverneur, column.Leefmilieu, column.Mobiliteit, column.Onderwijs, column.Provinciebestuur, column.Ruimte, column.VrijeTijd)
-  # Return
+    # Return
     return(column)
   }
 # Persreturn per beleid: algemeen ---------------------------------------------
   else if (Id == "return.beleid.alg") {
-  # split dataframe on "Verzender"
-    temp <- split(data, data$Beleid)
-  # Create empty dummy columns
-    column.Economie <- NULL
-    column.Gouverneur <- NULL
-    column.Leefmilieu <- NULL
-    column.Mobiliteit <- NULL
-    column.Onderwijs <- NULL
-    column.Provinciebestuur <- NULL
-    column.Ruimte <- NULL
-    column.VrijeTijd <- NULL
-  # Calculate totals
-    total.Economie <- sum(temp[["Economie"]]$Aantal)
-    total.Gouverneur <- sum(temp[["Gouverneur"]]$Aantal)
-    total.Leefmilieu <- sum(temp[["Leefmilieu"]]$Aantal)
-    total.Mobiliteit <- sum(temp[["Mobiliteit"]]$Aantal)
-    total.Onderwijs <- sum(temp[["Onderwijs en Educatie"]]$Aantal)
-    total.Provinciebestuur <- sum(temp[["Provinciebestuur"]]$Aantal)
-    total.Ruimte <- sum(temp[["Ruimte"]]$Aantal)
-    total.VrijeTijd <- sum(temp[["Vrije Tijd"]]$Aantal)
-  # Calculate percentages  
-    # Economie
-    for (i in 1:length(temp[["Economie"]]$Aantal)) {
-      column.Economie <- c(column.Economie,
-                           round(as.numeric(temp[["Economie"]]$Aantal[[i]] / total.Economie* 100), digits = 2))
+  # Split dataframe on "Beleid
+    df.split <- split(data, data$Beleid)
+  # Create empty list
+    column <- NULL
+  # Calculate percentages
+    for (beleid in levels(data$Beleid)) {
+      percentages <- NULL
+      for (i in 1:length(df.split[[beleid]]$Aantal)) {
+        percentages <- c(percentages,
+                         round(as.numeric(df.split[[beleid]]$Aantal[[i]] / sum(df.split[[beleid]]$Aantal) * 100), digits = 2))
+      }
+      column <- c(column, percentages)
     }
-    # Gouverneur
-    for (i in 1:length(temp[["Gouverneur"]]$Aantal)) {
-      column.Gouverneur <- c(column.Gouverneur,
-                             round(as.numeric(temp[["Gouverneur"]]$Aantal[[i]] / total.Gouverneur * 100), digits = 2))
+  # Fix NA values
+    for(i in 1:length(column)) {
+      if (is.na(column[[i]])) {
+        column[[i]] <- 0
+      }
     }
-    # Leefmileu
-    for (i in 1:length(temp[["Leefmilieu"]]$Aantal)) {
-      column.Leefmilieu <- c(column.Leefmilieu,
-                             round(as.numeric(temp[["Leefmilieu"]]$Aantal[[i]] / total.Leefmilieu * 100), digits = 2))
-    }
-    # Mobiliteit
-    for (i in 1:length(temp[["Mobiliteit"]]$Aantal)) {
-      column.Mobiliteit <- c(column.Mobiliteit,
-                             round(as.numeric(temp[["Mobiliteit"]]$Aantal[[i]] / total.Mobiliteit * 100), digits = 2))
-    }
-    # Onderwijs
-    for (i in 1:length(temp[["Onderwijs en Educatie"]]$Aantal)) {
-      column.Onderwijs <- c(column.Onderwijs,
-                            round(as.numeric(temp[["Onderwijs en Educatie"]]$Aantal[[i]] / total.Onderwijs * 100), digits = 2))
-    }
-    # Provinciebestuur
-    for (i in 1:length(temp[["Provinciebestuur"]]$Aantal)) {
-      column.Provinciebestuur <- c(column.Provinciebestuur,
-                                   round(as.numeric(temp[["Provinciebestuur"]]$Aantal[[i]] / total.Provinciebestuur * 100), digits = 2))
-    }
-    # Ruimte
-    for (i in 1:length(temp[["Ruimte"]]$Aantal)) {
-      column.Ruimte <- c(column.Ruimte,
-                         round(as.numeric(temp[["Ruimte"]]$Aantal[[i]] / total.Ruimte * 100), digits = 2))
-    }
-    # Vrije Tijd
-    for (i in 1:length(temp[["Vrije Tijd"]]$Aantal)) {
-      column.VrijeTijd <- c(column.VrijeTijd,
-                            round(as.numeric(temp[["Vrije Tijd"]]$Aantal[[i]] / total.VrijeTijd * 100), digits = 2))
-    }
-  # Merge
-    column <- c(column.Economie, column.Gouverneur, column.Leefmilieu, column.Mobiliteit, column.Onderwijs, column.Provinciebestuur, column.Ruimte, column.VrijeTijd)
   # Return
     return(column)
   }
+# Persreturn per beleid: deelbeleid -------------------------------------------
+  else if (Id == "return.beleid.beleid") {
+  # Split dataframe on "Deelbeleid
+    df.split <- split(data, data$Deelbeleid)
+  # Create empty list
+    column <- NULL
+  # Calculate percentages
+    for (deelbeleid in levels(data$Deelbeleid)) {
+      percentages <- NULL
+      for (i in 1:length(df.split[[deelbeleid]]$Aantal)) {
+        percentages <- c(percentages,
+                         round(as.numeric(df.split[[deelbeleid]]$Aantal[[i]] / sum(df.split[[deelbeleid]]$Aantal) * 100), digits = 2))
+      }
+      column <- c(column, percentages)
+    }
+  # Fix NA values
+    for(i in 1:length(column)) {
+      if (is.na(column[[i]])) {
+        column[[i]] <- 0
+      }
+    }
+  # Return
+    return(column)
+  }
+# Persreturn per medium -------------------------------------------------------
+  else if (Id == "return.medium") {
+  # Split dataframe on "Deelbeleid
+    df.split <- split(data, data$Beleid)
+  # Create empty list
+    column <- NULL
+  # Calculate percentages
+    for (beleid in levels(data$Beleid)) {
+      percentages <- NULL
+      for (i in 1:length(df.split[[beleid]]$Aantal)) {
+        percentages <- c(percentages,
+                         round(as.numeric(df.split[[beleid]]$Aantal[[i]] / sum(df.split[[beleid]]$Aantal) * 100), digits = 2))
+      }
+      column <- c(column, percentages)
+    }
+  # Fix NA values
+    for(i in 1:length(column)) {
+      if (is.na(column[[i]])) {
+        column[[i]] <- 0
+      }
+    }
+  # Return
+    return(column)
+  }  
 }
 # =============================================================================
