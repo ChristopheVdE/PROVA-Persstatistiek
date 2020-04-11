@@ -39,7 +39,7 @@ ui <- dashboardPage(
     # Persreturn --------------------------------------------------------------
       menuItem("Persreturn", tabname = "Persreturn", icon = icon("bar-chart-o"),
                menuSubItem("Per Beleid", tabName = "Return_Beleid"),
-               menuSubItem("Per Platform", tabName = "Return_Platform")
+               menuSubItem("Per Medium", tabName = "Return_Medium")
       ),
     # Download ----------------------------------------------------------------
       menuItem("Download", tabName = "Download"),
@@ -423,7 +423,7 @@ ui <- dashboardPage(
           ),
       # Per Platform ----------------------------------------------------------
         tabItem(
-          tabName = "Return_Platform",
+          tabName = "Return_Medium",
           fluidRow(
             tabBox(
               title = "Persreturn per medium",

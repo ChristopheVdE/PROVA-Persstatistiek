@@ -2,10 +2,16 @@
 # MODULE: Data visualisation (plot and table creation)
 ###############################################################################
 
+# LOAD PACKAGES ===============================================================
 library(shiny)
 library(ggplot2)
 library(RColorBrewer)
 library(scales)
+# =============================================================================
+
+# LOAD MODULES & FUNCTIONS ====================================================
+source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functies/percentages.R")
+# =============================================================================
 
 # UI ==========================================================================
 data.visualOutput <- function(id, plottitle, Xaxis, Xlabels) {
@@ -50,6 +56,8 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
           for (i in temp$Kwartaal) {
             berichten$Persberichten[grepl(i, berichten$Kwartaal)] <- temp$Persberichten[grepl(i, temp$Kwartaal)]
           }
+        # Add percentages
+          berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
         # Return df
           berichten
         }
@@ -60,6 +68,8 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
           colnames(berichten) <- c("Maand", "Persberichten")
         # Add "Totaal" to levels
           berichten$Maand <- factor(berichten$Maand, levels = c(month.abb, "Totaal"))
+        # Add percentages
+          berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
         # Return df
           berichten
         } 
@@ -68,6 +78,8 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
         # Create table
           berichten <- data.frame(table(data()$Beleid))
           colnames(berichten) <- c("Beleid","Persberichten")
+        # Add percentages
+          berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
         # Return df
           berichten
         } 
@@ -81,6 +93,10 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
         # Split dataframe on "Beleid"
           berichten <- split(berichten, berichten$Beleid)
           berichten <- berichten[[beleid]]
+        # Add percentages
+          berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
+        # Return
+          berichten
         }
       # Per beleid: Deelbeleid ------------------------------------------------
         else if (Id == "beleid.beleid") {
@@ -118,6 +134,8 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
           }
         # Add "Totaal" to levels
           levels(berichten$Deelbeleid) <- c(levels(berichten$Deelbeleid), "Totaal")
+        # Add percentages
+          berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
         # Return
           berichten
         } 
@@ -136,6 +154,8 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
               berichten <- rbind(berichten, temp)
             }
           }
+        # Add percentages
+          berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
         # Return
           berichten
         } 
@@ -155,13 +175,17 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
               berichten <- rbind(berichten, temp)
             }
           }
+        # Add percentages
+          berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
         # Return
           berichten
         }
       # Verzender: Maand ------------------------------------------------------
         else if (Id == "verzender.maand") {
+        # Create table
           berichten <- data.frame(table(data()$Verzender, data()$Maand))
           colnames(berichten) <- c("Verzender", "Maand", "Persberichten")
+        # Add missing "Verzender"
           for(i in c("Persdienst", "Provincie", "Gouverneur", "Extern")) {
             if(!(i %in% levels(berichten$Verzender))) {
               temp <- data.frame(
@@ -172,8 +196,13 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
               berichten <- rbind(berichten, temp)
             }
           }
+        # Display only selected verzender
           berichten <- split(berichten, berichten$Verzender)
           berichten <- berichten[[verzender]]
+        # Add percentages
+          berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
+        # Return
+          berichten
         } 
       # Type ------------------------------------------------------------------
         else if (Id == "type") {
@@ -192,6 +221,8 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
               berichten <- rbind(berichten, temp)
             }
           }
+        # Add percentages
+          berichten <- data.frame(berichten[order(berichten$Beleid),], "Procentueel" = calc_percentages(Id, berichten))
         # Return
           berichten
         }
@@ -201,6 +232,8 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
         # Create table
           berichten <- data.frame(table(data()$Beleid, data()$Persreturn))
           colnames(berichten) <- c("Beleid", "Persreturn", "Aantal")
+        # Add percentages
+          # berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
         # Return
           berichten
         }
@@ -252,12 +285,14 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
           }
         # Merge dummy dataframes
           berichten <- rbind(berichten.Ja, berichten.Nee)
+        # Add percentages
+          # berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
         # Return
           berichten
         }
       # Per platform ----------------------------------------------------------
         else if (Id == "return.medium") {
-        # Create table persreturn algemeen -------------------------------
+        # Create table: persreturn algemeen
           Algemeen <- split(data(), data()$Persreturn)
           Algemeen <- Algemeen$Ja
           Algemeen <- data.frame(table(Algemeen$Beleid, Algemeen$Persreturn))
@@ -281,15 +316,13 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
           
         # Merge dataframes
           berichten <- data.frame(Beleid = TV$Beleid,
-                                  Platform = c(Algemeen$Algemeen, TV$TV, Web$"Alleen web"),
+                                  Medium = c(Algemeen$Algemeen, TV$TV, Web$"Alleen web"),
                                   Aantal = c(Algemeen$Freq, TV$Freq, Web$Freq))
+        # Add percentages
+          # berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
         # Return
           berichten
         }
-    # Calculate percentages ---------------------------------------------------
-    # source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functies/percentages.R")
-    # berichten <- data.frame(berichten,
-    #                         "Procentueel" = calc_percentages(berichten))
   )
   
   # Define color pallete ------------------------------------------------------

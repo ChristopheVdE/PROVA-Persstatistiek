@@ -48,27 +48,21 @@ server <- function(input, output) {
           )
       # Per Maand -------------------------------------------------------------
         # Plot
-          # source("./Modules/Persberichten/Algemeen/Per_maand/maand_plot.R")
           persberichten.alg.maand <- callModule(data.visual, "bericht.alg.maand", Id = "alg.maand", data = Persstatistiek, Xaxis = "Maand", Fill = "Maand")  
           output$persberichten.alg.maand.plot <- renderPlot(
             persberichten.alg.maand$plot()
           )
         # Tabel
-          # source("./Functions/Persberichten/Algemeen/Per_maand/maand_tabel.R")
-          # persberichten.alg.maand.tabel <- bericht.alg.maand.tabel(reactive(Persstatistiek()))
           output$persberichten.alg.maand.tabel <- renderTable(
             persberichten.alg.maand$tabel()
           )
       # Per Beleid ------------------------------------------------------------
         # Plot
-          # source("./Modules/Persberichten/Algemeen/Per_beleid/beleid_plot.R")
           persberichten.alg.beleid <- callModule(data.visual, "bericht.alg.beleid", Id = "alg.beleid", data = Persstatistiek, Xaxis = "Beleid", Fill = "Beleid")   
           output$persberichten.alg.beleid.plot <- renderPlot(
             persberichten.alg.beleid$plot()
           )
         # Tabel
-          # source("./Functions/Persberichten/Algemeen/Per_beleid/beleid_tabel.R")
-          # persberichten.alg.beleid.tabel <- bericht.alg.beleid.tabel(reactive(Persstatistiek()))
           output$persberichten.alg.beleid.tabel <- renderTable(
             persberichten.alg.beleid$tabel()
           )
@@ -405,9 +399,9 @@ server <- function(input, output) {
           output$persreturn.beleid.beleid.vrijetijd.tabel <- renderTable(
             persreturn.beleid.beleid.vrijetijd$tabel()
           )
-    # PER PLATFORM ------------------------------------------------------------
+    # PER MEDIUM --------------------------------------------------------------
       # Barplot
-      persreturn.medium <- callModule(data.visual, "return.medium", Id = "return.medium" , Persstatistiek, Xaxis = "Beleid", Fill = "Platform")
+      persreturn.medium <- callModule(data.visual, "return.medium", Id = "return.medium" , Persstatistiek, Xaxis = "Beleid", Fill = "Medium")
       output$persreturn.medium.plot <- renderPlot(
         persreturn.medium$plot()
       )
@@ -499,9 +493,9 @@ server <- function(input, output) {
                                 ruimte.tabel = reactive(persreturn.beleid.ruimte.tabel()),
                                 vrijetijd.plot = reactive(persreturn.beleid.vrijetijd.plot()),
                                 vrijetijd.tabel = reactive(persreturn.beleid.vrijetijd.tabel()))
-      # Platform --------------------------------------------------------------
-      Persreturn.platform <- list(platform.plot = reactive(persreturn.platform.plot()),
-                                  platform.tabel = reactive(persreturn.platform.tabel()))
+      # Medium ----------------------------------------------------------------
+      Persreturn.medium <- list(medium.plot = reactive(persreturn.medium.plot()),
+                                medium.tabel = reactive(persreturn.medium.tabel()))
   # ===========================================================================
   
   # HTML RAPPORT AANMAAK ======================================================
@@ -524,7 +518,7 @@ server <- function(input, output) {
                      Persberichten.verzender.maand = Persberichten.verzender.maand,
                      Persberichten.type = Persberichten.type,
                      Persreturn.beleid = Persreturn.beleid,
-                     Persreturn.platform = Persreturn.platform)
+                     Persreturn.medium = Persreturn.medium)
       
       # Knit the document, passing in the `params` list, and eval it in a
       # child of the global environment (this isolates the code in the document
