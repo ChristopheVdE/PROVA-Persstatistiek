@@ -233,7 +233,7 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
           berichten <- data.frame(table(data()$Beleid, data()$Persreturn))
           colnames(berichten) <- c("Beleid", "Persreturn", "Aantal")
         # Add percentages
-          # berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
+          berichten <- data.frame(berichten[order(berichten$Beleid),], "Procentueel" = calc_percentages(Id, berichten))
         # Return
           berichten
         }

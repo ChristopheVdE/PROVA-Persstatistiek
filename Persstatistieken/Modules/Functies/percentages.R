@@ -83,12 +83,12 @@ calc_percentages <- function(Id, data) {
       column.Economie <- c(column.Economie,
                          round(as.numeric(temp[["Economie"]]$Persberichten[[i]] / total.Economie* 100), digits = 2))
     }
-    # Evenementenkalender
+    # Gouverneur
     for (i in 1:length(temp[["Gouverneur"]]$Persberichten)) {
       column.Gouverneur <- c(column.Gouverneur,
                              round(as.numeric(temp[["Gouverneur"]]$Persberichten[[i]] / total.Gouverneur * 100), digits = 2))
     }
-    # Persagenda
+    # Leefmilieu
     for (i in 1:length(temp[["Leefmilieu"]]$Persberichten)) {
       column.Leefmilieu <- c(column.Leefmilieu,
                              round(as.numeric(temp[["Leefmilieu"]]$Persberichten[[i]] / total.Leefmilieu * 100), digits = 2))
@@ -117,6 +117,74 @@ calc_percentages <- function(Id, data) {
     for (i in 1:length(temp[["Vrije Tijd"]]$Persberichten)) {
       column.VrijeTijd <- c(column.VrijeTijd,
                                    round(as.numeric(temp[["Vrije Tijd"]]$Persberichten[[i]] / total.VrijeTijd * 100), digits = 2))
+    }
+  # Merge
+    column <- c(column.Economie, column.Gouverneur, column.Leefmilieu, column.Mobiliteit, column.Onderwijs, column.Provinciebestuur, column.Ruimte, column.VrijeTijd)
+  # Return
+    return(column)
+  }
+# Persreturn per beleid: algemeen ---------------------------------------------
+  else if (Id == "return.beleid.alg") {
+  # split dataframe on "Verzender"
+    temp <- split(data, data$Beleid)
+  # Create empty dummy columns
+    column.Economie <- NULL
+    column.Gouverneur <- NULL
+    column.Leefmilieu <- NULL
+    column.Mobiliteit <- NULL
+    column.Onderwijs <- NULL
+    column.Provinciebestuur <- NULL
+    column.Ruimte <- NULL
+    column.VrijeTijd <- NULL
+  # Calculate totals
+    total.Economie <- sum(temp[["Economie"]]$Aantal)
+    total.Gouverneur <- sum(temp[["Gouverneur"]]$Aantal)
+    total.Leefmilieu <- sum(temp[["Leefmilieu"]]$Aantal)
+    total.Mobiliteit <- sum(temp[["Mobiliteit"]]$Aantal)
+    total.Onderwijs <- sum(temp[["Onderwijs en Educatie"]]$Aantal)
+    total.Provinciebestuur <- sum(temp[["Provinciebestuur"]]$Aantal)
+    total.Ruimte <- sum(temp[["Ruimte"]]$Aantal)
+    total.VrijeTijd <- sum(temp[["Vrije Tijd"]]$Aantal)
+  # Calculate percentages  
+    # Economie
+    for (i in 1:length(temp[["Economie"]]$Aantal)) {
+      column.Economie <- c(column.Economie,
+                           round(as.numeric(temp[["Economie"]]$Aantal[[i]] / total.Economie* 100), digits = 2))
+    }
+    # Gouverneur
+    for (i in 1:length(temp[["Gouverneur"]]$Aantal)) {
+      column.Gouverneur <- c(column.Gouverneur,
+                             round(as.numeric(temp[["Gouverneur"]]$Aantal[[i]] / total.Gouverneur * 100), digits = 2))
+    }
+    # Leefmileu
+    for (i in 1:length(temp[["Leefmilieu"]]$Aantal)) {
+      column.Leefmilieu <- c(column.Leefmilieu,
+                             round(as.numeric(temp[["Leefmilieu"]]$Aantal[[i]] / total.Leefmilieu * 100), digits = 2))
+    }
+    # Mobiliteit
+    for (i in 1:length(temp[["Mobiliteit"]]$Aantal)) {
+      column.Mobiliteit <- c(column.Mobiliteit,
+                             round(as.numeric(temp[["Mobiliteit"]]$Aantal[[i]] / total.Mobiliteit * 100), digits = 2))
+    }
+    # Onderwijs
+    for (i in 1:length(temp[["Onderwijs en Educatie"]]$Aantal)) {
+      column.Onderwijs <- c(column.Onderwijs,
+                            round(as.numeric(temp[["Onderwijs en Educatie"]]$Aantal[[i]] / total.Onderwijs * 100), digits = 2))
+    }
+    # Provinciebestuur
+    for (i in 1:length(temp[["Provinciebestuur"]]$Aantal)) {
+      column.Provinciebestuur <- c(column.Provinciebestuur,
+                                   round(as.numeric(temp[["Provinciebestuur"]]$Aantal[[i]] / total.Provinciebestuur * 100), digits = 2))
+    }
+    # Ruimte
+    for (i in 1:length(temp[["Ruimte"]]$Aantal)) {
+      column.Ruimte <- c(column.Ruimte,
+                         round(as.numeric(temp[["Ruimte"]]$Aantal[[i]] / total.Ruimte * 100), digits = 2))
+    }
+    # Vrije Tijd
+    for (i in 1:length(temp[["Vrije Tijd"]]$Aantal)) {
+      column.VrijeTijd <- c(column.VrijeTijd,
+                            round(as.numeric(temp[["Vrije Tijd"]]$Aantal[[i]] / total.VrijeTijd * 100), digits = 2))
     }
   # Merge
     column <- c(column.Economie, column.Gouverneur, column.Leefmilieu, column.Mobiliteit, column.Onderwijs, column.Provinciebestuur, column.Ruimte, column.VrijeTijd)
