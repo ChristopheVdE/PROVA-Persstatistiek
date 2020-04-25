@@ -137,11 +137,11 @@ ui <- dashboardPage(
               width = 6,
               colourInput("colour8", "Colour 8", brewer.pal(8,"Pastel2")[8]),
               colourInput("colour9", "Colour 9", brewer.pal(8,"Pastel1")[1]),
-              colourInput("colour10", "Colour 10", brewer.pal(8,"Pastel1")[1]),
-              colourInput("colour11", "Colour 11", brewer.pal(8,"Pastel1")[2]),
-              colourInput("colour12", "Colour 12", brewer.pal(8,"Pastel1")[3]),
-              colourInput("colour13", "Colour 13", brewer.pal(8,"Pastel2")[4]),
-              colourInput("colour14", "Colour 14", brewer.pal(8,"Pastel2")[5]),
+              colourInput("colour10", "Colour 10", brewer.pal(8,"Pastel1")[2]),
+              colourInput("colour11", "Colour 11", brewer.pal(8,"Pastel1")[3]),
+              colourInput("colour12", "Colour 12", brewer.pal(8,"Pastel1")[4]),
+              colourInput("colour13", "Colour 13", brewer.pal(8,"Pastel1")[5]),
+              colourInput("colour14", "Colour 14", brewer.pal(8,"Pastel1")[6]),
             )
           ),
           box(
