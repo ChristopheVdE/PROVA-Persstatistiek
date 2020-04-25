@@ -81,6 +81,8 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
         # Create table
           berichten <- data.frame(table(data()$Beleid))
           colnames(berichten) <- c("Beleid","Persberichten")
+        # Factors
+          levels(berichten$Beleid) <- c(levels(berichten$Beleid), "Totaal")
         # Add percentages
           berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
         # Return df
@@ -157,6 +159,8 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
               berichten <- rbind(berichten, temp)
             }
           }
+        # Factors
+          levels(berichten$Verzender) <- c(levels(berichten$Verzender), "Totaal")
         # Add percentages
           berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
         # Return
@@ -202,6 +206,8 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
         # Display only selected verzender
           berichten <- split(berichten, berichten$Verzender)
           berichten <- berichten[[verzender]]
+        # Factor
+          levels(berichten$Maand) <- c(levels(berichten$Maand), "Totaal")
         # Add percentages
           berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
         # Return
@@ -369,10 +375,61 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
 
   # Table ---------------------------------------------------------------------
   tabel <- reactive(
-            if (is.null(beleid)) {
-              df.berichten()
-              # rbind(df.berichten(), c(beleid, "Totaal", sum(df.berichten()$Persberichten), 100))
-            } else {
+          # Persberchten
+            if (Id == "alg.kwartaal" || Id == "alg.maand" || Id == "alg.beleid" || Id == "verzender.alg.verzender") {
+              rbind(df.berichten(), c("Totaal", sum(df.berichten()$Persberichten), 100))
+            } 
+          # Persberichten: beleid
+            else if (Id == "beleid.maand" || Id == "beleid.beleid") {
+              rbind(df.berichten(), c(beleid, "Totaal", sum(df.berichten()$Persberichten), 100))
+            }
+          # Persberichten: verzender - alg - beleid
+            else if (Id == "verzender.alg.beleid") {
+              temp <- split(df.berichten(), df.berichten()$Verzender)
+              if (input$inhoud == "Aantal") {
+                temp <- data.frame(Beleid = c(levels(df.berichten()$Beleid), "Totaal"),
+                                   Persdienst = c(temp$Persdienst$Persberichten, sum(temp$Persdienst$Persberichten)),
+                                   Provincie = c(temp$Provincie$Persberichten, sum(temp$Provincie$Persberichten)),
+                                   Gouverneur = c(temp$Gouverneur$Persberichten, sum(temp$Gouverneur$Persberichten)),
+                                   Extern = c(temp$Extern$Persberichten, sum(temp$Extern$Persberichten)))
+              } else {
+                temp <- data.frame(Beleid = c(levels(df.berichten()$Beleid), "Totaal"),
+                                   Persdienst = c(temp$Persdienst$Procentueel, "100"),
+                                   Provincie = c(temp$Provincie$Procentueel, "100"),
+                                   Gouverneur = c(temp$Gouverneur$Procentueel, "100"),
+                                   Extern = c(temp$Extern$Procentueel, "100"))
+              }
+            }
+          # Persberichten: verzender - maand
+            else if (Id == "verzender.maand") {
+              rbind(df.berichten(), c(verzender, "Totaal", sum(df.berichten()$Persberichten), 100))
+            }
+          # Persberichten: type
+            else if (Id == "type") {
+              temp <- split(df.berichten(), df.berichten()$Type)
+              if (input$inhoud == "Aantal") {
+                temp <- data.frame(
+                  Beleid = c(levels(df.berichten()$Beleid), "Totaal"),
+                  Agendatip = c(temp$Agendatip$Persberichten, sum(temp$Agendatip$Persberichten)),
+                  Evenementenkalender = c(temp$Evenementenkalender$Persberichten, sum(temp$Evenementenkalender$Persberichten)),
+                  Persagenda = c(temp$Persagenda$Persberichten, sum(temp$Persaganda$Persberichten)),
+                  Persbericht = c(temp$Persbericht$Persberichten, sum(temp$Persbericht$Persberichten)),
+                  Persuitnodiging = c(temp$Persuitnodiging$Persberichten, sum(temp$Persuitnodiging$Persberichten))
+                )
+              } else {
+                temp <- data.frame(
+                  Beleid = levels(df.berichten()$Beleid),
+                  Agendatip = temp$Agendatip$Procentueel,
+                  Evenementenkalender = temp$Evenementenkalender$Procentueel,
+                  Persagenda = temp$Persagenda$Procentueel,
+                  Persbericht = temp$Persbericht$Procentueel,
+                  Persuitnodiging = temp$Persuitnodiging$Procentueel, 
+                  Totaal = 100
+                )
+              }
+            }
+          # Other
+            else {
               df.berichten()
               # rbind(df.berichten(), c(beleid, "Totaal", sum(df.berichten()$Persberichten), 100))
             }
