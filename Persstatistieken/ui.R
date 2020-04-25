@@ -5,6 +5,7 @@
 # PACKAGES ====================================================================
 library(shiny)
 library(shinydashboard)
+library(colourpicker)
 # =============================================================================
 
 source("./Modules/data_visualisation.R")
@@ -53,10 +54,12 @@ ui <- dashboardPage(
       tabItem(
         tabName = "Settings",
         fluidRow(
+          heigth = "100%",
         # File input & options ------------------------------------------------
           box(
             title = "File input",
             width = 5,
+            height = "75%",
           # File input
             fileInput("file", 
                       "Kies Excel document:",
@@ -113,6 +116,39 @@ ui <- dashboardPage(
               textInput("col.return.tv", label = NULL, value = 8, placeholder = 8),
               textInput("col.maand", label = NULL, value = 13, placeholder = 9)
             )
+          )
+        ),
+        # colour chooser -------------------------------------------------------
+        fluidRow(
+          box(
+            title = "Plot kleuren: Persberichten",
+            width = 8,
+            column(
+              width = 6,
+              colourInput("colour1", "Colour 1", brewer.pal(8,"Pastel2")[1]),
+              colourInput("colour2", "Colour 2", brewer.pal(8,"Pastel2")[2]),
+              colourInput("colour3", "Colour 3", brewer.pal(8,"Pastel2")[3]),
+              colourInput("colour4", "Colour 4", brewer.pal(8,"Pastel2")[4]),
+              colourInput("colour5", "Colour 5", brewer.pal(8,"Pastel2")[5]),
+              colourInput("colour6", "Colour 6", brewer.pal(8,"Pastel2")[6]),
+              colourInput("colour7", "Colour 7", brewer.pal(8,"Pastel2")[7]),
+            ),
+            column(
+              width = 6,
+              colourInput("colour8", "Colour 8", brewer.pal(8,"Pastel2")[8]),
+              colourInput("colour9", "Colour 9", brewer.pal(8,"Pastel1")[1]),
+              colourInput("colour10", "Colour 10", brewer.pal(8,"Pastel1")[1]),
+              colourInput("colour11", "Colour 11", brewer.pal(8,"Pastel1")[2]),
+              colourInput("colour12", "Colour 12", brewer.pal(8,"Pastel1")[3]),
+              colourInput("colour13", "Colour 13", brewer.pal(8,"Pastel2")[4]),
+              colourInput("colour14", "Colour 14", brewer.pal(8,"Pastel2")[5]),
+            )
+          ),
+          box(
+            title = "Plot kleuren: Persreturn",
+            width = 4,
+            colourInput("return.colour1", "Persreturn: Yes", brewer.pal(8,"Pastel2")[1]),
+            colourInput("return.colour2", "Persreturn: No", brewer.pal(8,"Pastel2")[2])
           )
         )
       ),
@@ -295,7 +331,7 @@ ui <- dashboardPage(
                 tabBox(
                   title = "Beleid per Verzender",
                   width = 12,
-                  tabPanel("Barplot", plotOutput("persberichten.verzender.alg.beleid.plot")),
+                  tabPanel("Barplot", plotOutput("persberichten.verzender.alg.beleid.plot", height = '1000px')),
                   tabPanel("Table", tableOutput("persberichten.verzender.alg.beleid.tabel")),
                   data.visualOutput("bericht.verzender.alg.beleid", plottitle = "Persberichten per Beleid per Verzender", Xaxis = "Verzender", Xlabels = TRUE)
                 )

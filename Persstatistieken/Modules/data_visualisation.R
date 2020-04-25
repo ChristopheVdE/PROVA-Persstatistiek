@@ -10,7 +10,10 @@ library(scales)
 # =============================================================================
 
 # LOAD MODULES & FUNCTIONS ====================================================
-source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functies/percentages.R")
+source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functions/percentages.R")
+source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functions/simple_barplot.R")
+source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functions/simple_piechart.R")
+source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functions/advanced_piechart.R")
 # =============================================================================
 
 # UI ==========================================================================
@@ -37,7 +40,7 @@ data.visualOutput <- function(id, plottitle, Xaxis, Xlabels) {
 }
 
 # SERVER ======================================================================
-data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = NULL, verzender = NULL) {
+data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, beleid = NULL, verzender = NULL) {
 
   # Data preparation ---------------------------------------------------------- 
     df.berichten <- reactive(
@@ -327,13 +330,12 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
   )
   
   # Define color pallete ------------------------------------------------------
-  colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
+  # colors <- c(brewer.pal(8,"Pastel2"), brewer.pal(9, "Pastel1"))
   
   # Plot (beleid per maand) ---------------------------------------------------
   berichten.plot <- reactive(
     # Barplot -----------------------------------------------------------------
     if (input$type == "Barplot") {
-      source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functies/simple_barplot.R")
       simple_barplot(Id = Id,
                      data = df.berichten, 
                      Xaxis = Xaxis,
@@ -344,21 +346,24 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, beleid = 
                      Ytitle = input$Yaxis, 
                      Xlabels = input$Xlabels, 
                      legend = input$legend, 
-                     colors = colors)
+                     colors = colours)
     } 
     # Piechart ----------------------------------------------------------------
     else {
-      source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functies/simple_piechart.R")
-      simple_piechart(Id = Id,
-                      data = df.berichten, 
-                      Fill = Fill,
-                      visual = input$inhoud, 
-                      title = input$title, 
-                      Xtitle = input$Xaxis, 
-                      Ytitle = input$Yaxis, 
-                      Xlabels = input$Xlabels, 
-                      legend = input$legend, 
-                      colors = colors)
+      if (!(Id == "verzender.alg.beleid")) {
+        simple_piechart(Id = Id,
+                        data = df.berichten, 
+                        Fill = Fill,
+                        visual = input$inhoud, 
+                        title = input$title, 
+                        Xtitle = input$Xaxis, 
+                        Ytitle = input$Yaxis, 
+                        Xlabels = input$Xlabels, 
+                        legend = input$legend, 
+                        colors = colours)
+      } else {
+        advanced.pie(Id = "verzender.alg.beleid", data = df.berichten)
+      }
     }
   )
 
