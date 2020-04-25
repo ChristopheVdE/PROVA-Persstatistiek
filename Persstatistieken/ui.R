@@ -54,101 +54,104 @@ ui <- dashboardPage(
       tabItem(
         tabName = "Settings",
         fluidRow(
-          heigth = "100%",
+          column(
+            width = 6,
         # File input & options ------------------------------------------------
-          box(
-            title = "File input",
-            width = 5,
-            height = "75%",
-          # File input
-            fileInput("file", 
-                      "Kies Excel document:",
-                      multiple = FALSE,
-                      accept = c(".xls", ".xlsx"),
-                      width = 900,
-                      placeholder = "No file selected"),
-          # Werkblad
-            textInput("sheet", "Te gebruiken Werkblad", value ="Hele organisatie", placeholder = "Hele organisatie" ),
-          # Headers  
-            checkboxInput("headers", label = "Eerste rij bevat kolomnamen", value = TRUE),
-          # Jaar
-            selectInput("jaar", 
-                        label = "Jaar", 
-                        choices = c(format(Sys.Date(), "%Y"):2010),
-                        selected = format(Sys.Date(), "%Y")),
-          # Kwartaal
-            selectInput("kwartaal",
-                        label = "Selecteer kwartaal:",
-                        choices = c("Q1", "Q2", "Q3", "Q4", "Jaar"),
-                        selected = "Q1")
-          ),
+            box(
+              title = "File input",
+              width = 12,
+              height = "75%",
+            # File input
+              fileInput("file", 
+                        "Kies Excel document:",
+                        multiple = FALSE,
+                        accept = c(".xls", ".xlsx"),
+                        width = 900,
+                        placeholder = "No file selected"),
+            # Werkblad
+              textInput("sheet", "Te gebruiken Werkblad", value ="Hele organisatie", placeholder = "Hele organisatie" ),
+            # Headers  
+              checkboxInput("headers", label = "Eerste rij bevat kolomnamen", value = TRUE),
+            # Jaar
+              selectInput("jaar", 
+                          label = "Jaar", 
+                          choices = c(format(Sys.Date(), "%Y"):2010),
+                          selected = format(Sys.Date(), "%Y")),
+            # Kwartaal
+              selectInput("kwartaal",
+                          label = "Selecteer kwartaal:",
+                          choices = c("Q1", "Q2", "Q3", "Q4", "Jaar"),
+                          selected = "Q1")
+            ),
         # Kolom selectie ------------------------------------------------------
-          box(
-            title = "Selecteer kolomen die overenkomen met kolominhoud (indien geen kolomnnamen in Excel)",
-            width = 7,
-            column(
-              width = 3,
-              tags$br(tags$b("Kwartaal")),
-              tags$br(tags$b("Verzender")),
-              tags$br(tags$b("Beleid")),
-              tags$br(tags$b("Deelbeleid")),
-              tags$br(tags$b("Type Persbericht"))
-            ),
-            column(
-              width = 3,
-              textInput("col.kwartaal", label = NULL, value = 1, placeholder = 1),
-              textInput("col.verzender", label = NULL, value = 2, placeholder = 2),
-              textInput("col.beleid", label = NULL, value = 9, placeholder = 3),
-              textInput("col.detail", label = NULL, value = 10, placeholder = 4),
-              textInput("col.type", label = NULL, value = 11, placeholder = 5)
-            ),
-            column(
-              width = 3,
-              tags$br(tags$b("Persreturn: Algemeen")),
-              tags$br(tags$b("Persreturn: Web")),
-              tags$br(tags$b("Persreturn: TV")),
-              tags$br(tags$b("Maand")),
-            ),
-            column(
-              width = 3,
-              textInput("col.return.algemeen", label = NULL, value = 6, placeholder = 6),
-              textInput("col.return.web", label = NULL, value = 7, placeholder = 7),
-              textInput("col.return.tv", label = NULL, value = 8, placeholder = 8),
-              textInput("col.maand", label = NULL, value = 13, placeholder = 9)
-            )
-          )
-        ),
-        # colour chooser -------------------------------------------------------
-        fluidRow(
-          box(
-            title = "Plot kleuren: Persberichten",
-            width = 8,
-            column(
-              width = 6,
-              colourInput("colour1", "Colour 1", brewer.pal(8,"Pastel2")[1]),
-              colourInput("colour2", "Colour 2", brewer.pal(8,"Pastel2")[2]),
-              colourInput("colour3", "Colour 3", brewer.pal(8,"Pastel2")[3]),
-              colourInput("colour4", "Colour 4", brewer.pal(8,"Pastel2")[4]),
-              colourInput("colour5", "Colour 5", brewer.pal(8,"Pastel2")[5]),
-              colourInput("colour6", "Colour 6", brewer.pal(8,"Pastel2")[6]),
-              colourInput("colour7", "Colour 7", brewer.pal(8,"Pastel2")[7]),
-            ),
-            column(
-              width = 6,
-              colourInput("colour8", "Colour 8", brewer.pal(8,"Pastel2")[8]),
-              colourInput("colour9", "Colour 9", brewer.pal(8,"Pastel1")[1]),
-              colourInput("colour10", "Colour 10", brewer.pal(8,"Pastel1")[2]),
-              colourInput("colour11", "Colour 11", brewer.pal(8,"Pastel1")[3]),
-              colourInput("colour12", "Colour 12", brewer.pal(8,"Pastel1")[4]),
-              colourInput("colour13", "Colour 13", brewer.pal(8,"Pastel1")[5]),
-              colourInput("colour14", "Colour 14", brewer.pal(8,"Pastel1")[6]),
+            box(
+              title = "Selecteer kolomen die overenkomen met kolominhoud (indien geen kolomnnamen in Excel)",
+              width = 12,
+              column(
+                width = 3,
+                tags$br(tags$b("Kwartaal")),
+                tags$br(tags$b("Verzender")),
+                tags$br(tags$b("Beleid")),
+                tags$br(tags$b("Deelbeleid")),
+                tags$br(tags$b("Type Persbericht"))
+              ),
+              column(
+                width = 3,
+                textInput("col.kwartaal", label = NULL, value = 1, placeholder = 1),
+                textInput("col.verzender", label = NULL, value = 2, placeholder = 2),
+                textInput("col.beleid", label = NULL, value = 9, placeholder = 3),
+                textInput("col.detail", label = NULL, value = 10, placeholder = 4),
+                textInput("col.type", label = NULL, value = 11, placeholder = 5)
+              ),
+              column(
+                width = 3,
+                tags$br(tags$b("Persreturn: Algemeen")),
+                tags$br(tags$b("Persreturn: Web")),
+                tags$br(tags$b("Persreturn: TV")),
+                tags$br(tags$b("Maand")),
+              ),
+              column(
+                width = 3,
+                textInput("col.return.algemeen", label = NULL, value = 6, placeholder = 6),
+                textInput("col.return.web", label = NULL, value = 7, placeholder = 7),
+                textInput("col.return.tv", label = NULL, value = 8, placeholder = 8),
+                textInput("col.maand", label = NULL, value = 13, placeholder = 9)
+              )
             )
           ),
-          box(
-            title = "Plot kleuren: Persreturn",
-            width = 4,
-            colourInput("return.colour1", "Persreturn: Yes", brewer.pal(8,"Pastel2")[1]),
-            colourInput("return.colour2", "Persreturn: No", brewer.pal(8,"Pastel2")[2])
+        # colour chooser -------------------------------------------------------
+          column(
+            width = 6,
+            box(
+              title = "Plot kleuren: Persberichten",
+              width = 12,
+              column(
+                width = 6,
+                colourInput("colour1", "Colour 1", brewer.pal(8,"Pastel2")[1]),
+                colourInput("colour2", "Colour 2", brewer.pal(8,"Pastel2")[2]),
+                colourInput("colour3", "Colour 3", brewer.pal(8,"Pastel2")[3]),
+                colourInput("colour4", "Colour 4", brewer.pal(8,"Pastel2")[4]),
+                colourInput("colour5", "Colour 5", brewer.pal(8,"Pastel2")[5]),
+                colourInput("colour6", "Colour 6", brewer.pal(8,"Pastel2")[6]),
+                colourInput("colour7", "Colour 7", brewer.pal(8,"Pastel2")[7]),
+              ),
+              column(
+                width = 6,
+                colourInput("colour8", "Colour 8", brewer.pal(8,"Pastel2")[8]),
+                colourInput("colour9", "Colour 9", brewer.pal(8,"Pastel1")[1]),
+                colourInput("colour10", "Colour 10", brewer.pal(8,"Pastel1")[2]),
+                colourInput("colour11", "Colour 11", brewer.pal(8,"Pastel1")[3]),
+                colourInput("colour12", "Colour 12", brewer.pal(8,"Pastel1")[4]),
+                colourInput("colour13", "Colour 13", brewer.pal(8,"Pastel1")[5]),
+                colourInput("colour14", "Colour 14", brewer.pal(8,"Pastel1")[6]),
+              )
+            ),
+            box(
+              title = "Plot kleuren: Persreturn",
+              width = 12,
+              colourInput("return.colour1", "Persreturn: Yes", brewer.pal(8,"Pastel2")[1]),
+              colourInput("return.colour2", "Persreturn: No", brewer.pal(8,"Pastel2")[2])
+            )
           )
         )
       ),
