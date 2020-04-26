@@ -418,7 +418,7 @@ server <- function(input, output) {
           )
     # PER MEDIUM --------------------------------------------------------------
       # Barplot
-      persreturn.medium <- callModule(data.visual, "return.medium", Id = "return.medium" , Persstatistiek, Xaxis = "Beleid", Fill = "Medium", colours = return.colours)
+      persreturn.medium <- callModule(data.visual, "return.medium", Id = "return.medium" , Persstatistiek, Xaxis = "Beleid", Fill = "Medium", colours = colours)
       output$persreturn.medium.plot <- renderPlot(
         persreturn.medium$plot()
       )
@@ -474,45 +474,45 @@ server <- function(input, output) {
                                            vrijetijd.tabel = reactive(persberichten.beleid.beleid.vrijetijd$tabel()))
         # Verzender -----------------------------------------------------------
           # Algemeen ----------------------------------------------------------
-          Persberichten.verzender.alg <- list(totaal.plot = reactive(persberichten.verzender.alg.totaal.plot()),
-                                              totaal.tabel = reactive(persberichten.verzender.alg.totaal.tabel()),
-                                              beleid.plot = reactive(persberichten.verzender.alg.beleid.plot()),
-                                              beleid.tabel = reactive(persberichten.verzender.alg.beleid.plot()))
+          Persberichten.verzender.alg <- list(totaal.plot = reactive(persberichten.verzender.alg.totaal$plot()),
+                                              totaal.tabel = reactive(persberichten.verzender.alg.totaal$tabel()),
+                                              beleid.plot = reactive(persberichten.verzender.alg.beleid$plot()),
+                                              beleid.tabel = reactive(persberichten.verzender.alg.beleid$plot()))
           # Per maand ---------------------------------------------------------
-          Persberichten.verzender.maand <- list(persdienst.plot = reactive(persberichten.verzender.maand.persdienst.plot()),
-                                                persdienst.tabel = reactive(persberichten.verzender.maand.persdienst.tabel()),
-                                                provincie.plot = reactive(persberichten.verzender.maand.provincie.plot()),
-                                                provincie.tabel = reactive(persberichten.verzender.maand.provincie.tabel()),
-                                                gouverneur.plot = reactive(persberichten.verzender.maand.gouverneur.plot()),
-                                                gouverneur.tabel = reactive(persberichten.verzender.maand.gouverneur.tabel()),
-                                                extern.plot = reactive(persberichten.verzender.maand.extern.plot()),
-                                                extern.tabel = reactive(persberichten.verzender.maand.extern.tabel()))
+          Persberichten.verzender.maand <- list(persdienst.plot = reactive(persberichten.verzender.maand.persdienst$plot()),
+                                                persdienst.tabel = reactive(persberichten.verzender.maand.persdienst$tabel()),
+                                                provincie.plot = reactive(persberichten.verzender.maand.provincie$plot()),
+                                                provincie.tabel = reactive(persberichten.verzender.maand.provincie$tabel()),
+                                                gouverneur.plot = reactive(persberichten.verzender.maand.gouverneur$plot()),
+                                                gouverneur.tabel = reactive(persberichten.verzender.maand.gouverneur$tabel()),
+                                                extern.plot = reactive(persberichten.verzender.maand.extern$plot()),
+                                                extern.tabel = reactive(persberichten.verzender.maand.extern$tabel()))
         # Type ----------------------------------------------------------------
-        Persberichten.type <- list(type.plot = reactive(persberichten.type.plot()),
-                                   type.tabel = reactive(persberichten.type.tabel()))
+        Persberichten.type <- list(type.plot = reactive(persberichten.type$plot()),
+                                   type.tabel = reactive(persberichten.type$tabel()))
     # Persreturn --------------------------------------------------------------
       # Beleid ----------------------------------------------------------------
-      Persreturn.beleid <- list(algemeen.plot = reactive(persreturn.beleid.alg.plot()),
-                                algemeen.tabel = reactive(persreturn.beleid.alg.tabel()),
-                                economie.plot = reactive(persreturn.beleid.economie.plot()),
-                                economie.tabel = reactive(persreturn.beleid.alg.tabel()),
-                                gouverneur.plot = reactive(persreturn.beleid.gouverneur.plot()),
-                                gouverneur.tabel = reactive(persreturn.beleid.gouverneur.tabel()),
-                                leefmilieu.plot = reactive(persreturn.beleid.leefmilieu.plot()),
-                                leefmilieu.tabel = reactive(persreturn.beleid.leefmilieu.tabel()),
-                                mobiliteit.plot = reactive(persreturn.beleid.mobiliteit.plot()),
-                                mobiliteit.tabel = reactive(persreturn.beleid.mobiliteit.tabel()),
-                                onderwijs.plot = reactive(persreturn.beleid.onderwijs.plot()),
-                                onderwijs.tabel = reactive(persreturn.beleid.onderwijs.tabel()),
-                                provinciebestuur.plot = reactive(persreturn.beleid.provinciebestuur.plot()),
-                                provinciebestuur.tabel = reactive(persreturn.beleid.provinciebestuur.tabel()),
-                                ruimte.plot = reactive(persreturn.beleid.ruimte.plot()),
-                                ruimte.tabel = reactive(persreturn.beleid.ruimte.tabel()),
-                                vrijetijd.plot = reactive(persreturn.beleid.vrijetijd.plot()),
-                                vrijetijd.tabel = reactive(persreturn.beleid.vrijetijd.tabel()))
+      Persreturn.beleid <- list(algemeen.plot = reactive(persreturn.beleid.alg$plot()),
+                                algemeen.tabel = reactive(persreturn.beleid.alg$tabel()),
+                                economie.plot = reactive(persreturn.beleid.economie$plot()),
+                                economie.tabel = reactive(persreturn.beleid.alg$tabel()),
+                                gouverneur.plot = reactive(persreturn.beleid.gouverneur$plot()),
+                                gouverneur.tabel = reactive(persreturn.beleid.gouverneur$tabel()),
+                                leefmilieu.plot = reactive(persreturn.beleid.leefmilieu$plot()),
+                                leefmilieu.tabel = reactive(persreturn.beleid.leefmilieu$tabel()),
+                                mobiliteit.plot = reactive(persreturn.beleid.mobiliteit$plot()),
+                                mobiliteit.tabel = reactive(persreturn.beleid.mobiliteit$tabel()),
+                                onderwijs.plot = reactive(persreturn.beleid.onderwijs$plot()),
+                                onderwijs.tabel = reactive(persreturn.beleid.onderwijs$tabel()),
+                                provinciebestuur.plot = reactive(persreturn.beleid.provinciebestuur$plot()),
+                                provinciebestuur.tabel = reactive(persreturn.beleid.provinciebestuur$tabel()),
+                                ruimte.plot = reactive(persreturn.beleid.ruimte$plot()),
+                                ruimte.tabel = reactive(persreturn.beleid.ruimte$tabel()),
+                                vrijetijd.plot = reactive(persreturn.beleid.vrijetijd$plot()),
+                                vrijetijd.tabel = reactive(persreturn.beleid.vrijetijd$tabel()))
       # Medium ----------------------------------------------------------------
-      Persreturn.medium <- list(medium.plot = reactive(persreturn.medium.plot()),
-                                medium.tabel = reactive(persreturn.medium.tabel()))
+      Persreturn.medium <- list(medium.plot = reactive(persreturn.medium$plot()),
+                                medium.tabel = reactive(persreturn.medium$tabel()))
   # ===========================================================================
   
   # HTML RAPPORT AANMAAK ======================================================
