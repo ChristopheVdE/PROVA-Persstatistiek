@@ -5,6 +5,8 @@
 # PACKAGES ====================================================================
 library(shiny)
 library(shinydashboard)
+# library(shinydashboardPlus)
+library(sortable)
 library(colourpicker)
 # =============================================================================
 
@@ -43,8 +45,8 @@ ui <- dashboardPage(
                menuSubItem("Per Medium", tabName = "Return_Medium")
       ),
     # Download ----------------------------------------------------------------
-      menuItem("Download", tabName = "Download"),
-      downloadButton("report", "Generate report")
+      menuItem("Download", tabName = "Download")
+      # downloadButton("report", "Generate report")
     )
   ),
   # BODY ======================================================================
@@ -108,7 +110,7 @@ ui <- dashboardPage(
                 tags$br(tags$b("Persreturn: Algemeen")),
                 tags$br(tags$b("Persreturn: Web")),
                 tags$br(tags$b("Persreturn: TV")),
-                tags$br(tags$b("Maand")),
+                tags$br(tags$b("Maand"))
               ),
               column(
                 width = 3,
@@ -133,7 +135,7 @@ ui <- dashboardPage(
                 colourInput("colour4", "Colour 4", brewer.pal(8,"Pastel2")[4]),
                 colourInput("colour5", "Colour 5", brewer.pal(8,"Pastel2")[5]),
                 colourInput("colour6", "Colour 6", brewer.pal(8,"Pastel2")[6]),
-                colourInput("colour7", "Colour 7", brewer.pal(8,"Pastel2")[7]),
+                colourInput("colour7", "Colour 7", brewer.pal(8,"Pastel2")[7])
               ),
               column(
                 width = 6,
@@ -143,7 +145,7 @@ ui <- dashboardPage(
                 colourInput("colour11", "Colour 11", brewer.pal(8,"Pastel1")[3]),
                 colourInput("colour12", "Colour 12", brewer.pal(8,"Pastel1")[4]),
                 colourInput("colour13", "Colour 13", brewer.pal(8,"Pastel1")[5]),
-                colourInput("colour14", "Colour 14", brewer.pal(8,"Pastel1")[6]),
+                colourInput("colour14", "Colour 14", brewer.pal(8,"Pastel1")[6])
               )
             ),
             box(
@@ -162,7 +164,7 @@ ui <- dashboardPage(
           box(
             title = "Processed uploaded data",
             width = 12,
-            tableOutput("table"),
+            tableOutput("table")
           )
         )
       ),
@@ -191,7 +193,7 @@ ui <- dashboardPage(
                 tabPanel("Barplot", plotOutput("persberichten.alg.beleid.plot")),
                 tabPanel("Tabel", tableOutput("persberichten.alg.beleid.tabel")),
                 data.visualOutput("bericht.alg.beleid", plottitle = "Persberichten per beleid", Xaxis = "Beleid", Xlabels = FALSE)
-              ),
+              )
             )
           ),
         # Per beleid ----------------------------------------------------------
@@ -460,7 +462,7 @@ ui <- dashboardPage(
               )
             )
           ),
-      # Per Platform ----------------------------------------------------------
+        # Per Platform ----------------------------------------------------------
         tabItem(
           tabName = "Return_Medium",
           fluidRow(
@@ -472,8 +474,254 @@ ui <- dashboardPage(
               data.visualOutput("return.medium", plottitle = "Persreturn (totaal) per Medium", Xaxis = "Beleid", Xlabels = TRUE)
             )
           )
+        ),
+      # Download --------------------------------------------------------------
+      tabItem(
+        tabName = "Download",
+        fluidRow(
+          box(
+            width = 12,
+            title = "Download",
+            downloadButton("report", "Generate report")
+          ),
+        # Persberichten -------------------------------------------------------
+          box(
+            width = 12,
+            collapsible = TRUE,
+            collapsed = FALSE,
+            title = "Persberichten",
+            rank_list(
+              # text = "test",
+              input_id = "test",
+              labels = list(
+          # Algemeen ----------------------------------------------------------
+                box(
+                  width = 12,
+                  collapsible = TRUE,
+                  collapsed = TRUE,
+                  title = "Algemeen",
+                  rank_list(
+                    input_id = "test2",
+                    labels = list(
+                      fluidRow(
+                        column(width = 2, "Algemeen Kwartaal"),
+                        column(width = 4, textInput("title", label = NULL, value = "Persberichten per kwartaal", placeholder = "Sectie titel")),
+                        column(width = 6, textInput("text", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
+                      ),
+                      fluidRow(
+                        column(width = 2, "Algemeen Maand"),
+                        column(width = 4, textInput("title", label = NULL, value = "Persberichten per maand", placeholder = "Sectie titel")),
+                        column(width = 6, textInput("text", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
+                      ),
+                      fluidRow(
+                        column(width = 2, "Algemeen Beleid"),
+                        column(width = 4, textInput("title", label = NULL, value = "Persberichten per beleid", placeholder = "Sectie titel")),
+                        column(width = 6, textInput("text", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
+                      )
+                    )
+                  )
+                ),
+          # Beleid ------------------------------------------------------------
+                box(
+                  width = 12,
+                  collapsible = TRUE,
+                  collapsed = TRUE,
+                  title = "Beleid",
+            # Volgorde van de verschillende beleidsdomeinen -------------------
+                  rank_list(
+                    text = "Volgorde van de verschillende beleidsdomeinen:",
+                    input_id = "test2",
+                    labels = list(
+              # Provinciebestuur ----------------------------------------------
+                      box(
+                        width = 12,
+                        collapsible = TRUE,
+                        collapsed = TRUE,
+                        title = "Provinciebestuur",
+                        rank_list(
+                          text = "Volgorde grafieken & tabellen per beleid:",
+                          input_id = "test3",
+                          labels = list(
+                            fluidRow(
+                              column(width = 2, "Persberichten per maand"),
+                              column(width = 4, textInput("title", label = NULL, value = "Persberichten per kwartaal", placeholder = "Sectie titel")),
+                              column(width = 6, textInput("text", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
+                            ),
+                            fluidRow(
+                              column(width = 2, "Persberichten per deelbeleid"),
+                              column(width = 4, textInput("title", label = NULL, value = "Persberichten per maand", placeholder = "Sectie titel")),
+                              column(width = 6, textInput("text", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
+                            )
+                          )
+                        )
+                      ),
+              # Economie ------------------------------------------------------
+                      box(
+                        width = 12,
+                        collapsible = TRUE,
+                        collapsed = TRUE,
+                        title = "Economie",
+                        rank_list(
+                          text = "Volgorde grafieken & tabellen per beleid:",
+                          input_id = "test3",
+                          labels = list(
+                            fluidRow(
+                              column(width = 2, "Persberichten per maand"),
+                              column(width = 4, textInput("title", label = NULL, value = "Persberichten per kwartaal", placeholder = "Sectie titel")),
+                              column(width = 6, textInput("text", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
+                            ),
+                            fluidRow(
+                              column(width = 2, "Persberichten per deelbeleid"),
+                              column(width = 4, textInput("title", label = NULL, value = "Persberichten per maand", placeholder = "Sectie titel")),
+                              column(width = 6, textInput("text", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
+                            )
+                          )
+                        )
+                      ),
+              # Leefmilieu ----------------------------------------------------
+                      box(
+                        width = 12,
+                        collapsible = TRUE,
+                        collapsed = TRUE,
+                        title = "Leefmilieu",
+                        rank_list(
+                          text = "Volgorde grafieken & tabellen per beleid:",
+                          input_id = "test3",
+                          labels = list(
+                            fluidRow(
+                              column(width = 2, "Persberichten per maand"),
+                              column(width = 4, textInput("title", label = NULL, value = "Persberichten per kwartaal", placeholder = "Sectie titel")),
+                              column(width = 6, textInput("text", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
+                            ),
+                            fluidRow(
+                              column(width = 2, "Persberichten per deelbeleid"),
+                              column(width = 4, textInput("title", label = NULL, value = "Persberichten per maand", placeholder = "Sectie titel")),
+                              column(width = 6, textInput("text", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
+                            )
+                          )
+                        )
+                      ),
+              # Mobiliteit ----------------------------------------------------
+                      box(
+                        width = 12,
+                        collapsible = TRUE,
+                        collapsed = TRUE,
+                        title = "Mobiliteit",
+                        rank_list(
+                          text = "Volgorde grafieken & tabellen per beleid:",
+                          input_id = "test3",
+                          labels = list(
+                            fluidRow(
+                              column(width = 2, "Persberichten per maand"),
+                              column(width = 4, textInput("title", label = NULL, value = "Persberichten per kwartaal", placeholder = "Sectie titel")),
+                              column(width = 6, textInput("text", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
+                            ),
+                            fluidRow(
+                              column(width = 2, "Persberichten per deelbeleid"),
+                              column(width = 4, textInput("title", label = NULL, value = "Persberichten per maand", placeholder = "Sectie titel")),
+                              column(width = 6, textInput("text", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
+                            )
+                          )
+                        )
+                      ),
+              # Onderwijs en educatie -----------------------------------------
+                      box(
+                        width = 12,
+                        collapsible = TRUE,
+                        collapsed = TRUE,
+                        title = "Onderwijs en Educatie",
+                        rank_list(
+                          text = "Volgorde grafieken & tabellen per beleid:",
+                          input_id = "test3",
+                          labels = list(
+                            fluidRow(
+                              column(width = 2, "Persberichten per maand"),
+                              column(width = 4, textInput("title", label = NULL, value = "Persberichten per kwartaal", placeholder = "Sectie titel")),
+                              column(width = 6, textInput("text", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
+                            ),
+                            fluidRow(
+                              column(width = 2, "Persberichten per deelbeleid"),
+                              column(width = 4, textInput("title", label = NULL, value = "Persberichten per maand", placeholder = "Sectie titel")),
+                              column(width = 6, textInput("text", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
+                            )
+                          )
+                        )
+                      ),
+              # Ruimte --------------------------------------------------------
+                      box(
+                        width = 12,
+                        collapsible = TRUE,
+                        collapsed = TRUE,
+                        title = "Ruimte",
+                        rank_list(
+                          text = "Volgorde grafieken & tabellen per beleid:",
+                          input_id = "test3",
+                          labels = list(
+                            fluidRow(
+                              column(width = 2, "Persberichten per maand"),
+                              column(width = 4, textInput("title", label = NULL, value = "Persberichten per kwartaal", placeholder = "Sectie titel")),
+                              column(width = 6, textInput("text", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
+                            ),
+                            fluidRow(
+                              column(width = 2, "Persberichten per deelbeleid"),
+                              column(width = 4, textInput("title", label = NULL, value = "Persberichten per maand", placeholder = "Sectie titel")),
+                              column(width = 6, textInput("text", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
+                            )
+                          )
+                        )
+                      ),
+              # Vrije tijd ----------------------------------------------------
+                      box(
+                        width = 12,
+                        collapsible = TRUE,
+                        collapsed = TRUE,
+                        title = "Vrije Tijd",
+                        rank_list(
+                          text = "Volgorde grafieken & tabellen per beleid:",
+                          input_id = "test3",
+                          labels = list(
+                            fluidRow(
+                              column(width = 2, "Persberichten per maand"),
+                              column(width = 4, textInput("title", label = NULL, value = "Persberichten per kwartaal", placeholder = "Sectie titel")),
+                              column(width = 6, textInput("text", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
+                            ),
+                            fluidRow(
+                              column(width = 2, "Persberichten per deelbeleid"),
+                              column(width = 4, textInput("title", label = NULL, value = "Persberichten per maand", placeholder = "Sectie titel")),
+                              column(width = 6, textInput("text", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                ),
+          # Verzender ---------------------------------------------------------
+                box(
+                  width = 12,
+                  collapsible = TRUE,
+                  collapsed = TRUE,
+                  title = "Verzender"
+                ),
+          # Type --------------------------------------------------------------
+                box(
+                  width = 12,
+                  collapsible = TRUE,
+                  collapsed = TRUE,
+                  title = "Type"
+                )
+              )
+            )
+          # Persreturn --------------------------------------------------------
+          ),
+          box(
+            width = 6,
+            title = "Persreturn"
+          )
         )
+      )
     )
   )
 )
+
 
