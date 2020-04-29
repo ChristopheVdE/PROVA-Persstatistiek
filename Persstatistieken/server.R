@@ -428,6 +428,36 @@ server <- function(input, output) {
       )
   # ===========================================================================
       
+  # Download test =============================================================
+      Rapport.volgorde <- reactive({
+        volgorde <- input$Persberichten
+        for(i in volgorde) {
+        # Persberichten algemeen ----------------------------------------------
+          if(i == "Algemeen") {
+            volgorde$Algemeen <- input$Persberichten.alg
+            for (j in volgorde$Algemeen) {
+              if(j == "Kwartaal") {
+                volgorde$Algemeen$Kwartaal <- list("Kwartaal" = list("titel" = input$bericht.kwartaal.titel, "uitleg" = input$bericht.kwartaal.uitleg))
+              } else if (j == "Maand") {
+                volgorde$Algemeen$Maand <- list("Maand" = list("titel" = input$bericht.maand.titel, "uitleg" = input$bericht.maand.uitleg))
+              } else if (j == "Beleid") {
+                volgorde$Algemeen$Beleid <- list("Beleid" = list("titel" = input$bericht.beleid.titel, "uitleg" = input$bericht.beleid.uitleg))
+              }
+            }
+          }
+        }
+        volgorde
+      })
+      
+      
+      output$results <- renderPrint({
+        Rapport.volgorde()
+        # Rapport.volgorde["Algemeen"]
+        # input$Persberichten # This matches the input_id of the rank list
+      })
+      
+      
+      
   # VARIABLE COLLECTION FOR MARKDOWN (HTML) ===================================
     # Persberichten -----------------------------------------------------------
       # Algemeen --------------------------------------------------------------

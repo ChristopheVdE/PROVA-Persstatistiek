@@ -492,37 +492,37 @@ ui <- dashboardPage(
             title = "Persberichten",
             rank_list(
               # text = "test",
-              input_id = "test",
+              input_id = "Persberichten",
               labels = list(
           # Algemeen ----------------------------------------------------------
-                box(
+                Algemeen = box(
                   width = 12,
                   collapsible = TRUE,
                   collapsed = TRUE,
                   title = "Algemeen",
                   rank_list(
-                    input_id = "test2",
+                    input_id = "Persberichten.alg",
                     labels = list(
-                      fluidRow(
+                      Kwartaal = fluidRow(
                         column(width = 2, "Algemeen Kwartaal"),
-                        column(width = 4, textInput("title", label = NULL, value = "Persberichten per kwartaal", placeholder = "Sectie titel")),
-                        column(width = 6, textInput("text", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
+                        column(width = 4, textInput("bericht.kwartaal.titel", label = NULL, value = "Persberichten per kwartaal", placeholder = "Sectie titel")),
+                        column(width = 6, textInput("bericht.kwartaal.uitleg", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
                       ),
-                      fluidRow(
+                      Maand = fluidRow(
                         column(width = 2, "Algemeen Maand"),
-                        column(width = 4, textInput("title", label = NULL, value = "Persberichten per maand", placeholder = "Sectie titel")),
-                        column(width = 6, textInput("text", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
+                        column(width = 4, textInput("bericht.maand.titel", label = NULL, value = "Persberichten per maand", placeholder = "Sectie titel")),
+                        column(width = 6, textInput("bericht.maaand.uitleg", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
                       ),
-                      fluidRow(
+                      Beleid = fluidRow(
                         column(width = 2, "Algemeen Beleid"),
-                        column(width = 4, textInput("title", label = NULL, value = "Persberichten per beleid", placeholder = "Sectie titel")),
-                        column(width = 6, textInput("text", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
+                        column(width = 4, textInput("bericht.beleid.titel", label = NULL, value = "Persberichten per beleid", placeholder = "Sectie titel")),
+                        column(width = 6, textInput("bericht.beleid.uitleg", label = NULL, value = "", placeholder = "Extra uitleg bij grafiek/ tabel"))
                       )
                     )
                   )
                 ),
           # Beleid ------------------------------------------------------------
-                box(
+                "Beleid" = box(
                   width = 12,
                   collapsible = TRUE,
                   collapsed = TRUE,
@@ -712,12 +712,13 @@ ui <- dashboardPage(
                 )
               )
             )
-          # Persreturn --------------------------------------------------------
           ),
+          # Persreturn --------------------------------------------------------
           box(
-            width = 6,
+            width = 12,
             title = "Persreturn"
-          )
+          ),
+          verbatimTextOutput("results")
         )
       )
     )
