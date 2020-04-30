@@ -437,14 +437,36 @@ server <- function(input, output) {
             volgorde$Algemeen <- input$Persberichten.alg
             for (j in volgorde$Algemeen) {
               if(j == "Kwartaal") {
-                volgorde$Algemeen$Kwartaal <- list("Kwartaal" = list("titel" = input$bericht.kwartaal.titel, "uitleg" = input$bericht.kwartaal.uitleg))
+                volgorde$Algemeen$Kwartaal <- list("Kwartaal" = list("titel" = input$bericht.kwartaal.titel, "uitleg" = persberichten.alg.kwartaal$uitleg()))
               } else if (j == "Maand") {
-                volgorde$Algemeen$Maand <- list("Maand" = list("titel" = input$bericht.maand.titel, "uitleg" = input$bericht.maand.uitleg))
+                volgorde$Algemeen$Maand <- list("Maand" = list("titel" = input$bericht.maand.titel, "uitleg" = persberichten.alg.maand$uitleg()))
               } else if (j == "Beleid") {
-                volgorde$Algemeen$Beleid <- list("Beleid" = list("titel" = input$bericht.beleid.titel, "uitleg" = input$bericht.beleid.uitleg))
+                volgorde$Algemeen$Beleid <- list("Beleid" = list("titel" = input$bericht.beleid.titel, "uitleg" = persberichten.alg.beleid$uitleg()))
               }
             }
           }
+        # Persberichten beleid ------------------------------------------------
+        # } else if (i == "Beleid") {
+        #   volgorde$Beleid <- input$Persberichten.beleid
+        #   for (j in volgorde$Beleid) {
+        #     if (j == "Provinciebestuur") {
+        #       volgorde$Beleid$Provinciebestuur <- list("Provinciebestuur" = list("titel" = input$bericht.kwartaal.titel, "uitleg" = input$bericht.kwartaal.uitleg))
+        #     } else if (j == "Economie") {
+        #       volgorde$Beleid$Economie <- list("Economie" = list("titel" = input$bericht.kwartaal.titel, "uitleg" = input$bericht.kwartaal.uitleg))
+        #     } else if (j == "Leefmilieu") {
+        #       volgorde$Beleid$Leefmilieu <- list("Leefmilieu" = list("titel" = input$bericht.kwartaal.titel, "uitleg" = input$bericht.kwartaal.uitleg))
+        #     } else if (j == "Mobiliteit") {
+        #       volgorde$Beleid$Mobiliteit <- list("Mobiliteit" = list("titel" = input$bericht.kwartaal.titel, "uitleg" = input$bericht.kwartaal.uitleg))
+        #     } else if (j == "Onderwijs en Educatie") {
+        #       volgorde$Beleid$"Onderwijs en Educatie" <- list("Onderwijs en Educatie" = list("titel" = input$bericht.kwartaal.titel, "uitleg" = input$bericht.kwartaal.uitleg))
+        #     } else if (j == "Ruimte") {
+        #       volgorde$Beleid$Ruimte <- list("Ruimte" = list("titel" = input$bericht.kwartaal.titel, "uitleg" = input$bericht.kwartaal.uitleg))
+        #     } else if (j == "Vrije Tijd") {
+        #       volgorde$Beleid$"Vrije Tijd" <- list("Vrije Tijd" = list("titel" = input$bericht.kwartaal.titel, "uitleg" = input$bericht.kwartaal.uitleg))
+        #     } else if (j == "Gouverneur") {
+        #       volgorde$Beleid$"Vrije Tijd" <- list("Gouverneur" = list("titel" = input$bericht.kwartaal.titel, "uitleg" = input$bericht.kwartaal.uitleg))
+        #     }
+        #   }
         }
         volgorde
       })

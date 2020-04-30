@@ -35,6 +35,12 @@ data.visualOutput <- function(id, plottitle, Xaxis, Xlabels) {
         checkboxInput(ns("Xlabels"), label = "As labels (X-as)", value = Xlabels),
         checkboxInput(ns("legend"), label = "Legende", value = TRUE)
       )
+    ),
+    fluidRow(
+      tags$hr(),
+      column(width = 12,
+             textInput(ns("uitleg"), label ="Typ hier uitleg bij grafiek/ tabel:", value = "", placeholder = "Uitleg bij grafiek", width = "100%")
+      )
     )
   )
 }
@@ -489,7 +495,7 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
             }
            )
   
-  return(list(plot = berichten.plot, tabel = tabel))
+  return(list(plot = berichten.plot, tabel = tabel, uitleg = reactive(input$uitleg)))
   }
 
 
