@@ -483,12 +483,12 @@ server <- function(input, output) {
   # VARIABLE COLLECTION FOR MARKDOWN (HTML) ===================================
     # Persberichten -----------------------------------------------------------
       # Algemeen --------------------------------------------------------------
-      Persberichten.alg <- list(kwartaal.plot = reactive(persberichten.alg.kwartaal.plot()),
-                                kwartaal.tabel = reactive(persberichten.alg.kwartaal.tabel()),
-                                maand.plot = reactive(persberichten.alg.maand.plot()),
-                                maand.tabel = reactive(persberichten.alg.maand.tabel()),
-                                beleid.plot = reactive(persberichten.alg.beleid.plot()),
-                                beleid.tabel = reactive(persberichten.alg.beleid.tabel()))
+      Persberichten.alg <- list(kwartaal.plot = reactive(persberichten.alg.kwartaal$plot()),
+                                kwartaal.tabel = reactive(persberichten.alg.kwartaal$tabel()),
+                                maand.plot = reactive(persberichten.alg.maand$plot()),
+                                maand.tabel = reactive(persberichten.alg.maand$tabel()),
+                                beleid.plot = reactive(persberichten.alg.beleid$plot()),
+                                beleid.tabel = reactive(persberichten.alg.beleid$tabel()))
       # Per beleid ------------------------------------------------------------
         # Maand ---------------------------------------------------------------
         Persberichten.beleid.maand <- list(economie.plot = reactive(persberichten.beleid.maand.economie$plot()),
@@ -546,22 +546,22 @@ server <- function(input, output) {
       # Beleid ----------------------------------------------------------------
       Persreturn.beleid <- list(algemeen.plot = reactive(persreturn.beleid.alg$plot()),
                                 algemeen.tabel = reactive(persreturn.beleid.alg$tabel()),
-                                economie.plot = reactive(persreturn.beleid.economie$plot()),
-                                economie.tabel = reactive(persreturn.beleid.alg$tabel()),
-                                gouverneur.plot = reactive(persreturn.beleid.gouverneur$plot()),
-                                gouverneur.tabel = reactive(persreturn.beleid.gouverneur$tabel()),
-                                leefmilieu.plot = reactive(persreturn.beleid.leefmilieu$plot()),
-                                leefmilieu.tabel = reactive(persreturn.beleid.leefmilieu$tabel()),
-                                mobiliteit.plot = reactive(persreturn.beleid.mobiliteit$plot()),
-                                mobiliteit.tabel = reactive(persreturn.beleid.mobiliteit$tabel()),
-                                onderwijs.plot = reactive(persreturn.beleid.onderwijs$plot()),
-                                onderwijs.tabel = reactive(persreturn.beleid.onderwijs$tabel()),
-                                provinciebestuur.plot = reactive(persreturn.beleid.provinciebestuur$plot()),
-                                provinciebestuur.tabel = reactive(persreturn.beleid.provinciebestuur$tabel()),
-                                ruimte.plot = reactive(persreturn.beleid.ruimte$plot()),
-                                ruimte.tabel = reactive(persreturn.beleid.ruimte$tabel()),
-                                vrijetijd.plot = reactive(persreturn.beleid.vrijetijd$plot()),
-                                vrijetijd.tabel = reactive(persreturn.beleid.vrijetijd$tabel()))
+                                economie.plot = reactive(persreturn.beleid.beleid.economie$plot()),
+                                economie.tabel = reactive(persreturn.beleid.beleid.economie$tabel()),
+                                gouverneur.plot = reactive(persreturn.beleid.beleid.gouverneur$plot()),
+                                gouverneur.tabel = reactive(persreturn.beleid.beleid.gouverneur$tabel()),
+                                leefmilieu.plot = reactive(persreturn.beleid.beleid.leefmilieu$plot()),
+                                leefmilieu.tabel = reactive(persreturn.beleid.beleid.leefmilieu$tabel()),
+                                mobiliteit.plot = reactive(persreturn.beleid.beleid.mobiliteit$plot()),
+                                mobiliteit.tabel = reactive(persreturn.beleid.beleid.mobiliteit$tabel()),
+                                onderwijs.plot = reactive(persreturn.beleid.beleid.onderwijs$plot()),
+                                onderwijs.tabel = reactive(persreturn.beleid.beleid.onderwijs$tabel()),
+                                provinciebestuur.plot = reactive(persreturn.beleid.beleid.provinciebestuur$plot()),
+                                provinciebestuur.tabel = reactive(persreturn.beleid.beleid.provinciebestuur$tabel()),
+                                ruimte.plot = reactive(persreturn.beleid.beleid.ruimte$plot()),
+                                ruimte.tabel = reactive(persreturn.beleid.beleid.ruimte$tabel()),
+                                vrijetijd.plot = reactive(persreturn.beleid.beleid.vrijetijd$plot()),
+                                vrijetijd.tabel = reactive(persreturn.beleid.beleid.vrijetijd$tabel()))
       # Medium ----------------------------------------------------------------
       Persreturn.medium <- list(medium.plot = reactive(persreturn.medium$plot()),
                                 medium.tabel = reactive(persreturn.medium$tabel()))
@@ -575,6 +575,10 @@ server <- function(input, output) {
       # Copy the report file to a temporary directory before processing it, in
       # case we don't have write permissions to the current working dir (which
       # can happen when deployed).
+      withProgress(
+        message = 'Rapport samenstellen',
+        value = 0,
+        {
       tempReport <- file.path(tempdir(), "report.Rmd")
       file.copy("report.Rmd", tempReport, overwrite = TRUE)
       
@@ -587,15 +591,19 @@ server <- function(input, output) {
                      Persberichten.verzender.maand = Persberichten.verzender.maand,
                      Persberichten.type = Persberichten.type,
                      Persreturn.beleid = Persreturn.beleid,
-                     Persreturn.medium = Persreturn.medium)
+                     Persreturn.medium = Persreturn.medium,
+                     rendered_by_shiny = TRUE)
       
       # Knit the document, passing in the `params` list, and eval it in a
       # child of the global environment (this isolates the code in the document
       # from the code in this app).
-      rmarkdown::render(tempReport, output_file = file,
-                        params = params,
-                        envir = new.env(parent = globalenv())
-      )
+        rmarkdown::render(tempReport, 
+                          output_file = file,
+                          params = params,
+                          envir = new.env(parent = globalenv())
+        
+        )
+      })
     }
   )
   # ===========================================================================

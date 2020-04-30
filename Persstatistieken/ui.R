@@ -45,7 +45,8 @@ ui <- dashboardPage(
                menuSubItem("Per Medium", tabName = "Return_Medium")
       ),
     # Download ----------------------------------------------------------------
-      menuItem("Download", tabName = "Download")
+      menuItem("Download", tabName = "Download"),
+    textOutput("checkrender")
       # downloadButton("report", "Generate report")
     )
   ),
