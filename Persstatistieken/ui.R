@@ -486,6 +486,7 @@ ui <- dashboardPage(
             width = 12,
             title = "Download",
             downloadButton("report", "Generate report")
+            
           )
         )
       )

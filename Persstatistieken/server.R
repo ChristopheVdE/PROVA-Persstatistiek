@@ -30,22 +30,21 @@ server <- function(input, output) {
                                input$return.colour2))
   # Data Preparation ----------------------------------------------------------
   source("./Modules/Functions/data_preparation.R")
-  Persstatistiek <- data.preparation(file = reactive(input$file$datapath),
-                                     sheet = reactive(input$sheet),
-                                     headers = reactive(input$headers),
-                                     manual.headers = c(reactive(input$col.beleid), 
-                                                        reactive(input$col.detail), 
-                                                        reactive(input$col.kwartaal), 
-                                                        reactive(input$col.verzender), 
-                                                        reactive(input$col.type), 
-                                                        reactive(input$col.return.algemeen), 
-                                                        reactive(input$col.return.web), 
-                                                        reactive(input$col.return.tv), 
-                                                        reactive(input$col.maand)),
-                                     kwartaal = reactive(input$kwartaal))
+    Persstatistiek <- data.preparation(file = reactive(input$file$datapath),
+                                       sheet = reactive(input$sheet),
+                                       headers = reactive(input$headers),
+                                       manual.headers = c(reactive(input$col.beleid), 
+                                                          reactive(input$col.detail), 
+                                                          reactive(input$col.kwartaal), 
+                                                          reactive(input$col.verzender), 
+                                                          reactive(input$col.type), 
+                                                          reactive(input$col.return.algemeen), 
+                                                          reactive(input$col.return.web), 
+                                                          reactive(input$col.return.tv), 
+                                                          reactive(input$col.maand)),
+                                       kwartaal = reactive(input$kwartaal))
   # Render Original Table ---------------------------------------------------
   output$table <- renderTable({
-    # return(Persstatistiek())
     Persstatistiek()
   })
   # ===========================================================================
@@ -517,16 +516,14 @@ server <- function(input, output) {
   
   # HTML RAPPORT AANMAAK ======================================================
   output$report <- downloadHandler(
+    
     # For PDF output, change this to "report.pdf"
     filename = reactive(paste0("Persstatistiek_", paste0(input$jaar, paste0("_", paste0(input$kwartaal, ".html"))))),
     content = function(file) {
       # Copy the report file to a temporary directory before processing it, in
       # case we don't have write permissions to the current working dir (which
       # can happen when deployed).
-      withProgress(
-        message = 'Rapport samenstellen',
-        value = 0,
-        {
+
       tempReport <- file.path(tempdir(), "report.Rmd")
       file.copy("report.Rmd", tempReport, overwrite = TRUE)
       
@@ -545,13 +542,20 @@ server <- function(input, output) {
       # Knit the document, passing in the `params` list, and eval it in a
       # child of the global environment (this isolates the code in the document
       # from the code in this app).
-        rmarkdown::render(tempReport, 
-                          output_file = file,
-                          params = params,
-                          envir = new.env(parent = globalenv())
+      req(input$file$datapath)
+      withProgress(
+        message = 'Rapport samenstellen',
+        min = 0,
+        max = 17,
+        value = 0,
+        { rmarkdown::render(tempReport, 
+                            output_file = file,
+                            params = params,
+                            envir = new.env(parent = globalenv())
         
-        )
-      })
+                     )
+        }
+      )
     }
   )
   # ===========================================================================
