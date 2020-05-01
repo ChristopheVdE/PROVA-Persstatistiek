@@ -7,6 +7,7 @@ library(shiny)
 library(shinydashboard)
 # =============================================================================
 
+source("./Modules/data_visualisation.R")
 
 ui <- dashboardPage(
   # TITLE =====================================================================
@@ -40,14 +41,13 @@ ui <- dashboardPage(
                menuSubItem("Per Platform", tabName = "Return_Platform")
       ),
     # Download ----------------------------------------------------------------
-      menuItem("Download", tabName = "Download"),
-      downloadButton("report", "Generate report")
+      menuItem("Download", tabName = "Download")
     )
   ),
   # BODY ======================================================================
   dashboardBody(
     tabItems(
-      # Input scherm ----------------------------------------------------------
+    # Input scherm ------------------------------------------------------------
       tabItem(
         tabName = "Settings",
         fluidRow(
@@ -395,7 +395,19 @@ ui <- dashboardPage(
               tabPanel("Tabel", tableOutput("persreturn.platform.tabel"))
             )
           )
+        ),
+      # Download --------------------------------------------------------------
+      tabItem(
+        tabName = "Download",
+        fluidRow(
+        # Download button -----------------------------------------------------
+          box(
+            width = 12,
+            title = "Download",
+            downloadButton("report", "Generate report")
+          )
         )
+      )
     )
   )
 )
