@@ -15,18 +15,18 @@ params:
   Persberichten.verzender.maand: NA
   Persberichten.type: NA
   Persreturn.beleid: NA
-  Persreturn.platform: NA
+  Persreturn.medium: NA
+  rendered_by_shiny: FALSE
   
 title: "`r params$titel`"
 author: "Provincie Antwerpen - Persdienst"
 date: "`r format(Sys.Date(), '%d %B %Y')`"
 ---
 
-
 ```{r "Load required packages", include = FALSE}
 library(knitr)
+library(shiny)
 ```
-
 
 ## 1. Verzonden persberichten
 ### 1.1. Algemeen provincie
@@ -34,6 +34,9 @@ library(knitr)
 ##### Barplot
 ```{r "Persberichten algemeen: kwartaal - plot", echo = FALSE, align="center"}
 params$Persberichten.alg$kwartaal.plot()
+
+if (params$rendered_by_shiny)
+  shiny::setProgress(0.5)  # set progress to 50%
 ```
 
 ##### Tabel
@@ -445,12 +448,12 @@ kable(params$Persreturn.beleid$gouverneur.tabel(), caption = "Persberichten: Gou
 ### 2.2 Persreturn per medium {.tabset .tabset-fade}
 #### Barplot
 ```{r "Persreturn per medium - barplot", echo = FALSE}
-params$Persreturn.platform$platform.plot()
+params$Persreturn.medium$medium.plot()
 ```
 
 #### Tabel
 ```{r "Persreturn per medium - tabel", echo = FALSE}
-kable(params$Persreturn.platform$platform.tabel(), caption = "Persreturn per medium")
+kable(params$Persreturn.medium$medium.tabel(), caption = "Persreturn per medium")
 ```
 
 

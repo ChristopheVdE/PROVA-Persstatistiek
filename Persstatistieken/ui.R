@@ -5,10 +5,12 @@
 # PACKAGES ====================================================================
 library(shiny)
 library(shinydashboard)
+library(colourpicker)
 # =============================================================================
 
 source("./Modules/data_visualisation.R")
 
+# UI ==========================================================================
 ui <- dashboardPage(
   # TITLE =====================================================================
   dashboardHeader(
@@ -38,10 +40,12 @@ ui <- dashboardPage(
     # Persreturn --------------------------------------------------------------
       menuItem("Persreturn", tabname = "Persreturn", icon = icon("bar-chart-o"),
                menuSubItem("Per Beleid", tabName = "Return_Beleid"),
-               menuSubItem("Per Platform", tabName = "Return_Platform")
+               menuSubItem("Per Medium", tabName = "Return_Medium")
       ),
     # Download ----------------------------------------------------------------
-      menuItem("Download", tabName = "Download")
+      menuItem("Download", tabName = "Download"),
+    textOutput("checkrender")
+      # downloadButton("report", "Generate report")
     )
   ),
   # BODY ======================================================================
@@ -51,65 +55,106 @@ ui <- dashboardPage(
       tabItem(
         tabName = "Settings",
         fluidRow(
+          column(
+            width = 6,
         # File input & options ------------------------------------------------
-          box(
-            title = "File input",
-            width = 5,
-          # File input
-            fileInput("file", 
-                      "Kies Excel document:",
-                      multiple = FALSE,
-                      accept = c(".xls", ".xlsx"),
-                      width = 900,
-                      placeholder = "No file selected"),
-          # Werkblad
-            textInput("sheet", "Te gebruiken Werkblad", value ="Hele organisatie", placeholder = "Hele organisatie" ),
-          # Headers  
-            checkboxInput("headers", label = "Eerste rij bevat kolomnamen", value = TRUE),
-          # Jaar
-            selectInput("jaar", 
-                        label = "Jaar", 
-                        choices = c(format(Sys.Date(), "%Y"):2010),
-                        selected = format(Sys.Date(), "%Y")),
-          # Kwartaal
-            selectInput("kwartaal",
-                        label = "Selecteer kwartaal:",
-                        choices = c("Q1", "Q2", "Q3", "Q4", "Jaar"),
-                        selected = "Q1")
-          ),
+            box(
+              title = "File input",
+              width = 12,
+              height = "75%",
+            # File input
+              fileInput("file", 
+                        "Kies Excel document:",
+                        multiple = FALSE,
+                        accept = c(".xls", ".xlsx"),
+                        width = 900,
+                        placeholder = "No file selected"),
+            # Werkblad
+              textInput("sheet", "Te gebruiken Werkblad", value ="Hele organisatie", placeholder = "Hele organisatie" ),
+            # Headers  
+              checkboxInput("headers", label = "Eerste rij bevat kolomnamen", value = TRUE),
+            # Jaar
+              selectInput("jaar", 
+                          label = "Jaar", 
+                          choices = c(format(Sys.Date(), "%Y"):2010),
+                          selected = format(Sys.Date(), "%Y")),
+            # Kwartaal
+              selectInput("kwartaal",
+                          label = "Selecteer kwartaal:",
+                          choices = c("Q1", "Q2", "Q3", "Q4", "Jaar"),
+                          selected = "Q1")
+            ),
         # Kolom selectie ------------------------------------------------------
-          box(
-            title = "Selecteer kolomen die overenkomen met kolominhoud (indien geen kolomnnamen in Excel)",
-            width = 7,
-            column(
-              width = 3,
-              tags$br(tags$b("Kwartaal")),
-              tags$br(tags$b("Verzender")),
-              tags$br(tags$b("Beleid")),
-              tags$br(tags$b("Detail beleid")),
-              tags$br(tags$b("Type Persbericht"))
+            conditionalPanel(
+              condition = "input.headers == false",
+              box(
+                title = "Selecteer kolomen die overenkomen met kolominhoud",
+                width = 12,
+                column(
+                  width = 3,
+                  tags$br(tags$b("Kwartaal")),
+                  tags$br(tags$b("Verzender")),
+                  tags$br(tags$b("Beleid")),
+                  tags$br(tags$b("Deelbeleid")),
+                  tags$br(tags$b("Type Persbericht"))
+                ),
+                column(
+                  width = 3,
+                  textInput("col.kwartaal", label = NULL, value = 1, placeholder = 1),
+                  textInput("col.verzender", label = NULL, value = 2, placeholder = 2),
+                  textInput("col.beleid", label = NULL, value = 9, placeholder = 3),
+                  textInput("col.detail", label = NULL, value = 10, placeholder = 4),
+                  textInput("col.type", label = NULL, value = 11, placeholder = 5)
+                ),
+                column(
+                  width = 3,
+                  tags$br(tags$b("Persreturn: Algemeen")),
+                  tags$br(tags$b("Persreturn: Web")),
+                  tags$br(tags$b("Persreturn: TV")),
+                  tags$br(tags$b("Maand"))
+                ),
+                column(
+                  width = 3,
+                  textInput("col.return.algemeen", label = NULL, value = 6, placeholder = 6),
+                  textInput("col.return.web", label = NULL, value = 7, placeholder = 7),
+                  textInput("col.return.tv", label = NULL, value = 8, placeholder = 8),
+                  textInput("col.maand", label = NULL, value = 13, placeholder = 9)
+                )
+              )
+            )
+          ),
+        # colour chooser -------------------------------------------------------
+          column(
+            width = 6,
+            box(
+              title = "Plot kleuren: Persberichten",
+              width = 12,
+              column(
+                width = 6,
+                colourInput("colour1", "Colour 1", brewer.pal(8,"Pastel2")[1]),
+                colourInput("colour2", "Colour 2", brewer.pal(8,"Pastel2")[2]),
+                colourInput("colour3", "Colour 3", brewer.pal(8,"Pastel2")[3]),
+                colourInput("colour4", "Colour 4", brewer.pal(8,"Pastel2")[4]),
+                colourInput("colour5", "Colour 5", brewer.pal(8,"Pastel2")[5]),
+                colourInput("colour6", "Colour 6", brewer.pal(8,"Pastel2")[6]),
+                colourInput("colour7", "Colour 7", brewer.pal(8,"Pastel2")[7])
+              ),
+              column(
+                width = 6,
+                colourInput("colour8", "Colour 8", brewer.pal(8,"Pastel2")[8]),
+                colourInput("colour9", "Colour 9", brewer.pal(8,"Pastel1")[1]),
+                colourInput("colour10", "Colour 10", brewer.pal(8,"Pastel1")[2]),
+                colourInput("colour11", "Colour 11", brewer.pal(8,"Pastel1")[3]),
+                colourInput("colour12", "Colour 12", brewer.pal(8,"Pastel1")[4]),
+                colourInput("colour13", "Colour 13", brewer.pal(8,"Pastel1")[5]),
+                colourInput("colour14", "Colour 14", brewer.pal(8,"Pastel1")[6])
+              )
             ),
-            column(
-              width = 3,
-              textInput("col.kwartaal", label = NULL, value = 1, placeholder = 1),
-              textInput("col.verzender", label = NULL, value = 2, placeholder = 2),
-              textInput("col.beleid", label = NULL, value = 9, placeholder = 3),
-              textInput("col.detail", label = NULL, value = 10, placeholder = 4),
-              textInput("col.type", label = NULL, value = 11, placeholder = 5)
-            ),
-            column(
-              width = 3,
-              tags$br(tags$b("Persreturn: Algemeen")),
-              tags$br(tags$b("Persreturn: Web")),
-              tags$br(tags$b("Persreturn: TV")),
-              tags$br(tags$b("Maand")),
-            ),
-            column(
-              width = 3,
-              textInput("col.return.algemeen", label = NULL, value = 6, placeholder = 6),
-              textInput("col.return.web", label = NULL, value = 7, placeholder = 7),
-              textInput("col.return.tv", label = NULL, value = 8, placeholder = 8),
-              textInput("col.maand", label = NULL, value = 13, placeholder = 9)
+            box(
+              title = "Plot kleuren: Persreturn",
+              width = 12,
+              colourInput("return.colour1", "Persreturn: Yes", brewer.pal(8,"Pastel2")[1]),
+              colourInput("return.colour2", "Persreturn: No", brewer.pal(8,"Pastel2")[2])
             )
           )
         )
@@ -121,7 +166,7 @@ ui <- dashboardPage(
           box(
             title = "Processed uploaded data",
             width = 12,
-            tableOutput("table"),
+            tableOutput("table")
           )
         )
       ),
@@ -134,20 +179,23 @@ ui <- dashboardPage(
                 title = "Persberichten per Kwartaal",
                 width = 6,
                 tabPanel("Barplot", plotOutput("persberichten.alg.kwartaal.plot")),
-                tabPanel("Tabel", tableOutput("persberichten.alg.kwartaal.tabel"))
+                tabPanel("Tabel", tableOutput("persberichten.alg.kwartaal.tabel")),
+                data.visualOutput("bericht.alg.kwartaal", plottitle = "Persberichten per Kwartaal", Xaxis = "Kwartaal", Xlabels = FALSE)
               ),
               tabBox(
                 title = "Persberichten: Totaal per Maand",
                 width = 6,
                 tabPanel("Barplot", plotOutput("persberichten.alg.maand.plot")),
-                tabPanel("Tabel", tableOutput("persberichten.alg.maand.tabel"))
+                tabPanel("Tabel", tableOutput("persberichten.alg.maand.tabel")),
+                data.visualOutput("bericht.alg.maand", plottitle = "Persberichten per maand", Xaxis = "Maand", Xlabels = FALSE)
               ),
               tabBox(
                 width = 12,
                 title = "Persberichten per beleid",
                 tabPanel("Barplot", plotOutput("persberichten.alg.beleid.plot")),
-                tabPanel("Tabel", tableOutput("persberichten.alg.beleid.tabel"))
-              ),
+                tabPanel("Tabel", tableOutput("persberichten.alg.beleid.tabel")),
+                data.visualOutput("bericht.alg.beleid", plottitle = "Persberichten per beleid", Xaxis = "Beleid", Xlabels = FALSE)
+              )
             )
           ),
         # Per beleid ----------------------------------------------------------
@@ -159,49 +207,57 @@ ui <- dashboardPage(
                   width = 6,
                   title = "Economie",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.maand.economie.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.economie.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.economie.tabel")),
+                  data.visualOutput("bericht.beleid.maand.plot.economie", plottitle = "Persberichten: Maand per beleid (Economie)", Xaxis = "Maand", Xlabels = FALSE)
                 ),
                 tabBox(
                   width = 6,
                   title = "Gouverneur",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.maand.gouverneur.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.gouverneur.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.gouverneur.tabel")),
+                  data.visualOutput("bericht.beleid.maand.plot.gouverneur", plottitle = "Persberichten: Maand per beleid (Gouverneur)", Xaxis = "Maand", Xlabels = FALSE)
                 ),
                 tabBox(
                   width = 6,
                   title = "Leefmilieu",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.maand.leefmilieu.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.leefmilieu.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.leefmilieu.tabel")),
+                  data.visualOutput("bericht.beleid.maand.plot.leefmilieu", plottitle = "Persberichten: Maand per beleid (Leefmilieu)", Xaxis = "Maand", Xlabels = FALSE)
                 ),
                 tabBox(
                   width = 6,
                   title = "Mobiliteit",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.maand.mobiliteit.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.mobiliteit.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.mobiliteit.tabel")),
+                  data.visualOutput("bericht.beleid.maand.plot.mobiliteit", plottitle = "Persberichten: Maand per beleid (Mobiliteit)", Xaxis = "Maand", Xlabels = FALSE)
                 ),
                 tabBox(
                   width = 6,
                   title = "Onderwijs en Educatie",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.maand.onderwijs.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.onderwijs.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.onderwijs.tabel")),
+                  data.visualOutput("bericht.beleid.maand.plot.onderwijs", plottitle = "Persberichten: Maand per beleid (Onderwijs en Educatie)", Xaxis = "Maand", Xlabels = FALSE)
                 ),
                 tabBox(
                   width = 6,
                   title = "Provinciebestuur",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.maand.provinciebestuur.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.provinciebestuur.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.provinciebestuur.tabel")),
+                  data.visualOutput("bericht.beleid.maand.plot.provinciebestuur", plottitle = "Persberichten: Maand per beleid (Provinciebestuur)", Xaxis = "Maand", Xlabels = FALSE)
                 ),
                 tabBox(
                   width = 6,
                   title = "Ruimte",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.maand.ruimte.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.ruimte.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.ruimte.tabel")),
+                  data.visualOutput("bericht.beleid.maand.plot.ruimte", plottitle = "Persberichten: Maand per beleid (Ruimte)", Xaxis = "Maand", Xlabels = FALSE)
                 ),
                 tabBox(
                   width = 6,
                   title = "Vrije Tijd",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.maand.vrijetijd.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.vrijetijd.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.maand.vrijetijd.tabel")),
+                  data.visualOutput("bericht.beleid.maand.plot.vrijetijd", plottitle = "Persberichten: Maand per beleid (Vrije Tijd)", Xaxis = "Maand", Xlabels = FALSE)
                 )
               )
             ),
@@ -213,49 +269,57 @@ ui <- dashboardPage(
                   width = 6,
                   title = "Persberichten: Economie",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.economie.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.economie.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.economie.tabel")),
+                  data.visualOutput("bericht.beleid.beleid.plot.economie", plottitle = "Persberichten: Deelbeleid per beleid (Economie)", Xaxis = "Deelbeleid", Xlabels = FALSE)
                 ),
                 tabBox(
                   width = 6,
                   title = "Persberichten: Gouverneur",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.gouverneur.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.gouverneur.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.gouverneur.tabel")),
+                  data.visualOutput("bericht.beleid.beleid.plot.gouverneur", plottitle = "Persberichten: Deelbeleid per beleid (Gouverneur)", Xaxis = "Deelbeleid", Xlabels = FALSE)
                 ),
                 tabBox(
                   width = 6,
                   title = "Persberichten: Leefmilieu",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.leefmilieu.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.leefmilieu.tabel"))
-                ),
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.leefmilieu.tabel")),
+                  data.visualOutput("bericht.beleid.beleid.plot.leefmilieu", plottitle = "Persberichten: per deelbeleid (Leefmilieu)", Xaxis = "Deelbeleid", Xlabels = FALSE)
+                ),  
                 tabBox(
                   width = 6,
                   title = "Persberichten: Mobiliteit",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.mobiliteit.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.mobiliteit.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.mobiliteit.tabel")),
+                  data.visualOutput("bericht.beleid.beleid.plot.mobiliteit", plottitle = "Persberichten: per deelbeleid (Mobiliteit)", Xaxis = "Deelbeleid", Xlabels = FALSE)
                 ),
                 tabBox(
                   width = 6,
                   title = "Persberichten: Onderwijs en Educatie",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.onderwijs.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.onderwijs.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.onderwijs.tabel")),
+                  data.visualOutput("bericht.beleid.beleid.plot.onderwijs", plottitle = "Persberichten: per deelbeleid (Onderwijs en Educatie)", Xaxis = "Deelbeleid", Xlabels = FALSE)
                 ),
                 tabBox(
                   width = 6,
                   title = "Persberichten: Provinciebestuur",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.provinciebestuur.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.provinciebestuur.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.provinciebestuur.tabel")),
+                  data.visualOutput("bericht.beleid.beleid.plot.provinciebestuur", plottitle = "Persberichten: per deelbeleid (Provinciebestuur)", Xaxis = "Deelbeleid", Xlabels = FALSE)
                 ),
                 tabBox(
                   width = 6,
                   title = "Persberichten: Ruimte",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.ruimte.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.ruimte.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.ruimte.tabel")),
+                  data.visualOutput("bericht.beleid.beleid.plot.ruimte", plottitle = "Persberichten: per deelbeleid (Ruimte)", Xaxis = "Deelbeleid", Xlabels = FALSE)
                 ),
                 tabBox(
                   width = 6,
                   title = "Persberichten: Vrije Tijd",
                   tabPanel("Barplot", plotOutput("persberichten.beleid.beleid.vrijetijd.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.vrijetijd.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.beleid.beleid.vrijetijd.tabel")),
+                  data.visualOutput("bericht.beleid.beleid.plot.vrijetijd", plottitle = "Persberichten: per deelbeleid (Vrije Tijd)", Xaxis = "Deelbeleid", Xlabels = FALSE)
                 )
               )
             ),
@@ -268,13 +332,15 @@ ui <- dashboardPage(
                   title = "Persberichten per Verzender",
                   width = 12,
                   tabPanel("Barplot", plotOutput("persberichten.verzender.alg.totaal.plot")),
-                  tabPanel("Table", tableOutput("persberichten.verzender.alg.totaal.tabel"))
+                  tabPanel("Table", tableOutput("persberichten.verzender.alg.totaal.tabel")),
+                  data.visualOutput("bericht.verzender.alg.totaal", plottitle = "Persberichten per Verzender", Xaxis = "Verzender", Xlabels = FALSE)
                 ),
                 tabBox(
                   title = "Beleid per Verzender",
                   width = 12,
-                  tabPanel("Barplot", plotOutput("persberichten.verzender.alg.beleid.plot")),
-                  tabPanel("Table", tableOutput("persberichten.verzender.alg.beleid.tabel"))
+                  tabPanel("Barplot", plotOutput("persberichten.verzender.alg.beleid.plot", height = '1000px')),
+                  tabPanel("Table", tableOutput("persberichten.verzender.alg.beleid.tabel")),
+                  data.visualOutput("bericht.verzender.alg.beleid", plottitle = "Persberichten per Beleid per Verzender", Xaxis = "Verzender", Xlabels = TRUE)
                 )
               )
             ),
@@ -286,25 +352,29 @@ ui <- dashboardPage(
                   title = "Persdienst",
                   width = 6,
                   tabPanel("Barplot", plotOutput("persberichten.verzender.maand.persdienst.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.verzender.maand.persdienst.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.verzender.maand.persdienst.tabel")),
+                  data.visualOutput("bericht.verzender.maand.persdienst", plottitle = "Persberichten per Maand: Persdienst", Xaxis = "Maand", Xlabels = FALSE)
                 ), 
                 tabBox(
                   title = "Provincie",
                   width = 6,
                   tabPanel("Barplot", plotOutput("persberichten.verzender.maand.provincie.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.verzender.maand.provincie.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.verzender.maand.provincie.tabel")),
+                  data.visualOutput("bericht.verzender.maand.provincie", plottitle = "Persberichten per Maand: Provincie", Xaxis = "Maand", Xlabels = FALSE)
                 ), 
                 tabBox(
                   title = "Gouverneur",
                   width = 6,
                   tabPanel("Barplot", plotOutput("persberichten.verzender.maand.gouverneur.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.verzender.maand.gouverneur.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.verzender.maand.gouverneur.tabel")),
+                  data.visualOutput("bericht.verzender.maand.gouverneur", plottitle = "Persberichten per Maand: Gouvereur", Xaxis = "Maand", Xlabels = FALSE)
                 ), 
                 tabBox(
                   title = "Extern",
                   width = 6,
                   tabPanel("Barplot", plotOutput("persberichten.verzender.maand.extern.plot")),
-                  tabPanel("Tabel", tableOutput("persberichten.verzender.maand.extern.tabel"))
+                  tabPanel("Tabel", tableOutput("persberichten.verzender.maand.extern.tabel")),
+                  data.visualOutput("bericht.verzender.maand.extern", plottitle = "Persberichten per Maand: Extern", Xaxis = "Maand", Xlabels = FALSE)
                 )
               )
             ),  
@@ -316,7 +386,8 @@ ui <- dashboardPage(
                 title = "Persberichten per Soort",
                 width = 12,
                 tabPanel("Barplot", plotOutput("persberichten.type.plot")),
-                tabPanel("Tabel", tableOutput("persberichten.type.tabel"))
+                tabPanel("Tabel", tableOutput("persberichten.type.tabel")),
+                data.visualOutput("bericht.type", plottitle = "Persberichten per Type", Xaxis = "Beleid", Xlabels = TRUE)
               )
             )
           ),
@@ -326,73 +397,83 @@ ui <- dashboardPage(
           tabItem(
             tabName = "Return_Beleid",
             fluidRow(
-            # Algemeen ------------------------------------------------------
+            # Algemeen --------------------------------------------------------
               tabBox(
                 width = 12,
                 title = "Persreturn per beleid",
                 tabPanel("Barplot", plotOutput("persreturn.beleid.alg.plot")),
-                tabPanel("Tabel", tableOutput("persreturn.beleid.alg.tabel"))
+                tabPanel("Tabel", tableOutput("persreturn.beleid.alg.tabel")),
+                data.visualOutput("return.beleid.alg", plottitle = "Persreturn per Beleid", Xaxis = "Beleid", Xlabels = TRUE)
               ),
-            # Detail --------------------------------------------------------
+            # Deelbeleid ------------------------------------------------------
               tabBox(
                 width = 6,
                 title = "Persreturn: Economie",
-                tabPanel("Barplot", plotOutput("persreturn.beleid.economie.plot")),
-                tabPanel("Tabel", tableOutput("persreturn.beleid.economie.tabel"))
+                tabPanel("Barplot", plotOutput("persreturn.beleid.beleid.economie.plot")),
+                tabPanel("Tabel", tableOutput("persreturn.beleid.beleid.economie.tabel")),
+                data.visualOutput("return.beleid.beleid.economie", plottitle = "Persreturn per Beleid: Economie", Xaxis = "Deelbeleid", Xlabels = TRUE)
               ),
               tabBox(
                 width = 6,
                 title = "Persreturn: Gouverneur",
-                tabPanel("Barplot", plotOutput("persreturn.beleid.gouverneur.plot")),
-                tabPanel("Tabel", tableOutput("persreturn.beleid.gouverneur.tabel"))
+                tabPanel("Barplot", plotOutput("persreturn.beleid.beleid.gouverneur.plot")),
+                tabPanel("Tabel", tableOutput("persreturn.beleid.beleid.gouverneur.tabel")),
+                data.visualOutput("return.beleid.beleid.gouverneur", plottitle = "Persreturn per Beleid: Gouverneur", Xaxis = "Deelbeleid", Xlabels = TRUE)
               ),
               tabBox(
                 width = 6,
                 title = "Persreturn: Leefmilieu",
-                tabPanel("Barplot", plotOutput("persreturn.beleid.leefmilieu.plot")),
-                tabPanel("Tabel", tableOutput("persreturn.beleid.leefmilieu.tabel"))
+                tabPanel("Barplot", plotOutput("persreturn.beleid.beleid.leefmilieu.plot")),
+                tabPanel("Tabel", tableOutput("persreturn.beleid.beleid.leefmilieu.tabel")),
+                data.visualOutput("return.beleid.beleid.leefmilieu", plottitle = "Persreturn per Beleid: Leefmilieu", Xaxis = "Deelbeleid", Xlabels = TRUE)
               ),
               tabBox(
                 width = 6,
                 title = "Persreturn: Mobiliteit",
-                tabPanel("Barplot", plotOutput("persreturn.beleid.mobiliteit.plot")),
-                tabPanel("Tabel", tableOutput("persreturn.beleid.mobiliteit.tabel"))
+                tabPanel("Barplot", plotOutput("persreturn.beleid.beleid.mobiliteit.plot")),
+                tabPanel("Tabel", tableOutput("persreturn.beleid.beleid.mobiliteit.tabel")),
+                data.visualOutput("return.beleid.beleid.mobiliteit", plottitle = "Persreturn per Beleid: Mobiliteit", Xaxis = "Deelbeleid", Xlabels = TRUE)
               ),
               tabBox(
                 width = 6,
                 title = "Persreturn: Onderwijs en Educatie",
-                tabPanel("Barplot", plotOutput("persreturn.beleid.onderwijs.plot")),
-                tabPanel("Tabel", tableOutput("persreturn.beleid.onderwijs.tabel"))
+                tabPanel("Barplot", plotOutput("persreturn.beleid.beleid.onderwijs.plot")),
+                tabPanel("Tabel", tableOutput("persreturn.beleid.beleid.onderwijs.tabel")),
+                data.visualOutput("return.beleid.beleid.onderwijs", plottitle = "Persreturn per Beleid: Onderwijs en Educatie", Xaxis = "Deelbeleid", Xlabels = TRUE)
               ),
               tabBox(
                 width = 6,
                 title = "Persreturn: Provinciebestuur",
-                tabPanel("Barplot", plotOutput("persreturn.beleid.provinciebestuur.plot")),
-                tabPanel("Tabel", tableOutput("persreturn.beleid.provinciebestuur.tabel"))
+                tabPanel("Barplot", plotOutput("persreturn.beleid.beleid.provinciebestuur.plot")),
+                tabPanel("Tabel", tableOutput("persreturn.beleid.beleid.provinciebestuur.tabel")),
+                data.visualOutput("return.beleid.beleid.provinciebestuur", plottitle = "Persreturn per Beleid: Provinciebestuur", Xaxis = "Deelbeleid", Xlabels = TRUE)
               ),
               tabBox(
                 width = 6,
                 title = "Persreturn: Ruimte",
-                tabPanel("Barplot", plotOutput("persreturn.beleid.ruimte.plot")),
-                tabPanel("Tabel", tableOutput("persreturn.beleid.ruimte.tabel"))
+                tabPanel("Barplot", plotOutput("persreturn.beleid.beleid.ruimte.plot")),
+                tabPanel("Tabel", tableOutput("persreturn.beleid.beleid.ruimte.tabel")),
+                data.visualOutput("return.beleid.beleid.ruimte", plottitle = "Persreturn per Beleid: Ruimte", Xaxis = "Deelbeleid", Xlabels = TRUE)
               ),
               tabBox(
                 width = 6,
                 title = "Persreturn: Vrije Tijd",
-                tabPanel("Barplot", plotOutput("persreturn.beleid.vrijetijd.plot")),
-                tabPanel("Tabel", tableOutput("persreturn.beleid.vrijetijd.tabel"))
+                tabPanel("Barplot", plotOutput("persreturn.beleid.beleid.vrijetijd.plot")),
+                tabPanel("Tabel", tableOutput("persreturn.beleid.beleid.vrijetijd.tabel")),
+                data.visualOutput("return.beleid.beleid.vrijetijd", plottitle = "Persreturn per Beleid: Vrije Tijd", Xaxis = "Deelbeleid", Xlabels = TRUE)
               )
             )
           ),
-      # Per Platform ----------------------------------------------------------
+        # Per Platform ----------------------------------------------------------
         tabItem(
-          tabName = "Return_Platform",
+          tabName = "Return_Medium",
           fluidRow(
             tabBox(
-              title = "Persreturn per platform",
+              title = "Persreturn per medium",
               width = 12,
-              tabPanel("Barplot", plotOutput("persreturn.platform.plot")),
-              tabPanel("Tabel", tableOutput("persreturn.platform.tabel"))
+              tabPanel("Barplot", plotOutput("persreturn.medium.plot")),
+              tabPanel("Tabel", tableOutput("persreturn.medium.tabel")),
+              data.visualOutput("return.medium", plottitle = "Persreturn (totaal) per Medium", Xaxis = "Beleid", Xlabels = TRUE)
             )
           )
         ),
@@ -411,4 +492,5 @@ ui <- dashboardPage(
     )
   )
 )
+
 

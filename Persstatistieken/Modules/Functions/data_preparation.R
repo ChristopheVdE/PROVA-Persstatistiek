@@ -38,7 +38,7 @@ data.preparation <- function(file, sheet, headers, manual.headers, kwartaal) {
         Maand = Excel[[manual.headers()[9]]]
       )
       colnames(Excel)[4] <- "Alleen web"
-      colnames(Excel)[7] <- "Detail beleid"
+      colnames(Excel)[7] <- "Deelbeleid"
       
       # Errorcatching kwartaal niet gevonden  
       if(!(kwartaal() %in% levels(Excel$Kwartaal))) {
@@ -51,13 +51,12 @@ data.preparation <- function(file, sheet, headers, manual.headers, kwartaal) {
     
     # Removing non-required columns ------------------------------------
     for(i in colnames(Excel)) {
-      if(!(i %in% c("Beleid", "Detail beleid", "Kwartaal", "Verzender", "Persreturn", "Alleen web", "TV", "Soort", "Maand"))) {
+      if(!(i %in% c("Beleid", "Deelbeleid", "Kwartaal", "Verzender", "Persreturn", "Alleen web", "TV", "Soort", "Maand"))) {
         Excel[[i]] <- NULL
       }
     }
     
-    # Fixing Mistakes --------------------------------------------------
-    
+  # Fixing Mistakes --------------------------------------------------
     # Verzender ------------------------------------------------------
     Excel$Verzender <- gsub("extern", "Extern", Excel$Verzender, ignore.case = FALSE)
     Excel$Verzender <- gsub("gouverneur", "Gouverneur", Excel$Verzender, ignore.case = FALSE)
@@ -80,13 +79,13 @@ data.preparation <- function(file, sheet, headers, manual.headers, kwartaal) {
     Excel$Beleid <- gsub("ruimte", "Ruimte", Excel$Beleid, ignore.case = FALSE)
     Excel$Beleid <- gsub("Vrije tijd", "Vrije Tijd", Excel$Beleid, ignore.case = FALSE)
     
-    # Detail Beleid --------------------------------------------------
-    Excel$"Detail beleid" <- gsub("De Warande", "de Warande", Excel$"Detail beleid", ignore.case = FALSE)
-    Excel$"Detail beleid" <- gsub("Economie, innovatie en samenleving", "Economie, Innovatie en Samenleving", Excel$"Detail beleid", ignore.case = FALSE)
-    Excel$"Detail beleid" <- gsub("Economie, Innovatie en samenleving", "Economie, Innovatie en Samenleving", Excel$"Detail beleid", ignore.case = FALSE)
-    Excel$"Detail beleid" <- gsub("Economie, innovatie en Samenleving", "Economie, Innovatie en Samenleving", Excel$"Detail beleid", ignore.case = FALSE)
-    Excel$"Detail beleid" <- gsub("Regionaal Landschappen", "Regionale Landschappen", Excel$"Detail beleid", ignore.case = FALSE)
-    Excel$"Detail beleid" <- gsub("Toerisme provincie Antwerpen", "Toerisme Provincie Antwerpen", Excel$"Detail beleid", ignore.case = FALSE)
+    # Deelbeleid --------------------------------------------------
+    Excel$"Deelbeleid" <- gsub("De Warande", "de Warande", Excel$"Deelbeleid", ignore.case = FALSE)
+    Excel$"Deelbeleid" <- gsub("Economie, innovatie en samenleving", "Economie, Innovatie en Samenleving", Excel$"Deelbeleid", ignore.case = FALSE)
+    Excel$"Deelbeleid" <- gsub("Economie, Innovatie en samenleving", "Economie, Innovatie en Samenleving", Excel$"Deelbeleid", ignore.case = FALSE)
+    Excel$"Deelbeleid" <- gsub("Economie, innovatie en Samenleving", "Economie, Innovatie en Samenleving", Excel$"Deelbeleid", ignore.case = FALSE)
+    Excel$"Deelbeleid" <- gsub("Regionaal Landschappen", "Regionale Landschappen", Excel$"Deelbeleid", ignore.case = FALSE)
+    Excel$"Deelbeleid" <- gsub("Toerisme provincie Antwerpen", "Toerisme Provincie Antwerpen", Excel$"Deelbeleid", ignore.case = FALSE)
     
     # Soort ----------------------------------------------------------
     Excel$Soort <- gsub("persbericht", "Persbericht", Excel$Soort, ignore.case = FALSE)
@@ -95,19 +94,23 @@ data.preparation <- function(file, sheet, headers, manual.headers, kwartaal) {
     Excel$Soort <- gsub("activiteitenkalender", "Activiteitenkalender", Excel$Soort, ignore.case = FALSE)
     Excel$Soort <- gsub("evenementenkalender", "Evenementenkalender", Excel$Soort, ignore.case = FALSE)
     
-    # As factor --------------------------------------------------------
+  # As factor --------------------------------------------------------
     for (i in c("Verzender", "Beleid")) ({
       Excel[[i]] <- as.factor(Excel[[i]])
     })
     
-    # Split ------------------------------------------------------------
+    Excel$Maand <- factor(Excel$Maand, c("jan", "feb", "mrt", "apr", "mei","jun","jul","aug","sep","okt","nov","dec"))
+    levels(Excel$Maand) <- month.abb
+    
+    
+  # Split ------------------------------------------------------------
     Persstatistiek <- split.data.frame(Excel, Excel$Kwartaal)
     Persstatistiek$Jaar <- Excel
     
-    # Removing Excel ---------------------------------------------------
+  # Removing Excel ---------------------------------------------------
     Excel <- NULL
     
-    # Return dataset ---------------------------------------------------
+  # Return dataset ---------------------------------------------------
     return(Persstatistiek[[kwartaal()]])
   })
 }
