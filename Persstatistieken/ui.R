@@ -5,12 +5,10 @@
 # PACKAGES ====================================================================
 library(shiny)
 library(shinydashboard)
-library(sortable)
 library(colourpicker)
 # =============================================================================
 
 source("./Modules/data_visualisation.R")
-source("./Modules/download.R")
 
 # UI ==========================================================================
 ui <- dashboardPage(
@@ -488,9 +486,7 @@ ui <- dashboardPage(
             width = 12,
             title = "Download",
             downloadButton("report", "Generate report")
-          ),
-        # Volgorde ------------------------------------------------------------
-        RapportOutput("test")
+          )
         )
       )
     )

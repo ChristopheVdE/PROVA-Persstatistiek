@@ -10,11 +10,13 @@ library(sortable)
 # UI ==========================================================================
 RapportOutput <- function(id) {
   ns <- NS(id)
-  # Persberichten -------------------------------------------------------------
+# Persberichten ---------------------------------------------------------------
+  column(
+    width = 12,
     tabBox(
       title = "Persberichten",
       width = 12,
-    # Persberichten: Algemeen -------------------------------------------------
+  # Persberichten: Algemeen ---------------------------------------------------
       tabPanel(
         title = "Algemeen",
         fluidRow(
@@ -42,7 +44,7 @@ RapportOutput <- function(id) {
           ),
           column(
             width = 8,
-            textInput("Algemeen.title", label = "Sectietitel: Persberichten - algemeen", value = "Algemeen provincie", placeholder = "Algemeen provincie", width = '100%'),
+            textInput("Algemeen.titel", label = "Sectietitel: Persberichten - algemeen", value = "Algemeen provincie", placeholder = "Algemeen provincie", width = '100%'),
             tags$hr(),
             textInput("Algemeen.kwartaal", label = "Subtitel: Algemeen - Kwartaal", value = "Persberichten per kwartaal", placeholder = "Persberichten per kwartaal", width = '100%'),
             textInput("Algemeen.maand", label = "Subtitel: Algemeen - Maand", value = "Persberichten per maand", placeholder = "Persberichten per maand", width = '100%'),
@@ -50,7 +52,7 @@ RapportOutput <- function(id) {
           )
         )
       ),
-    # Persberichten: Beleid ---------------------------------------------------
+  # Persberichten: Beleid -----------------------------------------------------
       tabPanel(
         title = "Beleid",
         fluidRow(
@@ -84,13 +86,13 @@ RapportOutput <- function(id) {
           column(
             width = 8,
             tags$br(),
-            textInput("Algemeen.title", label = "Sectietitel: Persberichten - beleid", value = "Beleid en deelbeleid", placeholder = "Beleid en deelbeleid", width = '100%'),
+            textInput("Beleid.title", label = "Sectietitel: Persberichten - beleid", value = "Beleid en deelbeleid", placeholder = "Beleid en deelbeleid", width = '100%'),
             tags$hr(),
             tags$br(),
             tabBox(
               title = "Extra opties",
               width = 12,
-      # Provinciebestuur ------------------------------------------------
+    # Provinciebestuur --------------------------------------------------------
               tabPanel(
                 title = "Provinciebestuur",
                 fluidRow(
@@ -125,7 +127,7 @@ RapportOutput <- function(id) {
                   )
                 )
               ),
-      # Economie --------------------------------------------------------
+    # Economie ----------------------------------------------------------------
               tabPanel(
                 title = "Economie",
                 fluidRow(
@@ -160,7 +162,7 @@ RapportOutput <- function(id) {
                   )
                 )
               ),
-      # Leefmilieu ------------------------------------------------------
+    # Leefmilieu --------------------------------------------------------------
               tabPanel(
                 title = "Leefmilieu",
                 fluidRow(
@@ -195,7 +197,7 @@ RapportOutput <- function(id) {
                   )
                 )
               ),
-      # Mobiliteit ------------------------------------------------------
+    # Mobiliteit --------------------------------------------------------------
               tabPanel(
                 title = "Mobiliteit",
                 fluidRow(
@@ -230,7 +232,7 @@ RapportOutput <- function(id) {
                   )
                 )
               ),
-      # Ruimte ----------------------------------------------------------
+    # Ruimte ------------------------------------------------------------------
               tabPanel(
                 title = "Ruimte",
                 fluidRow(
@@ -265,7 +267,7 @@ RapportOutput <- function(id) {
                   )
                 )
               ),
-      # Onderwijs en Educatie -------------------------------------------
+    # Onderwijs en Educatie ---------------------------------------------------
               tabPanel(
                 title = "Onderwijs",
                 fluidRow(
@@ -300,7 +302,7 @@ RapportOutput <- function(id) {
                   )
                 )
               ),
-      # Vrije Tijd ------------------------------------------------------
+    # Vrije Tijd --------------------------------------------------------------
               tabPanel(
                 title = "Vrije tijd",
                 fluidRow(
@@ -335,7 +337,7 @@ RapportOutput <- function(id) {
                   )
                 )
               ),
-      # Gouverneur ------------------------------------------------------
+    # Gouverneur --------------------------------------------------------------
               tabPanel(
                 title = "Gouverneur",
                 fluidRow(
@@ -374,7 +376,7 @@ RapportOutput <- function(id) {
           )
         )
       ),
-    # Persberichten: Verzender ------------------------------------------------
+  # Persberichten: Verzender --------------------------------------------------
       tabPanel(
         title = "Verzender",
         fluidRow(
@@ -408,12 +410,12 @@ RapportOutput <- function(id) {
             tabBox(
               title = "Extra opties",
               width = 12,
-      # Algemeen ------------------------------------------------------------
+    # Algemeen ----------------------------------------------------------------
               tabPanel(
                 title = "Algemeen",
                 textInput("Verzender.alg.titel", label = "Sectietitel: Verzender - Algemeen", value = "Algemeen", placeholder = "Algemeen", width = '100%'),
               ),
-      # Per maand -----------------------------------------------------------
+    # Per maand ---------------------------------------------------------------
               tabPanel(
                 title = "Per maand",
                 fluidRow(
@@ -456,7 +458,7 @@ RapportOutput <- function(id) {
           )
         )
       ),
-    # Persberichten: Type -----------------------------------------------------
+  # Persberichten: Type -------------------------------------------------------
       tabPanel(
         title = "Type",
         fluidRow(
@@ -487,9 +489,139 @@ RapportOutput <- function(id) {
           )
         )
       )
+    ),
+# Persreturn ------------------------------------------------------------------
+    tabBox(
+      title = "Persreturn",
+      width = 12,
+  # Beleid --------------------------------------------------------------------
+      tabPanel(
+        title = "Beleid",
+        fluidRow(
+          column(
+            width = 4,
+            bucket_list(
+              header = NULL,
+              group_name = "Persreturn.beleid",
+              orientation = "vertical",
+              add_rank_list(
+                input_id = "persreturn.beleid",
+                text = "Toevoegen aan rapport in onderstaande volgorde",
+                labels = list(
+                  "Algemeen",
+                  "Per beleid"
+                )
+              ),
+              add_rank_list(
+                input_id = NULL,
+                text = "Weglaten uit rapport",
+                labels = NULL
+              )
+            )
+          ),
+          column(
+            width = 8,
+            textInput("return.beleid.titel", label = "Sectietitel: Persreturn - Beleid", value = "Persreturn per beleid", placeholder = "Persreturn per beleid", width = '100%'),
+            tags$hr(),
+            tabBox(
+              title = "Extra opties",
+              width = 12,
+              tabPanel(
+                title = "Algemeen",
+                textInput("return.beleid.alg.titel", label = "Subtitel: Beleid - algemeen", value = "Algemeen", placeholder = "Algemeen", width = '100%')
+              ),
+              tabPanel(
+                title = "Beleid",
+                fluidRow(
+                  column(
+                    width = 4,
+                    bucket_list(
+                      header = NULL, 
+                      group_name = "Return.beleid",
+                      orientation = "vertical",
+                      add_rank_list(
+                        input_id = "return.beleid",
+                        text = 'Toevoegen',
+                        labels = list(
+                          "Provinciebestuur",
+                          "Economie",
+                          "Leefmilieu",
+                          "Mobiliteit",
+                          "Onderwijs en Educatie",
+                          "Ruimte",
+                          "Vrije tijd",
+                          "Gouverneur"
+                        )
+                      )
+                    )
+                  ),
+                  column(
+                    width = 8,
+                    textInput("return.beleid.beleid.titel", label = "Sectietitel: Beleid - beleid", value = "Per beleid", placeholder = "Per beleid", width = '100%'),
+                    tags$hr(),
+                    textInput("return.beleid.provinciebestuur.titel", label = "Subtitel: Beleid - Provinciebestuur", value = "Provinciebestuur: overkoepelend", placeholder = "Provinciebestuur: overkoepelend", width = '100%'),
+                    textInput("return.beleid.economie.titel", label = "Subtitel: Beleid - Economie", value = "Economie", placeholder = "Economie", width = '100%'),
+                    textInput("return.beleid.leefmilieu.titel", label = "Subtitel: Beleid - Leefmilieu", value = "Leefmilieu", placeholder = "Leefmilieu", width = '100%'),
+                    textInput("return.beleid.mobiliteit.titel", label = "Subtitel: Beleid - Mobiliteit", value = "Mobiliteit", placeholder = "Mobiliteit", width = '100%'),
+                    textInput("return.beleid.onderwijs.titel", label = "Subtitel: Beleid - Onderwijs en educatie", value = "Onderwijs en Educatie", placeholder = "Onderwijs en Educatie", width = '100%'),
+                    textInput("return.beleid.ruimte.titel", label = "Subtitel: Beleid - Ruimte", value = "Ruimte", placeholder = "Ruimte", width = '100%'),
+                    textInput("return.beleid.vrijetijd.titel", label = "Subtitel: Beleid - Vrije tijd", value = "Vrije tijd", placeholder = "Vrije tijd", width = '100%'),
+                    textInput("return.beleid.gouverneur.titel", label = "Subtitel: Beleid - Gouverneur", value = "Gouverneur", placeholder = "Gouverneur", width = '100%')
+                  )
+                )
+              )
+            ) 
+          )
+        )
+      ),
+  # Medium --------------------------------------------------------------------
+      tabPanel(
+        title = "Medium",
+        fluidRow(
+          column(
+            width = 6, 
+            bucket_list(
+              header = NULL,
+              group_name = "Persreturn.medium",
+              orientation = "horizontal",
+              add_rank_list(
+                input_id = "persreturn.medium",
+                text = "Toevoegen aan rapport in onderstaande volgorde",
+                labels = list(
+                  "Medium"
+                )
+              ),
+              add_rank_list(
+                input_id = NULL,
+                text = "Weglaten uit rapport",
+                labels = NULL
+              )
+            ),
+          ),
+          column(
+            width = 6,
+            tags$br(),
+            textInput("Medium.titel", label = "Sectietitel: Persreturn - Medium", value = "Persreturn per medium", placeholder = "Persreturn per medium", width = '100%'),
+          )
+        )
+      )
     )
+  )
 }
 # SERVER ======================================================================
 Rapport <- function(input, output, session) {
-  
+  rapport.volgorde <- reactive({
+    volgorde <- list(
+      "Persberichten" = list("Algemeen", "Beleid", "Verzender", "Type"),
+      "Persreturn" = list("Beleid", "Medium")
+    )
+  # Persberichten -------------------------------------------------------------
+    # Algemeen ----------------------------------------------------------------
+    volgorde$Persberichten$Algemeen <- input$persberichten.alg()
+    volgorde$Persberichten$Algemeen$Kwartaal <- "test"
+
+    
+    volgorde
+  })
+  rapport.volgorde()
 }
