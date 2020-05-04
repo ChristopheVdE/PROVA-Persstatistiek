@@ -29,7 +29,7 @@ simple_barplot <- function(Id, data, Xaxis, Fill, visual, title, Xtitle, Ytitle,
       ylab(Ytitle) +
       labs(fill = Fill) +
       scale_fill_manual(values=colors()) + 
-      (if (visual == "Procentueel") {ylim(c(0,100))}) +
+      (if (visual == "Procent") {ylim(c(0,100))}) +
       (if (Xlabels) {theme(axis.text.x = element_text(angle = 45, hjust = 1))} else {theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())}) +
       (if (!(legend)) {theme(legend.position = "none")})
   )

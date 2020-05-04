@@ -30,8 +30,8 @@ data.visualOutput <- function(id, plottitle, Xaxis, Xlabels) {
       ),
       column(
         width = 6,
-        selectInput(ns("type"), label = "Plot type", choices = c("Barplot", "Taartdiagram"), selected = "Barplot"),
-        selectInput(ns("inhoud"), label = "Plot type", choices = c("Aantal", "Procentueel"), selected = "Aantal"),
+        selectInput(ns("type.aantal"), label = "Plot type - Aantal", choices = c("Barplot", "Taartdiagram"), selected = "Barplot"),
+        selectInput(ns("type.procent"), label = "Plot type - Procentueel", choices = c("Barplot", "Taartdiagram"), selected = "Barplot"),
         checkboxInput(ns("Xlabels"), label = "As labels (X-as)", value = Xlabels),
         checkboxInput(ns("legend"), label = "Legende", value = TRUE)
       )
@@ -415,40 +415,40 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
   )
   
   # Plot (beleid per maand) ---------------------------------------------------
-  berichten.plot <- reactive(
-    # Barplot -----------------------------------------------------------------
-    if (input$type == "Barplot") {
-      simple_barplot(Id = Id,
-                     data = df.berichten, 
-                     Xaxis = Xaxis,
-                     Fill = Fill,
-                     visual = input$inhoud, 
-                     title = input$title, 
-                     Xtitle = input$Xaxis, 
-                     Ytitle = input$Yaxis, 
-                     Xlabels = input$Xlabels, 
-                     legend = input$legend, 
-                     colors = colours)
-    } 
-    # Piechart ----------------------------------------------------------------
-    else {
-      if (!(Id == "verzender.alg.beleid")) {
-        simple_piechart(Id = Id,
-                        data = df.berichten, 
-                        Fill = Fill,
-                        visual = input$inhoud, 
-                        title = input$title, 
-                        Xtitle = input$Xaxis, 
-                        Ytitle = input$Yaxis, 
-                        Xlabels = input$Xlabels, 
-                        legend = input$legend, 
-                        colors = colours)
-      } else {
-        advanced.pie(Id = "verzender.alg.beleid", data = df.berichten)
+    berichten.plot <- reactive({
+      plots <- list("Aantal" = NA, "Procent" = NA)
+      for (inhoud in c("Aantal", "Procent")) {
+        if ((inhoud == "Aantal" && input$type.aantal == "Barplot") || (inhoud == "Procent" && input$type.procent == "Barplot")) {
+          plots[[inhoud]] <- simple_barplot(Id = Id,
+                                       data = df.berichten, 
+                                       Xaxis = Xaxis,
+                                       Fill = Fill,
+                                       visual = inhoud, 
+                                       title = input$title, 
+                                       Xtitle = input$Xaxis, 
+                                       Ytitle = input$Yaxis, 
+                                       Xlabels = input$Xlabels, 
+                                       legend = input$legend, 
+                                       colors = colours)
+        } else if ((inhoud == "Aantal" && input$type.aantal == "Taartdiagram") || (inhoud == "Procent" && input$type.procent == "Taartdiagram")) {
+            if (!(Id == "verzender.alg.beleid")) {
+              plots[[inhoud]] <- simple_piechart(Id = Id,
+                                                 data = df.berichten,
+                                                 Fill = Fill,
+                                                 visual = inhoud,
+                                                 title = input$title,
+                                                 Xtitle = input$Xaxis,
+                                                 Ytitle = input$Yaxis,
+                                                 Xlabels = input$Xlabels,
+                                                 legend = input$legend,
+                                                 colors = colours)
+            } else {
+              plots[[inhoud]] <- advanced.pie(Id = "verzender.alg.beleid", data = df.berichten)
+            }
+        }
       }
-    }
-  )
-
+      return(plots)
+    })
   # Table ---------------------------------------------------------------------
   tabel <- reactive(
           # Persberchten
@@ -568,7 +568,7 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
             }
            )
   # Return --------------------------------------------------------------------
-  return(list(plot = berichten.plot, tabel = tabel, uitleg = reactive(input$uitleg)))
+  return(list(plot.aantal = reactive(berichten.plot()$Aantal), plot.procent = reactive(berichten.plot()$Procent), tabel = tabel, uitleg = reactive(input$uitleg)))
   }
 
 
