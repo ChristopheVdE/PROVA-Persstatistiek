@@ -450,123 +450,68 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
       return(plots)
     })
   # Table ---------------------------------------------------------------------
-  tabel <- reactive(
-          # Persberchten
-            if (Id == "alg.kwartaal" || Id == "alg.maand" || Id == "alg.beleid" || Id == "verzender.alg.verzender") {
-              rbind(df.berichten(), c("Totaal", sum(df.berichten()$Persberichten), 100))
-            } 
-          # Persberichten: beleid
-            else if (Id == "beleid.maand" || Id == "beleid.beleid") {
-              rbind(df.berichten(), c(beleid, "Totaal", sum(df.berichten()$Persberichten), 100))
-            }
-          # Persberichten: verzender - alg - beleid
-            else if (Id == "verzender.alg.beleid") {
-              temp <- split(df.berichten(), df.berichten()$Verzender)
-              if (input$inhoud == "Aantal") {
-                temp <- data.frame(Beleid = c(levels(df.berichten()$Beleid), "Totaal"),
-                                   Persdienst = c(temp$Persdienst$Persberichten, sum(temp$Persdienst$Persberichten)),
-                                   Provincie = c(temp$Provincie$Persberichten, sum(temp$Provincie$Persberichten)),
-                                   Gouverneur = c(temp$Gouverneur$Persberichten, sum(temp$Gouverneur$Persberichten)),
-                                   Extern = c(temp$Extern$Persberichten, sum(temp$Extern$Persberichten)))
-              } else {
-                temp <- data.frame(Beleid = c(levels(df.berichten()$Beleid), "Totaal"),
-                                   Persdienst = c(temp$Persdienst$Procentueel, "100"),
-                                   Provincie = c(temp$Provincie$Procentueel, "100"),
-                                   Gouverneur = c(temp$Gouverneur$Procentueel, "100"),
-                                   Extern = c(temp$Extern$Procentueel, "100"))
-              }
-            }
-          # Persberichten: verzender - maand
-            else if (Id == "verzender.maand") {
-              rbind(df.berichten(), c(verzender, "Totaal", sum(df.berichten()$Persberichten), 100))
-            }
-          # Persberichten: type
-            else if (Id == "type") {
-              temp <- split(df.berichten(), df.berichten()$Type)
-              if (input$inhoud == "Aantal") {
-                temp <- data.frame(
-                  Beleid = c(levels(df.berichten()$Beleid), "Totaal"),
-                  Agendatip = c(temp$Agendatip$Persberichten, sum(temp$Agendatip$Persberichten)),
-                  Evenementenkalender = c(temp$Evenementenkalender$Persberichten, sum(temp$Evenementenkalender$Persberichten)),
-                  Persagenda = c(temp$Persagenda$Persberichten, sum(temp$Persaganda$Persberichten)),
-                  Persbericht = c(temp$Persbericht$Persberichten, sum(temp$Persbericht$Persberichten)),
-                  Persuitnodiging = c(temp$Persuitnodiging$Persberichten, sum(temp$Persuitnodiging$Persberichten))
-                )
-              } else {
-                temp <- data.frame(
-                  Beleid = levels(df.berichten()$Beleid),
-                  Agendatip = temp$Agendatip$Procentueel,
-                  Evenementenkalender = temp$Evenementenkalender$Procentueel,
-                  Persagenda = temp$Persagenda$Procentueel,
-                  Persbericht = temp$Persbericht$Procentueel,
-                  Persuitnodiging = temp$Persuitnodiging$Procentueel, 
-                  Totaal = 100
-                )
-              }
-            }
-          # Persreturn - beleid - alg
-            else if (Id == "return.beleid.alg") {
-              temp <- split(df.berichten(), df.berichten()$Persreturn)
-              if (input$inhoud == "Aantal") {
-                temp <- data.frame(
-                  Beleid = c(levels(df.berichten()$Beleid), "Totaal"),
-                  "Ja" = c(temp$Ja$Aantal, sum(temp$Ja$Aantal)),
-                  "Nee" = c(temp$Nee$Aantal, sum(temp$Nee$Aantal))
-                )
-                colnames(temp) <- c("Beleid", "Persreturn", "Geen persreturn")
-                temp
-              } else {
-                temp <- data.frame(
-                  Beleid = levels(df.berichten()$Beleid),
-                  "Ja" = temp$Ja$Procentueel,
-                  "Nee" = temp$Nee$Procentueel,
-                  Totaal = 100
-                )
-                colnames(temp) <- c("Beleid", "Persreturn", "Geen persreturn", "Totaal")
-                temp
-              }
-            }
-          # Persreturn - beleid - deelbeleid  
-            else if (Id == "return.beleid.beleid") {
-              temp <- split(df.berichten(), df.berichten()$Persreturn)
-              if (input$inhoud == "Aantal") {
-                temp <- data.frame(
-                  Beleid = beleid,
-                  Deelbeleid = c(levels(df.berichten()$Deelbeleid), "Totaal"),
-                  "Ja" = c(temp$Ja$Aantal, sum(temp$Ja$Aantal)),
-                  "Nee" = c(temp$Nee$Aantal, sum(temp$Nee$Aantal))
-                )
-                colnames(temp) <- c("Beleid", "Deelbeleid", "Persreturn", "Geen persreturn")
-                temp
-              } else {
-                temp <- data.frame(
-                  Beleid = beleid,
-                  Deelbeleid = levels(df.berichten()$Deelbeleid),
-                  "Ja" = temp$Ja$Procentueel,
-                  "Nee" = temp$Nee$Procentueel,
-                  Totaal = 100
-                )
-                colnames(temp) <- c("Beleid", "Deelbeleid", "Persreturn", "Geen persreturn", "Totaal")
-                temp
-              }
-            }
-            else if (Id == "return.medium") {
-              temp <- split(df.berichten(), df.berichten()$Medium)
-              if (input$inhoud == "Aantal") {
-                temp <- data.frame(
-                  Beleid = levels(df.berichten()$Beleid),
-                  Algemeen = temp$Algemeen$Aantal,
-                  Web = temp$"Alleen web"$Aantal,
-                  TV = temp$TV$Aantal)
-              } else {
-                temp <- data.frame(
-                  Beleid = levels(df.berichten()$Beleid),
-                  Algemeen = temp$Algemeen$Procentueel,
-                  Web = temp$"Alleen web"$Procentueel,
-                  TV = temp$TV$Procentueel)
-              }
-            }
-           )
+    tabel <- reactive(
+    # Persberichten: verzender - alg - beleid ---------------------------------
+      if (Id == "verzender.alg.beleid") {
+        temp <- split(df.berichten(), df.berichten()$Verzender)
+        temp <- data.frame(Beleid = levels(df.berichten()$Beleid),
+                           Persdienst = temp$Persdienst$Persberichten,
+                           Provincie = temp$Provincie$Persberichten,
+                           Gouverneur = temp$Gouverneur$Persberichten,
+                           Extern = temp$Extern$Persberichten)
+      }
+    # Persberichten: type -----------------------------------------------------
+      else if (Id == "type") {
+        temp <- split(df.berichten(), df.berichten()$Type)
+        temp <- data.frame(
+          Beleid = levels(df.berichten()$Beleid),
+          Agendatip = temp$Agendatip$Persberichten, 
+          Evenementenkalender = temp$Evenementenkalender$Persberichten,
+          Persagenda = temp$Persagenda$Persberichten,
+          Persbericht = temp$Persbericht$Persberichten,
+          Persuitnodiging = temp$Persuitnodiging$Persberichten
+        )
+      }
+    # Persreturn - beleid - alg -----------------------------------------------
+      else if (Id == "return.beleid.alg") {
+        temp <- split(df.berichten(), df.berichten()$Persreturn)
+        temp <- data.frame(
+          Beleid = levels(df.berichten()$Beleid),
+          Ja = temp$Ja$Aantal,
+          Nee = temp$Nee$Aantal
+        )
+        colnames(temp) <- c("Beleid", "Persreturn", "Geen persreturn")
+        temp
+      }
+    # Persreturn - beleid - deelbeleid  ---------------------------------------
+      else if (Id == "return.beleid.beleid") {
+        temp <- split(df.berichten(), df.berichten()$Persreturn)
+        temp <- data.frame(
+          Beleid = beleid,
+          Deelbeleid = levels(df.berichten()$Deelbeleid),
+          Ja = temp$Ja$Aantal,
+          Nee = temp$Nee$Aantal 
+        )
+        colnames(temp) <- c("Beleid", "Deelbeleid", "Persreturn", "Geen persreturn")
+        temp
+      }
+    # Persreturn - medium -----------------------------------------------------
+      else if (Id == "return.medium") {
+        temp <- split(df.berichten(), df.berichten()$Medium)
+        temp <- data.frame(
+          Beleid = levels(df.berichten()$Beleid),
+          Algemeen = temp$Algemeen$Aantal,
+          Web = temp$"Alleen web"$Aantal,
+          TV = temp$TV$Aantal
+        )
+      }
+    # Persberichten (tabellen zonder speciale bewerkingen) --------------------
+      else {
+        temp <- df.berichten()
+        temp$Procentueel <- NULL
+        temp
+      }
+    )
   # Return --------------------------------------------------------------------
   return(list(plot.aantal = reactive(berichten.plot()$Aantal), plot.procent = reactive(berichten.plot()$Procent), tabel = tabel, uitleg = reactive(input$uitleg)))
   }
