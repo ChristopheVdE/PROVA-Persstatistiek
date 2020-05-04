@@ -111,23 +111,60 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
         }
       # Per beleid: Deelbeleid ------------------------------------------------
         else if (Id == "beleid.beleid") {
+        # Create actual table for chose "beleid"
+          temp <- split(data(), data()$Beleid)
+          temp <- data.frame("Beleid" = beleid, table(temp[[beleid]]$"Deelbeleid"))
+          colnames(temp) <- c("Beleid", "Deelbeleid","Persberichten")
         # Specify "deelbeleid" per "Beleid"
+          deelbeleid <- levels(temp[[beleid]]$"Deelbeleid")
           if(beleid == "Economie") {
-            deelbeleid <- c("Economie, Innovatie en Samenleving", "Europa", "Financien", "Havencentrum", "Hooibeekhoeve", "Innovant", "Interreg", "Landbouw", "Logistiek", "Mondiaal beleid", "Plattelandsbeleid", "POM Antwerpen", "Sociale economie")
+            for (i in c("Economie, Innovatie en Samenleving", "Europa", "Financien", "Havencentrum", "Hooibeekhoeve", "Innovant", "Interreg", "Landbouw", "Logistiek", "Mondiaal beleid", "Plattelandsbeleid", "POM Antwerpen", "Sociale economie")) {
+              if (!(i %in% deelbeleid)) {
+                deelbeleid <- c(deelbeleid, i)
+              }
+            }
           } else if(beleid == "Gouverneur") {
-            deelbeleid <- c("Toezicht gemeenten", "Veiligheid")
+            for (i in c("Toezicht gemeenten", "Veiligheid")) {
+              if (!(i %in% deelbeleid)) {
+                deelbeleid <- c(deelbeleid, i)
+              }
+            }
           } else if(beleid == "Leefmilieu") {
-            deelbeleid <- c("Bosgroepen", "Duurzaam milieu en natuurgebied", "Kamp C", "Klimaatstrijd", "Landschap", "Milieu en natuur", "MOS", "PIH", "Regionale landschappen", "Waterbeleid")
+            for (i in c("Bosgroepen", "Duurzaam milieu en natuurgebied", "Kamp C", "Klimaatstrijd", "Landschap", "Milieu en natuur", "MOS", "PIH", "Regionale landschappen", "Waterbeleid")) {
+              if (!(i %in% deelbeleid)) {
+                deelbeleid <- c(deelbeleid, i)
+              }
+            }
           } else if(beleid == "Mobiliteit") {
-            deelbeleid <- c("Fietsbeleid", "Fietseducatie")
+            for (i in c("Fietsbeleid", "Fietseducatie")) {
+              if (!(i %in% deelbeleid)) {
+                deelbeleid <- c(deelbeleid, i)
+              }
+            }
           } else if(beleid == "Onderwijs en Educatie") {
-            deelbeleid <- c("Avant", "Campus Vesta", "CVO Vivant", "Onderwijs", "PITO Starbroek", "PIVA", "PTS Boom", "Suske en Wiske", "Veiligheidsinstituut", "Vormingscentrum")
+            for (i in c("Avant", "Campus Vesta", "CVO Vivant", "Onderwijs", "PITO Starbroek", "PIVA", "PTS Boom", "Suske en Wiske", "Veiligheidsinstituut", "Vormingscentrum")) {
+              if (!(i %in% deelbeleid)) {
+                deelbeleid <- c(deelbeleid, i)
+              }
+            }
           } else if(beleid == "Provinciebestuur") {
-            deelbeleid <- c("Activiteitenkalender", "Pers", "Persagenda", "Provincieraad")
+            for (i in c("Activiteitenkalender", "Pers", "Persagenda", "Provincieraad")) {
+              if (!(i %in% deelbeleid)) {
+                deelbeleid <- c(deelbeleid, i)
+              }
+            }
           } else if(beleid == "Ruimte") {
-            deelbeleid <- c("Erfgoed", "Ruimtelijke planning")
+            for (i in c("Erfgoed", "Ruimtelijke planning")) {
+              if (!(i %in% deelbeleid)) {
+                deelbeleid <- c(deelbeleid, i)
+              }
+            }
           } else if(beleid == "Vrije Tijd") {
-            deelbeleid <- c("Arboretum", "De Nekker", "De Schorre", "de Warande", "Kasteel d'Ursel", "Kempens Landschap", "PGRA", "PGRA - M - K", "PGRK", "PGRM", "Terra Nova", "Toerisme Provincie Antwerpen", "Zilvermeer")
+            for (i in c("Arboretum", "De Nekker", "De Schorre", "de Warande", "Kasteel d'Ursel", "Kempens Landschap", "PGRA", "PGRA - M - K", "PGRK", "PGRM", "Terra Nova", "Toerisme Provincie Antwerpen", "Zilvermeer")) {
+              if (!(i %in% deelbeleid)) {
+                deelbeleid <- c(deelbeleid, i)
+              }
+            }
           }
         # Create dummy dataframes
           berichten <- data.frame(
@@ -135,14 +172,13 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
             Deelbeleid = deelbeleid,
             Persberichten = 0
           )
-        # Create actual table for chose "beleid"
-          temp <- split(data(), data()$Beleid)
-          temp <- data.frame("Beleid" = beleid, table(temp[[beleid]]$"Deelbeleid"))
-          colnames(temp) <- c("Beleid", "Deelbeleid","Persberichten")
+
         # Update values of dummy dataframe
-          for (i in temp$Deelbeleid) {
-            berichten$Persberichten[grepl(i, berichten$Deelbeleid)] <- temp$Persberichten[grepl(i, temp$Deelbeleid)]
-          }
+          suppressWarnings(
+            for (i in temp$Deelbeleid) {
+              berichten$Persberichten[grepl(i, berichten$Deelbeleid)] <- temp$Persberichten[grepl(i, temp$Deelbeleid)]
+            }
+          )
         # Add "Totaal" to levels
           levels(berichten$Deelbeleid) <- c(levels(berichten$Deelbeleid), "Totaal")
         # Add percentages
@@ -254,23 +290,61 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
         }
       # Per beleid: Deelbeleid ------------------------------------------------
         else if (Id == "return.beleid.beleid") {
-        # Specify "deelbeleid" per "Beleid"
+        # Create actual table for chose "beleid"
+          temp <- split(data(), data()$Beleid)
+          temp <- temp[[beleid]]
+          temp <- data.frame("Beleid" = beleid, table(temp$Deelbeleid, temp$Persreturn))
+          colnames(temp) <- c("Beleid", "Deelbeleid","Persreturn", "Aantal")
+          # Specify "deelbeleid" per "Beleid"
+          deelbeleid <- levels(temp[[beleid]]$"Deelbeleid")
           if(beleid == "Economie") {
-            deelbeleid <- c("Economie, Innovatie en Samenleving", "Europa", "Financien", "Havencentrum", "Hooibeekhoeve", "Innovant", "Interreg", "Landbouw", "Logistiek", "Mondiaal beleid", "Plattelandsbeleid", "POM Antwerpen", "Sociale economie")
+            for (i in c("Economie, Innovatie en Samenleving", "Europa", "Financien", "Havencentrum", "Hooibeekhoeve", "Innovant", "Interreg", "Landbouw", "Logistiek", "Mondiaal beleid", "Plattelandsbeleid", "POM Antwerpen", "Sociale economie")) {
+              if (!(i %in% deelbeleid)) {
+                deelbeleid <- c(deelbeleid, i)
+              }
+            }
           } else if(beleid == "Gouverneur") {
-            deelbeleid <- c("Toezicht gemeenten", "Veiligheid")
+            for (i in c("Toezicht gemeenten", "Veiligheid")) {
+              if (!(i %in% deelbeleid)) {
+                deelbeleid <- c(deelbeleid, i)
+              }
+            }
           } else if(beleid == "Leefmilieu") {
-            deelbeleid <- c("Bosgroepen", "Duurzaam milieu en natuurgebied", "Kamp C", "Klimaatstrijd", "Landschap", "Milieu en natuur", "MOS", "PIH", "Regionale landschappen", "Waterbeleid")
+            for (i in c("Bosgroepen", "Duurzaam milieu en natuurgebied", "Kamp C", "Klimaatstrijd", "Landschap", "Milieu en natuur", "MOS", "PIH", "Regionale landschappen", "Waterbeleid")) {
+              if (!(i %in% deelbeleid)) {
+                deelbeleid <- c(deelbeleid, i)
+              }
+            }
           } else if(beleid == "Mobiliteit") {
-            deelbeleid <- c("Fietsbeleid", "Fietseducatie")
+            for (i in c("Fietsbeleid", "Fietseducatie")) {
+              if (!(i %in% deelbeleid)) {
+                deelbeleid <- c(deelbeleid, i)
+              }
+            }
           } else if(beleid == "Onderwijs en Educatie") {
-            deelbeleid <- c("Avant", "Campus Vesta", "CVO Vivant", "Onderwijs", "PITO Starbroek", "PIVA", "PTS Boom", "Suske en Wiske", "Veiligheidsinstituut", "Vormingscentrum")
+            for (i in c("Avant", "Campus Vesta", "CVO Vivant", "Onderwijs", "PITO Starbroek", "PIVA", "PTS Boom", "Suske en Wiske", "Veiligheidsinstituut", "Vormingscentrum")) {
+              if (!(i %in% deelbeleid)) {
+                deelbeleid <- c(deelbeleid, i)
+              }
+            }
           } else if(beleid == "Provinciebestuur") {
-            deelbeleid <- c("Activiteitenkalender", "Pers", "Persagenda", "Provincieraad")
+            for (i in c("Activiteitenkalender", "Pers", "Persagenda", "Provincieraad")) {
+              if (!(i %in% deelbeleid)) {
+                deelbeleid <- c(deelbeleid, i)
+              }
+            }
           } else if(beleid == "Ruimte") {
-            deelbeleid <- c("Erfgoed", "Ruimtelijke planning")
+            for (i in c("Erfgoed", "Ruimtelijke planning")) {
+              if (!(i %in% deelbeleid)) {
+                deelbeleid <- c(deelbeleid, i)
+              }
+            }
           } else if(beleid == "Vrije Tijd") {
-            deelbeleid <- c("Arboretum", "De Nekker", "De Schorre", "de Warande", "Kasteel d'Ursel", "Kempens Landschap", "PGRA", "PGRA - M - K", "PGRK", "PGRM", "Terra Nova", "Toerisme Provincie Antwerpen", "Zilvermeer")
+            for (i in c("Arboretum", "De Nekker", "De Schorre", "de Warande", "Kasteel d'Ursel", "Kempens Landschap", "PGRA", "PGRA - M - K", "PGRK", "PGRM", "Terra Nova", "Toerisme Provincie Antwerpen", "Zilvermeer")) {
+              if (!(i %in% deelbeleid)) {
+                deelbeleid <- c(deelbeleid, i)
+              }
+            }
           }
         # Create dummy dataframes containing every "Deelbeleid" of the "Beleid"
           berichten.Ja <- data.frame(
@@ -285,19 +359,18 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
             Persreturn = "Nee",
             Aantal = 0
           )
-        # Create actual table for chose "beleid"
-          temp <- split(data(), data()$Beleid)
-          temp <- temp[[beleid]]
-          temp <- data.frame("Beleid" = beleid, table(temp$Deelbeleid, temp$Persreturn))
-          colnames(temp) <- c("Beleid", "Deelbeleid","Persreturn", "Aantal")
-          temp <- split(temp, temp$Persreturn)
         # Update dummy dataframes
-          for (i in temp[["Ja"]]$Deelbeleid) {
-            berichten.Ja$Aantal[grepl(i, berichten.Ja$Deelbeleid)] <- temp[["Ja"]]$Aantal[grepl(i, temp[["Ja"]]$Deelbeleid)]
-          }
-          for (i in temp[["Nee"]]$Deelbeleid) {
-            berichten.Nee$Aantal[grepl(i, berichten.Nee$Deelbeleid)] <- temp[["Nee"]]$Aantal[grepl(i, temp[["Nee"]]$Deelbeleid)]
-          }
+          temp <- split(temp, temp$Persreturn)
+          suppressWarnings(
+            for (i in temp[["Ja"]]$Deelbeleid) {
+              berichten.Ja$Aantal[grepl(i, berichten.Ja$Deelbeleid)] <- temp[["Ja"]]$Aantal[grepl(i, temp[["Ja"]]$Deelbeleid)]
+            }
+          )
+          suppressWarnings(
+            for (i in temp[["Nee"]]$Deelbeleid) {
+              berichten.Nee$Aantal[grepl(i, berichten.Nee$Deelbeleid)] <- temp[["Nee"]]$Aantal[grepl(i, temp[["Nee"]]$Deelbeleid)]
+            }
+          )
         # Merge dummy dataframes
           berichten <- rbind(berichten.Ja, berichten.Nee)
           berichten <- berichten[order(berichten$Deelbeleid),]
@@ -494,7 +567,7 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
               }
             }
            )
-  
+  # Return --------------------------------------------------------------------
   return(list(plot = berichten.plot, tabel = tabel, uitleg = reactive(input$uitleg)))
   }
 

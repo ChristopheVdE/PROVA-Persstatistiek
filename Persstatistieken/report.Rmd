@@ -23,42 +23,54 @@ author: "Provincie Antwerpen - Persdienst"
 date: "`r format(Sys.Date(), '%d %B %Y')`"
 ---
 
-```{r "Load required packages", include = FALSE}
-library(knitr)
-library(shiny)
+```{r "globaly disable echo", include = FALSE}
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ## 1. Verzonden persberichten
 ### 1.1. Algemeen provincie
 #### 1.1.1. Persberichten per kwartaal {.tabset .tabset-fade}
-##### Barplot
-```{r "Persberichten algemeen: kwartaal - plot", echo = FALSE, align="center"}
+##### Plot
+```{r "Persberichten algemeen: kwartaal - plot", align="center"}
 params$Persberichten.alg$kwartaal.plot()
 ```
 
 ##### Tabel
-```{r "Persberichten algemeen: kwartaal - tabel", echo = FALSE}
+```{r "Persberichten algemeen: kwartaal - tabel"}
 kable(params$Persberichten.alg$kwartaal.tabel(), caption = "Persberichten per Beleid")
+```
+
+#### {-}
+`r params$Persberichten.alg$kwartaal.uitleg()`
+
+```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(1) 
+if (params$rendered_by_shiny) shiny::setProgress(1)
 ```
 
 
 #### 1.1.2. Persberichten per maand {.tabset .tabset-fade}
-##### Barplot
-```{r "Persberichten per maand - barplot", echo = FALSE}
+##### Plot
+```{r "Persberichten per maand - Plot", echo = FALSE}
 params$Persberichten.alg$maand.plot()
 ```
 
 ##### Tabel
 ```{r "Persberichten per maand: tabel", echo = FALSE}
 kable(params$Persberichten.alg$maand.tabel(), caption = "Persberichten per maand")
-# Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(2) 
 ```
 
+#### {-}
+`r params$Persberichten.alg$maand.uitleg()`
+
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(2)
+```
+
+
 #### 1.2.3. Persberichten per beleid {.tabset .tabset-fade}
-##### Barplot
+##### Plot
 ```{r "Persberichten per beleid: algemeen - plot", echo = FALSE, align="center"}
 params$Persberichten.alg$beleid.plot()
 ```
@@ -66,19 +78,22 @@ params$Persberichten.alg$beleid.plot()
 ##### Tabel
 ```{r "Persberichten per beleid: algemeen - tabel", echo = FALSE}
 kable(params$Persberichten.alg$beleid.tabel(), caption = "Persberichten per Beleid")
-# Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(3) 
 ```
 
+#### {-}
+`r params$Persberichten.alg$beleid.uitleg()`
 
-
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(3)
+```
 
 
 ### 1.2. Beleid en deelbeleid
 #### 1.2.1. Provinciebestuur
 ##### 1.2.6.1. Per maand {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten Provinciebestuur: barplot - maand", echo = FALSE}
+###### Plot
+```{r "Persberichten Provinciebestuur: Plot - maand", echo = FALSE}
 params$Persberichten.beleid.maand$provinciebestuur.plot()
 ```
 
@@ -87,23 +102,32 @@ params$Persberichten.beleid.maand$provinciebestuur.plot()
 kable(params$Persberichten.beleid.maand$provinciebestuur.tabel(), caption="Persberichten: Provinciebestuur per maand")
 ```
 
+##### {-}
+`r params$Persberichten.beleid.maand$provinciebestuur.uitleg()`
+
 ##### 1.2.6.2. Per thema {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten Provinciebestuur: barplot", echo = FALSE}
+###### Plot
+```{r "Persberichten Provinciebestuur: Plot", echo = FALSE}
 params$Persberichten.beleid.beleid$provinciebestuur.plot()
 ```
 
 ###### Tabel
 ```{r "Persberichten Provinciebestuur: tabel", echo = FALSE}
 kable(params$Persberichten.beleid.beleid$provinciebestuur.tabel(), caption = "Persberichten: Provinciebestuur")
+```
+
+##### {-}
+`r params$Persberichten.beleid.beleid$provinciebestuur.uitleg()`
+
+```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(4) 
+if (params$rendered_by_shiny) shiny::setProgress(4)
 ```
 
 #### 1.2.2. Economie
 ##### 1.2.1.1. Per maand {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten Economie: barplot - maand", echo = FALSE}
+###### Plot
+```{r "Persberichten Economie: Plot - maand", echo = FALSE}
 params$Persberichten.beleid.maand$economie.plot()
 ```
 
@@ -112,23 +136,32 @@ params$Persberichten.beleid.maand$economie.plot()
 kable(params$Persberichten.beleid.maand$economie.tabel(), caption="Persberichten: Economie per maand")
 ```
 
+##### {-}
+`r params$Persberichten.beleid.maand$economie.uitleg()`
+
 ##### 1.2.1.2. Deelbeleid: Economie {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten Economie: barplot", echo = FALSE}
+###### Plot
+```{r "Persberichten Economie: Plot", echo = FALSE}
 params$Persberichten.beleid.beleid$economie.plot()
 ```
 
 ###### Tabel
 ```{r "Persberichten Economie: tabel", echo = FALSE}
 kable(params$Persberichten.beleid.beleid$economie.tabel(), caption = "Persberichten: Economie")
+```
+
+##### {-}
+`r params$Persberichten.beleid.beleid$economie.uitleg()`
+
+```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(5) 
+if (params$rendered_by_shiny) shiny::setProgress(5)
 ```
 
 #### 1.2.3. Leefmilieu
 ##### 1.2.3.1. Per maand {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten Leefmilieu: barplot - maand", echo = FALSE}
+###### Plot
+```{r "Persberichten Leefmilieu: Plot - maand", echo = FALSE}
 params$Persberichten.beleid.maand$leefmilieu.plot()
 ```
 
@@ -137,23 +170,32 @@ params$Persberichten.beleid.maand$leefmilieu.plot()
 kable(params$Persberichten.beleid.maand$leefmilieu.tabel(), caption="Persberichten: Leefmilieu per maand")
 ```
 
+##### {-}
+`r params$Persberichten.beleid.maand$leefmilieu.uitleg()`
+
 ##### 1.2.3.2. Deelbeleid: Leefmilieu {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten Leefmilieu: barplot", echo = FALSE}
+###### Plot
+```{r "Persberichten Leefmilieu: Plot", echo = FALSE}
 params$Persberichten.beleid.beleid$leefmilieu.plot()
 ```
 
 ###### Tabel
 ```{r "Persberichten Leefmilieu: tabel", echo = FALSE}
 kable(params$Persberichten.beleid.beleid$leefmilieu.tabel(), caption = "Persberichten: Leefmilieu")
+```
+
+##### {-}
+`r params$Persberichten.beleid.maand$leefmilieu.uitleg()`
+
+```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(6) 
+if (params$rendered_by_shiny) shiny::setProgress(6)
 ```
 
 #### 1.2.4. Mobiliteit
 ##### 1.2.4.1. Per maand {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten Mobiliteit: barplot - maand", echo = FALSE}
+###### Plot
+```{r "Persberichten Mobiliteit: Plot - maand", echo = FALSE}
 params$Persberichten.beleid.maand$mobiliteit.plot()
 ```
 
@@ -162,23 +204,32 @@ params$Persberichten.beleid.maand$mobiliteit.plot()
 kable(params$Persberichten.beleid.maand$mobiliteit.tabel(), caption="Persberichten: Mobiliteit per maand")
 ```
 
+##### {-}
+`r params$Persberichten.beleid.maand$mobiliteit.uitleg()`
+
 ##### 1.2.4.2. Deelbeleid: Mobiliteit {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten Mobiliteit: barplot", echo = FALSE}
+###### Plot
+```{r "Persberichten Mobiliteit: Plot", echo = FALSE}
 params$Persberichten.beleid.beleid$mobiliteit.plot()
 ```
 
 ###### Tabel
 ```{r "Persberichten Mobiliteit: tabel", echo = FALSE}
 kable(params$Persberichten.beleid.beleid$mobiliteit.tabel(), caption = "Persberichten: Mobiliteit")
+```
+
+##### {-}
+`r params$Persberichten.beleid.beleid$mobiliteit.uitleg()`
+
+```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(7) 
+if (params$rendered_by_shiny) shiny::setProgress(7)
 ```
 
 #### 1.2.5. Onderwijs en Educatie
 ##### 1.2.5.1. Per maand {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten Onderwijs en Educatie: barplot - maand", echo = FALSE}
+###### Plot
+```{r "Persberichten Onderwijs en Educatie: Plot - maand", echo = FALSE}
 params$Persberichten.beleid.maand$onderwijs.plot()
 ```
 
@@ -187,23 +238,32 @@ params$Persberichten.beleid.maand$onderwijs.plot()
 kable(params$Persberichten.beleid.maand$onderwijs.tabel(), caption="Persberichten: Onderwijs en Educatie per maand")
 ```
 
+##### {-}
+`r params$Persberichten.beleid.maand$onderwijs.uitleg()`
+
 ##### 1.2.5.2. Deelbeleid: Onderwijs en Educatie {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten Onderwijs en Educatie: barplot", echo = FALSE}
+###### Plot
+```{r "Persberichten Onderwijs en Educatie: Plot", echo = FALSE}
 params$Persberichten.beleid.beleid$onderwijs.plot()
 ```
 
 ###### Tabel
 ```{r "Persberichten Onderwijs en Educatie: tabel", echo = FALSE}
 kable(params$Persberichten.beleid.beleid$onderwijs.tabel(), caption = "Persberichten: Onderwijs en Educatie")
+```
+
+##### {-}
+`r params$Persberichten.beleid.beleid$onderwijs.uitleg()`
+
+```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(8) 
+if (params$rendered_by_shiny) shiny::setProgress(8)
 ```
 
 #### 1.2.6. Ruimte
 ##### 1.2.7.1. Per maand {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten Ruimte: barplot - maand", echo = FALSE}
+###### Plot
+```{r "Persberichten Ruimte: Plot - maand", echo = FALSE}
 params$Persberichten.beleid.maand$ruimte.plot()
 ```
 
@@ -212,23 +272,32 @@ params$Persberichten.beleid.maand$ruimte.plot()
 kable(params$Persberichten.beleid.maand$ruimte.tabel(), caption="Persberichten: Ruimte per maand")
 ```
 
+##### {-}
+`r params$Persberichten.beleid.maand$ruimte.uitleg()`
+
 ##### 1.2.7.2. Deelbeleid Ruimte {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten Ruimte: barplot", echo = FALSE}
+###### Plot
+```{r "Persberichten Ruimte: Plot", echo = FALSE}
 params$Persberichten.beleid.beleid$ruimte.plot()
 ```
 
 ###### Tabel
 ```{r "Persberichten Ruimte: tabel", echo = FALSE}
 kable(params$Persberichten.beleid.beleid$ruimte.tabel(), caption = "Persberichten: Ruimte")
+```
+
+##### {-}
+`r params$Persberichten.beleid.beleid$ruimte.uitleg()`
+
+```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(9) 
+if (params$rendered_by_shiny) shiny::setProgress(9)
 ```
 
 #### 1.2.7. Vrije tijd
 ##### 1.2.8.1. Per maand {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten Vrije Tijd: barplot - maand", echo = FALSE}
+###### Plot
+```{r "Persberichten Vrije Tijd: Plot - maand", echo = FALSE}
 params$Persberichten.beleid.maand$vrijetijd.plot()
 ```
 
@@ -237,25 +306,32 @@ params$Persberichten.beleid.maand$vrijetijd.plot()
 kable(params$Persberichten.beleid.maand$vrijetijd.tabel(), caption="Persberichten: Vrije Tijd per maand")
 ```
 
+##### {-}
+`r params$Persberichten.beleid.maand$vrijetijd.uitleg()`
+
 ##### 1.2.8.2. Deelbeleid: Vrije tijd {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten Vrije Tijd: barplot", echo = FALSE}
+###### Plot
+```{r "Persberichten Vrije Tijd: Plot", echo = FALSE}
 params$Persberichten.beleid.beleid$vrijetijd.plot()
 ```
 
 ###### Tabel
 ```{r "Persberichten Vrije Tijd: tabel", echo = FALSE}
 kable(params$Persberichten.beleid.beleid$vrijetijd.tabel(), caption = "Persberichten: Vrije Tijd")
-# Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(10) 
 ```
 
+##### {-}
+`r params$Persberichten.beleid.beleid$vrijetijd.uitleg()`
 
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(10)
+```
 
 #### 1.2.8. Gouverneur
 ##### 1.2.2.1. Per maand {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten Gouverneur: barplot - maand", echo = FALSE}
+###### Plot
+```{r "Persberichten Gouverneur: Plot - maand", echo = FALSE}
 params$Persberichten.beleid.maand$gouverneur.plot()
 ```
 
@@ -264,41 +340,54 @@ params$Persberichten.beleid.maand$gouverneur.plot()
 kable(params$Persberichten.beleid.maand$gouverneur.tabel(), caption="Persberichten: Gouverneur per maand")
 ```
 
+##### {-}
+`r params$Persberichten.beleid.maand$gouverneur.uitleg()`
+
 ##### 1.2.2.2. Deelbeleid: Gouverneur {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten Gouverneur: barplot", echo = FALSE}
+###### Plot
+```{r "Persberichten Gouverneur: Plot", echo = FALSE}
 params$Persberichten.beleid.beleid$gouverneur.plot()
 ```
 
 ###### Tabel
 ```{r "Persberichten Gouverneur: tabel", echo = FALSE}
 kable(params$Persberichten.beleid.beleid$gouverneur.tabel(), caption = "Persberichten: Gouverneur")
-# Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(11) 
 ```
 
+##### {-}
+`r params$Persberichten.beleid.beleid$gouverneur.uitleg()`
 
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(11)
+```
 
 
 ### 1.3. Per verzender
 #### 1.3.1. Algemeen {.tabset .tabset-fade}
-##### Barplot
-```{r "Persberichten per verzender - Barplot", echo = FALSE}
+##### Plot
+```{r "Persberichten per verzender - Plot", echo = FALSE}
 params$Persberichten.verzender.alg$totaal.plot()
 ```
 
 ##### Tabel
 ```{r "Persberichten per verzender - Tabel", echo = FALSE}
 kable(params$Persberichten.verzender.alg$totaal.tabel(), caption="Persberichten per verzender")
+```
+
+##### {-}
+`r params$Persberichten.verzender.alg$totaal.uitleg()`
+
+```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(12) 
+if (params$rendered_by_shiny) shiny::setProgress(12)
 ```
 
 
 #### 1.3.2. Per maand
 ##### 1.3.2.1. Verzonden door: Persdienst {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten per verzender - persdienst: Barplot", echo = FALSE}
+###### Plot
+```{r "Persberichten per verzender - persdienst: Plot", echo = FALSE}
 params$Persberichten.verzender.maand$persdienst.plot()
 ```
 
@@ -307,9 +396,17 @@ params$Persberichten.verzender.maand$persdienst.plot()
 kable(params$Persberichten.verzender.maand$persdienst.tabel(), caption="Persberichten: Persdienst")
 ```
 
+##### {-}
+`r params$Persberichten.verzender.maand$persdienst.uitleg()`
+
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(13)
+```
+
 ##### 1.3.2.2. Verzonden door: Provincie {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten per verzender - provincie: Barplot", echo = FALSE}
+###### Plot
+```{r "Persberichten per verzender - provincie: Plot", echo = FALSE}
 params$Persberichten.verzender.maand$provincie.plot()
 ```
 
@@ -318,10 +415,17 @@ params$Persberichten.verzender.maand$provincie.plot()
 kable(params$Persberichten.verzender.maand$provincie.tabel(), caption="Persberichten: Provincie")
 ```
 
+##### {-}
+`r params$Persberichten.verzender.maand$provincie.uitleg()`
+
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(14)
+```
 
 ##### 1.3.2.3. Verzonden door: Gouverneur {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten per verzender - gouverneur: Barplot", echo = FALSE}
+###### Plot
+```{r "Persberichten per verzender - gouverneur: Plot", echo = FALSE}
 params$Persberichten.verzender.maand$gouverneur.plot()
 ```
 
@@ -330,22 +434,32 @@ params$Persberichten.verzender.maand$gouverneur.plot()
 kable(params$Persberichten.verzender.maand$gouverneur.tabel(), caption="Persberichten: Gouverneur")
 ```
 
+##### {-}
+`r params$Persberichten.verzender.maand$gouverneur.uitleg()`
+
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(15)
+```
+
 ##### 1.3.2.4. Extern {.tabset .tabset-fade}
-###### Barplot
-```{r "Persberichten per verzender - extern: Barplot", echo = FALSE}
+###### Plot
+```{r "Persberichten per verzender - extern: Plot", echo = FALSE}
 params$Persberichten.verzender.maand$extern.plot()
 ```
 
 ###### Tabel
 ```{r "Persberichten per verzender - extern: Tabel", echo = FALSE}
 kable(params$Persberichten.verzender.maand$extern.tabel(), caption="Persberichten: Extern")
-# Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(13) 
 ```
 
+##### {-}
+`r params$Persberichten.verzender.maand$extern.uitleg()`
 
-
-
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(16)
+```
 
 
 ### 1.4. Type persberichten {.tabset .tabset-fade}
@@ -354,36 +468,46 @@ if (params$rendered_by_shiny) shiny::setProgress(13)
 kable(params$Persberichten.type$type.tabel(), caption = "Persberichten per type")
 ```
 
-#### Barplot
-```{r "Persberichten per type - Barplot", echo = FALSE}
+#### Plot
+```{r "Persberichten per type - Plot", echo = FALSE}
 params$Persberichten.type$type.plot()
-# Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(14) 
 ```
 
+##### {-}
+`r params$Persberichten.type$type.uitleg()`
 
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(17)
+```
 
 
 
 ## 2 Persreturn
 ### 2.1 Persreturn per beleid
 #### 2.1.1 Algemeen {.tabset .tabset-fade}
-##### Barplot
-```{r "Persreturn per beleid - algemeen: barplot", echo = FALSE}
+##### Plot
+```{r "Persreturn per beleid - algemeen: Plot", echo = FALSE}
 params$Persreturn.beleid$algemeen.plot()
 ```
 
 ##### Tabel
 ```{r "Persreturn per beleid - algemeen: tabel", echo = FALSE}
 kable(params$Persreturn.beleid$algemeen.tabel(), caption= "Persreturn per beleid")
+```
+
+#### {-}
+`r params$Persreturn.beleid$algemeen.uitleg()`
+
+```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(15) 
+if (params$rendered_by_shiny) shiny::setProgress(18)
 ```
 
 #### 2.1.2 Per beleid
 ##### 2.1.2.1 Provinciebestuur: overkoepelend {.tabset .tabset-fade}
-###### Barplot
-```{r "Persreturn Provinciebestuur: barplot", echo = FALSE}
+###### Plot
+```{r "Persreturn Provinciebestuur: Plot", echo = FALSE}
 params$Persreturn.beleid$provinciebestuur.plot()
 ```
 
@@ -392,9 +516,17 @@ params$Persreturn.beleid$provinciebestuur.plot()
 kable(params$Persreturn.beleid$provinciebestuur.tabel(), caption = "Persberichten: Provinciebestuur")
 ```
 
+##### {-}
+`r params$Persreturn.beleid$provinciebestuur.uitleg()`
+
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(19)
+```
+
 ##### 2.1.2.2 Economie {.tabset .tabset-fade}
-###### Barplot
-```{r "Persreturn Economie: barplot", echo = FALSE}
+###### Plot
+```{r "Persreturn Economie: Plot", echo = FALSE}
 params$Persreturn.beleid$economie.plot()
 ```
 
@@ -403,9 +535,17 @@ params$Persreturn.beleid$economie.plot()
 kable(params$Persreturn.beleid$economie.tabel(), caption = "Persberichten: Economie")
 ```
 
+##### {-}
+`r params$Persreturn.beleid$economie.uitleg()`
+
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(20)
+```
+
 ##### 2.1.2.3 Leefmilieu {.tabset .tabset-fade}
-###### Barplot
-```{r "Persreturn Leefmilieu: barplot", echo = FALSE}
+###### Plot
+```{r "Persreturn Leefmilieu: Plot", echo = FALSE}
 params$Persreturn.beleid$leefmilieu.plot()
 ```
 
@@ -414,9 +554,17 @@ params$Persreturn.beleid$leefmilieu.plot()
 kable(params$Persreturn.beleid$leefmilieu.tabel(), caption = "Persberichten: Leefmilieu")
 ```
 
+##### {-}
+`r params$Persreturn.beleid$leefmilieu.uitleg()`
+
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(21)
+```
+
 ##### 2.1.2.4 Mobiliteit {.tabset .tabset-fade}
-###### Barplot
-```{r "Persreturn Mobiliteit: barplot", echo = FALSE}
+###### Plot
+```{r "Persreturn Mobiliteit: Plot", echo = FALSE}
 params$Persreturn.beleid$mobiliteit.plot()
 ```
 
@@ -425,9 +573,17 @@ params$Persreturn.beleid$mobiliteit.plot()
 kable(params$Persreturn.beleid$mobiliteit.tabel(), caption = "Persberichten: Mobiliteit")
 ```
 
+##### {-}
+`r params$Persreturn.beleid$mobiliteit.uitleg()`
+
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(22)
+```
+
 ##### 2.1.2.5 Onderwijs en Educatie {.tabset .tabset-fade}
-###### Barplot
-```{r "Persreturn Onderwijs en Educatie: barplot", echo = FALSE}
+###### Plot
+```{r "Persreturn Onderwijs en Educatie: Plot", echo = FALSE}
 params$Persreturn.beleid$onderwijs.plot()
 ```
 
@@ -436,9 +592,17 @@ params$Persreturn.beleid$onderwijs.plot()
 kable(params$Persreturn.beleid$onderwijs.tabel(), caption = "Persberichten: Onderwijs en Educatie")
 ```
 
+##### {-}
+`r params$Persreturn.beleid$onderwijs.uitleg()`
+
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(23)
+```
+
 ##### 2.1.2.6 Ruimte {.tabset .tabset-fade}
-###### Barplot
-```{r "Persreturn Ruimte: barplot", echo = FALSE}
+###### Plot
+```{r "Persreturn Ruimte: Plot", echo = FALSE}
 params$Persreturn.beleid$ruimte.plot()
 ```
 
@@ -447,9 +611,17 @@ params$Persreturn.beleid$ruimte.plot()
 kable(params$Persreturn.beleid$ruimte.tabel(), caption = "Persberichten: Ruimte")
 ```
 
+##### {-}
+`r params$Persreturn.beleid$ruimte.uitleg()`
+
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(24)
+```
+
 ##### 2.1.2.7 Vrije Tijd {.tabset .tabset-fade}
-###### Barplot
-```{r "Persreturn Vrije Tijd: barplot", echo = FALSE}
+###### Plot
+```{r "Persreturn Vrije Tijd: Plot", echo = FALSE}
 params$Persreturn.beleid$vrijetijd.plot()
 ```
 
@@ -458,35 +630,52 @@ params$Persreturn.beleid$vrijetijd.plot()
 kable(params$Persreturn.beleid$vrijetijd.tabel(), caption = "Persberichten: Vrije Tijd")
 ```
 
+##### {-}
+`r params$Persreturn.beleid$vrijetijd.uitleg()`
+
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(25)
+```
+
 ##### 2.1.2.8 Gouverneur {.tabset .tabset-fade}
-###### Barplot
-```{r "Persreturn Gouverneur: barplot", echo = FALSE}
+###### Plot
+```{r "Persreturn Gouverneur: Plot", echo = FALSE}
 params$Persreturn.beleid$gouverneur.plot()
 ```
 
 ###### Tabel
 ```{r "Persreturn Gouverneur: tabel", echo = FALSE}
 kable(params$Persreturn.beleid$gouverneur.tabel(), caption = "Persberichten: Gouverneur")
+```
+
+##### {-}
+`r params$Persreturn.beleid$gouverneur.uitleg()`
+
+```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(16) 
+if (params$rendered_by_shiny) shiny::setProgress(26)
 ```
 
 
-
-
 ### 2.2 Persreturn per medium {.tabset .tabset-fade}
-#### Barplot
-```{r "Persreturn per medium - barplot", echo = FALSE}
+#### Plot
+```{r "Persreturn per medium - Plot", echo = FALSE}
 params$Persreturn.medium$medium.plot()
 ```
 
 #### Tabel
 ```{r "Persreturn per medium - tabel", echo = FALSE}
 kable(params$Persreturn.medium$medium.tabel(), caption = "Persreturn per medium")
-# Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(17) 
 ```
 
+##### {-}
+`r params$Persreturn.medium$medium.uitleg()`
+
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(27)
+```
 
 
 
