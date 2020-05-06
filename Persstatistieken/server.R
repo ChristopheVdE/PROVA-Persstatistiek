@@ -41,7 +41,7 @@ server <- function(input, output) {
                                                           reactive(input$col.return.algemeen), 
                                                           reactive(input$col.return.web), 
                                                           reactive(input$col.return.tv), 
-                                                          reactive(input$col.maand)),
+                                                          reactive(input$col.datum)),
                                        kwartaal = reactive(input$kwartaal))
   # Render Original Table ---------------------------------------------------
   output$table <- renderTable({

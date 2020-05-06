@@ -111,14 +111,14 @@ ui <- dashboardPage(
                   tags$br(tags$b("Persreturn: Algemeen")),
                   tags$br(tags$b("Persreturn: Web")),
                   tags$br(tags$b("Persreturn: TV")),
-                  tags$br(tags$b("Maand"))
+                  tags$br(tags$b("Datum"))
                 ),
                 column(
                   width = 3,
                   textInput("col.return.algemeen", label = NULL, value = 6, placeholder = 6),
                   textInput("col.return.web", label = NULL, value = 7, placeholder = 7),
                   textInput("col.return.tv", label = NULL, value = 8, placeholder = 8),
-                  textInput("col.maand", label = NULL, value = 13, placeholder = 9)
+                  textInput("col.datum", label = NULL, value = 12, placeholder = 9)
                 )
               )
             )

@@ -41,7 +41,7 @@ data.preparation <- function(file, sheet, headers, manual.headers, kwartaal) {
         Beleid = Excel[[manual.headers()[1]]],
         Detail = Excel[[manual.headers()[2]]],
         Soort = Excel[[manual.headers()[5]]],
-        Maand = Excel[[manual.headers()[9]]]
+        Datum = Excel[[manual.headers()[9]]]
       )
       colnames(Excel)[4] <- "Alleen web"
       colnames(Excel)[7] <- "Deelbeleid"
