@@ -55,7 +55,7 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
         if (Id == "alg.kwartaal") {
         # Create dummy dataframe
           berichten <- data.frame(
-            Kwartaal = factor(c("Q1", "Q2", "Q3", "Q4"), c("Q1", "Q2", "Q3", "Q4", "Totaal")),
+            Kwartaal = factor(c("Q1", "Q2", "Q3", "Q4"), c("Q1", "Q2", "Q3", "Q4")),
             Persberichten = 0
           )
         # Create table
@@ -75,20 +75,36 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
         # Create table
           berichten <- data.frame(table(data()$Maand))
           colnames(berichten) <- c("Maand", "Persberichten")
-        # Add "Totaal" to levels
-          berichten$Maand <- factor(berichten$Maand, levels = c(month.abb, "Totaal"))
         # Add percentages
           berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
         # Return df
           berichten
         } 
+      # Algemeen Dag ----------------------------------------------------------
+      else if (Id == "alg.dag") {
+        # Create table
+        berichten <- data.frame(table(data()$Dag))
+        colnames(berichten) <- c("Dag", "Persberichten")
+        # Add percentages
+        berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
+        # Return df
+        berichten
+      } 
+      # Algemeen Week ---------------------------------------------------------
+      else if (Id == "alg.week") {
+        # Create table
+        berichten <- data.frame(table(data()$Week))
+        colnames(berichten) <- c("Week", "Persberichten")
+        # Add percentages
+        berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
+        # Return df
+        berichten
+      } 
       # Algemeen Beleid -------------------------------------------------------
         else if (Id == "alg.beleid") {
         # Create table
           berichten <- data.frame(table(data()$Beleid))
           colnames(berichten) <- c("Beleid","Persberichten")
-        # Factors
-          levels(berichten$Beleid) <- c(levels(berichten$Beleid), "Totaal")
         # Add percentages
           berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
         # Return df
@@ -99,8 +115,6 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
         # Create table
           berichten <- data.frame(table(data()$Beleid, data()$Maand))
           colnames(berichten) <- c("Beleid", "Maand", "Persberichten")
-        # Add "Totaal" to levels
-          berichten$Maand <- factor(berichten$Maand, levels = c(month.abb, "Totaal"))
         # Split dataframe on "Beleid"
           berichten <- split(berichten, berichten$Beleid)
           berichten <- berichten[[beleid]]
@@ -179,8 +193,6 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
               berichten$Persberichten[grepl(i, berichten$Deelbeleid)] <- temp$Persberichten[grepl(i, temp$Deelbeleid)]
             }
           )
-        # Add "Totaal" to levels
-          levels(berichten$Deelbeleid) <- c(levels(berichten$Deelbeleid), "Totaal")
         # Add percentages
           berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
         # Return
@@ -201,8 +213,6 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
               berichten <- rbind(berichten, temp)
             }
           }
-        # Factors
-          levels(berichten$Verzender) <- c(levels(berichten$Verzender), "Totaal")
         # Add percentages
           berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
         # Return
@@ -240,7 +250,7 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
               temp <- data.frame(
                 Maand = levels(berichten$Maand),
                 Verzender = i,
-                Persbreichten = 0
+                Persberichten = 0
               )
               berichten <- rbind(berichten, temp)
             }
@@ -248,8 +258,6 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
         # Display only selected verzender
           berichten <- split(berichten, berichten$Verzender)
           berichten <- berichten[[verzender]]
-        # Factor
-          levels(berichten$Maand) <- c(levels(berichten$Maand), "Totaal")
         # Add percentages
           berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
         # Return
@@ -414,10 +422,11 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
         }
   )
   
-  # Plot (beleid per maand) ---------------------------------------------------
+  # Plot ----------------------------------------------------------------------
     berichten.plot <- reactive({
       plots <- list("Aantal" = NA, "Procent" = NA)
       for (inhoud in c("Aantal", "Procent")) {
+    # Barplot -----------------------------------------------------------------
         if ((inhoud == "Aantal" && input$type.aantal == "Barplot") || (inhoud == "Procent" && input$type.procent == "Barplot")) {
           plots[[inhoud]] <- simple_barplot(Id = Id,
                                        data = df.berichten, 
@@ -430,7 +439,9 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
                                        Xlabels = input$Xlabels, 
                                        legend = input$legend, 
                                        colors = colours)
-        } else if ((inhoud == "Aantal" && input$type.aantal == "Taartdiagram") || (inhoud == "Procent" && input$type.procent == "Taartdiagram")) {
+        } 
+    # Taartdiagram ------------------------------------------------------------
+        else if ((inhoud == "Aantal" && input$type.aantal == "Taartdiagram") || (inhoud == "Procent" && input$type.procent == "Taartdiagram")) {
             if (!(Id == "verzender.alg.beleid")) {
               plots[[inhoud]] <- simple_piechart(Id = Id,
                                                  data = df.berichten,

@@ -67,13 +67,12 @@ server <- function(input, output) {
             persberichten.alg.kwartaal$tabel()
           )
       # Per Maand -------------------------------------------------------------
+          persberichten.alg.maand <- callModule(data.visual, "bericht.alg.maand", Id = "alg.maand", data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours)
         # Plot - aantal
-          persberichten.alg.maand <- callModule(data.visual, "bericht.alg.maand", Id = "alg.maand", data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours)  
           output$persberichten.alg.maand.plot.aantal <- renderPlot(
             persberichten.alg.maand$plot.aantal()
           )
           # Plot - procent
-          persberichten.alg.maand <- callModule(data.visual, "bericht.alg.maand", Id = "alg.maand", data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours)  
           output$persberichten.alg.maand.plot.procent <- renderPlot(
             persberichten.alg.maand$plot.procent()
           )
@@ -81,14 +80,41 @@ server <- function(input, output) {
           output$persberichten.alg.maand.tabel <- renderTable(
             persberichten.alg.maand$tabel()
           )
-      # Per Beleid ------------------------------------------------------------
+      # Per Dag ---------------------------------------------------------------
+          persberichten.alg.dag <- callModule(data.visual, "bericht.alg.dag", Id = "alg.dag", data = Persstatistiek, Xaxis = "Dag", Fill = "Dag", colours = colours)
         # Plot - aantal
-          persberichten.alg.beleid <- callModule(data.visual, "bericht.alg.beleid", Id = "alg.beleid", data = Persstatistiek, Xaxis = "Beleid", Fill = "Beleid", colours = colours)   
+          output$persberichten.alg.dag.plot.aantal <- renderPlot(
+            persberichten.alg.dag$plot.aantal()
+          )
+        # Plot - procent
+          output$persberichten.alg.dag.plot.procent <- renderPlot(
+            persberichten.alg.dag$plot.procent()
+          )
+        # Tabel
+          output$persberichten.alg.dag.tabel <- renderTable(
+            persberichten.alg.dag$tabel()
+          )
+      # Per Week --------------------------------------------------------------
+          persberichten.alg.week <- callModule(data.visual, "bericht.alg.week", Id = "alg.week", data = Persstatistiek, Xaxis = "Week", Fill = "Week", colours = colours)
+          # Plot - aantal
+          output$persberichten.alg.week.plot.aantal <- renderPlot(
+            persberichten.alg.week$plot.aantal()
+          )
+          # Plot - procent
+          output$persberichten.alg.week.plot.procent <- renderPlot(
+            persberichten.alg.week$plot.procent()
+          )
+          # Tabel
+          output$persberichten.alg.week.tabel <- renderTable(
+            persberichten.alg.week$tabel()
+          )
+      # Per Beleid ------------------------------------------------------------
+          persberichten.alg.beleid <- callModule(data.visual, "bericht.alg.beleid", Id = "alg.beleid", data = Persstatistiek, Xaxis = "Beleid", Fill = "Beleid", colours = colours)
+        # Plot - aantal
           output$persberichten.alg.beleid.plot.aantal <- renderPlot(
             persberichten.alg.beleid$plot.aantal()
           )
         # Plot
-          persberichten.alg.beleid <- callModule(data.visual, "bericht.alg.beleid", Id = "alg.beleid", data = Persstatistiek, Xaxis = "Beleid", Fill = "Beleid", colours = colours)   
           output$persberichten.alg.beleid.plot.procent <- renderPlot(
             persberichten.alg.beleid$plot.procent()
           )
@@ -328,13 +354,12 @@ server <- function(input, output) {
     # PER VERZENDER -----------------------------------------------------------
       # Algemeen --------------------------------------------------------------
         # Totaal per Verzender ------------------------------------------------
-          # Plot - aantal
           persberichten.verzender.alg.totaal <- callModule(data.visual, "bericht.verzender.alg.totaal", Id = "verzender.alg.verzender" , Persstatistiek, Xaxis = "Verzender", Fill = "Verzender", colours = colours)
+          # Plot - aantal
           output$persberichten.verzender.alg.totaal.plot.aantal <- renderPlot(
             persberichten.verzender.alg.totaal$plot.aantal()
           )
           # Plot - procent
-          persberichten.verzender.alg.totaal <- callModule(data.visual, "bericht.verzender.alg.totaal", Id = "verzender.alg.verzender" , Persstatistiek, Xaxis = "Verzender", Fill = "Verzender", colours = colours)
           output$persberichten.verzender.alg.totaal.plot.procent <- renderPlot(
             persberichten.verzender.alg.totaal$plot.procent()
           )
@@ -343,13 +368,13 @@ server <- function(input, output) {
             persberichten.verzender.alg.totaal$tabel()
           )
         # Beleid per Verzender ------------------------------------------------
-          # Plot - aantal
           persberichten.verzender.alg.beleid <- callModule(data.visual, "bericht.verzender.alg.beleid", Id = "verzender.alg.beleid" , Persstatistiek, Xaxis = "Verzender", Fill = "Beleid", colours = colours)
+          # Plot - aantal
+          
           output$persberichten.verzender.alg.beleid.plot.aantal <- renderPlot(
             persberichten.verzender.alg.beleid$plot.aantal()
           )
           # Plot - procent
-          persberichten.verzender.alg.beleid <- callModule(data.visual, "bericht.verzender.alg.beleid", Id = "verzender.alg.beleid" , Persstatistiek, Xaxis = "Verzender", Fill = "Beleid", colours = colours)
           output$persberichten.verzender.alg.beleid.plot.procent <- renderPlot(
             persberichten.verzender.alg.beleid$plot.procent()
           )
@@ -359,13 +384,12 @@ server <- function(input, output) {
           )
       # Per Maand -------------------------------------------------------------
         # Persdienst ----------------------------------------------------------
-          # Plot - aantal
           persberichten.verzender.maand.persdienst <- callModule(data.visual, "bericht.verzender.maand.persdienst", Id = "verzender.maand" , Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours, verzender = "Persdienst")
+          # Plot - aantal
           output$persberichten.verzender.maand.persdienst.plot.aantal <- renderPlot(
             persberichten.verzender.maand.persdienst$plot.aantal()
           )
           # Plot - procent
-          persberichten.verzender.maand.persdienst <- callModule(data.visual, "bericht.verzender.maand.persdienst", Id = "verzender.maand" , Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours, verzender = "Persdienst")
           output$persberichten.verzender.maand.persdienst.plot.procent <- renderPlot(
             persberichten.verzender.maand.persdienst$plot.procent()
           )
@@ -374,13 +398,12 @@ server <- function(input, output) {
             persberichten.verzender.maand.persdienst$tabel()
           )
         # Provincie -----------------------------------------------------------
-          # Plot - aantal
           persberichten.verzender.maand.provincie <- callModule(data.visual, "bericht.verzender.maand.provincie", Id = "verzender.maand" , Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours, verzender = "Provincie")
+          # Plot - aantal
           output$persberichten.verzender.maand.provincie.plot.aantal <- renderPlot(
             persberichten.verzender.maand.provincie$plot.aantal()
           )
           # Plot - procent
-          persberichten.verzender.maand.provincie <- callModule(data.visual, "bericht.verzender.maand.provincie", Id = "verzender.maand" , Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours, verzender = "Provincie")
           output$persberichten.verzender.maand.provincie.plot.procent <- renderPlot(
             persberichten.verzender.maand.provincie$plot.procent()
           )
@@ -389,13 +412,12 @@ server <- function(input, output) {
             persberichten.verzender.maand.provincie$tabel()
           )
         # Gouverneur ----------------------------------------------------------
-          # Plot - aantal
           persberichten.verzender.maand.gouverneur <- callModule(data.visual, "bericht.verzender.maand.gouverneur", Id = "verzender.maand" , Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours, verzender = "Gouverneur")
+          # Plot - aantal
           output$persberichten.verzender.maand.gouverneur.plot.aantal <- renderPlot(
             persberichten.verzender.maand.gouverneur$plot.aantal()
           )
           # Plot - procent
-          persberichten.verzender.maand.gouverneur <- callModule(data.visual, "bericht.verzender.maand.gouverneur", Id = "verzender.maand" , Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours, verzender = "Gouverneur")
           output$persberichten.verzender.maand.gouverneur.plot.procent <- renderPlot(
             persberichten.verzender.maand.gouverneur$plot.procent()
           )
@@ -404,13 +426,12 @@ server <- function(input, output) {
             persberichten.verzender.maand.gouverneur$tabel()
           )
         # Extern --------------------------------------------------------------
-          # Plot - aantal
           persberichten.verzender.maand.extern <- callModule(data.visual, "bericht.verzender.maand.extern", Id = "verzender.maand" , Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours, verzender = "Extern")
+          # Plot - aantal
           output$persberichten.verzender.maand.extern.plot.aantal <- renderPlot(
             persberichten.verzender.maand.extern$plot.aantal()
           )
           # Plot - procent
-          persberichten.verzender.maand.extern <- callModule(data.visual, "bericht.verzender.maand.extern", Id = "verzender.maand" , Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours, verzender = "Extern")
           output$persberichten.verzender.maand.extern.plot.procent <- renderPlot(
             persberichten.verzender.maand.extern$plot.procent()
           )
@@ -419,13 +440,12 @@ server <- function(input, output) {
             persberichten.verzender.maand.extern$tabel()
           )
     # PER TYPE ----------------------------------------------------------------
-      # Plot - aantal
       persberichten.type <- callModule(data.visual, "bericht.type", Id = "type" , Persstatistiek, Xaxis = "Beleid", Fill = "Type", colours = colours)
+      # Plot - aantal
       output$persberichten.type.plot.aantal <- renderPlot(
         persberichten.type$plot.aantal()
       )
       # Plot - procent
-      persberichten.type <- callModule(data.visual, "bericht.type", Id = "type" , Persstatistiek, Xaxis = "Beleid", Fill = "Type", colours = colours)
       output$persberichten.type.plot.procent <- renderPlot(
         persberichten.type$plot.procent()
       )
@@ -438,13 +458,12 @@ server <- function(input, output) {
   # PERSRETURN ================================================================
     # PER BELEID --------------------------------------------------------------
       # Algemeen --------------------------------------------------------------
+      persreturn.beleid.alg <- callModule(data.visual, "return.beleid.alg", Id = "return.beleid.alg" , Persstatistiek, Xaxis = "Beleid", Fill = "Persreturn", colours = return.colours)
         # Plot - aantal
-        persreturn.beleid.alg <- callModule(data.visual, "return.beleid.alg", Id = "return.beleid.alg" , Persstatistiek, Xaxis = "Beleid", Fill = "Persreturn", colours = return.colours)
         output$persreturn.beleid.alg.plot.aantal <- renderPlot(
           persreturn.beleid.alg$plot.aantal()
         )
         # Plot - procent
-        persreturn.beleid.alg <- callModule(data.visual, "return.beleid.alg", Id = "return.beleid.alg" , Persstatistiek, Xaxis = "Beleid", Fill = "Persreturn", colours = return.colours)
         output$persreturn.beleid.alg.plot.procent <- renderPlot(
           persreturn.beleid.alg$plot.procent()
         )
@@ -606,6 +625,14 @@ server <- function(input, output) {
                                   maand.plot.procent = reactive(persberichten.alg.maand$plot.procent()),
                                   maand.tabel = reactive(persberichten.alg.maand$tabel()),
                                   maand.uitleg = reactive(persberichten.alg.maand$uitleg()),
+                                  dag.plot.aantal = reactive(persberichten.alg.dag$plot.aantal()),
+                                  dag.plot.procent = reactive(persberichten.alg.dag$plot.procent()),
+                                  dag.tabel = reactive(persberichten.alg.dag$tabel()),
+                                  dag.uitleg = reactive(persberichten.alg.dag$uitleg()),
+                                  week.plot.aantal = reactive(persberichten.alg.week$plot.aantal()),
+                                  week.plot.procent = reactive(persberichten.alg.week$plot.procent()),
+                                  week.tabel = reactive(persberichten.alg.week$tabel()),
+                                  week.uitleg = reactive(persberichten.alg.week$uitleg()),
                                   beleid.plot.aantal = reactive(persberichten.alg.beleid$plot.aantal()),
                                   beleid.plot.procent = reactive(persberichten.alg.beleid$plot.procent()),
                                   beleid.tabel = reactive(persberichten.alg.beleid$tabel()),
@@ -775,7 +802,7 @@ server <- function(input, output) {
       withProgress(
         message = 'Rapport samenstellen',
         min = 0,
-        max = 25,
+        max = 29,
         value = 0,
         { rmarkdown::render(tempReport, 
                             output_file = file,

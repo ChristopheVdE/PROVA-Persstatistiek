@@ -192,6 +192,22 @@ ui <- dashboardPage(
                 data.visualOutput("bericht.alg.maand", plottitle = "Persberichten per maand", Xaxis = "Maand", Xlabels = FALSE)
               ),
               tabBox(
+                title = "Persberichten: Totaal per Dag",
+                width = 6,
+                tabPanel("Plot - aantal", plotOutput("persberichten.alg.dag.plot.aantal")),
+                tabPanel("Plot - procent", plotOutput("persberichten.alg.dag.plot.procent")),
+                tabPanel("Tabel", tableOutput("persberichten.alg.dag.tabel")),
+                data.visualOutput("bericht.alg.dag", plottitle = "Persberichten per dag", Xaxis = "Dag", Xlabels = FALSE)
+              ),
+              tabBox(
+                title = "Persberichten: Totaal per Week",
+                width = 6,
+                tabPanel("Plot - aantal", plotOutput("persberichten.alg.week.plot.aantal")),
+                tabPanel("Plot - procent", plotOutput("persberichten.alg.week.plot.procent")),
+                tabPanel("Tabel", tableOutput("persberichten.alg.week.tabel")),
+                data.visualOutput("bericht.alg.week", plottitle = "Persberichten per maand", Xaxis = "Week", Xlabels = FALSE)
+              ),
+              tabBox(
                 width = 12,
                 title = "Persberichten per beleid",
                 tabPanel("Plot - aantal", plotOutput("persberichten.alg.beleid.plot.aantal")),
