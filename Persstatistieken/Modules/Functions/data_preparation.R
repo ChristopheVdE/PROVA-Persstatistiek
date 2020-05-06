@@ -98,10 +98,9 @@ data.preparation <- function(file, sheet, headers, manual.headers, kwartaal) {
     Excel$Soort <- gsub("evenementenkalender", "Evenementenkalender", Excel$Soort, ignore.case = FALSE)
     # Datum, dag, week & maand ------------------------------------------------
     Excel$Datum <- as.character(Excel$Datum)
-    Excel$Dag <- factor(weekdays(as.Date(Excel$Datum), abbreviate = TRUE), levels = c("Ma", "Di", "Wo", "Do","Vr", "Za", "Zo"))
+    Excel$Dag <- factor(weekdays(as.Date(Excel$Datum), abbreviate = TRUE), levels = c("ma", "di", "wo", "do", "vr", "za", "zo"))
     Excel$Week <- isoweek(as.Date(Excel$Datum))
     Excel$Maand <- factor(months(as.Date(Excel$Datum), abbreviate = TRUE), levels = c("jan", "feb", "mrt", "apr", "mei","jun","jul","aug","sep","okt","nov","dec"))
-    levels(Excel$Maand) <- month.abb
   # As factor -----------------------------------------------------------------
     for (i in c("Verzender", "Beleid")) ({
       Excel[[i]] <- as.factor(Excel[[i]])

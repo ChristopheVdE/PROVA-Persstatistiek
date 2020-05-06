@@ -17,7 +17,7 @@ source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functions/a
 # =============================================================================
 
 # UI ==========================================================================
-data.visualOutput <- function(id, plottitle, Xaxis, Xlabels) {
+data.visualOutput <- function(id, plottitle, Xaxis, Xlabels, Legende = TRUE) {
   ns <- NS(id)
   tabPanel(
     "Opties",
@@ -33,7 +33,7 @@ data.visualOutput <- function(id, plottitle, Xaxis, Xlabels) {
         selectInput(ns("type.aantal"), label = "Plot type - Aantal", choices = c("Barplot", "Taartdiagram"), selected = "Barplot"),
         selectInput(ns("type.procent"), label = "Plot type - Procentueel", choices = c("Barplot", "Taartdiagram"), selected = "Barplot"),
         checkboxInput(ns("Xlabels"), label = "As labels (X-as)", value = Xlabels),
-        checkboxInput(ns("legend"), label = "Legende", value = TRUE)
+        checkboxInput(ns("legend"), label = "Legende", value = Legende)
       )
     ),
     fluidRow(

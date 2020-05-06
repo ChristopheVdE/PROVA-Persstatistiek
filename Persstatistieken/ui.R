@@ -205,7 +205,7 @@ ui <- dashboardPage(
                 tabPanel("Plot - aantal", plotOutput("persberichten.alg.week.plot.aantal")),
                 tabPanel("Plot - procent", plotOutput("persberichten.alg.week.plot.procent")),
                 tabPanel("Tabel", tableOutput("persberichten.alg.week.tabel")),
-                data.visualOutput("bericht.alg.week", plottitle = "Persberichten per maand", Xaxis = "Week", Xlabels = FALSE)
+                data.visualOutput("bericht.alg.week", plottitle = "Persberichten per week", Xaxis = "Week", Xlabels = TRUE, Legende = FALSE)
               ),
               tabBox(
                 width = 12,
