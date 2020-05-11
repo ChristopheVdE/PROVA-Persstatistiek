@@ -3,9 +3,6 @@
 ###############################################################################
 
 # LOAD PACKAGES ===============================================================
-library(shiny)
-library(ggplot2)
-library(RColorBrewer)
 library(scales)
 # =============================================================================
 
@@ -13,7 +10,6 @@ library(scales)
 source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functions/percentages.R")
 source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functions/simple_barplot.R")
 source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functions/simple_piechart.R")
-source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functions/advanced_piechart.R")
 # =============================================================================
 
 # UI ==========================================================================
@@ -442,7 +438,7 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
         } 
     # Taartdiagram ------------------------------------------------------------
         else if ((inhoud == "Aantal" && input$type.aantal == "Taartdiagram") || (inhoud == "Procent" && input$type.procent == "Taartdiagram")) {
-            if (!(Id == "verzender.alg.beleid")) {
+            if (!(Id == "verzender.alg.beleid" || Id == "type" || Id == "return.beleid.alg" || Id == "return.beleid.beleid" || Id == "return.medium")) {
               plots[[inhoud]] <- simple_piechart(Id = Id,
                                                  data = df.berichten,
                                                  Fill = Fill,
@@ -454,7 +450,7 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
                                                  legend = input$legend,
                                                  colors = colours)
             } else {
-              plots[[inhoud]] <- advanced.pie(Id = "verzender.alg.beleid", data = df.berichten)
+              stop("Data is te complex om met een taartdiagram weer te geven.")
             }
         }
       }
