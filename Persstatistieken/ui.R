@@ -378,7 +378,7 @@ ui <- dashboardPage(
                   tabPanel("Plot - aantal", plotOutput("persberichten.verzender.alg.beleid.plot.aantal")),
                   tabPanel("Plot - procent", plotOutput("persberichten.verzender.alg.beleid.plot.procent")),
                   tabPanel("Table", tableOutput("persberichten.verzender.alg.beleid.tabel")),
-                  data.visualOutput("bericht.verzender.alg.beleid", plottitle = "Persberichten per Beleid per Verzender", Xaxis = "Verzender", Xlabels = TRUE)
+                  data.visualOutput("bericht.verzender.alg.beleid", plottitle = "Persberichten per Beleid per Verzender", Xaxis = "Verzender", Xlabels = TRUE, Piechart = FALSE)
                 )
               )
             ),
@@ -447,7 +447,7 @@ ui <- dashboardPage(
                 tabPanel("Plot - aantal", plotOutput("persreturn.beleid.alg.plot.aantal")),
                 tabPanel("Plot - procent", plotOutput("persreturn.beleid.alg.plot.procent")),
                 tabPanel("Tabel", tableOutput("persreturn.beleid.alg.tabel")),
-                data.visualOutput("return.beleid.alg", plottitle = "Persreturn per Beleid", Xaxis = "Beleid", Xlabels = TRUE)
+                data.visualOutput("return.beleid.alg", plottitle = "Persreturn per Beleid", Xaxis = "Beleid", Xlabels = TRUE, Piechart = FALSE)
               ),
             # Deelbeleid ------------------------------------------------------
               tabBox(
@@ -456,7 +456,7 @@ ui <- dashboardPage(
                 tabPanel("Plot - aantal", plotOutput("persreturn.beleid.beleid.economie.plot.aantal")),
                 tabPanel("Plot - procent", plotOutput("persreturn.beleid.beleid.economie.plot.procent")),
                 tabPanel("Tabel", tableOutput("persreturn.beleid.beleid.economie.tabel")),
-                data.visualOutput("return.beleid.beleid.economie", plottitle = "Persreturn per Beleid: Economie", Xaxis = "Deelbeleid", Xlabels = TRUE)
+                data.visualOutput("return.beleid.beleid.economie", plottitle = "Persreturn per Beleid: Economie", Xaxis = "Deelbeleid", Xlabels = TRUE, Piechart = FALSE)
               ),
               tabBox(
                 width = 6,
@@ -464,7 +464,7 @@ ui <- dashboardPage(
                 tabPanel("Plot - aantal", plotOutput("persreturn.beleid.beleid.gouverneur.plot.aantal")),
                 tabPanel("Plot - procent", plotOutput("persreturn.beleid.beleid.gouverneur.plot.procent")),
                 tabPanel("Tabel", tableOutput("persreturn.beleid.beleid.gouverneur.tabel")),
-                data.visualOutput("return.beleid.beleid.gouverneur", plottitle = "Persreturn per Beleid: Gouverneur", Xaxis = "Deelbeleid", Xlabels = TRUE)
+                data.visualOutput("return.beleid.beleid.gouverneur", plottitle = "Persreturn per Beleid: Gouverneur", Xaxis = "Deelbeleid", Xlabels = TRUE, Piechart = FALSE)
               ),
               tabBox(
                 width = 6,
@@ -472,7 +472,7 @@ ui <- dashboardPage(
                 tabPanel("Plot - aantal", plotOutput("persreturn.beleid.beleid.leefmilieu.plot.aantal")),
                 tabPanel("Plot - procent", plotOutput("persreturn.beleid.beleid.leefmilieu.plot.procent")),
                 tabPanel("Tabel", tableOutput("persreturn.beleid.beleid.leefmilieu.tabel")),
-                data.visualOutput("return.beleid.beleid.leefmilieu", plottitle = "Persreturn per Beleid: Leefmilieu", Xaxis = "Deelbeleid", Xlabels = TRUE)
+                data.visualOutput("return.beleid.beleid.leefmilieu", plottitle = "Persreturn per Beleid: Leefmilieu", Xaxis = "Deelbeleid", Xlabels = TRUE, Piechart = FALSE)
               ),
               tabBox(
                 width = 6,
@@ -480,7 +480,7 @@ ui <- dashboardPage(
                 tabPanel("Plot - aantal", plotOutput("persreturn.beleid.beleid.mobiliteit.plot.aantal")),
                 tabPanel("Plot - procent", plotOutput("persreturn.beleid.beleid.mobiliteit.plot.procent")),
                 tabPanel("Tabel", tableOutput("persreturn.beleid.beleid.mobiliteit.tabel")),
-                data.visualOutput("return.beleid.beleid.mobiliteit", plottitle = "Persreturn per Beleid: Mobiliteit", Xaxis = "Deelbeleid", Xlabels = TRUE)
+                data.visualOutput("return.beleid.beleid.mobiliteit", plottitle = "Persreturn per Beleid: Mobiliteit", Xaxis = "Deelbeleid", Xlabels = TRUE, Piechart = FALSE)
               ),
               tabBox(
                 width = 6,
@@ -488,7 +488,7 @@ ui <- dashboardPage(
                 tabPanel("Plot - aantal", plotOutput("persreturn.beleid.beleid.onderwijs.plot.aantal")),
                 tabPanel("Plot - procent", plotOutput("persreturn.beleid.beleid.onderwijs.plot.procent")),
                 tabPanel("Tabel", tableOutput("persreturn.beleid.beleid.onderwijs.tabel")),
-                data.visualOutput("return.beleid.beleid.onderwijs", plottitle = "Persreturn per Beleid: Onderwijs en Educatie", Xaxis = "Deelbeleid", Xlabels = TRUE)
+                data.visualOutput("return.beleid.beleid.onderwijs", plottitle = "Persreturn per Beleid: Onderwijs en Educatie", Xaxis = "Deelbeleid", Xlabels = TRUE, Piechart = FALSE)
               ),
               tabBox(
                 width = 6,
@@ -496,7 +496,7 @@ ui <- dashboardPage(
                 tabPanel("Plot - aantal", plotOutput("persreturn.beleid.beleid.provinciebestuur.plot.aantal")),
                 tabPanel("Plot - procent", plotOutput("persreturn.beleid.beleid.provinciebestuur.plot.procent")),
                 tabPanel("Tabel", tableOutput("persreturn.beleid.beleid.provinciebestuur.tabel")),
-                data.visualOutput("return.beleid.beleid.provinciebestuur", plottitle = "Persreturn per Beleid: Provinciebestuur", Xaxis = "Deelbeleid", Xlabels = TRUE)
+                data.visualOutput("return.beleid.beleid.provinciebestuur", plottitle = "Persreturn per Beleid: Provinciebestuur", Xaxis = "Deelbeleid", Xlabels = TRUE, Piechart = FALSE)
               ),
               tabBox(
                 width = 6,
@@ -504,7 +504,7 @@ ui <- dashboardPage(
                 tabPanel("Plot - aantal", plotOutput("persreturn.beleid.beleid.ruimte.plot.aantal")),
                 tabPanel("Plot - procent", plotOutput("persreturn.beleid.beleid.ruimte.plot.procent")),
                 tabPanel("Tabel", tableOutput("persreturn.beleid.beleid.ruimte.tabel")),
-                data.visualOutput("return.beleid.beleid.ruimte", plottitle = "Persreturn per Beleid: Ruimte", Xaxis = "Deelbeleid", Xlabels = TRUE)
+                data.visualOutput("return.beleid.beleid.ruimte", plottitle = "Persreturn per Beleid: Ruimte", Xaxis = "Deelbeleid", Xlabels = TRUE, Piechart = FALSE)
               ),
               tabBox(
                 width = 6,
@@ -512,7 +512,7 @@ ui <- dashboardPage(
                 tabPanel("Plot - aantal", plotOutput("persreturn.beleid.beleid.vrijetijd.plot.aantal")),
                 tabPanel("Plot - procent", plotOutput("persreturn.beleid.beleid.vrijetijd.plot.procent")),
                 tabPanel("Tabel", tableOutput("persreturn.beleid.beleid.vrijetijd.tabel")),
-                data.visualOutput("return.beleid.beleid.vrijetijd", plottitle = "Persreturn per Beleid: Vrije Tijd", Xaxis = "Deelbeleid", Xlabels = TRUE)
+                data.visualOutput("return.beleid.beleid.vrijetijd", plottitle = "Persreturn per Beleid: Vrije Tijd", Xaxis = "Deelbeleid", Xlabels = TRUE, Piechart = FALSE)
               )
             )
           ),
@@ -526,7 +526,7 @@ ui <- dashboardPage(
               tabPanel("Plot - aantal", plotOutput("persreturn.medium.plot.aantal")),
               tabPanel("Plot - procent", plotOutput("persreturn.medium.plot.procent")),
               tabPanel("Tabel", tableOutput("persreturn.medium.tabel")),
-              data.visualOutput("return.medium", plottitle = "Persreturn (totaal) per Medium", Xaxis = "Beleid", Xlabels = TRUE)
+              data.visualOutput("return.medium", plottitle = "Persreturn (totaal) per Medium", Xaxis = "Beleid", Xlabels = TRUE, Piechart = FALSE)
             )
           )
         ),

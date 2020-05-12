@@ -13,7 +13,7 @@ source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functions/s
 # =============================================================================
 
 # UI ==========================================================================
-data.visualOutput <- function(id, plottitle, Xaxis, Xlabels, Legende = TRUE) {
+data.visualOutput <- function(id, plottitle, Xaxis, Xlabels, Legende = TRUE, Piechart = TRUE) {
   ns <- NS(id)
   tabPanel(
     "Opties",
@@ -26,8 +26,8 @@ data.visualOutput <- function(id, plottitle, Xaxis, Xlabels, Legende = TRUE) {
       ),
       column(
         width = 6,
-        selectInput(ns("type.aantal"), label = "Plot type - Aantal", choices = c("Barplot", "Taartdiagram"), selected = "Barplot"),
-        selectInput(ns("type.procent"), label = "Plot type - Procentueel", choices = c("Barplot", "Taartdiagram"), selected = "Barplot"),
+        selectInput(ns("type.aantal"), label = "Plot type - Aantal", choices = (if(Piechart == TRUE) {c("Barplot", "Taartdiagram")} else {c("Barplot")}), selected = "Barplot"),
+        selectInput(ns("type.procent"), label = "Plot type - Procentueel", choices = (if(Piechart == TRUE) {c("Barplot", "Taartdiagram")} else {c("Barplot")}), selected = "Barplot"),
         checkboxInput(ns("Xlabels"), label = "As labels (X-as)", value = Xlabels),
         checkboxInput(ns("legend"), label = "Legende", value = Legende)
       )
@@ -438,20 +438,16 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
         } 
     # Taartdiagram ------------------------------------------------------------
         else if ((inhoud == "Aantal" && input$type.aantal == "Taartdiagram") || (inhoud == "Procent" && input$type.procent == "Taartdiagram")) {
-            if (!(Id == "verzender.alg.beleid" || Id == "type" || Id == "return.beleid.alg" || Id == "return.beleid.beleid" || Id == "return.medium")) {
-              plots[[inhoud]] <- simple_piechart(Id = Id,
-                                                 data = df.berichten,
-                                                 Fill = Fill,
-                                                 visual = inhoud,
-                                                 title = input$title,
-                                                 Xtitle = input$Xaxis,
-                                                 Ytitle = input$Yaxis,
-                                                 Xlabels = input$Xlabels,
-                                                 legend = input$legend,
-                                                 colors = colours)
-            } else {
-              stop("Data is te complex om met een taartdiagram weer te geven.")
-            }
+          plots[[inhoud]] <- simple_piechart(Id = Id,
+                                             data = df.berichten,
+                                             Fill = Fill,
+                                             visual = inhoud,
+                                             title = input$title,
+                                             Xtitle = input$Xaxis,
+                                             Ytitle = input$Yaxis,
+                                             Xlabels = input$Xlabels,
+                                             legend = input$legend,
+                                             colors = colours)
         }
       }
       return(plots)
