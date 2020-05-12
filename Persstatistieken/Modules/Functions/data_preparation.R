@@ -59,8 +59,6 @@ data.preparation <- function(file, sheet, headers, manual.headers, kwartaal) {
         }
       }
     }
-    # Check for and remove possible NA values ---------------------------------
-    Excel <- Excel[complete.cases(Excel),]
   # Fixing Mistakes -----------------------------------------------------------
     # Verzender ---------------------------------------------------------------
     Excel$Verzender <- gsub("extern", "Extern", Excel$Verzender, ignore.case = FALSE)

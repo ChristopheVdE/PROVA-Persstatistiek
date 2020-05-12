@@ -5,6 +5,7 @@
 # PACKAGES ====================================================================
 library(shiny)
 library(shinydashboard)
+library(RColorBrewer)
 library(colourpicker)
 # =============================================================================
 

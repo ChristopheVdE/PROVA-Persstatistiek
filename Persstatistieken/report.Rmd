@@ -468,7 +468,7 @@ if (params$rendered_by_shiny) shiny::setProgress(12)
 ##### 1.2.2.1. Per maand {.tabset .tabset-fade}
 ###### Plot - aantal
 ```{r "Persberichten Gouverneur: Plot - aantal - maand"}
-params$Persberichten.beleid.maand$gouverneur.plot.procent()
+params$Persberichten.beleid.maand$gouverneur.plot.aantal()
 ```
 
 ###### Plot - procent
@@ -609,7 +609,7 @@ kable(params$Persberichten.verzender.maand$gouverneur.tabel(), caption="Persberi
 if (params$rendered_by_shiny) shiny::setProgress(17)
 ```
 
-##### 1.3.2.4. Extern {.tabset .tabset-fade}
+##### 1.3.2.4. Verzonden door: Extern {.tabset .tabset-fade}
 ###### Plot - aantal
 ```{r "Persberichten per verzender - extern: Plot - aantal"}
 params$Persberichten.verzender.maand$extern.plot.aantal()
