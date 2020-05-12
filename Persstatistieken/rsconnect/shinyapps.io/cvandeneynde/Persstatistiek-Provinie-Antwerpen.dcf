@@ -1,0 +1,13 @@
+name: Persstatistiek-Provinie-Antwerpen
+title: Persstatistiek-Provinie-Antwerpen
+username:
+account: cvandeneynde
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2286595
+bundleId: 3138412
+url: https://cvandeneynde.shinyapps.io/Persstatistiek-Provinie-Antwerpen/
+when: 1589308585.01087
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .RData
