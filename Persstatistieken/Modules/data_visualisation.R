@@ -7,9 +7,9 @@ library(scales)
 # =============================================================================
 
 # LOAD MODULES & FUNCTIONS ====================================================
-source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functions/percentages.R")
-source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functions/simple_barplot.R")
-source("D:/Documenten/GitHub/Persstatistiek/Persstatistieken/Modules/Functions/simple_piechart.R")
+source("./Modules/Functions/percentages.R")
+source("./Modules/Functions/simple_barplot.R")
+source("./Modules/Functions/simple_piechart.R")
 # =============================================================================
 
 # UI ==========================================================================
