@@ -7,9 +7,6 @@ if (interactive()) {
   source("ui.R", local = TRUE)
   source("server.R")
   
-  # # source functions
-  # source("./Modules/Functies/percentages.R", local = FALSE)
-  
   # Start App
   shinyApp(
     ui = ui,
