@@ -33,15 +33,14 @@ server <- function(input, output) {
     Persstatistiek <- data.preparation(file = reactive(input$file$datapath),
                                        sheet = reactive(input$sheet),
                                        headers = reactive(input$headers),
-                                       manual.headers = c(reactive(input$col.beleid), 
-                                                          reactive(input$col.detail), 
-                                                          reactive(input$col.kwartaal), 
-                                                          reactive(input$col.verzender), 
-                                                          reactive(input$col.type), 
-                                                          reactive(input$col.return.algemeen), 
-                                                          reactive(input$col.return.web), 
-                                                          reactive(input$col.return.tv), 
-                                                          reactive(input$col.datum)),
+                                       manual.beleid = reactive(input$col.beleid),
+                                       manual.deelbeleid = reactive(input$col.detail),
+                                       manual.verzender = reactive(input$col.verzender),
+                                       manual.type = reactive(input$col.type),
+                                       manual.return.alg = reactive(input$col.return.algemeen),
+                                       manual.return.web = reactive(input$col.return.web),
+                                       manual.return.tv = reactive(input$col.return.tv),
+                                       manual.datum = reactive(input$col.datum),
                                        kwartaal = reactive(input$kwartaal))
   # Render Original Table ---------------------------------------------------
   output$table <- renderTable({

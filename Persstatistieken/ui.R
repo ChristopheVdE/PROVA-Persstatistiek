@@ -92,34 +92,18 @@ ui <- dashboardPage(
                 title = "Selecteer kolomen die overenkomen met kolominhoud",
                 width = 12,
                 column(
-                  width = 3,
-                  tags$br(tags$b("Kwartaal")),
-                  tags$br(tags$b("Verzender")),
-                  tags$br(tags$b("Beleid")),
-                  tags$br(tags$b("Deelbeleid")),
-                  tags$br(tags$b("Type Persbericht"))
+                  width = 6,
+                  textInput("col.verzender", label = "Verzender", value = 2, placeholder = 2),
+                  textInput("col.beleid", label = "Beleid", value = 9, placeholder = 9),
+                  textInput("col.detail", label = "Deelbeleid", value = 10, placeholder = 10),
+                  textInput("col.type", label = "Type persbericht", value = 11, placeholder = 11)
                 ),
                 column(
-                  width = 3,
-                  textInput("col.kwartaal", label = NULL, value = 1, placeholder = 1),
-                  textInput("col.verzender", label = NULL, value = 2, placeholder = 2),
-                  textInput("col.beleid", label = NULL, value = 9, placeholder = 3),
-                  textInput("col.detail", label = NULL, value = 10, placeholder = 4),
-                  textInput("col.type", label = NULL, value = 11, placeholder = 5)
-                ),
-                column(
-                  width = 3,
-                  tags$br(tags$b("Persreturn: Algemeen")),
-                  tags$br(tags$b("Persreturn: Web")),
-                  tags$br(tags$b("Persreturn: TV")),
-                  tags$br(tags$b("Datum"))
-                ),
-                column(
-                  width = 3,
-                  textInput("col.return.algemeen", label = NULL, value = 6, placeholder = 6),
-                  textInput("col.return.web", label = NULL, value = 7, placeholder = 7),
-                  textInput("col.return.tv", label = NULL, value = 8, placeholder = 8),
-                  textInput("col.datum", label = NULL, value = 12, placeholder = 9)
+                  width = 6,
+                  textInput("col.return.algemeen", label = "Persreturn: algemeen", value = 6, placeholder = 6),
+                  textInput("col.return.web", label = "Persreturn: web", value = 7, placeholder = 7),
+                  textInput("col.return.tv", label = "Persreturn: TV", value = 8, placeholder = 8),
+                  textInput("col.datum", label = "Datum", value = 12, placeholder = 12)
                 )
               )
             )
