@@ -191,7 +191,6 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
           }
           return(berichten)
         }
-        
       # Per beleid: Maand -----------------------------------------------------
         else if (Id == "beleid.maand") {
         # Create table

@@ -120,9 +120,8 @@ data.preparation <- function(file,
     Excel$Soort <- gsub("activiteitenkalender", "Activiteitenkalender", Excel$Soort, ignore.case = FALSE)
     Excel$Soort <- gsub("evenementenkalender", "Evenementenkalender", Excel$Soort, ignore.case = FALSE)
   # As factor -----------------------------------------------------------------
-    for (i in c("Verzender", "Beleid")) ({
-      Excel[[i]] <- as.factor(Excel[[i]])
-    })
+    Excel$Beleid <- factor(Excel$Beleid, c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijs en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"))
+    Excel$Verzender <- factor(Excel$Verzender, c("Provincie", "Persdienst", "Gouverneur", "Extern"))
   # Split ---------------------------------------------------------------------
     Persstatistiek <- split.data.frame(Excel, Excel$Kwartaal)
     Persstatistiek$Jaar <- Excel
