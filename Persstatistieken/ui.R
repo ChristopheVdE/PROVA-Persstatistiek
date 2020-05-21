@@ -27,7 +27,10 @@ ui <- dashboardPage(
                menuSubItem("Data", tabName = "Data", icon = icon("fas fa-table", lib = "font-awesome"))),
     # Persberichten -----------------------------------------------------------
       menuItem("Persberichten", tabname = "Persberichten", icon = icon("bar-chart-o"),
-               menuSubItem("Algemeen", tabName = "Persbericht-algemeen"), 
+               menuItem("Algemeen", tabName = "Persbericht-algemeen", icon = icon("angle-double-right", lib = "font-awesome"), 
+                        menuSubItem("Persberichten", tabName = "Persbericht-alg-persbericht"),
+                        menuSubItem("Persconferenties", tabName = "Persbericht-alg-persconferentie")
+               ),          
                menuItem("Per Beleid", tabName = "Persbericht-beleid", icon = icon("angle-double-right", lib = "font-awesome"), 
                         menuSubItem("Per Maand", tabName = "Persbericht-beleid-maand"),
                         menuSubItem("Per Beleid", tabName = "Persbericht-beleid-beleid")
@@ -94,21 +97,22 @@ ui <- dashboardPage(
                 column(
                   width = 6,
                   textInput("col.verzender", label = "Verzender", value = 2, placeholder = 2),
-                  textInput("col.beleid", label = "Beleid", value = 9, placeholder = 9),
-                  textInput("col.detail", label = "Deelbeleid", value = 10, placeholder = 10),
-                  textInput("col.type", label = "Type persbericht", value = 11, placeholder = 11)
+                  textInput("col.beleid", label = "Beleid", value = 10, placeholder = 10),
+                  textInput("col.detail", label = "Deelbeleid", value = 11, placeholder = 11),
+                  textInput("col.type", label = "Type persbericht", value = 12, placeholder = 12),
+                  textInput("col.persconferentie", label = "Datum persconferentie", value = 5, placeholder = 5)
                 ),
                 column(
                   width = 6,
-                  textInput("col.return.algemeen", label = "Persreturn: algemeen", value = 6, placeholder = 6),
-                  textInput("col.return.web", label = "Persreturn: web", value = 7, placeholder = 7),
-                  textInput("col.return.tv", label = "Persreturn: TV", value = 8, placeholder = 8),
-                  textInput("col.datum", label = "Datum", value = 12, placeholder = 12)
+                  textInput("col.return.algemeen", label = "Persreturn: algemeen", value = 7, placeholder = 7),
+                  textInput("col.return.web", label = "Persreturn: web", value = 8, placeholder = 8),
+                  textInput("col.return.tv", label = "Persreturn: TV", value = 9, placeholder = 9),
+                  textInput("col.datum", label = "Datum", value = 13, placeholder = 13)
                 )
               )
             )
           ),
-        # colour chooser -------------------------------------------------------
+        # Colour chooser -------------------------------------------------------
           column(
             width = 6,
             box(
@@ -156,9 +160,9 @@ ui <- dashboardPage(
         )
       ),
       # Persberichten ---------------------------------------------------------
-        # Algemeen ------------------------------------------------------------
+        # Algemeen - Persberichten --------------------------------------------
           tabItem(
-            tabName = "Persbericht-algemeen",
+            tabName = "Persbericht-alg-persbericht",
             fluidRow(
               tabBox(
                 title = "Persberichten per Kwartaal",
@@ -199,6 +203,52 @@ ui <- dashboardPage(
                 tabPanel("Plot - procent", plotOutput("persberichten.alg.beleid.plot.procent")),
                 tabPanel("Tabel", tableOutput("persberichten.alg.beleid.tabel")),
                 data.visualOutput("bericht.alg.beleid", plottitle = "Persberichten per beleid", Xaxis = "Beleid", Xlabels = FALSE)
+              )
+            )
+          ),
+        # Algemeen - Persconferenties -----------------------------------------
+          tabItem(
+            tabName = "Persbericht-alg-persconferentie",
+            fluidRow(
+              tabBox(
+                title = "Persconferenties per Kwartaal",
+                width = 6,
+                tabPanel("Plot - aantal", plotOutput("persconferenties.alg.kwartaal.plot.aantal")),
+                tabPanel("Plot - procent", plotOutput("persconferenties.alg.kwartaal.plot.procent")),
+                tabPanel("Tabel", tableOutput("persconferenties.alg.kwartaal.tabel")),
+                data.visualOutput("conferentie.alg.kwartaal", plottitle = "Persconferenties per Kwartaal", Xaxis = "Kwartaal", Xlabels = FALSE)
+              ),
+              tabBox(
+                title = "Persconferenties: Totaal per Maand",
+                width = 6,
+                tabPanel("Plot - aantal", plotOutput("persconferenties.alg.maand.plot.aantal")),
+                tabPanel("Plot - procent", plotOutput("persconferenties.alg.maand.plot.procent")),
+                tabPanel("Tabel", tableOutput("persconferenties.alg.maand.tabel")),
+                data.visualOutput("conferentie.alg.maand", plottitle = "Persconferenties per maand", Xaxis = "Maand", Xlabels = FALSE)
+              ),
+              tabBox(
+                title = "Persconferenties: Totaal per Dag",
+                width = 6,
+                tabPanel("Plot - aantal", plotOutput("persconferenties.alg.dag.plot.aantal")),
+                tabPanel("Plot - procent", plotOutput("persconferenties.alg.dag.plot.procent")),
+                tabPanel("Tabel", tableOutput("persconferenties.alg.dag.tabel")),
+                data.visualOutput("conferentie.alg.dag", plottitle = "Persconferenties per dag", Xaxis = "Dag", Xlabels = FALSE)
+              ),
+              tabBox(
+                title = "Persconferenties: Totaal per Week",
+                width = 6,
+                tabPanel("Plot - aantal", plotOutput("persconferenties.alg.week.plot.aantal")),
+                tabPanel("Plot - procent", plotOutput("persconferenties.alg.week.plot.procent")),
+                tabPanel("Tabel", tableOutput("persconferenties.alg.week.tabel")),
+                data.visualOutput("conferentie.alg.week", plottitle = "Persconferenties per week", Xaxis = "Week", Xlabels = TRUE, Legende = FALSE)
+              ),
+              tabBox(
+                width = 12,
+                title = "Persconferenties per beleid",
+                tabPanel("Plot - aantal", plotOutput("persconferenties.alg.beleid.plot.aantal")),
+                tabPanel("Plot - procent", plotOutput("persconferenties.alg.beleid.plot.procent")),
+                tabPanel("Tabel", tableOutput("persconferenties.alg.beleid.tabel")),
+                data.visualOutput("conferentie.alg.beleid", plottitle = "Persconferenties per beleid", Xaxis = "Beleid", Xlabels = FALSE)
               )
             )
           ),

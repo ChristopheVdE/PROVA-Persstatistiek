@@ -8,9 +8,13 @@ simple_piechart <- function(Id, data, Fill, visual, title, Xtitle, Ytitle, Xlabe
   Y <- reactive(
         if (visual == "Aantal") {
           # Persreturn
-          if(Id == "return.beleid.alg" || Id == "return.beleid.beleid" || Id == "return.medium") {
+          if(grepl("return", Id)) {
             data()$Aantal
           } 
+          # Persberichten - Persconferenties
+          else if (grepl("conferentie", Id)) {
+            data()$Persconferenties
+          }
           # Persberichten
           else {
             data()$Persberichten

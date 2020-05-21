@@ -14,6 +14,16 @@ calc_percentages <- function(Id, data) {
     }
     return(column)
   } 
+# Persberichten: Persconferenties ---------------------------------------------
+  else if (Id == "conferentie.alg.kwartaal") {
+    total <- sum(data$Persconferenties)
+    column <- NULL
+    for (i in 1:length(data$Persconferenties)) {
+      column <- c(column,
+                  round(as.numeric(data$Persconferenties[[i]] / total * 100), digits = 2))
+    }
+    return(column)
+  }
 # Persberichten per beleid per verzender --------------------------------------
   else if (Id == "verzender.alg.beleid") {
     # Split dataframe on "Beleid
