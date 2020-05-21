@@ -152,20 +152,20 @@ server <- function(input, output) {
             output$persconferenties.alg.maand.tabel <- renderTable(
               persconferenties.alg.maand$tabel()
             )
-        # # Per Dag ---------------------------------------------------------------
-        #     persconferenties.alg.dag <- callModule(data.visual, "conferentie.alg.dag", Id = "conferentie.alg.dag", data = Persstatistiek, Xaxis = "Dag", Fill = "Dag", colours = colours)
-        #   # Plot - aantal
-        #     output$persconferenties.alg.dag.plot.aantal <- renderPlot(
-        #       persconferenties.alg.dag$plot.aantal()
-        #     )
-        #   # Plot - procent
-        #     output$persconferenties.alg.dag.plot.procent <- renderPlot(
-        #       persconferenties.alg.dag$plot.procent()
-        #     )
-        #   # Tabel
-        #     output$persconferenties.alg.dag.tabel <- renderTable(
-        #       persconferenties.alg.dag$tabel()
-        #     )
+        # Per Dag ---------------------------------------------------------------
+            persconferenties.alg.dag <- callModule(data.visual, "conferentie.alg.dag", Id = "conferentie.alg.dag", data = Persstatistiek, Xaxis = "Dag", Fill = "Dag", colours = colours)
+          # Plot - aantal
+            output$persconferenties.alg.dag.plot.aantal <- renderPlot(
+              persconferenties.alg.dag$plot.aantal()
+            )
+          # Plot - procent
+            output$persconferenties.alg.dag.plot.procent <- renderPlot(
+              persconferenties.alg.dag$plot.procent()
+            )
+          # Tabel
+            output$persconferenties.alg.dag.tabel <- renderTable(
+              persconferenties.alg.dag$tabel()
+            )
         # # Per Week --------------------------------------------------------------
         #     persconferenties.alg.week <- callModule(data.visual, "conferentie.alg.week", Id = "conferentie.alg.week", data = Persstatistiek, Xaxis = "Week", Fill = "Week", colours = colours)
         #   # Plot - aantal

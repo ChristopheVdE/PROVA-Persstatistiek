@@ -151,18 +151,22 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
             colnames(berichten) <- c("Maand", "Persconferenties", "Procentueel")
             berichten
           }
+        # Dag -----------------------------------------------------------------
+          else if (Id == "conferentie.alg.dag") {
+            # Dag Toevoegen
+            temp$Dag <- factor(format(as.Date(temp$"Datum PC"), format = "%u"), levels = c(1:7))
+            levels(temp$Dag) <- c("ma", "di", "wo", "do", "vr", "za", "zo")
+            # Create table
+            berichten <- data.frame(table(temp$Dag))
+            colnames(berichten) <- c("Dag", "Persberichten")
+            # Add percentages
+            berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
+            # Return df
+            colnames(berichten) <- c("Dag", "Persconferenties", "Procentueel")
+            berichten
+          }
           return(berichten)
         }
-        # # Dag -----------------------------------------------------------------
-        #   else if (Id == "conferentie.alg.dag") {
-        #     # Create table
-        #     berichten <- data.frame(table(data()$Dag))
-        #     colnames(berichten) <- c("Dag", "Persconferenties")
-        #     # Add percentages
-        #     berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
-        #     # Return df
-        #     berichten
-        #   } 
         # # Week ----------------------------------------------------------------
         #   else if (Id == "conferentie.alg.week") {
         #     # Create table
