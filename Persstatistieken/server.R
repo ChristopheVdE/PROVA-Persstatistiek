@@ -138,20 +138,20 @@ server <- function(input, output) {
             output$persconferenties.alg.kwartaal.tabel <- renderTable(
               persconferenties.alg.kwartaal$tabel()
             )
-        # # Per Maand -------------------------------------------------------------
-        #     persconferenties.alg.maand <- callModule(data.visual, "conferentie.alg.maand", Id = "conferentie.alg.maand", data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours)
-        #   # Plot - aantal
-        #     output$persconferenties.alg.maand.plot.aantal <- renderPlot(
-        #       persconferenties.alg.maand$plot.aantal()
-        #     )
-        #   # Plot - procent
-        #     output$persconferenties.alg.maand.plot.procent <- renderPlot(
-        #       persconferenties.alg.maand$plot.procent()
-        #     )
-        #   # Tabel
-        #     output$persconferenties.alg.maand.tabel <- renderTable(
-        #       persconferenties.alg.maand$tabel()
-        #     )
+        # Per Maand -------------------------------------------------------------
+            persconferenties.alg.maand <- callModule(data.visual, "conferentie.alg.maand", Id = "conferentie.alg.maand", data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours)
+          # Plot - aantal
+            output$persconferenties.alg.maand.plot.aantal <- renderPlot(
+              persconferenties.alg.maand$plot.aantal()
+            )
+          # Plot - procent
+            output$persconferenties.alg.maand.plot.procent <- renderPlot(
+              persconferenties.alg.maand$plot.procent()
+            )
+          # Tabel
+            output$persconferenties.alg.maand.tabel <- renderTable(
+              persconferenties.alg.maand$tabel()
+            )
         # # Per Dag ---------------------------------------------------------------
         #     persconferenties.alg.dag <- callModule(data.visual, "conferentie.alg.dag", Id = "conferentie.alg.dag", data = Persstatistiek, Xaxis = "Dag", Fill = "Dag", colours = colours)
         #   # Plot - aantal
