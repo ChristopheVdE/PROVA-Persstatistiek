@@ -9,6 +9,7 @@ output:
 params:
   titel: NA
   Persberichten.alg: NA
+  Persconferenties.alg: NA
   Persberichten.beleid.maand: NA
   Persberichten.beleid.beleid: NA
   Persberichten.verzender.alg: NA
@@ -29,23 +30,24 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## 1. Verzonden persberichten
 ### 1.1. Algemeen provincie
-#### 1.1.1. Persberichten per kwartaal {.tabset .tabset-fade}
-##### Plot - aantal
+#### 1.1.1. Persberichten
+##### 1.1.1.1. Persberichten per kwartaal {.tabset .tabset-fade}
+###### Plot - aantal
 ```{r "Persberichten algemeen: kwartaal - plot aantal", align="center"}
 params$Persberichten.alg$kwartaal.plot.aantal()
 ```
 
-##### Plot - procent
+###### Plot - procent
 ```{r "Persberichten algemeen: kwartaal - plot procent", align="center"}
 params$Persberichten.alg$kwartaal.plot.procent()
 ```
 
-##### Tabel
+###### Tabel
 ```{r "Persberichten algemeen: kwartaal - tabel"}
 kable(params$Persberichten.alg$kwartaal.tabel(), caption = "Persberichten per Beleid")
 ```
 
-#### {-}
+##### {-}
 `r params$Persberichten.alg$kwartaal.uitleg()`
 
 ```{r}
@@ -54,24 +56,24 @@ if (params$rendered_by_shiny) shiny::setProgress(1)
 ```
 
 
-#### 1.1.2. Persberichten per maand {.tabset .tabset-fade}
-##### Plot - aantal
+##### 1.1.1.2. Persberichten per maand {.tabset .tabset-fade}
+###### Plot - aantal
 ```{r "Persberichten per maand - Plot - aantal"}
 params$Persberichten.alg$maand.plot.aantal()
 ```
 
-##### Plot - procent
+###### Plot - procent
 ```{r "Persberichten per maand - Plot - procent"}
 params$Persberichten.alg$maand.plot.procent()
 ```
 
 
-##### Tabel
+###### Tabel
 ```{r "Persberichten per maand: tabel"}
 kable(params$Persberichten.alg$maand.tabel(), caption = "Persberichten per maand")
 ```
 
-#### {-}
+##### {-}
 `r params$Persberichten.alg$maand.uitleg()`
 
 ```{r}
@@ -79,24 +81,24 @@ kable(params$Persberichten.alg$maand.tabel(), caption = "Persberichten per maand
 if (params$rendered_by_shiny) shiny::setProgress(2)
 ```
 
-#### 1.1.2. Persberichten per dag {.tabset .tabset-fade}
-##### Plot - aantal
+##### 1.1.1.3. Persberichten per dag {.tabset .tabset-fade}
+###### Plot - aantal
 ```{r "Persberichten per dag - Plot - aantal"}
 params$Persberichten.alg$dag.plot.aantal()
 ```
 
-##### Plot - procent
+###### Plot - procent
 ```{r "Persberichten per dag - Plot - procent"}
 params$Persberichten.alg$dag.plot.procent()
 ```
 
 
-##### Tabel
+###### Tabel
 ```{r "Persberichten per dag: tabel"}
 kable(params$Persberichten.alg$dag.tabel(), caption = "Persberichten per dag")
 ```
 
-#### {-}
+##### {-}
 `r params$Persberichten.alg$dag.uitleg()`
 
 ```{r}
@@ -104,24 +106,24 @@ kable(params$Persberichten.alg$dag.tabel(), caption = "Persberichten per dag")
 if (params$rendered_by_shiny) shiny::setProgress(3)
 ```
 
-#### 1.1.2. Persberichten per week {.tabset .tabset-fade}
-##### Plot - aantal
+##### 1.1.1.4. Persberichten per week {.tabset .tabset-fade}
+###### Plot - aantal
 ```{r "Persberichten per week - Plot - aantal"}
 params$Persberichten.alg$week.plot.aantal()
 ```
 
-##### Plot - procent
+###### Plot - procent
 ```{r "Persberichten per week - Plot - procent"}
 params$Persberichten.alg$week.plot.procent()
 ```
 
 
-##### Tabel
+###### Tabel
 ```{r "Persberichten per week: tabel"}
 kable(params$Persberichten.alg$week.tabel(), caption = "Persberichten per week")
 ```
 
-#### {-}
+##### {-}
 `r params$Persberichten.alg$week.uitleg()`
 
 ```{r}
@@ -130,28 +132,154 @@ if (params$rendered_by_shiny) shiny::setProgress(4)
 ```
 
 
-#### 1.2.3. Persberichten per beleid {.tabset .tabset-fade}
-##### Plot - aantal
+##### 1.1.2.5. Persberichten per beleid {.tabset .tabset-fade}
+###### Plot - aantal
 ```{r "Persberichten per beleid: algemeen - plot aantal", align="center"}
 params$Persberichten.alg$beleid.plot.aantal()
 ```
 
-##### Plot - procent
+###### Plot - procent
 ```{r "Persberichten per beleid: algemeen - plot procent", align="center"}
 params$Persberichten.alg$beleid.plot.procent()
 ```
 
-##### Tabel
+###### Tabel
 ```{r "Persberichten per beleid: algemeen - tabel"}
 kable(params$Persberichten.alg$beleid.tabel(), caption = "Persberichten per Beleid")
 ```
 
-#### {-}
+##### {-}
 `r params$Persberichten.alg$beleid.uitleg()`
 
 ```{r}
 # Update progressbar
 if (params$rendered_by_shiny) shiny::setProgress(5)
+```
+
+#### 1.1.2. Persconferenties
+##### 1.1.2.1. Persconferenties per kwartaal {.tabset .tabset-fade}
+###### Plot - aantal
+```{r "Persconferenties algemeen: kwartaal - plot aantal", align="center"}
+params$Persconferenties.alg$kwartaal.plot.aantal()
+```
+
+###### Plot - procent
+```{r "Persconferenties algemeen: kwartaal - plot procent", align="center"}
+params$Persconferenties.alg$kwartaal.plot.procent()
+```
+
+###### Tabel
+```{r "Persconferenties algemeen: kwartaal - tabel"}
+kable(params$Persconferenties.alg$kwartaal.tabel(), caption = "Persconferenties per Beleid")
+```
+
+##### {-}
+`r params$Persconferenties.alg$kwartaal.uitleg()`
+
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(6)
+```
+
+
+##### 1.1.2.2. Persconferenties per maand {.tabset .tabset-fade}
+###### Plot - aantal
+```{r "Persconferenties per maand - Plot - aantal"}
+params$Persconferenties.alg$maand.plot.aantal()
+```
+
+###### Plot - procent
+```{r "Persconferenties per maand - Plot - procent"}
+params$Persconferenties.alg$maand.plot.procent()
+```
+
+
+###### Tabel
+```{r "Persconferenties per maand: tabel"}
+kable(params$Persconferenties.alg$maand.tabel(), caption = "Persconferenties per maand")
+```
+
+##### {-}
+`r params$Persconferenties.alg$maand.uitleg()`
+
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(7)
+```
+
+##### 1.1.2.3. Persconferenties per dag {.tabset .tabset-fade}
+###### Plot - aantal
+```{r "Persconferenties per dag - Plot - aantal"}
+params$Persconferenties.alg$dag.plot.aantal()
+```
+
+###### Plot - procent
+```{r "Persconferenties per dag - Plot - procent"}
+params$Persconferenties.alg$dag.plot.procent()
+```
+
+
+###### Tabel
+```{r "Persconferenties per dag: tabel"}
+kable(params$Persconferenties.alg$dag.tabel(), caption = "Persconferenties per dag")
+```
+
+##### {-}
+`r params$Persconferenties.alg$dag.uitleg()`
+
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(8)
+```
+
+##### 1.1.2.4. Persconferenties per week {.tabset .tabset-fade}
+###### Plot - aantal
+```{r "Persconferenties per week - Plot - aantal"}
+params$Persconferenties.alg$week.plot.aantal()
+```
+
+###### Plot - procent
+```{r "Persconferenties per week - Plot - procent"}
+params$Persconferenties.alg$week.plot.procent()
+```
+
+
+###### Tabel
+```{r "Persconferenties per week: tabel"}
+kable(params$Persconferenties.alg$week.tabel(), caption = "Persconferenties per week")
+```
+
+##### {-}
+`r params$Persconferenties.alg$week.uitleg()`
+
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(9)
+```
+
+
+##### 1.1.2.5. Persconferenties per beleid {.tabset .tabset-fade}
+###### Plot - aantal
+```{r "Persconferenties per beleid: algemeen - plot aantal", align="center"}
+params$Persconferenties.alg$beleid.plot.aantal()
+```
+
+###### Plot - procent
+```{r "Persconferenties per beleid: algemeen - plot procent", align="center"}
+params$Persconferenties.alg$beleid.plot.procent()
+```
+
+###### Tabel
+```{r "Persconferenties per beleid: algemeen - tabel"}
+kable(params$Persconferenties.alg$beleid.tabel(), caption = "Persconferenties per Beleid")
+```
+
+##### {-}
+`r params$Persconferenties.alg$beleid.uitleg()`
+
+```{r}
+# Update progressbar
+if (params$rendered_by_shiny) shiny::setProgress(10)
 ```
 
 
@@ -197,7 +325,7 @@ kable(params$Persberichten.beleid.beleid$provinciebestuur.tabel(), caption = "Pe
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(6)
+if (params$rendered_by_shiny) shiny::setProgress(11)
 ```
 
 #### 1.2.2. Economie
@@ -241,7 +369,7 @@ kable(params$Persberichten.beleid.beleid$economie.tabel(), caption = "Persberich
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(7)
+if (params$rendered_by_shiny) shiny::setProgress(12)
 ```
 
 #### 1.2.3. Leefmilieu
@@ -285,7 +413,7 @@ kable(params$Persberichten.beleid.beleid$leefmilieu.tabel(), caption = "Persberi
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(8)
+if (params$rendered_by_shiny) shiny::setProgress(13)
 ```
 
 #### 1.2.4. Mobiliteit
@@ -329,7 +457,7 @@ kable(params$Persberichten.beleid.beleid$mobiliteit.tabel(), caption = "Persberi
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(9)
+if (params$rendered_by_shiny) shiny::setProgress(14)
 ```
 
 #### 1.2.5. Onderwijs en Educatie
@@ -373,7 +501,7 @@ kable(params$Persberichten.beleid.beleid$onderwijs.tabel(), caption = "Persberic
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(10)
+if (params$rendered_by_shiny) shiny::setProgress(15)
 ```
 
 #### 1.2.6. Ruimte
@@ -417,7 +545,7 @@ kable(params$Persberichten.beleid.beleid$ruimte.tabel(), caption = "Persberichte
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(11)
+if (params$rendered_by_shiny) shiny::setProgress(16)
 ```
 
 #### 1.2.7. Vrije tijd
@@ -461,7 +589,7 @@ kable(params$Persberichten.beleid.beleid$vrijetijd.tabel(), caption = "Persberic
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(12)
+if (params$rendered_by_shiny) shiny::setProgress(17)
 ```
 
 #### 1.2.8. Gouverneur
@@ -505,7 +633,7 @@ kable(params$Persberichten.beleid.beleid$gouverneur.tabel(), caption = "Persberi
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(13)
+if (params$rendered_by_shiny) shiny::setProgress(18)
 ```
 
 
@@ -532,7 +660,7 @@ kable(params$Persberichten.verzender.alg$totaal.tabel(), caption="Persberichten 
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(14)
+if (params$rendered_by_shiny) shiny::setProgress(19)
 ```
 
 
@@ -558,7 +686,7 @@ kable(params$Persberichten.verzender.maand$persdienst.tabel(), caption="Persberi
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(15)
+if (params$rendered_by_shiny) shiny::setProgress(20)
 ```
 
 ##### 1.3.2.2. Verzonden door: Provincie {.tabset .tabset-fade}
@@ -582,7 +710,7 @@ kable(params$Persberichten.verzender.maand$provincie.tabel(), caption="Persberic
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(16)
+if (params$rendered_by_shiny) shiny::setProgress(21)
 ```
 
 ##### 1.3.2.3. Verzonden door: Gouverneur {.tabset .tabset-fade}
@@ -606,7 +734,7 @@ kable(params$Persberichten.verzender.maand$gouverneur.tabel(), caption="Persberi
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(17)
+if (params$rendered_by_shiny) shiny::setProgress(22)
 ```
 
 ##### 1.3.2.4. Verzonden door: Extern {.tabset .tabset-fade}
@@ -630,7 +758,7 @@ kable(params$Persberichten.verzender.maand$extern.tabel(), caption="Persberichte
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(18)
+if (params$rendered_by_shiny) shiny::setProgress(23)
 ```
 
 
@@ -655,7 +783,7 @@ params$Persberichten.type$type.plot.procent()
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(19)
+if (params$rendered_by_shiny) shiny::setProgress(24)
 ```
 
 
@@ -683,7 +811,7 @@ kable(params$Persreturn.beleid$algemeen.tabel(), caption= "Persreturn per beleid
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(20)
+if (params$rendered_by_shiny) shiny::setProgress(25)
 ```
 
 #### 2.1.2 Per beleid
@@ -708,7 +836,7 @@ kable(params$Persreturn.beleid$provinciebestuur.tabel(), caption = "Persberichte
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(21)
+if (params$rendered_by_shiny) shiny::setProgress(26)
 ```
 
 ##### 2.1.2.2 Economie {.tabset .tabset-fade}
@@ -732,7 +860,7 @@ kable(params$Persreturn.beleid$economie.tabel(), caption = "Persberichten: Econo
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(22)
+if (params$rendered_by_shiny) shiny::setProgress(27)
 ```
 
 ##### 2.1.2.3 Leefmilieu {.tabset .tabset-fade}
@@ -756,7 +884,7 @@ kable(params$Persreturn.beleid$leefmilieu.tabel(), caption = "Persberichten: Lee
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(23)
+if (params$rendered_by_shiny) shiny::setProgress(28)
 ```
 
 ##### 2.1.2.4 Mobiliteit {.tabset .tabset-fade}
@@ -780,7 +908,7 @@ kable(params$Persreturn.beleid$mobiliteit.tabel(), caption = "Persberichten: Mob
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(24)
+if (params$rendered_by_shiny) shiny::setProgress(29)
 ```
 
 ##### 2.1.2.5 Onderwijs en Educatie {.tabset .tabset-fade}
@@ -804,7 +932,7 @@ kable(params$Persreturn.beleid$onderwijs.tabel(), caption = "Persberichten: Onde
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(25)
+if (params$rendered_by_shiny) shiny::setProgress(30)
 ```
 
 ##### 2.1.2.6 Ruimte {.tabset .tabset-fade}
@@ -828,7 +956,7 @@ kable(params$Persreturn.beleid$ruimte.tabel(), caption = "Persberichten: Ruimte"
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(26)
+if (params$rendered_by_shiny) shiny::setProgress(31)
 ```
 
 ##### 2.1.2.7 Vrije Tijd {.tabset .tabset-fade}
@@ -852,7 +980,7 @@ kable(params$Persreturn.beleid$vrijetijd.tabel(), caption = "Persberichten: Vrij
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(27)
+if (params$rendered_by_shiny) shiny::setProgress(32)
 ```
 
 ##### 2.1.2.8 Gouverneur {.tabset .tabset-fade}
@@ -876,7 +1004,7 @@ kable(params$Persreturn.beleid$gouverneur.tabel(), caption = "Persberichten: Gou
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(28)
+if (params$rendered_by_shiny) shiny::setProgress(33)
 ```
 
 
@@ -901,7 +1029,7 @@ kable(params$Persreturn.medium$medium.tabel(), caption = "Persreturn per medium"
 
 ```{r}
 # Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(29)
+if (params$rendered_by_shiny) shiny::setProgress(34)
 ```
 
 

@@ -168,7 +168,7 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
         # Week ----------------------------------------------------------------
           else if (Id == "conferentie.alg.week") {
             # Week toevoegen
-            temp$Week <- isoweek(as.Date(temp$"Datum PC"))
+            temp$Week <- ISOweek(as.Date(temp$"Datum PC"))
             # Create table
             berichten <- data.frame(table(temp$Week))
             colnames(berichten) <- c("Week", "Persberichten")
@@ -186,7 +186,7 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
             # Add percentages
             berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
             # Return df
-            colnames(berichten) <- c("Beleid","Persconferenties")
+            colnames(berichten) <- c("Beleid","Persconferenties", "Procentueel")
             berichten
           }
           return(berichten)

@@ -71,7 +71,7 @@ data.preparation <- function(file,
     Excel$Dag <- factor(format(as.Date(Excel$Datum), format = "%u"), levels = c(1:7))
     levels(Excel$Dag) <- c("ma", "di", "wo", "do", "vr", "za", "zo")
     # Week toevoegen ----------------------------------------------------------
-    Excel$Week <- isoweek(as.Date(Excel$Datum))
+    Excel$Week <- ISOweek(as.Date(Excel$Datum))
     # Maand toevoegen ---------------------------------------------------------
     Excel$Maand <- factor(format(as.Date(Excel$Datum), format = "%m"), levels = c("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"))
     levels(Excel$Maand) <- c("jan", "feb", "mrt", "apr", "mei","jun","jul","aug","sep","okt","nov","dec")
