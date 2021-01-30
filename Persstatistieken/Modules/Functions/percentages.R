@@ -31,7 +31,7 @@ calc_percentages <- function(Id, data) {
     # Create empty list
     column <- NULL
     # Calculate percentages
-    for (verzender in levels(data$Verzender)) {
+    for (verzender in levels(as.factor(data$Verzender))) {
       percentages <- NULL
       for (i in 1:length(df.split[[verzender]]$Persberichten)) {
         percentages <- c(percentages,
@@ -55,7 +55,7 @@ calc_percentages <- function(Id, data) {
     # Create empty list
     column <- NULL
     # Calculate percentages
-    for (beleid in levels(data$Beleid)) {
+    for (beleid in levels(as.factor(data$Beleid))) {
       percentages <- NULL
       for (i in 1:length(df.split[[beleid]]$Persberichten)) {
         percentages <- c(percentages,
@@ -79,7 +79,7 @@ calc_percentages <- function(Id, data) {
   # Create empty list
     column <- NULL
   # Calculate percentages
-    for (beleid in levels(data$Beleid)) {
+    for (beleid in levels(as.factor(data$Beleid))) {
       percentages <- NULL
       for (i in 1:length(df.split[[beleid]]$Aantal)) {
         percentages <- c(percentages,
@@ -103,7 +103,7 @@ calc_percentages <- function(Id, data) {
   # Create empty list
     column <- NULL
   # Calculate percentages
-    for (deelbeleid in levels(data$Deelbeleid)) {
+    for (deelbeleid in levels(as.factor(data$Deelbeleid))) {
       percentages <- NULL
       for (i in 1:length(df.split[[deelbeleid]]$Aantal)) {
         percentages <- c(percentages,
@@ -111,6 +111,7 @@ calc_percentages <- function(Id, data) {
       }
       column <- c(column, percentages)
     }
+    #browser()
   # Fix NA values
     for(i in 1:length(column)) {
       if (is.na(column[[i]])) {
@@ -127,7 +128,7 @@ calc_percentages <- function(Id, data) {
   # Create empty list
     column <- NULL
   # Calculate percentages
-    for (beleid in levels(data$Beleid)) {
+    for (beleid in levels(as.factor(data$Beleid))) {
       percentages <- NULL
       for (i in 1:length(df.split[[beleid]]$Aantal)) {
         percentages <- c(percentages,

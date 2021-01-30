@@ -4,3 +4,4 @@
 ./Rapporten/*
 *.docx
 *.Rhistory
+*.RData
