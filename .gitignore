@@ -5,3 +5,4 @@
 *.docx
 *.Rhistory
 *.RData
+!Persstatistiek_template.xlsx
