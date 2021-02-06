@@ -13,7 +13,7 @@ getdata.Deelbeleiden <- function(
                               sheet,
                               datarange) {
   # Prepare dataset -----------------------------------------------------------
-  Deelbeleiden <- reactive({
+  AlleDeelbeleiden <- reactive({
     req(file())
     req(sheet())
     req(datarange)

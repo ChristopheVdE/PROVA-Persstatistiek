@@ -245,13 +245,13 @@ ui <- dashboardPage(
           box(
             title = 'Deelbeleiden',
             width = 12,
-            DT::dataTableOutput("Deelbeleiden")
+            DT::dataTableOutput("AlleDeelbeleiden")
           )
         )
       ),
     # Persberichten ------------------------------------------------------------
       # Algemeen ---------------------------------------------------------------
-        # Algemeen - Persberichten -----------------------------------------------
+        # Algemeen - Persberichten ---------------------------------------------
           tabItem(
             tabName = "Persbericht-alg-persbericht",
             fluidRow(

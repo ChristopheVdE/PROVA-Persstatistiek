@@ -32,14 +32,16 @@ server <- function(input, output) {
                                input$return.colour2))
   # Inlezen basis data ---------------------------------------------------------
   source("./Modules/Functions/ophalen_deelbeleiden.R")
-    Deelbeleiden <- getdata.Deelbeleiden(file = reactive(input$file$datapath),
+    AlleDeelbeleiden <- getdata.Deelbeleiden(file = reactive(input$file$datapath),
                                          sheet = reactive(input$basisSheet),
                                          datarange = c("H:I")
       
     )
-    output$Deelbeleiden <- DT::renderDataTable({
-      Deelbeleiden()
+    output$AlleDeelbeleiden <- DT::renderDataTable({
+      AlleDeelbeleiden()
     })
+    Deelbeleiden <- reactive(split.data.frame(AlleDeelbeleiden, AlleDeelbeleiden()$Beleid))
+    
     
   # Inlezen hoofd data----------------------------------------------------------
   source("./Modules/Functions/data_preparation.R")
