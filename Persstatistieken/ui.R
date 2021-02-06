@@ -7,6 +7,7 @@ library(shiny)
 library(shinydashboard)
 library(RColorBrewer)
 library(colourpicker)
+library(shinyWidgets)
 # ==============================================================================
 
 source("./Modules/data_visualisation.R")
@@ -24,6 +25,7 @@ ui <- dashboardPage(
     # Input --------------------------------------------------------------------
       menuItem("Input", tabName = "Input",
                menuSubItem("Settings", tabName = "Settings", icon = icon("fas fa-cog", lib = "font-awesome")),
+               menuSubItem("Kleuren", tabName = "Kleuren", icon = icon("fas fa-palette", lib = 'font-awesome')),
                menuSubItem("Data", tabName = "Data", icon = icon("fas fa-table", lib = "font-awesome"))),
     # Persberichten ------------------------------------------------------------
       menuItem("Persberichten", tabname = "Persberichten", icon = icon("bar-chart-o"),
@@ -56,6 +58,7 @@ ui <- dashboardPage(
   dashboardBody(
     tabItems(
     # Input scherm -------------------------------------------------------------
+      # Settings ---------------------------------------------------------------
       tabItem(
         tabName = "Settings",
         fluidRow(
@@ -112,7 +115,84 @@ ui <- dashboardPage(
               )
             )
           ),
-        # Colour chooser -------------------------------------------------------
+        # Selecteer actieve deelbeleiden per beleid ----------------------------
+          column(
+            width = 6,
+            box(
+              title = 'Selecteer actieve deelbeleiden per beleid',
+              width = 12,
+              pickerInput(
+                inputId = 'Economie.ActieveDeelbeleiden',
+                label = 'Economie:',
+                choices = c('test1', 'test2', 'test3'),
+                selected = c('test1', 'test2', 'test3'),
+                multiple = TRUE,
+                options = list(`actions-box` = TRUE)
+              ),
+              pickerInput(
+                inputId = 'Gouverneur.ActieveDeelbeleiden',
+                label = 'Gouverneur:',
+                choices = c('test1', 'test2', 'test3'),
+                selected = c('test1', 'test2', 'test3'),
+                multiple = TRUE,
+                options = list(`actions-box` = TRUE)
+              ),
+              pickerInput(
+                inputId = 'Leefmilieu.ActieveDeelbeleiden',
+                label = 'Leefmilieu:',
+                choices = c('test1', 'test2', 'test3'),
+                selected = c('test1', 'test2', 'test3'),
+                multiple = TRUE,
+                options = list(`actions-box` = TRUE)
+              ),
+              pickerInput(
+                inputId = 'Mobiliteit.ActieveDeelbeleiden',
+                label = 'Mobiliteit:',
+                choices = c('test1', 'test2', 'test3'),
+                selected = c('test1', 'test2', 'test3'),
+                multiple = TRUE,
+                options = list(`actions-box` = TRUE)
+              ),
+              pickerInput(
+                inputId = 'Onderwijs.ActieveDeelbeleiden',
+                label = 'Onderwijs en Educatie:',
+                choices = c('test1', 'test2', 'test3'),
+                selected = c('test1', 'test2', 'test3'),
+                multiple = TRUE,
+                options = list(`actions-box` = TRUE)
+              ),
+              pickerInput(
+                inputId = 'Provinciebestuur.ActieveDeelbeleiden',
+                label = 'Provinciebestuur:',
+                choices = c('test1', 'test2', 'test3'),
+                selected = c('test1', 'test2', 'test3'),
+                multiple = TRUE,
+                options = list(`actions-box` = TRUE)
+              ),
+              pickerInput(
+                inputId = 'Ruimte.ActieveDeelbeleiden',
+                label = 'Economie:',
+                choices = c('test1', 'test2', 'test3'),
+                selected = c('test1', 'test2', 'test3'),
+                multiple = TRUE,
+                options = list(`actions-box` = TRUE)
+              ),
+              pickerInput(
+                inputId = 'VrijeTijd.ActieveDeelbeleiden',
+                label = 'Vrije Tijd:',
+                choices = c('test1', 'test2', 'test3'),
+                selected = c('test1', 'test2', 'test3'),
+                multiple = TRUE,
+                options = list(`actions-box` = TRUE)
+              ),
+            )
+          )
+        )
+      ),
+      # Color chooser ----------------------------------------------------------
+      tabItem(
+        tabName = "Kleuren",
+        fluidRow(
           column(
             width = 6,
             box(
@@ -138,7 +218,10 @@ ui <- dashboardPage(
                 colourInput("colour13", "Colour 13", brewer.pal(8,"Pastel1")[5]),
                 colourInput("colour14", "Colour 14", brewer.pal(8,"Pastel1")[6])
               )
-            ),
+            )
+          ),
+          column(
+            width = 6,
             box(
               title = "Plot kleuren: Persreturn",
               width = 12,
