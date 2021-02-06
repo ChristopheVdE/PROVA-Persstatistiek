@@ -8,6 +8,7 @@ library(shinydashboard)
 library(RColorBrewer)
 library(colourpicker)
 library(shinyWidgets)
+library(DT)
 # ==============================================================================
 
 source("./Modules/data_visualisation.R")
@@ -77,7 +78,8 @@ ui <- dashboardPage(
                         width = 900,
                         placeholder = "No file selected"),
             # Werkblad
-              textInput("sheet", "Te gebruiken Werkblad", value ="Hele organisatie", placeholder = "Hele organisatie" ),
+              textInput("sheet", "Te gebruiken Werkblad", value ="Hele Organisatie", placeholder = "Hele Organisatie" ),
+              textInput("basisSheet", "Werkblad met basisdata en relaties", value ="Dependencies", placeholder = "Dependencies" ),
             # Headers  
               checkboxInput("headers", label = "Eerste rij bevat kolomnamen", value = TRUE),
             # Jaar
@@ -238,7 +240,12 @@ ui <- dashboardPage(
           box(
             title = "Processed uploaded data",
             width = 12,
-            tableOutput("table")
+            DT::dataTableOutput("Persstatistiek")
+          ),
+          box(
+            title = 'Deelbeleiden',
+            width = 12,
+            DT::dataTableOutput("Deelbeleiden")
           )
         )
       ),

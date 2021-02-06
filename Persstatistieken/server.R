@@ -7,6 +7,7 @@ library(knitr)
 library(RColorBrewer)
 library(ggplot2)
 library(ISOweek)
+library(DT)
 # ==============================================================================
 
 server <- function(input, output) {
@@ -29,7 +30,18 @@ server <- function(input, output) {
                         input$colour14))
   return.colours <- reactive(c(input$return.colour1, 
                                input$return.colour2))
-  # Data Preparation -----------------------------------------------------------
+  # Inlezen basis data ---------------------------------------------------------
+  source("./Modules/Functions/ophalen_deelbeleiden.R")
+    Deelbeleiden <- getdata.Deelbeleiden(file = reactive(input$file$datapath),
+                                         sheet = reactive(input$basisSheet),
+                                         datarange = c("H:I")
+      
+    )
+    output$Deelbeleiden <- DT::renderDataTable({
+      Deelbeleiden()
+    })
+    
+  # Inlezen hoofd data----------------------------------------------------------
   source("./Modules/Functions/data_preparation.R")
     Persstatistiek <- data.preparation(file = reactive(input$file$datapath),
                                        sheet = reactive(input$sheet),
@@ -45,7 +57,7 @@ server <- function(input, output) {
                                        manual.persconferentie = reactive(input$col.persconferentie),
                                        kwartaal = reactive(input$kwartaal))
   # Render Original Table ------------------------------------------------------
-  output$table <- renderTable({
+  output$Persstatistiek <- DT::renderDataTable({
     Persstatistiek()
   })
   # ============================================================================
