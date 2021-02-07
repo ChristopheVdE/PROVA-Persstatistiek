@@ -576,7 +576,7 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
         temp <- split(df.berichten(), df.berichten()$Persreturn)
         temp <- data.frame(
           Beleid = beleid,
-          Deelbeleid = levels(df.berichten()$Deelbeleid),
+          Deelbeleid = levels(as.factor(datadeelbeleid())),
           Ja = temp$Ja$Aantal,
           Nee = temp$Nee$Aantal 
         )
