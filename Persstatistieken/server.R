@@ -10,7 +10,7 @@ library(ISOweek)
 library(DT)
 # ==============================================================================
 
-server <- function(input, output) {
+server <- function(input, output, session) {
   
   # INPUT PROCESSING ===========================================================
   # Colors ---------------------------------------------------------------------
@@ -37,11 +37,27 @@ server <- function(input, output) {
                                          datarange = c("H:I")
       
     )
+    # Render Table -------------------------------------------------------------
     output$AlleDeelbeleiden <- DT::renderDataTable({
       AlleDeelbeleiden()
     })
-    Deelbeleiden <- reactive(split.data.frame(AlleDeelbeleiden, AlleDeelbeleiden()$Beleid))
+    # Udpate pickerInput -------------------------------------------------------
+    observe({
+      Deelbeleiden <- split.data.frame(AlleDeelbeleiden(), AlleDeelbeleiden()$Beleid)
+      updatePickerInput(
+         session = session,
+         inputId = 'Economie.ActieveDeelbeleiden',
+         choices = Deelbeleiden$Economie$Deelbeleid,
+         selected = Deelbeleiden$Economie$Deelbeleid
+      )
+    })
     
+    
+
+    
+
+
+   # browser()
     
   # Inlezen hoofd data----------------------------------------------------------
   source("./Modules/Functions/data_preparation.R")

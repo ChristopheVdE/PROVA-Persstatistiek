@@ -126,8 +126,8 @@ ui <- dashboardPage(
               pickerInput(
                 inputId = 'Economie.ActieveDeelbeleiden',
                 label = 'Economie:',
-                choices = c('test1', 'test2', 'test3'),
-                selected = c('test1', 'test2', 'test3'),
+                choices = NULL,
+                selected = NULL,
                 multiple = TRUE,
                 options = list(`actions-box` = TRUE)
               ),
