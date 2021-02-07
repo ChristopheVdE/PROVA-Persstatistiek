@@ -129,63 +129,63 @@ ui <- dashboardPage(
                 choices = NULL,
                 selected = NULL,
                 multiple = TRUE,
-                options = list(`actions-box` = TRUE)
+                options = list(`actions-box` = TRUE, `live-search`=TRUE)
               ),
               pickerInput(
                 inputId = 'Gouverneur.ActieveDeelbeleiden',
                 label = 'Gouverneur:',
-                choices = c('test1', 'test2', 'test3'),
-                selected = c('test1', 'test2', 'test3'),
+                choices = NULL,
+                selected = NULL,
                 multiple = TRUE,
-                options = list(`actions-box` = TRUE)
+                options = list(`actions-box` = TRUE, `live-search`=TRUE)
               ),
               pickerInput(
                 inputId = 'Leefmilieu.ActieveDeelbeleiden',
                 label = 'Leefmilieu:',
-                choices = c('test1', 'test2', 'test3'),
-                selected = c('test1', 'test2', 'test3'),
+                choices = NULL,
+                selected = NULL,
                 multiple = TRUE,
-                options = list(`actions-box` = TRUE)
+                options = list(`actions-box` = TRUE, `live-search`=TRUE)
               ),
               pickerInput(
                 inputId = 'Mobiliteit.ActieveDeelbeleiden',
                 label = 'Mobiliteit:',
-                choices = c('test1', 'test2', 'test3'),
-                selected = c('test1', 'test2', 'test3'),
+                choices = NULL,
+                selected = NULL,
                 multiple = TRUE,
-                options = list(`actions-box` = TRUE)
+                options = list(`actions-box` = TRUE, `live-search`=TRUE)
               ),
               pickerInput(
                 inputId = 'Onderwijs.ActieveDeelbeleiden',
                 label = 'Onderwijs en Educatie:',
-                choices = c('test1', 'test2', 'test3'),
-                selected = c('test1', 'test2', 'test3'),
+                choices = NULL,
+                selected = NULL,
                 multiple = TRUE,
-                options = list(`actions-box` = TRUE)
+                options = list(`actions-box` = TRUE, `live-search`=TRUE)
               ),
               pickerInput(
                 inputId = 'Provinciebestuur.ActieveDeelbeleiden',
                 label = 'Provinciebestuur:',
-                choices = c('test1', 'test2', 'test3'),
-                selected = c('test1', 'test2', 'test3'),
+                choices = NULL,
+                selected = NULL,
                 multiple = TRUE,
-                options = list(`actions-box` = TRUE)
+                options = list(`actions-box` = TRUE, `live-search`=TRUE)
               ),
               pickerInput(
                 inputId = 'Ruimte.ActieveDeelbeleiden',
                 label = 'Economie:',
-                choices = c('test1', 'test2', 'test3'),
-                selected = c('test1', 'test2', 'test3'),
+                choices = NULL,
+                selected = NULL,
                 multiple = TRUE,
-                options = list(`actions-box` = TRUE)
+                options = list(`actions-box` = TRUE, `live-search`=TRUE)
               ),
               pickerInput(
                 inputId = 'VrijeTijd.ActieveDeelbeleiden',
                 label = 'Vrije Tijd:',
-                choices = c('test1', 'test2', 'test3'),
-                selected = c('test1', 'test2', 'test3'),
+                choices = NULL,
+                selected = NULL,
                 multiple = TRUE,
-                options = list(`actions-box` = TRUE)
+                options = list(`actions-box` = TRUE, `live-search`=TRUE)
               ),
             )
           )

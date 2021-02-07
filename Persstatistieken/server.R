@@ -30,8 +30,9 @@ server <- function(input, output, session) {
                         input$colour14))
   return.colours <- reactive(c(input$return.colour1, 
                                input$return.colour2))
-  # Inlezen basis data ---------------------------------------------------------
-  source("./Modules/Functions/ophalen_deelbeleiden.R")
+  # BASIS data -----------------------------------------------------------------
+    # Inlezen ------------------------------------------------------------------
+    source("./Modules/Functions/ophalen_deelbeleiden.R")
     AlleDeelbeleiden <- getdata.Deelbeleiden(file = reactive(input$file$datapath),
                                          sheet = reactive(input$basisSheet),
                                          datarange = c("H:I")
@@ -44,11 +45,62 @@ server <- function(input, output, session) {
     # Udpate pickerInput -------------------------------------------------------
     observe({
       Deelbeleiden <- split.data.frame(AlleDeelbeleiden(), AlleDeelbeleiden()$Beleid)
+      # Economie
       updatePickerInput(
          session = session,
          inputId = 'Economie.ActieveDeelbeleiden',
          choices = Deelbeleiden$Economie$Deelbeleid,
          selected = Deelbeleiden$Economie$Deelbeleid
+      )
+      # browser()
+      # Gouverneur
+      updatePickerInput(
+        session = session,
+        inputId = 'Gouverneur.ActieveDeelbeleiden',
+        choices = Deelbeleiden$Gouverneur$Deelbeleid,
+        selected = Deelbeleiden$Gouverneur$Deelbeleid
+      )
+      # Leefmilieu
+      updatePickerInput(
+        session = session,
+        inputId = 'Leefmilieu.ActieveDeelbeleiden',
+        choices = Deelbeleiden$Leefmilieu$Deelbeleid,
+        selected = Deelbeleiden$Leefmilieu$Deelbeleid
+      )
+      # Mobiliteit
+      updatePickerInput(
+        session = session,
+        inputId = 'Mobiliteit.ActieveDeelbeleiden',
+        choices = Deelbeleiden$Mobiliteit$Deelbeleid,
+        selected = Deelbeleiden$Mobiliteit$Deelbeleid
+      )
+      # Onderwijs en Educatie
+      updatePickerInput(
+        session = session,
+        inputId = 'Onderwijs.ActieveDeelbeleiden',
+        choices = Deelbeleiden$`Onderwijs en Educatie`$Deelbeleid,
+        selected = Deelbeleiden$`Onderwijs en Educatie`$Deelbeleid
+      )
+      # Provinciebestuur
+      updatePickerInput(
+        session = session,
+        inputId = 'Provinciebestuur.ActieveDeelbeleiden',
+        choices = Deelbeleiden$Provinciebestuur$Deelbeleid,
+        selected = Deelbeleiden$Provinciebestuur$Deelbeleid
+      )
+      # Ruimte
+      updatePickerInput(
+        session = session,
+        inputId = 'Ruimte.ActieveDeelbeleiden',
+        choices = Deelbeleiden$Ruimte$Deelbeleid,
+        selected = Deelbeleiden$Ruimte$Deelbeleid
+      )
+      # Vrije Tijd
+      updatePickerInput(
+        session = session,
+        inputId = 'VrijeTijd.ActieveDeelbeleiden',
+        choices = Deelbeleiden$`Vrije Tijd`$Deelbeleid,
+        selected = Deelbeleiden$`Vrije Tijd`$Deelbeleid
       )
     })
     
