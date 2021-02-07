@@ -35,7 +35,7 @@ simple_piechart <- function(Id, data, Fill, visual, title, Xtitle, Ytitle, Xlabe
       xlab(Xtitle) +
       ylab(Ytitle) +
       labs(fill = Fill) +
-      (if (length(levels(data()[[Fill]])) <= 14) {scale_fill_manual(values=colors())}) +
+      (if (length(levels(as.factor(data()[[Fill]]))) <= 14) {scale_fill_manual(values=colors())}) +
       (if (visual == "Procent") {ylim(c(0,100))}) +
       (if (Xlabels) {theme(axis.text.x = element_text(angle = 45, hjust = 1))} else {theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())}) +
       (if (!(legend)) {theme(legend.position = "none")})

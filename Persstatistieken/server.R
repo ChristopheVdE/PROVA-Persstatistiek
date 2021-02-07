@@ -103,13 +103,7 @@ server <- function(input, output, session) {
         selected = Deelbeleiden$`Vrije Tijd`$Deelbeleid
       )
     })
-    
-    
 
-    
-
-
-   # browser()
     
   # Inlezen hoofd data----------------------------------------------------------
   source("./Modules/Functions/data_preparation.R")
@@ -395,7 +389,7 @@ server <- function(input, output, session) {
 
       # Per Deelbeleid ---------------------------------------------------------
         # Economie -------------------------------------------------------------
-        persberichten.beleid.beleid.economie <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.economie", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Economie")
+        persberichten.beleid.beleid.economie <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.economie", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Economie", datadeelbeleid = reactive(input$Economie.ActieveDeelbeleiden))
           # Plot - aantal
           output$persberichten.beleid.beleid.economie.plot.aantal <- renderPlot(
             persberichten.beleid.beleid.economie$plot.aantal()
@@ -409,7 +403,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.economie$tabel()
           )
         # Gouverneur -----------------------------------------------------------
-        persberichten.beleid.beleid.gouverneur <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.gouverneur", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Gouverneur")
+        persberichten.beleid.beleid.gouverneur <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.gouverneur", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Gouverneur", datadeelbeleid = reactive(input$Gouverneur.ActieveDeelbeleiden))
           # Plot  -aantal
           output$persberichten.beleid.beleid.gouverneur.plot.aantal <- renderPlot(
             persberichten.beleid.beleid.gouverneur$plot.aantal()
@@ -423,7 +417,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.gouverneur$tabel()
           )
         # Leefmilieu -----------------------------------------------------------
-        persberichten.beleid.beleid.leefmilieu <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.leefmilieu", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Leefmilieu")
+        persberichten.beleid.beleid.leefmilieu <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.leefmilieu", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Leefmilieu", datadeelbeleid = reactive(input$Leefmilieu.ActieveDeelbeleiden))
           # Plot -aantal
           output$persberichten.beleid.beleid.leefmilieu.plot.aantal <- renderPlot(
             persberichten.beleid.beleid.leefmilieu$plot.aantal()
@@ -437,7 +431,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.leefmilieu$tabel()
           )
         # Mobiliteit -----------------------------------------------------------
-        persberichten.beleid.beleid.mobiliteit <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.mobiliteit", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Mobiliteit")
+        persberichten.beleid.beleid.mobiliteit <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.mobiliteit", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Mobiliteit", datadeelbeleid = reactive(input$Mobiliteit.ActieveDeelbeleiden))
           # Plot - aantal 
           output$persberichten.beleid.beleid.mobiliteit.plot.aantal <- renderPlot(
             persberichten.beleid.beleid.mobiliteit$plot.aantal()
@@ -451,7 +445,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.mobiliteit$tabel()
           )
         # Onderwijs en Educatie ------------------------------------------------
-        persberichten.beleid.beleid.onderwijs <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.onderwijs", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Onderwijs en Educatie")
+        persberichten.beleid.beleid.onderwijs <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.onderwijs", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Onderwijs en Educatie", datadeelbeleid = reactive(input$Onderwijs.ActieveDeelbeleiden))
           # Plot -aantal 
           output$persberichten.beleid.beleid.onderwijs.plot.aantal <- renderPlot(
             persberichten.beleid.beleid.onderwijs$plot.aantal()
@@ -465,7 +459,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.onderwijs$tabel()
           )
         # Provinciebestuur -----------------------------------------------------
-        persberichten.beleid.beleid.provinciebestuur <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.provinciebestuur", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Provinciebestuur")
+        persberichten.beleid.beleid.provinciebestuur <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.provinciebestuur", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Provinciebestuur", datadeelbeleid = reactive(input$Provinciebestuur.ActieveDeelbeleiden))
           # Plot  - aantal
           output$persberichten.beleid.beleid.provinciebestuur.plot.aantal <- renderPlot(
             persberichten.beleid.beleid.provinciebestuur$plot.aantal()
@@ -479,7 +473,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.provinciebestuur$tabel()
           )
         # Ruimte ---------------------------------------------------------------
-        persberichten.beleid.beleid.ruimte <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.ruimte", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Ruimte")
+        persberichten.beleid.beleid.ruimte <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.ruimte", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Ruimte", datadeelbeleid = reactive(input$Ruimte.ActieveDeelbeleiden))
           # Plot  - aantal
           output$persberichten.beleid.beleid.ruimte.plot.aantal <- renderPlot(
             persberichten.beleid.beleid.ruimte$plot.aantal()
@@ -493,7 +487,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.ruimte$tabel()
         )
         # Vrije Tijd -----------------------------------------------------------
-        persberichten.beleid.beleid.vrijetijd <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.vrijetijd", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Vrije Tijd")
+        persberichten.beleid.beleid.vrijetijd <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.vrijetijd", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Vrije Tijd", datadeelbeleid = reactive(input$VrijeTijd.ActieveDeelbeleiden))
           # Plot  - aantal
           output$persberichten.beleid.beleid.vrijetijd.plot.aantal <- renderPlot(
             persberichten.beleid.beleid.vrijetijd$plot.aantal()
@@ -628,7 +622,7 @@ server <- function(input, output, session) {
         )
       # Deelbeleid -------------------------------------------------------------
         # Economie -------------------------------------------------------------
-        persreturn.beleid.beleid.economie <- callModule(data.visual, "return.beleid.beleid.economie", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", colours = return.colours, beleid = "Economie")
+        persreturn.beleid.beleid.economie <- callModule(data.visual, "return.beleid.beleid.economie", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", colours = return.colours, beleid = "Economie", datadeelbeleid = reactive(input$Economie.ActieveDeelbeleiden))
           # Plot - aantal
           output$persreturn.beleid.beleid.economie.plot.aantal <- renderPlot(
             persreturn.beleid.beleid.economie$plot.aantal()
@@ -642,7 +636,7 @@ server <- function(input, output, session) {
             persreturn.beleid.beleid.economie$tabel()
           )
         # Gouverneur -----------------------------------------------------------
-        persreturn.beleid.beleid.gouverneur <- callModule(data.visual, "return.beleid.beleid.gouverneur", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", colours = return.colours, beleid = "Gouverneur")
+        persreturn.beleid.beleid.gouverneur <- callModule(data.visual, "return.beleid.beleid.gouverneur", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", colours = return.colours, beleid = "Gouverneur", datadeelbeleid =reactive(input$Gouverneur.ActieveDeelbeleiden))
           # Plot  - antal
           output$persreturn.beleid.beleid.gouverneur.plot.aantal <- renderPlot(
             persreturn.beleid.beleid.gouverneur$plot.aantal()
@@ -656,7 +650,7 @@ server <- function(input, output, session) {
             persreturn.beleid.beleid.gouverneur$tabel()
           )
         # Leefmilieu -----------------------------------------------------------
-        persreturn.beleid.beleid.leefmilieu <- callModule(data.visual, "return.beleid.beleid.leefmilieu", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", colours = return.colours, beleid = "Leefmilieu")
+        persreturn.beleid.beleid.leefmilieu <- callModule(data.visual, "return.beleid.beleid.leefmilieu", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", colours = return.colours, beleid = "Leefmilieu", datadeelbeleid = reactive(input$Leefmilieu.ActieveDeelbeleiden))
           # Plot - aantal
           output$persreturn.beleid.beleid.leefmilieu.plot.aantal <- renderPlot(
             persreturn.beleid.beleid.leefmilieu$plot.aantal()
@@ -670,7 +664,7 @@ server <- function(input, output, session) {
             persreturn.beleid.beleid.leefmilieu$tabel()
           )
         # Mobiliteit -----------------------------------------------------------
-        persreturn.beleid.beleid.mobiliteit <- callModule(data.visual, "return.beleid.beleid.mobiliteit", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", colours = return.colours, beleid = "Mobiliteit")
+        persreturn.beleid.beleid.mobiliteit <- callModule(data.visual, "return.beleid.beleid.mobiliteit", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", colours = return.colours, beleid = "Mobiliteit", datadeelbeleid=reactive(input$Mobiliteit.ActieveDeelbeleiden))
           # Plot  - aantal
           output$persreturn.beleid.beleid.mobiliteit.plot.aantal <- renderPlot(
             persreturn.beleid.beleid.mobiliteit$plot.aantal()
@@ -684,7 +678,7 @@ server <- function(input, output, session) {
             persreturn.beleid.beleid.mobiliteit$tabel()
           )
         # Onderwijs en Educatie ------------------------------------------------
-        persreturn.beleid.beleid.onderwijs <- callModule(data.visual, "return.beleid.beleid.onderwijs", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", colours = return.colours, beleid = "Onderwijs en Educatie")
+        persreturn.beleid.beleid.onderwijs <- callModule(data.visual, "return.beleid.beleid.onderwijs", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", colours = return.colours, beleid = "Onderwijs en Educatie", datadeelbeleid = reactive(input$Onderwijs.ActieveDeelbeleiden))
           # Plot  -aantal
           output$persreturn.beleid.beleid.onderwijs.plot.aantal <- renderPlot(
             persreturn.beleid.beleid.onderwijs$plot.aantal()
@@ -698,7 +692,7 @@ server <- function(input, output, session) {
             persreturn.beleid.beleid.onderwijs$tabel()
           )
         # Provinciebestuur -----------------------------------------------------
-        persreturn.beleid.beleid.provinciebestuur <- callModule(data.visual, "return.beleid.beleid.provinciebestuur", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", colours = return.colours, beleid = "Provinciebestuur")
+        persreturn.beleid.beleid.provinciebestuur <- callModule(data.visual, "return.beleid.beleid.provinciebestuur", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", colours = return.colours, beleid = "Provinciebestuur", datadeelbeleid = reactive(input$Provinciebestuur.ActieveDeelbeleiden))
           # Plot  - aantal
           output$persreturn.beleid.beleid.provinciebestuur.plot.aantal <- renderPlot(
             persreturn.beleid.beleid.provinciebestuur$plot.aantal()
@@ -712,7 +706,7 @@ server <- function(input, output, session) {
             persreturn.beleid.beleid.provinciebestuur$tabel()
           )
         # Ruimte ---------------------------------------------------------------
-        persreturn.beleid.beleid.ruimte <- callModule(data.visual, "return.beleid.beleid.ruimte", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", colours = return.colours, beleid = "Ruimte")
+        persreturn.beleid.beleid.ruimte <- callModule(data.visual, "return.beleid.beleid.ruimte", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", colours = return.colours, beleid = "Ruimte", datadeelbeleid = reactive(input$Ruimte.ActieveDeelbeleiden))
           # Plot  - aantal
           output$persreturn.beleid.beleid.ruimte.plot.aantal <- renderPlot(
             persreturn.beleid.beleid.ruimte$plot.aantal()
@@ -726,7 +720,7 @@ server <- function(input, output, session) {
             persreturn.beleid.beleid.ruimte$tabel()
           )
         # Vrije Tijd -----------------------------------------------------------
-        persreturn.beleid.beleid.vrijetijd <- callModule(data.visual, "return.beleid.beleid.vrijetijd", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", colours = return.colours, beleid = "Vrije Tijd")
+        persreturn.beleid.beleid.vrijetijd <- callModule(data.visual, "return.beleid.beleid.vrijetijd", Id = "return.beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Persreturn", colours = return.colours, beleid = "Vrije Tijd", datadeelbeleid = reactive(input$VrijeTijd.ActieveDeelbeleiden))
           # Plot  - aantal
           output$persreturn.beleid.beleid.vrijetijd.plot.aantal <- renderPlot(
             persreturn.beleid.beleid.vrijetijd$plot.aantal()

@@ -42,7 +42,7 @@ data.visualOutput <- function(id, plottitle, Xaxis, Xlabels, Legende = TRUE, Pie
 }
 
 # SERVER ======================================================================
-data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, beleid = NULL, verzender = NULL) {
+data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, beleid = NULL, datadeelbeleid = NULL, verzender = NULL) {
 
   # Data preparation ---------------------------------------------------------- 
     df.berichten <- reactive(
@@ -206,56 +206,56 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
         }
       # Per beleid: Deelbeleid ------------------------------------------------
         else if (Id == "beleid.beleid") {
-        # Create actual table for chose "beleid"
+        # Create actual table for chosen "beleid"
           temp <- split(data(), data()$Beleid)
           temp <- data.frame("Beleid" = beleid, table(temp[[beleid]]$"Deelbeleid"))
           colnames(temp) <- c("Beleid", "Deelbeleid","Persberichten")
         # Specify "deelbeleid" per "Beleid"
           deelbeleid <- levels(temp[[beleid]]$"Deelbeleid")
           if(beleid == "Economie") {
-            for (i in c("Economie, Innovatie en Samenleving", "Europa", "Financien", "Havencentrum", "Hooibeekhoeve", "Innovant", "Interreg", "Landbouw", "Logistiek", "Mondiaal beleid", "Plattelandsbeleid", "POM Antwerpen", "Sociale economie")) {
+            for (i in datadeelbeleid()) {
               if (!(i %in% deelbeleid)) {
                 deelbeleid <- c(deelbeleid, i)
               }
             }
           } else if(beleid == "Gouverneur") {
-            for (i in c("Toezicht gemeenten", "Veiligheid")) {
+            for (i in datadeelbeleid()) {
               if (!(i %in% deelbeleid)) {
                 deelbeleid <- c(deelbeleid, i)
               }
             }
           } else if(beleid == "Leefmilieu") {
-            for (i in c("Bosgroepen", "Duurzaam milieu en natuurgebied", "Kamp C", "Klimaatstrijd", "Landschap", "Milieu en natuur", "MOS", "PIH", "Regionale landschappen", "Waterbeleid")) {
+            for (i in datadeelbeleid()) {
               if (!(i %in% deelbeleid)) {
                 deelbeleid <- c(deelbeleid, i)
               }
             }
           } else if(beleid == "Mobiliteit") {
-            for (i in c("Fietsbeleid", "Fietseducatie")) {
+            for (i in datadeelbeleid()) {
               if (!(i %in% deelbeleid)) {
                 deelbeleid <- c(deelbeleid, i)
               }
             }
           } else if(beleid == "Onderwijs en Educatie") {
-            for (i in c("Avant", "Campus Vesta", "CVO Vivant", "Onderwijs", "PITO Starbroek", "PIVA", "PTS Boom", "Suske en Wiske", "Veiligheidsinstituut", "Vormingscentrum")) {
+            for (i in datadeelbeleid()) {
               if (!(i %in% deelbeleid)) {
                 deelbeleid <- c(deelbeleid, i)
               }
             }
           } else if(beleid == "Provinciebestuur") {
-            for (i in c("Activiteitenkalender", "Pers", "Persagenda", "Provincieraad")) {
+            for (i in datadeelbeleid()) {
               if (!(i %in% deelbeleid)) {
                 deelbeleid <- c(deelbeleid, i)
               }
             }
           } else if(beleid == "Ruimte") {
-            for (i in c("Erfgoed", "Ruimtelijke planning")) {
+            for (i in datadeelbeleid()) {
               if (!(i %in% deelbeleid)) {
                 deelbeleid <- c(deelbeleid, i)
               }
             }
           } else if(beleid == "Vrije Tijd") {
-            for (i in c("Arboretum", "De Nekker", "De Schorre", "de Warande", "Kasteel d'Ursel", "Kempens Landschap", "PGRA", "PGRA - M - K", "PGRK", "PGRM", "Terra Nova", "Toerisme Provincie Antwerpen", "Zilvermeer")) {
+            for (i in datadeelbeleid()) {
               if (!(i %in% deelbeleid)) {
                 deelbeleid <- c(deelbeleid, i)
               }
@@ -387,49 +387,49 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
           # Specify "deelbeleid" per "Beleid"
           deelbeleid <- levels(temp[[beleid]]$"Deelbeleid")
           if(beleid == "Economie") {
-            for (i in c("Economie, Innovatie en Samenleving", "Europa", "Financien", "Havencentrum", "Hooibeekhoeve", "Innovant", "Interreg", "Landbouw", "Logistiek", "Mondiaal beleid", "Plattelandsbeleid", "POM Antwerpen", "Sociale economie")) {
+            for (i in datadeelbeleid()) {
               if (!(i %in% deelbeleid)) {
                 deelbeleid <- c(deelbeleid, i)
               }
             }
           } else if(beleid == "Gouverneur") {
-            for (i in c("Toezicht gemeenten", "Veiligheid")) {
+            for (i in datadeelbeleid()) {
               if (!(i %in% deelbeleid)) {
                 deelbeleid <- c(deelbeleid, i)
               }
             }
           } else if(beleid == "Leefmilieu") {
-            for (i in c("Bosgroepen", "Duurzaam milieu en natuurgebied", "Kamp C", "Klimaatstrijd", "Landschap", "Milieu en natuur", "MOS", "PIH", "Regionale landschappen", "Waterbeleid")) {
+            for (i in datadeelbeleid()) {
               if (!(i %in% deelbeleid)) {
                 deelbeleid <- c(deelbeleid, i)
               }
             }
           } else if(beleid == "Mobiliteit") {
-            for (i in c("Fietsbeleid", "Fietseducatie")) {
+            for (i in datadeelbeleid()) {
               if (!(i %in% deelbeleid)) {
                 deelbeleid <- c(deelbeleid, i)
               }
             }
           } else if(beleid == "Onderwijs en Educatie") {
-            for (i in c("Avant", "Campus Vesta", "CVO Vivant", "Onderwijs", "PITO Starbroek", "PIVA", "PTS Boom", "Suske en Wiske", "Veiligheidsinstituut", "Vormingscentrum")) {
+            for (i in datadeelbeleid()) {
               if (!(i %in% deelbeleid)) {
                 deelbeleid <- c(deelbeleid, i)
               }
             }
           } else if(beleid == "Provinciebestuur") {
-            for (i in c("Activiteitenkalender", "Pers", "Persagenda", "Provincieraad")) {
+            for (i in datadeelbeleid()) {
               if (!(i %in% deelbeleid)) {
                 deelbeleid <- c(deelbeleid, i)
               }
             }
           } else if(beleid == "Ruimte") {
-            for (i in c("Erfgoed", "Ruimtelijke planning")) {
+            for (i in datadeelbeleid()) {
               if (!(i %in% deelbeleid)) {
                 deelbeleid <- c(deelbeleid, i)
               }
             }
           } else if(beleid == "Vrije Tijd") {
-            for (i in c("Arboretum", "De Nekker", "De Schorre", "de Warande", "Kasteel d'Ursel", "Kempens Landschap", "PGRA", "PGRA - M - K", "PGRK", "PGRM", "Terra Nova", "Toerisme Provincie Antwerpen", "Zilvermeer")) {
+            for (i in datadeelbeleid()) {
               if (!(i %in% deelbeleid)) {
                 deelbeleid <- c(deelbeleid, i)
               }

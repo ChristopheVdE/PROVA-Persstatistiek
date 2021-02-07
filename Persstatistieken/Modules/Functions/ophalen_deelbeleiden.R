@@ -25,8 +25,6 @@ getdata.Deelbeleiden <- function(
                 range = cell_cols(datarange)
              )
     
-    # browser()
-
     # Return dataset ------------------------------------------------------------
     return(Excel)
   })
