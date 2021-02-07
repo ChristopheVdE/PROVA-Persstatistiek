@@ -32,10 +32,10 @@ server <- function(input, output, session) {
                                input$return.colour2))
   # BASIS data -----------------------------------------------------------------
     # Inlezen ------------------------------------------------------------------
-    source("./Modules/Functions/ophalen_deelbeleiden.R")
+    source("./Modules/BasisData/ophalen_deelbeleiden.R")
     AlleDeelbeleiden <- getdata.Deelbeleiden(file = reactive(input$file$datapath),
                                          sheet = reactive(input$basisSheet),
-                                         datarange = c("H:I")
+                                         datarange = reactive(input$rangeDeelbeleid)
       
     )
     # Render Table -------------------------------------------------------------
@@ -106,7 +106,7 @@ server <- function(input, output, session) {
 
     
   # Inlezen hoofd data----------------------------------------------------------
-  source("./Modules/Functions/data_preparation.R")
+  source("./Modules/JaarOverzicht/data_preparation.R")
     Persstatistiek <- data.preparation(file = reactive(input$file$datapath),
                                        sheet = reactive(input$sheet),
                                        headers = reactive(input$headers),
@@ -127,7 +127,7 @@ server <- function(input, output, session) {
   # ============================================================================
   
   # PERSBERICHTEN ==============================================================
-    source("./Modules/data_visualisation.R")
+    source("./Modules/JaarOverzicht/data_visualisation.R")
     # ALGEMEEN -----------------------------------------------------------------
       # Persberichten ----------------------------------------------------------
         # Per Kwartaal ---------------------------------------------------------
@@ -759,8 +759,8 @@ server <- function(input, output, session) {
       # case we don't have write permissions to the current working dir (which
       # can happen when deployed).
 
-      tempReport <- file.path(tempdir(), "report.Rmd")
-      file.copy("report.Rmd", tempReport, overwrite = TRUE)
+      tempReport <- file.path(tempdir(), "JaarVolledig.Rmd")
+      file.copy("./Reports/JaarVolledig.Rmd", tempReport, overwrite = TRUE)
       
       
     # VARIABLE COLLECTION FOR MARKDOWN (HTML) ----------------------------------

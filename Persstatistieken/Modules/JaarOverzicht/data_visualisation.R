@@ -7,9 +7,9 @@ library(scales)
 # =============================================================================
 
 # LOAD MODULES & FUNCTIONS ====================================================
-source("./Modules/Functions/percentages.R")
-source("./Modules/Functions/simple_barplot.R")
-source("./Modules/Functions/simple_piechart.R")
+source("./Modules/JaarOverzicht/percentages.R")
+source("./Modules/JaarOverzicht/Plots/simple_barplot.R")
+source("./Modules/JaarOverzicht/Plots/simple_piechart.R")
 # =============================================================================
 
 # UI ==========================================================================

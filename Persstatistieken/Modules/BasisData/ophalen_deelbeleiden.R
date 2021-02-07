@@ -16,13 +16,13 @@ getdata.Deelbeleiden <- function(
   AlleDeelbeleiden <- reactive({
     req(file())
     req(sheet())
-    req(datarange)
+    req(datarange())
     
     # Reading Excel -----------------------------------------------------------
     Excel <- read_excel(
                 file(), 
                 sheet = sheet(), 
-                range = cell_cols(datarange)
+                range = cell_cols(datarange())
              )
     
     # Return dataset ------------------------------------------------------------

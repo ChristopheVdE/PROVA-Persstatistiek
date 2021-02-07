@@ -11,7 +11,7 @@ library(shinyWidgets)
 library(DT)
 # ==============================================================================
 
-source("./Modules/data_visualisation.R")
+source("./Modules/JaarOverzicht/data_visualisation.R")
 
 # UI ===========================================================================
 ui <- dashboardPage(
@@ -79,9 +79,13 @@ ui <- dashboardPage(
                         placeholder = "No file selected"),
             # Werkblad
               textInput("sheet", "Te gebruiken Werkblad", value ="Hele Organisatie", placeholder = "Hele Organisatie" ),
-              textInput("basisSheet", "Werkblad met basisdata en relaties", value ="Dependencies", placeholder = "Dependencies" ),
             # Headers  
               checkboxInput("headers", label = "Eerste rij bevat kolomnamen", value = TRUE),
+              hr(),
+            # Basisdata
+              textInput("basisSheet", "Werkblad met basisdata en relaties", value ="Dependencies", placeholder = "Dependencies" ),
+              textInput("rangeDeelbeleid", "Kolom-range tabel Deelbeleiden", value='H:I', placeholder = 'H:I'),
+              hr(),
             # Jaar
               selectInput("jaar", 
                           label = "Jaar", 
