@@ -8,11 +8,15 @@ library(RColorBrewer)
 library(ggplot2)
 library(ISOweek)
 library(DT)
+# ------------------------------------------------------------------------------
+source("./Modules/BasisData/ophalen_basisdata.R")
+source("./Modules/JaarOverzicht/data_preparation.R")
+source("./Modules/JaarOverzicht/data_visualisation.R")
 # ==============================================================================
 
 server <- function(input, output, session) {
   
-  # INPUT PROCESSING ===========================================================
+# INPUT PROCESSING =============================================================
   # Colors ---------------------------------------------------------------------
   colours <- reactive(c(input$colour1, 
                         input$colour2,
@@ -30,19 +34,15 @@ server <- function(input, output, session) {
                         input$colour14))
   return.colours <- reactive(c(input$return.colour1, 
                                input$return.colour2))
-  # BASIS data -----------------------------------------------------------------
+  # BASIC data -----------------------------------------------------------------
     # Inlezen ------------------------------------------------------------------
-    source("./Modules/BasisData/ophalen_deelbeleiden.R")
-    AlleDeelbeleiden <- getdata.Deelbeleiden(file = reactive(input$file$datapath),
+   
+    AlleDeelbeleiden <- getbasisdata(file = reactive(input$file$datapath),
                                          sheet = reactive(input$basisSheet),
                                          datarange = reactive(input$rangeDeelbeleid)
       
     )
-    # Render Table -------------------------------------------------------------
-    output$AlleDeelbeleiden <- DT::renderDataTable({
-      AlleDeelbeleiden()
-    })
-    # Udpate pickerInput -------------------------------------------------------
+    # Update pickerInput -------------------------------------------------------
     observe({
       Deelbeleiden <- split.data.frame(AlleDeelbeleiden(), AlleDeelbeleiden()$Beleid)
       # Economie
@@ -103,10 +103,31 @@ server <- function(input, output, session) {
         selected = Deelbeleiden$`Vrije Tijd`$Deelbeleid
       )
     })
-
+    # Render Table -------------------------------------------------------------
+    output$AlleDeelbeleiden <- DT::renderDataTable({
+      AlleDeelbeleiden()
+    })
     
-  # Inlezen hoofd data----------------------------------------------------------
-  source("./Modules/JaarOverzicht/data_preparation.R")
+  # MAIN data: ALL -------------------------------------------------------------
+    # Inlezen + Corrigeren
+    PersstatistiekFull <- data.preparation(file = reactive(input$file$datapath),
+                                       sheet = reactive(input$sheet),
+                                       headers = reactive(input$headers),
+                                       manual.beleid = reactive(input$col.beleid),
+                                       manual.deelbeleid = reactive(input$col.detail),
+                                       manual.verzender = reactive(input$col.verzender),
+                                       manual.type = reactive(input$col.type),
+                                       manual.return.alg = reactive(input$col.return.algemeen),
+                                       manual.return.web = reactive(input$col.return.web),
+                                       manual.return.tv = reactive(input$col.return.tv),
+                                       manual.datum = reactive(input$col.datum),
+                                       manual.persconferentie = reactive(input$col.persconferentie))
+    # Render Table
+    output$PersstatistiekFull <- DT::renderDataTable({
+      PersstatistiekFull()
+    })
+  # MAIN data: 1 YEAR ----------------------------------------------------------
+    # Inlezen + Corrigeren
     Persstatistiek <- data.preparation(file = reactive(input$file$datapath),
                                        sheet = reactive(input$sheet),
                                        headers = reactive(input$headers),
@@ -119,15 +140,15 @@ server <- function(input, output, session) {
                                        manual.return.tv = reactive(input$col.return.tv),
                                        manual.datum = reactive(input$col.datum),
                                        manual.persconferentie = reactive(input$col.persconferentie),
+                                       jaar = reactive(input$jaar),
                                        kwartaal = reactive(input$kwartaal))
-  # Render Original Table ------------------------------------------------------
-  output$Persstatistiek <- DT::renderDataTable({
-    Persstatistiek()
-  })
-  # ============================================================================
+    # Render Table
+    output$Persstatistiek <- DT::renderDataTable({
+      Persstatistiek()
+    })
+# ==============================================================================
   
-  # PERSBERICHTEN ==============================================================
-    source("./Modules/JaarOverzicht/data_visualisation.R")
+# PERSBERICHTEN ================================================================
     # ALGEMEEN -----------------------------------------------------------------
       # Persberichten ----------------------------------------------------------
         # Per Kwartaal ---------------------------------------------------------
@@ -141,7 +162,7 @@ server <- function(input, output, session) {
               persberichten.alg.kwartaal$plot.procent()
             )
           # Tabel
-            output$persberichten.alg.kwartaal.tabel <- renderTable(
+            output$persberichten.alg.kwartaal.tabel <- DT::renderDataTable(
               persberichten.alg.kwartaal$tabel()
             )
         # Per Maand ------------------------------------------------------------
@@ -155,7 +176,7 @@ server <- function(input, output, session) {
               persberichten.alg.maand$plot.procent()
             )
           # Tabel
-            output$persberichten.alg.maand.tabel <- renderTable(
+            output$persberichten.alg.maand.tabel <- DT::renderDataTable(
               persberichten.alg.maand$tabel()
             )
         # Per Dag --------------------------------------------------------------
@@ -169,7 +190,7 @@ server <- function(input, output, session) {
               persberichten.alg.dag$plot.procent()
             )
           # Tabel
-            output$persberichten.alg.dag.tabel <- renderTable(
+            output$persberichten.alg.dag.tabel <- DT::renderDataTable(
               persberichten.alg.dag$tabel()
             )
         # Per Week -------------------------------------------------------------
@@ -183,7 +204,7 @@ server <- function(input, output, session) {
               persberichten.alg.week$plot.procent()
             )
             # Tabel
-            output$persberichten.alg.week.tabel <- renderTable(
+            output$persberichten.alg.week.tabel <- DT::renderDataTable(
               persberichten.alg.week$tabel()
             )
         # Per Beleid -----------------------------------------------------------
@@ -197,7 +218,7 @@ server <- function(input, output, session) {
               persberichten.alg.beleid$plot.procent()
             )
           # Tabel
-            output$persberichten.alg.beleid.tabel <- renderTable(
+            output$persberichten.alg.beleid.tabel <- DT::renderDataTable(
               persberichten.alg.beleid$tabel()
             )
       # Persconferenties -------------------------------------------------------
@@ -212,7 +233,7 @@ server <- function(input, output, session) {
               persconferenties.alg.kwartaal$plot.procent()
             )
           # Tabel
-            output$persconferenties.alg.kwartaal.tabel <- renderTable(
+            output$persconferenties.alg.kwartaal.tabel <- DT::renderDataTable(
               persconferenties.alg.kwartaal$tabel()
             )
         # Per Maand ------------------------------------------------------------
@@ -226,7 +247,7 @@ server <- function(input, output, session) {
               persconferenties.alg.maand$plot.procent()
             )
           # Tabel
-            output$persconferenties.alg.maand.tabel <- renderTable(
+            output$persconferenties.alg.maand.tabel <- DT::renderDataTable(
               persconferenties.alg.maand$tabel()
             )
         # Per Dag --------------------------------------------------------------
@@ -240,7 +261,7 @@ server <- function(input, output, session) {
               persconferenties.alg.dag$plot.procent()
             )
           # Tabel
-            output$persconferenties.alg.dag.tabel <- renderTable(
+            output$persconferenties.alg.dag.tabel <- DT::renderDataTable(
               persconferenties.alg.dag$tabel()
             )
         # Per Week -------------------------------------------------------------
@@ -254,7 +275,7 @@ server <- function(input, output, session) {
               persconferenties.alg.week$plot.procent()
             )
           # Tabel
-            output$persconferenties.alg.week.tabel <- renderTable(
+            output$persconferenties.alg.week.tabel <- DT::renderDataTable(
               persconferenties.alg.week$tabel()
             )
         # Per Beleid -----------------------------------------------------------
@@ -268,7 +289,7 @@ server <- function(input, output, session) {
               persconferenties.alg.beleid$plot.procent()
             )
           # Tabel
-            output$persconferenties.alg.beleid.tabel <- renderTable(
+            output$persconferenties.alg.beleid.tabel <- DT::renderDataTable(
               persconferenties.alg.beleid$tabel()
             )
     # PER BELEID ---------------------------------------------------------------
@@ -284,7 +305,7 @@ server <- function(input, output, session) {
             persberichten.beleid.maand.economie$plot.procent()
           )
           # Table
-          output$persberichten.beleid.maand.economie.tabel <- renderTable(
+          output$persberichten.beleid.maand.economie.tabel <- DT::renderDataTable(
             persberichten.beleid.maand.economie$tabel()
           )
         # Gouverneur -----------------------------------------------------------
@@ -298,7 +319,7 @@ server <- function(input, output, session) {
             persberichten.beleid.maand.gouverneur$plot.procent()
           )
           # Table
-          output$persberichten.beleid.maand.gouverneur.tabel <- renderTable(
+          output$persberichten.beleid.maand.gouverneur.tabel <- DT::renderDataTable(
             persberichten.beleid.maand.gouverneur$tabel()
           )
           
@@ -313,7 +334,7 @@ server <- function(input, output, session) {
             persberichten.beleid.maand.leefmilieu$plot.procent()
           )
           # Table
-          output$persberichten.beleid.maand.leefmilieu.tabel <- renderTable(
+          output$persberichten.beleid.maand.leefmilieu.tabel <- DT::renderDataTable(
             persberichten.beleid.maand.leefmilieu$tabel()
           )
         # Mobiliteit -----------------------------------------------------------
@@ -327,7 +348,7 @@ server <- function(input, output, session) {
             persberichten.beleid.maand.mobiliteit$plot.procent()
           )
           # Table
-          output$persberichten.beleid.maand.mobiliteit.tabel <- renderTable(
+          output$persberichten.beleid.maand.mobiliteit.tabel <- DT::renderDataTable(
             persberichten.beleid.maand.mobiliteit$tabel()
           )
         # Onderwijs en Educatie-------------------------------------------------
@@ -341,7 +362,7 @@ server <- function(input, output, session) {
             persberichten.beleid.maand.onderwijs$plot.procent()
           )
           # Tabel
-          output$persberichten.beleid.maand.onderwijs.tabel <- renderTable(
+          output$persberichten.beleid.maand.onderwijs.tabel <- DT::renderDataTable(
             persberichten.beleid.maand.onderwijs$tabel()
           )
         # Provinciebestuur -----------------------------------------------------
@@ -355,7 +376,7 @@ server <- function(input, output, session) {
             persberichten.beleid.maand.provinciebestuur$plot.procent()
           )
           # Table
-          output$persberichten.beleid.maand.provinciebestuur.tabel <- renderTable(
+          output$persberichten.beleid.maand.provinciebestuur.tabel <- DT::renderDataTable(
             persberichten.beleid.maand.provinciebestuur$tabel()
           )
         # Ruimte ---------------------------------------------------------------
@@ -369,7 +390,7 @@ server <- function(input, output, session) {
             persberichten.beleid.maand.ruimte$plot.procent()
           )
           # Table
-          output$persberichten.beleid.maand.ruimte.tabel <- renderTable(
+          output$persberichten.beleid.maand.ruimte.tabel <- DT::renderDataTable(
             persberichten.beleid.maand.ruimte$tabel()
           )
         # Vrije Tijd -----------------------------------------------------------
@@ -383,7 +404,7 @@ server <- function(input, output, session) {
             persberichten.beleid.maand.vrijetijd$plot.procent()
           )
           # Table
-          output$persberichten.beleid.maand.vrijetijd.tabel <- renderTable(
+          output$persberichten.beleid.maand.vrijetijd.tabel <- DT::renderDataTable(
             persberichten.beleid.maand.vrijetijd$tabel()
           )
 
@@ -399,7 +420,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.economie$plot.procent()
           )
           # Table
-          output$persberichten.beleid.beleid.economie.tabel <- renderTable(
+          output$persberichten.beleid.beleid.economie.tabel <- DT::renderDataTable(
             persberichten.beleid.beleid.economie$tabel()
           )
         # Gouverneur -----------------------------------------------------------
@@ -413,7 +434,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.gouverneur$plot.procent()
           )
           # Table
-          output$persberichten.beleid.beleid.gouverneur.tabel <- renderTable(
+          output$persberichten.beleid.beleid.gouverneur.tabel <- DT::renderDataTable(
             persberichten.beleid.beleid.gouverneur$tabel()
           )
         # Leefmilieu -----------------------------------------------------------
@@ -427,7 +448,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.leefmilieu$plot.procent()
           )
           # Table
-          output$persberichten.beleid.beleid.leefmilieu.tabel <- renderTable(
+          output$persberichten.beleid.beleid.leefmilieu.tabel <- DT::renderDataTable(
             persberichten.beleid.beleid.leefmilieu$tabel()
           )
         # Mobiliteit -----------------------------------------------------------
@@ -441,7 +462,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.mobiliteit$plot.procent()
           )
           # Table
-          output$persberichten.beleid.beleid.mobiliteit.tabel <- renderTable(
+          output$persberichten.beleid.beleid.mobiliteit.tabel <- DT::renderDataTable(
             persberichten.beleid.beleid.mobiliteit$tabel()
           )
         # Onderwijs en Educatie ------------------------------------------------
@@ -455,7 +476,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.onderwijs$plot.procent()
           )
           # Tabel
-          output$persberichten.beleid.beleid.onderwijs.tabel <- renderTable(
+          output$persberichten.beleid.beleid.onderwijs.tabel <- DT::renderDataTable(
             persberichten.beleid.beleid.onderwijs$tabel()
           )
         # Provinciebestuur -----------------------------------------------------
@@ -469,7 +490,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.provinciebestuur$plot.procent()
           )
           # Table
-          output$persberichten.beleid.beleid.provinciebestuur.tabel <- renderTable(
+          output$persberichten.beleid.beleid.provinciebestuur.tabel <- DT::renderDataTable(
             persberichten.beleid.beleid.provinciebestuur$tabel()
           )
         # Ruimte ---------------------------------------------------------------
@@ -483,7 +504,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.ruimte$plot.procent()
           )
           # Table
-          output$persberichten.beleid.beleid.ruimte.tabel <- renderTable(
+          output$persberichten.beleid.beleid.ruimte.tabel <- DT::renderDataTable(
             persberichten.beleid.beleid.ruimte$tabel()
         )
         # Vrije Tijd -----------------------------------------------------------
@@ -497,7 +518,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.vrijetijd$plot.procent()
           )
           # Table
-          output$persberichten.beleid.beleid.vrijetijd.tabel <- renderTable(
+          output$persberichten.beleid.beleid.vrijetijd.tabel <- DT::renderDataTable(
             persberichten.beleid.beleid.vrijetijd$tabel()
           )
     # PER VERZENDER ------------------------------------------------------------
@@ -513,7 +534,7 @@ server <- function(input, output, session) {
             persberichten.verzender.alg.totaal$plot.procent()
           )
           # Tabel
-          output$persberichten.verzender.alg.totaal.tabel <- renderTable(
+          output$persberichten.verzender.alg.totaal.tabel <- DT::renderDataTable(
             persberichten.verzender.alg.totaal$tabel()
           )
         # Beleid per Verzender -------------------------------------------------
@@ -528,7 +549,7 @@ server <- function(input, output, session) {
             persberichten.verzender.alg.beleid$plot.procent()
           )
           # Tabel
-          output$persberichten.verzender.alg.beleid.tabel <- renderTable(
+          output$persberichten.verzender.alg.beleid.tabel <- DT::renderDataTable(
             persberichten.verzender.alg.beleid$tabel()
           )
       # Per Maand --------------------------------------------------------------
@@ -543,7 +564,7 @@ server <- function(input, output, session) {
             persberichten.verzender.maand.persdienst$plot.procent()
           )
           # Tabel
-          output$persberichten.verzender.maand.persdienst.tabel <- renderTable(
+          output$persberichten.verzender.maand.persdienst.tabel <- DT::renderDataTable(
             persberichten.verzender.maand.persdienst$tabel()
           )
         # Provincie ------------------------------------------------------------
@@ -557,7 +578,7 @@ server <- function(input, output, session) {
             persberichten.verzender.maand.provincie$plot.procent()
           )
           # Tabel
-          output$persberichten.verzender.maand.provincie.tabel <- renderTable(
+          output$persberichten.verzender.maand.provincie.tabel <- DT::renderDataTable(
             persberichten.verzender.maand.provincie$tabel()
           )
         # Gouverneur -----------------------------------------------------------
@@ -571,7 +592,7 @@ server <- function(input, output, session) {
             persberichten.verzender.maand.gouverneur$plot.procent()
           )
           # Tabel
-          output$persberichten.verzender.maand.gouverneur.tabel <- renderTable(
+          output$persberichten.verzender.maand.gouverneur.tabel <- DT::renderDataTable(
             persberichten.verzender.maand.gouverneur$tabel()
           )
         # Extern ---------------------------------------------------------------
@@ -585,7 +606,7 @@ server <- function(input, output, session) {
             persberichten.verzender.maand.extern$plot.procent()
           )
           # Tabel
-          output$persberichten.verzender.maand.extern.tabel <- renderTable(
+          output$persberichten.verzender.maand.extern.tabel <- DT::renderDataTable(
             persberichten.verzender.maand.extern$tabel()
           )
     # PER TYPE -----------------------------------------------------------------
@@ -599,7 +620,7 @@ server <- function(input, output, session) {
         persberichten.type$plot.procent()
       )
       # Tabel
-      output$persberichten.type.tabel <- renderTable(
+      output$persberichten.type.tabel <- DT::renderDataTable(
         persberichten.type$tabel()
       )
   # ============================================================================
@@ -617,7 +638,7 @@ server <- function(input, output, session) {
           persreturn.beleid.alg$plot.procent()
         )
         # Tabel 
-        output$persreturn.beleid.alg.tabel <- renderTable(
+        output$persreturn.beleid.alg.tabel <- DT::renderDataTable(
           persreturn.beleid.alg$tabel()
         )
       # Deelbeleid -------------------------------------------------------------
@@ -632,7 +653,7 @@ server <- function(input, output, session) {
             persreturn.beleid.beleid.economie$plot.procent()
           )
           # Table
-          output$persreturn.beleid.beleid.economie.tabel <- renderTable(
+          output$persreturn.beleid.beleid.economie.tabel <- DT::renderDataTable(
             persreturn.beleid.beleid.economie$tabel()
           )
         # Gouverneur -----------------------------------------------------------
@@ -646,7 +667,7 @@ server <- function(input, output, session) {
             persreturn.beleid.beleid.gouverneur$plot.procent()
           )
           # Table
-          output$persreturn.beleid.beleid.gouverneur.tabel <- renderTable(
+          output$persreturn.beleid.beleid.gouverneur.tabel <- DT::renderDataTable(
             persreturn.beleid.beleid.gouverneur$tabel()
           )
         # Leefmilieu -----------------------------------------------------------
@@ -660,7 +681,7 @@ server <- function(input, output, session) {
             persreturn.beleid.beleid.leefmilieu$plot.procent()
           )
           # Table
-          output$persreturn.beleid.beleid.leefmilieu.tabel <- renderTable(
+          output$persreturn.beleid.beleid.leefmilieu.tabel <- DT::renderDataTable(
             persreturn.beleid.beleid.leefmilieu$tabel()
           )
         # Mobiliteit -----------------------------------------------------------
@@ -674,7 +695,7 @@ server <- function(input, output, session) {
             persreturn.beleid.beleid.mobiliteit$plot.procent()
           )
           # Table
-          output$persreturn.beleid.beleid.mobiliteit.tabel <- renderTable(
+          output$persreturn.beleid.beleid.mobiliteit.tabel <- DT::renderDataTable(
             persreturn.beleid.beleid.mobiliteit$tabel()
           )
         # Onderwijs en Educatie ------------------------------------------------
@@ -688,7 +709,7 @@ server <- function(input, output, session) {
             persreturn.beleid.beleid.onderwijs$plot.procent()
           )
           # Tabel
-          output$persreturn.beleid.beleid.onderwijs.tabel <- renderTable(
+          output$persreturn.beleid.beleid.onderwijs.tabel <- DT::renderDataTable(
             persreturn.beleid.beleid.onderwijs$tabel()
           )
         # Provinciebestuur -----------------------------------------------------
@@ -702,7 +723,7 @@ server <- function(input, output, session) {
             persreturn.beleid.beleid.provinciebestuur$plot.procent()
           )
           # Table
-          output$persreturn.beleid.beleid.provinciebestuur.tabel <- renderTable(
+          output$persreturn.beleid.beleid.provinciebestuur.tabel <- DT::renderDataTable(
             persreturn.beleid.beleid.provinciebestuur$tabel()
           )
         # Ruimte ---------------------------------------------------------------
@@ -716,7 +737,7 @@ server <- function(input, output, session) {
             persreturn.beleid.beleid.ruimte$plot.procent()
           )
           # Table
-          output$persreturn.beleid.beleid.ruimte.tabel <- renderTable(
+          output$persreturn.beleid.beleid.ruimte.tabel <- DT::renderDataTable(
             persreturn.beleid.beleid.ruimte$tabel()
           )
         # Vrije Tijd -----------------------------------------------------------
@@ -730,7 +751,7 @@ server <- function(input, output, session) {
             persreturn.beleid.beleid.vrijetijd$plot.procent()
           )
           # Table
-          output$persreturn.beleid.beleid.vrijetijd.tabel <- renderTable(
+          output$persreturn.beleid.beleid.vrijetijd.tabel <- DT::renderDataTable(
             persreturn.beleid.beleid.vrijetijd$tabel()
           )
     # PER MEDIUM ---------------------------------------------------------------
@@ -744,7 +765,7 @@ server <- function(input, output, session) {
         persreturn.medium$plot.procent()
       )
       # Tabel
-      output$persreturn.medium.tabel <- renderTable(
+      output$persreturn.medium.tabel <- DT::renderDataTable(
         persreturn.medium$tabel()
       )
   # ============================================================================

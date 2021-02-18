@@ -20,7 +20,8 @@ data.preparation <- function(file,
                              manual.return.tv, 
                              manual.datum, 
                              manual.persconferentie,
-                             kwartaal) {
+                             jaar = NULL,
+                             kwartaal = NULL) {
   # Prepare dataset -----------------------------------------------------------
   Persstatistiek <- reactive({
     req(file())
@@ -124,12 +125,23 @@ data.preparation <- function(file,
   # As factor -----------------------------------------------------------------
     Excel$Beleid <- factor(Excel$Beleid, c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijs en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"))
     Excel$Verzender <- factor(Excel$Verzender, c("Provincie", "Persdienst", "Gouverneur", "Extern"))
-  # Split ---------------------------------------------------------------------
-    Persstatistiek <- split.data.frame(Excel, Excel$Kwartaal)
-    Persstatistiek$Jaar <- Excel
-  # Removing Excel ------------------------------------------------------------
-    Excel <- NULL
-  # Return dataset ------------------------------------------------------------
-    return(Persstatistiek[[kwartaal()]])
+  # Split & return ------------------------------------------------------------
+    if(is.null(jaar())){
+      return(Excel)
+    } else {
+      if(!(jaar() %in% levels(Excel$Jaar))) {
+        stop("Geslecteerd Jaar niet gevonden in data")
+      } else {
+        Persstatistiek <- split.data.frame(Excel, Excel$Jaar)
+        Persstatistiek <- Persstatistiek[[jaar()]]
+        if(grepl(kwartaal(), "Jaar")) {
+          return(Persstatistiek)
+        } else {
+          Persstatistiek <- split.data.frame(Persstatistiek, Persstatistiek$Kwartaal)
+          return(Persstatistiek[[kwartaal()]])
+        }
+
+      }
+    }
   })
 }
