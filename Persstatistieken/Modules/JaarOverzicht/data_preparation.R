@@ -20,6 +20,7 @@ data.preparation <- function(file,
                              manual.return.tv, 
                              manual.datum, 
                              manual.persconferentie,
+                             alles,
                              jaar = NULL,
                              kwartaal = NULL) {
   # Prepare dataset -----------------------------------------------------------
@@ -126,7 +127,7 @@ data.preparation <- function(file,
     Excel$Beleid <- factor(Excel$Beleid, c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijs en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"))
     Excel$Verzender <- factor(Excel$Verzender, c("Provincie", "Persdienst", "Gouverneur", "Extern"))
   # Split & return ------------------------------------------------------------
-    if(is.null(jaar())){
+    if(alles){
       return(Excel)
     } else {
       if(!(jaar() %in% levels(Excel$Jaar))) {

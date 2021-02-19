@@ -121,7 +121,8 @@ server <- function(input, output, session) {
                                        manual.return.web = reactive(input$col.return.web),
                                        manual.return.tv = reactive(input$col.return.tv),
                                        manual.datum = reactive(input$col.datum),
-                                       manual.persconferentie = reactive(input$col.persconferentie))
+                                       manual.persconferentie = reactive(input$col.persconferentie),
+                                       alles = TRUE)
     # Render Table
     output$PersstatistiekFull <- DT::renderDataTable({
       PersstatistiekFull()
@@ -140,6 +141,7 @@ server <- function(input, output, session) {
                                        manual.return.tv = reactive(input$col.return.tv),
                                        manual.datum = reactive(input$col.datum),
                                        manual.persconferentie = reactive(input$col.persconferentie),
+                                       alles = FALSE,
                                        jaar = reactive(input$jaar),
                                        kwartaal = reactive(input$kwartaal))
     # Render Table
