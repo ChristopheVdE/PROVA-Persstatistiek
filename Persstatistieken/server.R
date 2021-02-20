@@ -128,6 +128,24 @@ server <- function(input, output, session) {
       PersstatistiekFull()
     })
   # MAIN data: 1 YEAR ----------------------------------------------------------
+    # Update selectie mogeiljkheden
+    observe({
+      updateSelectInput(
+        session = session,
+        inputId = 'jaar',
+        label = "Jaar", 
+        choices = levels(PersstatistiekFull()$Jaar),
+        selected = max(levels(PersstatistiekFull()$Jaar))
+      )
+      updateSelectInput(
+        session = session,
+        inputId = 'kwartaal',
+        label = "Selecteer kwartaal:",
+        choices = c("Q1", "Q2", "Q3", "Q4", "Jaar"),
+        selected = "Jaar"
+      )
+    })
+
     # Inlezen + Corrigeren
     Persstatistiek <- data.preparation(file = reactive(input$file$datapath),
                                        sheet = reactive(input$sheet),

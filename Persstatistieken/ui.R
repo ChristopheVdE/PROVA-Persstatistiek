@@ -89,13 +89,13 @@ ui <- dashboardPage(
             # Jaar
               selectInput("jaar", 
                           label = "Jaar", 
-                          choices = c(format(Sys.Date(), "%Y"):2010),
-                          selected = format(Sys.Date(), "%Y")),
+                          choices = NULL,
+                          selected = NULL),
             # Kwartaal
               selectInput("kwartaal",
                           label = "Selecteer kwartaal:",
-                          choices = c("Q1", "Q2", "Q3", "Q4", "Jaar"),
-                          selected = "Q1")
+                          choices = NULL,
+                          selected = NULL)
             ),
         # Kolom selectie -------------------------------------------------------
             conditionalPanel(
