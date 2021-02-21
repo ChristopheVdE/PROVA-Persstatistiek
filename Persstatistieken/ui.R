@@ -24,34 +24,41 @@ ui <- dashboardPage(
     sidebarMenu(
       tags$br(),
     # Input --------------------------------------------------------------------
-      menuItem("Input", tabName = "Input",
+      menuItem("Input", tabName = "Input", startExpanded = TRUE,
                menuSubItem("Settings", tabName = "Settings", icon = icon("fas fa-cog", lib = "font-awesome")),
                menuSubItem("Kleuren", tabName = "Kleuren", icon = icon("fas fa-palette", lib = 'font-awesome')),
                menuSubItem("Data", tabName = "Data", icon = icon("fas fa-table", lib = "font-awesome"))),
-    # Persberichten ------------------------------------------------------------
-      menuItem("Persberichten", tabname = "Persberichten", icon = icon("bar-chart-o"),
-               menuItem("Algemeen", tabName = "Persbericht-algemeen", icon = icon("angle-double-right", lib = "font-awesome"), 
-                        menuSubItem("Persberichten", tabName = "Persbericht-alg-persbericht"),
-                        menuSubItem("Persconferenties", tabName = "Persbericht-alg-persconferentie")
-               ),          
-               menuItem("Per Beleid", tabName = "Persbericht-beleid", icon = icon("angle-double-right", lib = "font-awesome"), 
-                        menuSubItem("Per Maand", tabName = "Persbericht-beleid-maand"),
-                        menuSubItem("Per Beleid", tabName = "Persbericht-beleid-beleid")
-               ),
-               menuItem("Per Verzender", tabName = "Persbericht-verzender", icon = icon("angle-double-right", lib = "font-awesome"),
-                        menuSubItem("Algemeen", tabName = "Persbericht-verzender-algemeen"),
-                        menuSubItem("Per Maand", tabName = "Persbericht-verzender-maand")
-               ),
-               menuSubItem("Per Type", tabName = "Persbericht-type")
-      ),
-    # Persreturn ---------------------------------------------------------------
-      menuItem("Persreturn", tabname = "Persreturn", icon = icon("bar-chart-o"),
-               menuSubItem("Per Beleid", tabName = "Return_Beleid"),
-               menuSubItem("Per Medium", tabName = "Return_Medium")
-      ),
+    # Statistieken voor geelcteed jaar -----------------------------------------
+      tags$br(),
+      menuSubItem("Voor geslecteerd jaar", icon = NULL),
+      # Persberichten ------------------------------------------------------------
+        menuItem("Persberichten", tabname = "Persberichten", icon = icon("bar-chart-o"),
+                 menuItem("Algemeen", tabName = "Persbericht-algemeen", icon = icon("angle-double-right", lib = "font-awesome"), 
+                          menuSubItem("Persberichten", tabName = "Persbericht-alg-persbericht"),
+                          menuSubItem("Persconferenties", tabName = "Persbericht-alg-persconferentie")
+                 ),          
+                 menuItem("Per Beleid", tabName = "Persbericht-beleid", icon = icon("angle-double-right", lib = "font-awesome"), 
+                          menuSubItem("Per Maand", tabName = "Persbericht-beleid-maand"),
+                          menuSubItem("Per Beleid", tabName = "Persbericht-beleid-beleid")
+                 ),
+                 menuItem("Per Verzender", tabName = "Persbericht-verzender", icon = icon("angle-double-right", lib = "font-awesome"),
+                          menuSubItem("Algemeen", tabName = "Persbericht-verzender-algemeen"),
+                          menuSubItem("Per Maand", tabName = "Persbericht-verzender-maand")
+                 ),
+                 menuSubItem("Per Type", tabName = "Persbericht-type")
+        ),
+      # Persreturn -------------------------------------------------------------
+        menuItem("Persreturn", tabname = "Persreturn", icon = icon("bar-chart-o"),
+                 menuSubItem("Per Beleid", tabName = "Return_Beleid"),
+                 menuSubItem("Per Medium", tabName = "Return_Medium")
+        ),
+    # Statistieken van alle jaar -----------------------------------------------
+      tags$br(),
+      menuSubItem("Voor geslecteerd jaar", icon = NULL),
     # Download -----------------------------------------------------------------
+      tags$br(),
       menuItem("Download", tabName = "Download"),
-    textOutput("checkrender")
+      textOutput("checkrender")
       # downloadButton("report", "Generate report")
     )
   ),

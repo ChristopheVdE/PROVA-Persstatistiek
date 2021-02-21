@@ -109,7 +109,7 @@ server <- function(input, output, session) {
     })
     
   # MAIN data: ALL -------------------------------------------------------------
-    # Inlezen + Corrigeren
+    # Inlezen + Corrigeren -----------------------------------------------------
     PersstatistiekFull <- data.preparation(file = reactive(input$file$datapath),
                                        sheet = reactive(input$sheet),
                                        headers = reactive(input$headers),
@@ -123,12 +123,12 @@ server <- function(input, output, session) {
                                        manual.datum = reactive(input$col.datum),
                                        manual.persconferentie = reactive(input$col.persconferentie),
                                        alles = TRUE)
-    # Render Table
+    # Render Table -------------------------------------------------------------
     output$PersstatistiekFull <- DT::renderDataTable({
       PersstatistiekFull()
     })
   # MAIN data: 1 YEAR ----------------------------------------------------------
-    # Update selectie mogeiljkheden
+    # Update selectie mogelijkheden --------------------------------------------
     observe({
       updateSelectInput(
         session = session,
@@ -141,12 +141,13 @@ server <- function(input, output, session) {
         session = session,
         inputId = 'kwartaal',
         label = "Selecteer kwartaal:",
-        choices = c("Q1", "Q2", "Q3", "Q4", "Jaar"),
+        choices = c(levels(as.factor(split.data.frame(PersstatistiekFull(), PersstatistiekFull()$Jaar)[[input$jaar]][["Kwartaal"]])), 'Jaar'),   #c("Q1", "Q2", "Q3", "Q4", "Jaar"),
         selected = "Jaar"
       )
+      #browser()
     })
 
-    # Inlezen + Corrigeren
+    # Inlezen + Corrigeren -----------------------------------------------------
     Persstatistiek <- data.preparation(file = reactive(input$file$datapath),
                                        sheet = reactive(input$sheet),
                                        headers = reactive(input$headers),
@@ -162,7 +163,7 @@ server <- function(input, output, session) {
                                        alles = FALSE,
                                        jaar = reactive(input$jaar),
                                        kwartaal = reactive(input$kwartaal))
-    # Render Table
+    # Render Table -------------------------------------------------------------
     output$Persstatistiek <- DT::renderDataTable({
       Persstatistiek()
     })
