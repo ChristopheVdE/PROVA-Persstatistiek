@@ -130,7 +130,7 @@ data.preparation <- function(file,
     if(alles){
       return(Excel)
     } else {
-      if(!(jaar() %in% levels(Excel$Jaar))) {
+      if(!(jaar() %in% levels(as.factor(Excel$Jaar)))) {
         stop("Geslecteerd Jaar niet gevonden in data!")
       } else {
         Persstatistiek <- split.data.frame(Excel, Excel$Jaar)
@@ -138,7 +138,7 @@ data.preparation <- function(file,
         if(grepl(kwartaal(), "Jaar")) {
           return(Persstatistiek)
         } else {
-          if(!(kwartaal() %in% levels((Persstatistiek$Kwartaal)))) {
+          if(!(kwartaal() %in% levels(as.factor(Persstatistiek$Kwartaal)))) {
             stop("Geselecteerd kwartaal niet gevonden voor geselecteerd jaar!")
           } else {
             Persstatistiek <- split.data.frame(Persstatistiek, Persstatistiek$Kwartaal)

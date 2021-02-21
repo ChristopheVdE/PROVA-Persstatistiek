@@ -28,9 +28,9 @@ ui <- dashboardPage(
                menuSubItem("Settings", tabName = "Settings", icon = icon("fas fa-cog", lib = "font-awesome")),
                menuSubItem("Kleuren", tabName = "Kleuren", icon = icon("fas fa-palette", lib = 'font-awesome')),
                menuSubItem("Data", tabName = "Data", icon = icon("fas fa-table", lib = "font-awesome"))),
-    # Statistieken voor geelcteed jaar -----------------------------------------
-      tags$br(),
-      menuSubItem("Voor geslecteerd jaar", icon = NULL),
+    # Statistieken voor geselcteed jaar -----------------------------------------
+      tags$hr(),
+      menuSubItem("Statistieken geslecteerd jaar", icon = NULL),
       # Persberichten ------------------------------------------------------------
         menuItem("Persberichten", tabname = "Persberichten", icon = icon("bar-chart-o"),
                  menuItem("Algemeen", tabName = "Persbericht-algemeen", icon = icon("angle-double-right", lib = "font-awesome"), 
@@ -53,10 +53,10 @@ ui <- dashboardPage(
                  menuSubItem("Per Medium", tabName = "Return_Medium")
         ),
     # Statistieken van alle jaar -----------------------------------------------
-      tags$br(),
-      menuSubItem("Voor geslecteerd jaar", icon = NULL),
+      tags$hr(),
+      menuSubItem("Statistieken over alle jaren", icon = NULL),
     # Download -----------------------------------------------------------------
-      tags$br(),
+      tags$hr(),
       menuItem("Download", tabName = "Download"),
       textOutput("checkrender")
       # downloadButton("report", "Generate report")

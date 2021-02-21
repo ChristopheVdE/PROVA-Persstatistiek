@@ -137,6 +137,8 @@ server <- function(input, output, session) {
         choices = levels(PersstatistiekFull()$Jaar),
         selected = max(levels(PersstatistiekFull()$Jaar))
       )
+    })
+    observe({
       updateSelectInput(
         session = session,
         inputId = 'kwartaal',
@@ -144,7 +146,7 @@ server <- function(input, output, session) {
         choices = c(levels(as.factor(split.data.frame(PersstatistiekFull(), PersstatistiekFull()$Jaar)[[input$jaar]][["Kwartaal"]])), 'Jaar'),   #c("Q1", "Q2", "Q3", "Q4", "Jaar"),
         selected = "Jaar"
       )
-      #browser()
+     #browser()
     })
 
     # Inlezen + Corrigeren -----------------------------------------------------
@@ -200,7 +202,7 @@ server <- function(input, output, session) {
             output$persberichten.alg.maand.tabel <- DT::renderDataTable(
               persberichten.alg.maand$tabel()
             )
-        # Per Dag --------------------------------------------------------------
+        # Per WeekDag --------------------------------------------------------------
             persberichten.alg.dag <- callModule(data.visual, "bericht.alg.dag", Id = "alg.dag", data = Persstatistiek, Xaxis = "Dag", Fill = "Dag", colours = colours)
           # Plot - aantal
             output$persberichten.alg.dag.plot.aantal <- renderPlot(

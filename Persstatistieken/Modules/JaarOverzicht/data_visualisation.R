@@ -46,7 +46,7 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
 
   # Data preparation ---------------------------------------------------------- 
     df.berichten <- reactive(
-    # Persberichten -----------------------------------------------------------
+    # Persberichten ------------------------------------------------------------
       # Algemeen - Persberichten
         # Kwartaal ------------------------------------------------------------
           if (Id == "alg.kwartaal") {
@@ -77,7 +77,7 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
           # Return df
             berichten
           } 
-        # Dag -----------------------------------------------------------------
+        # WeekDag --------------------------------------------------------------
         else if (Id == "alg.dag") {
           # Create table
           berichten <- data.frame(table(data()$Dag))
@@ -87,7 +87,7 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
           # Return df
           berichten
         } 
-        # Week ----------------------------------------------------------------
+        # Week -----------------------------------------------------------------
         else if (Id == "alg.week") {
           # Create table
           berichten <- data.frame(table(data()$Week))
@@ -107,9 +107,9 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
           # Return df
             berichten
           } 
-      # Algemeen Persconferenties ---------------------------------------------
+      # Algemeen Persconferenties ----------------------------------------------
         else if (grepl("conferentie", Id)) {
-        # Data preparation ----------------------------------------------------
+        # Data preparation -----------------------------------------------------
           temp <- split(data(), data()$Persconferentie)
           temp <- temp$Ja
           for (i in colnames(temp)) {
