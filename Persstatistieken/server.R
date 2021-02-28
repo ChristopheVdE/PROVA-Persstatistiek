@@ -12,6 +12,7 @@ library(DT)
 source("./Modules/BasisData/ophalen_basisdata.R")
 source("./Modules/JaarOverzicht/data_preparation.R")
 source("./Modules/JaarOverzicht/data_visualisation.R")
+source("./Modules/JaarOverzicht/DataVisual/DataVisual_PersberichtDeelbeleid.R")
 # ==============================================================================
 
 server <- function(input, output, session) {
@@ -36,7 +37,6 @@ server <- function(input, output, session) {
                                input$return.colour2))
   # BASIC data -----------------------------------------------------------------
     # Inlezen ------------------------------------------------------------------
-   
     AlleDeelbeleiden <- getbasisdata(file = reactive(input$file$datapath),
                                          sheet = reactive(input$basisSheet),
                                          datarange = reactive(input$rangeDeelbeleid)
@@ -52,7 +52,6 @@ server <- function(input, output, session) {
          choices = Deelbeleiden$Economie$Deelbeleid,
          selected = Deelbeleiden$Economie$Deelbeleid
       )
-      # browser()
       # Gouverneur
       updatePickerInput(
         session = session,
@@ -146,7 +145,6 @@ server <- function(input, output, session) {
         choices = c(levels(as.factor(split.data.frame(PersstatistiekFull(), PersstatistiekFull()$Jaar)[[input$jaar]][["Kwartaal"]])), 'Jaar'),   #c("Q1", "Q2", "Q3", "Q4", "Jaar"),
         selected = "Jaar"
       )
-     #browser()
     })
 
     # Inlezen + Corrigeren -----------------------------------------------------
@@ -170,8 +168,9 @@ server <- function(input, output, session) {
       Persstatistiek()
     })
 # ==============================================================================
-  
-# PERSBERICHTEN ================================================================
+
+# GESELECTEERD JAAR ============================================================  
+  # PERSBERICHTEN ==============================================================
     # ALGEMEEN -----------------------------------------------------------------
       # Persberichten ----------------------------------------------------------
         # Per Kwartaal ---------------------------------------------------------
@@ -433,7 +432,7 @@ server <- function(input, output, session) {
 
       # Per Deelbeleid ---------------------------------------------------------
         # Economie -------------------------------------------------------------
-        persberichten.beleid.beleid.economie <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.economie", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Economie", datadeelbeleid = reactive(input$Economie.ActieveDeelbeleiden))
+        persberichten.beleid.beleid.economie <- callModule(DataVisual.PbDeelbeleid, "bericht.beleid.beleid.plot.aantal.economie", Persstatistiek, colours = colours, beleid = "Economie", datadeelbeleid = reactive(input$Economie.ActieveDeelbeleiden))
           # Plot - aantal
           output$persberichten.beleid.beleid.economie.plot.aantal <- renderPlot(
             persberichten.beleid.beleid.economie$plot.aantal()
@@ -447,7 +446,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.economie$tabel()
           )
         # Gouverneur -----------------------------------------------------------
-        persberichten.beleid.beleid.gouverneur <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.gouverneur", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Gouverneur", datadeelbeleid = reactive(input$Gouverneur.ActieveDeelbeleiden))
+        persberichten.beleid.beleid.gouverneur <- callModule(DataVisual.PbDeelbeleid, "bericht.beleid.beleid.plot.aantal.gouverneur", Persstatistiek, colours = colours, beleid = "Gouverneur", datadeelbeleid = reactive(input$Gouverneur.ActieveDeelbeleiden))
           # Plot  -aantal
           output$persberichten.beleid.beleid.gouverneur.plot.aantal <- renderPlot(
             persberichten.beleid.beleid.gouverneur$plot.aantal()
@@ -461,7 +460,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.gouverneur$tabel()
           )
         # Leefmilieu -----------------------------------------------------------
-        persberichten.beleid.beleid.leefmilieu <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.leefmilieu", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Leefmilieu", datadeelbeleid = reactive(input$Leefmilieu.ActieveDeelbeleiden))
+        persberichten.beleid.beleid.leefmilieu <- callModule(DataVisual.PbDeelbeleid, "bericht.beleid.beleid.plot.aantal.leefmilieu", Persstatistiek, colours = colours, beleid = "Leefmilieu", datadeelbeleid = reactive(input$Leefmilieu.ActieveDeelbeleiden))
           # Plot -aantal
           output$persberichten.beleid.beleid.leefmilieu.plot.aantal <- renderPlot(
             persberichten.beleid.beleid.leefmilieu$plot.aantal()
@@ -475,7 +474,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.leefmilieu$tabel()
           )
         # Mobiliteit -----------------------------------------------------------
-        persberichten.beleid.beleid.mobiliteit <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.mobiliteit", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Mobiliteit", datadeelbeleid = reactive(input$Mobiliteit.ActieveDeelbeleiden))
+        persberichten.beleid.beleid.mobiliteit <- callModule(DataVisual.PbDeelbeleid, "bericht.beleid.beleid.plot.aantal.mobiliteit", Persstatistiek, colours = colours, beleid = "Mobiliteit", datadeelbeleid = reactive(input$Mobiliteit.ActieveDeelbeleiden))
           # Plot - aantal 
           output$persberichten.beleid.beleid.mobiliteit.plot.aantal <- renderPlot(
             persberichten.beleid.beleid.mobiliteit$plot.aantal()
@@ -489,7 +488,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.mobiliteit$tabel()
           )
         # Onderwijs en Educatie ------------------------------------------------
-        persberichten.beleid.beleid.onderwijs <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.onderwijs", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Onderwijs en Educatie", datadeelbeleid = reactive(input$Onderwijs.ActieveDeelbeleiden))
+        persberichten.beleid.beleid.onderwijs <- callModule(DataVisual.PbDeelbeleid, "bericht.beleid.beleid.plot.aantal.onderwijs", Persstatistiek, colours = colours, beleid = "Onderwijs en Educatie", datadeelbeleid = reactive(input$Onderwijs.ActieveDeelbeleiden))
           # Plot -aantal 
           output$persberichten.beleid.beleid.onderwijs.plot.aantal <- renderPlot(
             persberichten.beleid.beleid.onderwijs$plot.aantal()
@@ -503,7 +502,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.onderwijs$tabel()
           )
         # Provinciebestuur -----------------------------------------------------
-        persberichten.beleid.beleid.provinciebestuur <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.provinciebestuur", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Provinciebestuur", datadeelbeleid = reactive(input$Provinciebestuur.ActieveDeelbeleiden))
+        persberichten.beleid.beleid.provinciebestuur <- callModule(DataVisual.PbDeelbeleid, "bericht.beleid.beleid.plot.aantal.provinciebestuur", Persstatistiek, colours = colours, beleid = "Provinciebestuur", datadeelbeleid = reactive(input$Provinciebestuur.ActieveDeelbeleiden))
           # Plot  - aantal
           output$persberichten.beleid.beleid.provinciebestuur.plot.aantal <- renderPlot(
             persberichten.beleid.beleid.provinciebestuur$plot.aantal()
@@ -517,7 +516,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.provinciebestuur$tabel()
           )
         # Ruimte ---------------------------------------------------------------
-        persberichten.beleid.beleid.ruimte <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.ruimte", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Ruimte", datadeelbeleid = reactive(input$Ruimte.ActieveDeelbeleiden))
+        persberichten.beleid.beleid.ruimte <- callModule(DataVisual.PbDeelbeleid, "bericht.beleid.beleid.plot.aantal.ruimte", Persstatistiek, colours = colours, beleid = "Ruimte", datadeelbeleid = reactive(input$Ruimte.ActieveDeelbeleiden))
           # Plot  - aantal
           output$persberichten.beleid.beleid.ruimte.plot.aantal <- renderPlot(
             persberichten.beleid.beleid.ruimte$plot.aantal()
@@ -531,7 +530,7 @@ server <- function(input, output, session) {
             persberichten.beleid.beleid.ruimte$tabel()
         )
         # Vrije Tijd -----------------------------------------------------------
-        persberichten.beleid.beleid.vrijetijd <- callModule(data.visual, "bericht.beleid.beleid.plot.aantal.vrijetijd", Id = "beleid.beleid" , Persstatistiek, Xaxis = "Deelbeleid", Fill = "Deelbeleid", colours = colours, beleid = "Vrije Tijd", datadeelbeleid = reactive(input$VrijeTijd.ActieveDeelbeleiden))
+        persberichten.beleid.beleid.vrijetijd <- callModule(DataVisual.PbDeelbeleid, "bericht.beleid.beleid.plot.aantal.vrijetijd", Persstatistiek, colours = colours, beleid = "Vrije Tijd", datadeelbeleid = reactive(input$VrijeTijd.ActieveDeelbeleiden))
           # Plot  - aantal
           output$persberichten.beleid.beleid.vrijetijd.plot.aantal <- renderPlot(
             persberichten.beleid.beleid.vrijetijd$plot.aantal()
@@ -792,6 +791,36 @@ server <- function(input, output, session) {
         persreturn.medium$tabel()
       )
   # ============================================================================
+# ==============================================================================
+     
+# STATISTIEK ALLE JAREN ========================================================
+# observe({
+#   req(input$kwartaal)
+#   allejaren <- data.frame('Q1' = numeric(), 'Q2'=numeric(), 'Q3'=numeric(), 'Q4'=numeric())
+#   tempallejaren <- data.frame()
+#   namesallejaren <- c()
+#   for (i in levels(as.factor(PersstatistiekFull()$Jaar))) {
+#     tempallejaren <- split.data.frame(PersstatistiekFull(), PersstatistiekFull()$Jaar)[[i]]
+#     if(!(grep('Jaar',input$kwartaal))) {
+#       tempallejaren <- data.frame(table(tempallejaren[[input$kwartaal]]))
+#     }
+#     tempallejaren <- data.frame(table(tempallejaren[["Kwartaal"]]))
+#     browser()
+#     namesallejaren <- c(namesallejaren, i)
+#     rbind(allejaren, tempallejaren)
+#     browser()
+#   }
+#   dfallejaren <- t(allejaren)                     # transpose
+#   rownames(dfallejaren) <- namesallejaren # add colnames
+# 
+#   output$dfallejaren <- DT::renderDataTable(dfallejaren)
+#   browser()
+# })
+
+# ==============================================================================
+
+   
+      
       
   # HTML RAPPORT AANMAAK =======================================================
   output$report <- downloadHandler(
