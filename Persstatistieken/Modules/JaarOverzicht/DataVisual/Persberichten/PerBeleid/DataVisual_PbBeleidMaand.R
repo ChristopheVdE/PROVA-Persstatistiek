@@ -42,7 +42,7 @@ data.visualOutput <- function(id, plottitle, Xaxis, Xlabels, Legende = TRUE, Pie
 }
 
 # SERVER =======================================================================
-DataVisual.PbBeleidMaand <- function(input, output, session, data, colours, beleid, datadeelbeleid) {
+DataVisual.PbBeleidMaand <- function(input, output, session, data, colours, beleid) {
   
   df.berichten <- reactive({
   # Tabel ------------------------------------------------------------------------ 
