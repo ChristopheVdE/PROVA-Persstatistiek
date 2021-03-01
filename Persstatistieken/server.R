@@ -12,7 +12,8 @@ library(DT)
 source("./Modules/BasisData/ophalen_basisdata.R")
 source("./Modules/JaarOverzicht/data_preparation.R")
 source("./Modules/JaarOverzicht/data_visualisation.R")
-source("./Modules/JaarOverzicht/DataVisual/DataVisual_PersberichtDeelbeleid.R")
+source("./Modules/JaarOverzicht/DataVisual/DataVisual_PbBeleidMaand.R")
+source("./Modules/JaarOverzicht/DataVisual/DataVisual_PbBeleidDeelbeleid.R")
 # ==============================================================================
 
 server <- function(input, output, session) {
@@ -317,7 +318,7 @@ server <- function(input, output, session) {
     # PER BELEID ---------------------------------------------------------------
       # Per Maand --------------------------------------------------------------
         # Economie -------------------------------------------------------------
-        persberichten.beleid.maand.economie <- callModule(data.visual, "bericht.beleid.maand.plot.aantal.economie", Id = "beleid.maand" ,data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours, beleid = "Economie")
+        persberichten.beleid.maand.economie <- callModule(DataVisual.PbBeleidMaand, "bericht.beleid.maand.plot.aantal.economie", data = Persstatistiek, colours = colours, beleid = "Economie")
           # Plot - aantal
           output$persberichten.beleid.maand.economie.plot.aantal <- renderPlot(
             persberichten.beleid.maand.economie$plot.aantal()
@@ -331,7 +332,7 @@ server <- function(input, output, session) {
             persberichten.beleid.maand.economie$tabel()
           )
         # Gouverneur -----------------------------------------------------------
-        persberichten.beleid.maand.gouverneur <- callModule(data.visual, "bericht.beleid.maand.plot.aantal.gouverneur", Id = "beleid.maand" , data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours, beleid = "Gouverneur")
+        persberichten.beleid.maand.gouverneur <- callModule(DataVisual.PbBeleidMaand, "bericht.beleid.maand.plot.aantal.gouverneur", data = Persstatistiek, colours = colours, beleid = "Gouverneur")
           # Plot - aantal
           output$persberichten.beleid.maand.gouverneur.plot.aantal <- renderPlot(
             persberichten.beleid.maand.gouverneur$plot.aantal()
@@ -346,7 +347,7 @@ server <- function(input, output, session) {
           )
           
         # Leefmilieu -----------------------------------------------------------
-        persberichten.beleid.maand.leefmilieu <- callModule(data.visual, "bericht.beleid.maand.plot.aantal.leefmilieu", Id = "beleid.maand" , data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours, beleid = "Leefmilieu")
+        persberichten.beleid.maand.leefmilieu <- callModule(DataVisual.PbBeleidMaand, "bericht.beleid.maand.plot.aantal.leefmilieu", data = Persstatistiek, colours = colours, beleid = "Leefmilieu")
           # Plot - aantal
           output$persberichten.beleid.maand.leefmilieu.plot.aantal <- renderPlot(
             persberichten.beleid.maand.leefmilieu$plot.aantal()
@@ -360,7 +361,7 @@ server <- function(input, output, session) {
             persberichten.beleid.maand.leefmilieu$tabel()
           )
         # Mobiliteit -----------------------------------------------------------
-        persberichten.beleid.maand.mobiliteit <- callModule(data.visual, "bericht.beleid.maand.plot.aantal.mobiliteit", Id = "beleid.maand" , data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours, beleid = "Mobiliteit")
+        persberichten.beleid.maand.mobiliteit <- callModule(DataVisual.PbBeleidMaand, "bericht.beleid.maand.plot.aantal.mobiliteit", data = Persstatistiek, colours = colours, beleid = "Mobiliteit")
           # Plot - aantal
           output$persberichten.beleid.maand.mobiliteit.plot.aantal <- renderPlot(
             persberichten.beleid.maand.mobiliteit$plot.aantal()
@@ -374,7 +375,7 @@ server <- function(input, output, session) {
             persberichten.beleid.maand.mobiliteit$tabel()
           )
         # Onderwijs en Educatie-------------------------------------------------
-        persberichten.beleid.maand.onderwijs <- callModule(data.visual, "bericht.beleid.maand.plot.aantal.onderwijs", Id = "beleid.maand" , data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours, beleid = "Onderwijs en Educatie")
+        persberichten.beleid.maand.onderwijs <- callModule(DataVisual.PbBeleidMaand, "bericht.beleid.maand.plot.aantal.onderwijs", data = Persstatistiek, colours = colours, beleid = "Onderwijs en Educatie")
           # Plot - aantal
           output$persberichten.beleid.maand.onderwijs.plot.aantal <- renderPlot(
             persberichten.beleid.maand.onderwijs$plot.aantal()
@@ -388,7 +389,7 @@ server <- function(input, output, session) {
             persberichten.beleid.maand.onderwijs$tabel()
           )
         # Provinciebestuur -----------------------------------------------------
-        persberichten.beleid.maand.provinciebestuur <- callModule(data.visual, "bericht.beleid.maand.plot.aantal.provinciebestuur", Id = "beleid.maand" , data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours, beleid = "Provinciebestuur")
+        persberichten.beleid.maand.provinciebestuur <- callModule(DataVisual.PbBeleidMaand, "bericht.beleid.maand.plot.aantal.provinciebestuur", data = Persstatistiek, colours = colours, beleid = "Provinciebestuur")
           # Plot  - aantal
           output$persberichten.beleid.maand.provinciebestuur.plot.aantal <- renderPlot(
             persberichten.beleid.maand.provinciebestuur$plot.aantal()
@@ -402,7 +403,7 @@ server <- function(input, output, session) {
             persberichten.beleid.maand.provinciebestuur$tabel()
           )
         # Ruimte ---------------------------------------------------------------
-        persberichten.beleid.maand.ruimte <- callModule(data.visual, "bericht.beleid.maand.plot.aantal.ruimte", Id = "beleid.maand" , data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours, beleid = "Ruimte")
+        persberichten.beleid.maand.ruimte <- callModule(DataVisual.PbBeleidMaand, "bericht.beleid.maand.plot.aantal.ruimte", data = Persstatistiek, colours = colours, beleid = "Ruimte")
           # Plot  - antal
           output$persberichten.beleid.maand.ruimte.plot.aantal <- renderPlot(
             persberichten.beleid.maand.ruimte$plot.aantal()
@@ -416,7 +417,7 @@ server <- function(input, output, session) {
             persberichten.beleid.maand.ruimte$tabel()
           )
         # Vrije Tijd -----------------------------------------------------------
-        persberichten.beleid.maand.vrijetijd <- callModule(data.visual, "bericht.beleid.maand.plot.aantal.vrijetijd", Id = "beleid.maand" , data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours, beleid = "Vrije Tijd")
+        persberichten.beleid.maand.vrijetijd <- callModule(DataVisual.PbBeleidMaand, "bericht.beleid.maand.plot.aantal.vrijetijd", data = Persstatistiek, colours = colours, beleid = "Vrije Tijd")
           # Plot - aantal 
           output$persberichten.beleid.maand.vrijetijd.plot.aantal <- renderPlot(
             persberichten.beleid.maand.vrijetijd$plot.aantal()
