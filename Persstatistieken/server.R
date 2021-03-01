@@ -15,6 +15,7 @@ source("./Modules/JaarOverzicht/data_visualisation.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerBeleid/DataVisual_PbBeleidMaand.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerBeleid/DataVisual_PbBeleidDeelbeleid.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerVerzender/DataVisual_PbVerzenderMaand.R")
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerType/DataVisual_PbType.R")
 # ==============================================================================
 
 server <- function(input, output, session) {
@@ -634,7 +635,7 @@ server <- function(input, output, session) {
             persberichten.verzender.maand.extern$tabel()
           )
     # PER TYPE -----------------------------------------------------------------
-      persberichten.type <- callModule(data.visual, "bericht.type", Id = "type" , Persstatistiek, Xaxis = "Beleid", Fill = "Type", colours = colours)
+      persberichten.type <- callModule(DataVisual.PbType, "bericht.type", Persstatistiek, colours = colours, datadeelbeleid = reactive(input$Economie.ActieveDeelbeleiden))
       # Plot - aantal
       output$persberichten.type.plot.aantal <- renderPlot(
         persberichten.type$plot.aantal()

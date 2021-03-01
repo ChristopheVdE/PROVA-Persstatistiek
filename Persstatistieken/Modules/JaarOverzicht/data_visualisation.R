@@ -232,52 +232,6 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
         # Return
           berichten
         }
-      # Verzender: Maand ------------------------------------------------------
-        else if (Id == "verzender.maand") {
-        # Create table
-          berichten <- data.frame(table(data()$Verzender, data()$Maand))
-          colnames(berichten) <- c("Verzender", "Maand", "Persberichten")
-        # Add missing "Verzender"
-          for(i in c("Persdienst", "Provincie", "Gouverneur", "Extern")) {
-            if(!(i %in% levels(berichten$Verzender))) {
-              temp <- data.frame(
-                Maand = levels(berichten$Maand),
-                Verzender = i,
-                Persberichten = 0
-              )
-              berichten <- rbind(berichten, temp)
-            }
-          }
-        # Display only selected verzender
-          berichten <- split(berichten, berichten$Verzender)
-          berichten <- berichten[[verzender]]
-        # Add percentages
-          berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
-        # Return
-          berichten
-        } 
-      # Type ------------------------------------------------------------------
-        else if (Id == "type") {
-        # Create tabel
-          berichten <- data.frame(table(data()$Beleid, data()$Soort))
-          colnames(berichten) <- c("Beleid", "Type", "Persberichten")
-          berichten$Type <- as.factor(berichten$Type)
-        # Add missing "Type"
-          for(i in c("Activiteitenkalender", "Agendatip", "Evenementenkalender", "Persagenda", "Persbericht", "Persuitnodiging")) {
-            if(!(i %in% levels(berichten$Type))) {
-              temp <- data.frame(
-                Beleid = c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijs en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"),
-                Type = i,
-                Persberichten = 0
-              )
-              berichten <- rbind(berichten, temp)
-            }
-          }
-        # Add percentages
-          berichten <- data.frame(berichten[order(berichten$Beleid),], "Procentueel" = calc_percentages(Id, berichten))
-        # Return
-          berichten
-        }
     # Persreturn --------------------------------------------------------------
       # Per beleid: Algemeen --------------------------------------------------
         else if (Id == "return.beleid.alg") {
