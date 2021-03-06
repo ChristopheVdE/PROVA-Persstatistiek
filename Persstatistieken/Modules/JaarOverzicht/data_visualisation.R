@@ -191,47 +191,6 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
           }
           return(berichten)
         }
-      # Verzender Algemeen - Verzender ----------------------------------------
-        else if (Id == "verzender.alg.verzender") {
-        # Create table
-          berichten <- data.frame(table(data()$Verzender))
-          colnames(berichten) <- c("Verzender", "Persberichten")
-        # Add missing "Verzender"
-          for(i in c("Persdienst", "Provincie", "Gouverneur", "Extern")) {
-            if(!(i %in% levels(berichten$Verzender))) {
-              temp <- data.frame(
-                Verzender = i,
-                Persberichten = 0
-              )
-              berichten <- rbind(berichten, temp)
-            }
-          }
-        # Add percentages
-          berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
-        # Return
-          berichten
-        } 
-      # Verzender Algemeen - Beleid -------------------------------------------
-        else if (Id == "verzender.alg.beleid") {
-        # Create table
-          berichten <- data.frame(table(data()$Beleid, data()$Verzender))
-          colnames(berichten) <- c("Beleid", "Verzender", "Persberichten")
-        # Add missing "Verzender"
-          for(i in c("Persdienst", "Provincie", "Gouverneur", "Extern")) {
-            if(!(i %in% levels(berichten$Verzender))) {
-              temp <- data.frame(
-                Beleid = c("Economie", "Gouverneur", "Leefmilieu", "Mobiliteit", "Onderwijs en Educatie", "Provinciebestuur", "Ruimte", "Vrije Tijd"),
-                Verzender = i,
-                Persberichten = 0
-              )
-              berichten <- rbind(berichten, temp)
-            }
-          }
-        # Add percentages
-          berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
-        # Return
-          berichten
-        }
     # Persreturn --------------------------------------------------------------
       # Per beleid: Algemeen --------------------------------------------------
         else if (Id == "return.beleid.alg") {

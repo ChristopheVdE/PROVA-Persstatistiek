@@ -14,6 +14,8 @@ source("./Modules/JaarOverzicht/data_preparation.R")
 source("./Modules/JaarOverzicht/data_visualisation.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerBeleid/DataVisual_PbBeleidMaand.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerBeleid/DataVisual_PbBeleidDeelbeleid.R")
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerVerzender/DataVisual_PbVerzenderVerzender.R")
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerVerzender/DataVisual_PbVerzenderBeleid.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerVerzender/DataVisual_PbVerzenderMaand.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerType/DataVisual_PbType.R")
 # ==============================================================================
@@ -549,7 +551,7 @@ server <- function(input, output, session) {
     # PER VERZENDER ------------------------------------------------------------
       # Algemeen ---------------------------------------------------------------
         # Totaal per Verzender -------------------------------------------------
-          persberichten.verzender.alg.totaal <- callModule(data.visual, "bericht.verzender.alg.totaal", Id = "verzender.alg.verzender" , Persstatistiek, Xaxis = "Verzender", Fill = "Verzender", colours = colours)
+          persberichten.verzender.alg.totaal <- callModule(DataVisual.PbVerzenderVerzender, "bericht.verzender.alg.totaal", Persstatistiek, colours = colours)
           # Plot - aantal
           output$persberichten.verzender.alg.totaal.plot.aantal <- renderPlot(
             persberichten.verzender.alg.totaal$plot.aantal()
@@ -563,7 +565,7 @@ server <- function(input, output, session) {
             persberichten.verzender.alg.totaal$tabel()
           )
         # Beleid per Verzender -------------------------------------------------
-          persberichten.verzender.alg.beleid <- callModule(data.visual, "bericht.verzender.alg.beleid", Id = "verzender.alg.beleid" , Persstatistiek, Xaxis = "Verzender", Fill = "Beleid", colours = colours)
+          persberichten.verzender.alg.beleid <- callModule(DataVisual.PbVerzenderBeleid, "bericht.verzender.alg.beleid", Persstatistiek, colours = colours, datadeelbeleid=reactive(AlleDeelbeleiden))
           # Plot - aantal
           
           output$persberichten.verzender.alg.beleid.plot.aantal <- renderPlot(
@@ -635,7 +637,7 @@ server <- function(input, output, session) {
             persberichten.verzender.maand.extern$tabel()
           )
     # PER TYPE -----------------------------------------------------------------
-      persberichten.type <- callModule(DataVisual.PbType, "bericht.type", Persstatistiek, colours = colours, datadeelbeleid = reactive(input$Economie.ActieveDeelbeleiden))
+      persberichten.type <- callModule(DataVisual.PbType, "bericht.type", Persstatistiek, colours = colours, datadeelbeleid = reactive(AlleDeelbeleiden))
       # Plot - aantal
       output$persberichten.type.plot.aantal <- renderPlot(
         persberichten.type$plot.aantal()
