@@ -44,8 +44,8 @@ data.visualOutput <- function(id, plottitle, Xaxis, Xlabels, Legende = TRUE, Pie
 # SERVER =======================================================================
 DataVisual.PbVerzenderBeleid <- function(input, output, session, data, colours, verzender, datadeelbeleid) {
 
+# Tabel ------------------------------------------------------------------------ 
 df.berichten <- reactive({
-  # Tabel ------------------------------------------------------------------------ 
     # Create table
     berichten <- data.frame(table(data()$Beleid, data()$Verzender))
     colnames(berichten) <- c("Beleid", "Verzender", "Persberichten")
@@ -65,6 +65,18 @@ df.berichten <- reactive({
     # Return
     return(berichten)
 })
+
+# Create clean tabel for display -----------------------------------------------
+table.berichten <- reactive({
+  berichten <- split(df.berichten(), df.berichten()$Verzender)
+  berichten <- data.frame(Beleid = levels(df.berichten()$Beleid),
+                     Persdienst = berichten$Persdienst$Persberichten,
+                     Provincie = berichten$Provincie$Persberichten,
+                     Gouverneur = berichten$Gouverneur$Persberichten,
+                     Extern = berichten$Extern$Persberichten)
+  return(berichten)
+})
+
   # Plot ----------------------------------------------------------------------
 berichten.plot <- reactive({
       plots <- list("Aantal" = NA, "Procent" = NA)
@@ -102,7 +114,7 @@ berichten.plot <- reactive({
   # Return --------------------------------------------------------------------
 return(list(plot.aantal = reactive(berichten.plot()$Aantal), 
             plot.procent = reactive(berichten.plot()$Procent), 
-            tabel = reactive(df.berichten()), 
+            tabel = reactive(table.berichten()), 
             uitleg = reactive(input$uitleg)))
 
 }

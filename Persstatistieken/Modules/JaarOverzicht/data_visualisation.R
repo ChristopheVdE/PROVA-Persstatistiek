@@ -364,27 +364,6 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
     })
   # Table ---------------------------------------------------------------------
     tabel <- reactive(
-    # Persberichten: verzender - alg - beleid ---------------------------------
-      if (Id == "verzender.alg.beleid") {
-        temp <- split(df.berichten(), df.berichten()$Verzender)
-        temp <- data.frame(Beleid = levels(df.berichten()$Beleid),
-                           Persdienst = temp$Persdienst$Persberichten,
-                           Provincie = temp$Provincie$Persberichten,
-                           Gouverneur = temp$Gouverneur$Persberichten,
-                           Extern = temp$Extern$Persberichten)
-      }
-    # Persberichten: type -----------------------------------------------------
-      else if (Id == "type") {
-        temp <- split(df.berichten(), df.berichten()$Type)
-        temp <- data.frame(
-          Beleid = levels(df.berichten()$Beleid),
-          Agendatip = temp$Agendatip$Persberichten, 
-          Evenementenkalender = temp$Evenementenkalender$Persberichten,
-          Persagenda = temp$Persagenda$Persberichten,
-          Persbericht = temp$Persbericht$Persberichten,
-          Persuitnodiging = temp$Persuitnodiging$Persberichten
-        )
-      }
     # Persreturn - beleid - alg -----------------------------------------------
       else if (Id == "return.beleid.alg") {
         temp <- split(df.berichten(), df.berichten()$Persreturn)
