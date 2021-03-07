@@ -49,10 +49,9 @@ df.berichten <- reactive({
     # Create tabel
     berichten <- data.frame(table(data()$Beleid, data()$Soort))
     colnames(berichten) <- c("Beleid", "Type", "Persberichten")
-    berichten$Type <- as.factor(berichten$Type)
     # Add missing "Type"
     for(i in c("Activiteitenkalender", "Agendatip", "Evenementenkalender", "Persagenda", "Persbericht", "Persuitnodiging")) {
-      if(!(i %in% levels(berichten$Type))) {
+      if(!(i %in% levels(as.factor(berichten$Type)))) {
         temp <- data.frame(
           Beleid = c(levels(as.factor(datadeelbeleid()$Beleid))),
           Type = i,
@@ -66,21 +65,6 @@ df.berichten <- reactive({
     # Return
     return(berichten)
 })
-
-# Create cleaner table for display ---------------------------------------------
-table.berichten <- reactive({
-  berichten <- split(df.berichten(), df.berichten()$Type)
-  berichten <- data.frame(
-    Beleid = levels(df.berichten()$Beleid),
-    Agendatip = berichten$Agendatip$Persberichten, 
-    Evenementenkalender = berichten$Evenementenkalender$Persberichten,
-    Persagenda = berichten$Persagenda$Persberichten,
-    Persbericht = berichten$Persbericht$Persberichten,
-    Persuitnodiging = berichten$Persuitnodiging$Persberichten
-  )
-  return(berichten)
-})
-
 
 # Plot -------------------------------------------------------------------------
 berichten.plot <- reactive({
@@ -116,6 +100,21 @@ berichten.plot <- reactive({
       }
       return(plots)
 })
+
+# Create cleaner table for display ---------------------------------------------
+table.berichten <- reactive({
+  berichten <- split(df.berichten(), df.berichten()$Type)
+  berichten <- data.frame(
+    Beleid = levels(df.berichten()$Beleid),
+    Agendatip = berichten$Agendatip$Persberichten, 
+    Evenementenkalender = berichten$Evenementenkalender$Persberichten,
+    Persagenda = berichten$Persagenda$Persberichten,
+    Persbericht = berichten$Persbericht$Persberichten,
+    Persuitnodiging = berichten$Persuitnodiging$Persberichten
+  )
+  return(berichten)
+})
+
   # Return --------------------------------------------------------------------
 return(list(plot.aantal = reactive(berichten.plot()$Aantal), 
             plot.procent = reactive(berichten.plot()$Procent), 

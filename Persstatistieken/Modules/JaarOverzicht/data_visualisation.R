@@ -365,7 +365,7 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
   # Table ---------------------------------------------------------------------
     tabel <- reactive(
     # Persreturn - beleid - alg -----------------------------------------------
-      else if (Id == "return.beleid.alg") {
+      if (Id == "return.beleid.alg") {
         temp <- split(df.berichten(), df.berichten()$Persreturn)
         temp <- data.frame(
           Beleid = levels(df.berichten()$Beleid),
