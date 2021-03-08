@@ -305,7 +305,7 @@ if (params$rendered_by_shiny) shiny::setProgress(10)
 
 ### 1.2. Beleid en deelbeleid
 #### 1.2.1. Provinciebestuur
-##### 1.2.6.1. Per maand {.tabset .tabset-fade}
+##### 1.2.1.1. Per maand {.tabset .tabset-fade}
 ###### Plot - aantal
 ```{r "Persberichten Provinciebestuur: Plot - aantal - maand"}
 params$Persberichten.beleid.maand$provinciebestuur.plot.aantal()
@@ -327,7 +327,7 @@ kable(params$Persberichten.beleid.maand$provinciebestuur.tabel()
 ##### {-}
 `r params$Persberichten.beleid.maand$provinciebestuur.uitleg()`
 
-##### 1.2.6.2. Per thema {.tabset .tabset-fade}
+##### 1.2.1.2. Per thema {.tabset .tabset-fade}
 ###### Plot - aantal
 ```{r "Persberichten Provinciebestuur: Plot - aantal"}
 params$Persberichten.beleid.beleid$provinciebestuur.plot.aantal()
@@ -352,7 +352,7 @@ if (params$rendered_by_shiny) shiny::setProgress(11)
 ```
 
 #### 1.2.2. Economie
-##### 1.2.1.1. Per maand {.tabset .tabset-fade}
+##### 1.2.2.1. Per maand {.tabset .tabset-fade}
 ###### Plot - aantal
 ```{r "Persberichten Economie: Plot - aantal - maand"}
 params$Persberichten.beleid.maand$economie.plot.aantal()
@@ -373,7 +373,7 @@ kable(params$Persberichten.beleid.maand$economie.tabel()
 ##### {-}
 `r params$Persberichten.beleid.maand$economie.uitleg()`
 
-##### 1.2.1.2. Deelbeleid: Economie {.tabset .tabset-fade}
+##### 1.2.2.2. Deelbeleid: Economie {.tabset .tabset-fade}
 ###### Plot - aantal
 ```{r "Persberichten Economie: Plot - aantal"}
 params$Persberichten.beleid.beleid$economie.plot.aantal()
@@ -537,7 +537,7 @@ if (params$rendered_by_shiny) shiny::setProgress(15)
 ```
 
 #### 1.2.6. Ruimte
-##### 1.2.7.1. Per maand {.tabset .tabset-fade}
+##### 1.2.6.1. Per maand {.tabset .tabset-fade}
 ###### Plot - aantal
 ```{r "Persberichten Ruimte: Plot - aantal - maand"}
 params$Persberichten.beleid.maand$ruimte.plot.aantal()
@@ -558,7 +558,7 @@ kable(params$Persberichten.beleid.maand$ruimte.tabel()
 ##### {-}
 `r params$Persberichten.beleid.maand$ruimte.uitleg()`
 
-##### 1.2.7.2. Deelbeleid Ruimte {.tabset .tabset-fade}
+##### 1.2.6.2. Deelbeleid Ruimte {.tabset .tabset-fade}
 ###### Plot - aantal
 ```{r "Persberichten Ruimte: Plot - aantal"}
 params$Persberichten.beleid.beleid$ruimte.plot.aantal()
@@ -583,7 +583,7 @@ if (params$rendered_by_shiny) shiny::setProgress(16)
 ```
 
 #### 1.2.7. Vrije tijd
-##### 1.2.8.1. Per maand {.tabset .tabset-fade}
+##### 1.2.7.1. Per maand {.tabset .tabset-fade}
 ###### Plot - aantal
 ```{r "Persberichten Vrije Tijd: Plot - aantal - maand"}
 params$Persberichten.beleid.maand$vrijetijd.plot.aantal()
@@ -604,7 +604,7 @@ kable(params$Persberichten.beleid.maand$vrijetijd.tabel()
 ##### {-}
 `r params$Persberichten.beleid.maand$vrijetijd.uitleg()`
 
-##### 1.2.8.2. Deelbeleid: Vrije tijd {.tabset .tabset-fade}
+##### 1.2.7.2. Deelbeleid: Vrije tijd {.tabset .tabset-fade}
 ###### Plot - aantal
 ```{r "Persberichten Vrije Tijd: Plot - aantal"}
 params$Persberichten.beleid.beleid$vrijetijd.plot.aantal()
@@ -629,7 +629,7 @@ if (params$rendered_by_shiny) shiny::setProgress(17)
 ```
 
 #### 1.2.8. Gouverneur
-##### 1.2.2.1. Per maand {.tabset .tabset-fade}
+##### 1.2.8.1. Per maand {.tabset .tabset-fade}
 ###### Plot - aantal
 ```{r "Persberichten Gouverneur: Plot - aantal - maand"}
 params$Persberichten.beleid.maand$gouverneur.plot.aantal()
@@ -650,7 +650,7 @@ kable(params$Persberichten.beleid.maand$gouverneur.tabel()
 ##### {-}
 `r params$Persberichten.beleid.maand$gouverneur.uitleg()`
 
-##### 1.2.2.2. Deelbeleid: Gouverneur {.tabset .tabset-fade}
+##### 1.2.8.2. Deelbeleid: Gouverneur {.tabset .tabset-fade}
 ###### Plot - aantal
 ```{r "Persberichten Gouverneur: Plot - aantal"}
 params$Persberichten.beleid.beleid$gouverneur.plot.procent()
