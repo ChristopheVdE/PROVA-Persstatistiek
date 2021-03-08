@@ -106,6 +106,7 @@ table.berichten <- reactive({
   berichten <- split(df.berichten(), df.berichten()$Type)
   berichten <- data.frame(
     Beleid = levels(df.berichten()$Beleid),
+    Activiteitenkalender = berichten$Activiteitenkalender$Persberichten,
     Agendatip = berichten$Agendatip$Persberichten, 
     Evenementenkalender = berichten$Evenementenkalender$Persberichten,
     Persagenda = berichten$Persagenda$Persberichten,
