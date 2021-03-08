@@ -44,7 +44,9 @@ params$Persberichten.alg$kwartaal.plot.procent()
 
 ###### Tabel
 ```{r "Persberichten algemeen: kwartaal - tabel"}
-kable(params$Persberichten.alg$kwartaal.tabel(), caption = "Persberichten per Beleid")
+kable(params$Persberichten.alg$kwartaal.tabel()
+      , caption = "Persberichten per Beleid"
+      , row.names = FALSE)
 ```
 
 ##### {-}
@@ -70,7 +72,9 @@ params$Persberichten.alg$maand.plot.procent()
 
 ###### Tabel
 ```{r "Persberichten per maand: tabel"}
-kable(params$Persberichten.alg$maand.tabel(), caption = "Persberichten per maand")
+kable(params$Persberichten.alg$maand.tabel()
+      , caption = "Persberichten per maand"
+      , row.names = FALSE)
 ```
 
 ##### {-}
@@ -95,7 +99,9 @@ params$Persberichten.alg$dag.plot.procent()
 
 ###### Tabel
 ```{r "Persberichten per dag: tabel"}
-kable(params$Persberichten.alg$dag.tabel(), caption = "Persberichten per dag")
+kable(params$Persberichten.alg$dag.tabel()
+      , caption = "Persberichten per dag"
+      , row.names = FALSE)
 ```
 
 ##### {-}
@@ -120,7 +126,9 @@ params$Persberichten.alg$week.plot.procent()
 
 ###### Tabel
 ```{r "Persberichten per week: tabel"}
-kable(params$Persberichten.alg$week.tabel(), caption = "Persberichten per week")
+kable(params$Persberichten.alg$week.tabel()
+      , caption = "Persberichten per week"
+      , row.names = FALSE)
 ```
 
 ##### {-}
@@ -132,7 +140,7 @@ if (params$rendered_by_shiny) shiny::setProgress(4)
 ```
 
 
-##### 1.1.2.5. Persberichten per beleid {.tabset .tabset-fade}
+##### 1.1.1.5. Persberichten per beleid {.tabset .tabset-fade}
 ###### Plot - aantal
 ```{r "Persberichten per beleid: algemeen - plot aantal", align="center"}
 params$Persberichten.alg$beleid.plot.aantal()
@@ -145,7 +153,9 @@ params$Persberichten.alg$beleid.plot.procent()
 
 ###### Tabel
 ```{r "Persberichten per beleid: algemeen - tabel"}
-kable(params$Persberichten.alg$beleid.tabel(), caption = "Persberichten per Beleid")
+kable(params$Persberichten.alg$beleid.tabel()
+      , caption = "Persberichten per Beleid"
+      , row.names = FALSE)
 ```
 
 ##### {-}
@@ -170,7 +180,9 @@ params$Persconferenties.alg$kwartaal.plot.procent()
 
 ###### Tabel
 ```{r "Persconferenties algemeen: kwartaal - tabel"}
-kable(params$Persconferenties.alg$kwartaal.tabel(), caption = "Persconferenties per Beleid")
+kable(params$Persconferenties.alg$kwartaal.tabel()
+      , caption = "Persconferenties per Beleid"
+      , row.names = FALSE)
 ```
 
 ##### {-}
@@ -196,7 +208,9 @@ params$Persconferenties.alg$maand.plot.procent()
 
 ###### Tabel
 ```{r "Persconferenties per maand: tabel"}
-kable(params$Persconferenties.alg$maand.tabel(), caption = "Persconferenties per maand")
+kable(params$Persconferenties.alg$maand.tabel()
+      , caption = "Persconferenties per maand"
+      , row.names = FALSE)
 ```
 
 ##### {-}
@@ -221,7 +235,9 @@ params$Persconferenties.alg$dag.plot.procent()
 
 ###### Tabel
 ```{r "Persconferenties per dag: tabel"}
-kable(params$Persconferenties.alg$dag.tabel(), caption = "Persconferenties per dag")
+kable(params$Persconferenties.alg$dag.tabel()
+      , caption = "Persconferenties per dag"
+      , row.names = FALSE)
 ```
 
 ##### {-}
@@ -246,7 +262,9 @@ params$Persconferenties.alg$week.plot.procent()
 
 ###### Tabel
 ```{r "Persconferenties per week: tabel"}
-kable(params$Persconferenties.alg$week.tabel(), caption = "Persconferenties per week")
+kable(params$Persconferenties.alg$week.tabel()
+      , caption = "Persconferenties per week"
+      , row.names = FALSE)
 ```
 
 ##### {-}
@@ -271,7 +289,9 @@ params$Persconferenties.alg$beleid.plot.procent()
 
 ###### Tabel
 ```{r "Persconferenties per beleid: algemeen - tabel"}
-kable(params$Persconferenties.alg$beleid.tabel(), caption = "Persconferenties per Beleid")
+kable(params$Persconferenties.alg$beleid.tabel()
+      , caption = "Persconferenties per Beleid"
+      , row.names = FALSE)
 ```
 
 ##### {-}

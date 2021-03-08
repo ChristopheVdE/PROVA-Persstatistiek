@@ -66,18 +66,9 @@ df.berichten <- reactive({
     return(berichten)
 })
 
-# Create clean tabel for display -----------------------------------------------
-table.berichten <- reactive({
-  berichten <- split(df.berichten(), df.berichten()$Verzender)
-  berichten <- data.frame(Beleid = levels(df.berichten()$Beleid),
-                     Persdienst = berichten$Persdienst$Persberichten,
-                     Provincie = berichten$Provincie$Persberichten,
-                     Gouverneur = berichten$Gouverneur$Persberichten,
-                     Extern = berichten$Extern$Persberichten)
-  return(berichten)
-})
 
-  # Plot ----------------------------------------------------------------------
+
+# Plot ----------------------------------------------------------------------
 berichten.plot <- reactive({
       plots <- list("Aantal" = NA, "Procent" = NA)
       for (inhoud in c("Aantal", "Procent")) {
@@ -111,10 +102,27 @@ berichten.plot <- reactive({
       }
       return(plots)
 })
-  # Return --------------------------------------------------------------------
+
+# Create clean tabel for display -----------------------------------------------
+berichten.tabel <- reactive({
+  # Reformat table -------------------------------------------------------------
+
+  berichten <- split(df.berichten(), df.berichten()$Verzender)
+  berichten <- data.frame(Beleid = levels(df.berichten()$Beleid),
+                          Persdienst = berichten$Persdienst$Persberichten,
+                          Provincie = berichten$Provincie$Persberichten,
+                          Gouverneur = berichten$Gouverneur$Persberichten,
+                          Extern = berichten$Extern$Persberichten)
+  # Totaal toevoegen aan tabel -------------------------------------------------
+  adorn_totals(df.berichten(),"row")
+  
+  return(berichten)
+})
+
+# Return --------------------------------------------------------------------
 return(list(plot.aantal = reactive(berichten.plot()$Aantal), 
             plot.procent = reactive(berichten.plot()$Procent), 
-            tabel = reactive(table.berichten()), 
+            tabel = reactive(berichten.tabel()), 
             uitleg = reactive(input$uitleg)))
 
 }

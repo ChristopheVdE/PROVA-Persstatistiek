@@ -98,10 +98,16 @@ berichten.plot <- reactive({
       }
       return(plots)
 })
+
+# Totaal toevoegen aan tabel ---------------------------------------------------
+berichten.tabel <- reactive({
+  adorn_totals(df.berichten(),"row")
+})
+
   # Return --------------------------------------------------------------------
 return(list(plot.aantal = reactive(berichten.plot()$Aantal), 
             plot.procent = reactive(berichten.plot()$Procent), 
-            tabel = reactive(df.berichten()), 
+            tabel = reactive(berichten.tabel()), 
             uitleg = reactive(input$uitleg)))
 
 }

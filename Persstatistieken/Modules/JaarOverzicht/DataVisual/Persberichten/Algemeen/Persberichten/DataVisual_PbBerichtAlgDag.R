@@ -4,6 +4,7 @@
 
 # LOAD PACKAGES ===============================================================
 library(scales)
+library(janitor)
 # =============================================================================
 
 # LOAD MODULES & FUNCTIONS ====================================================
@@ -42,40 +43,29 @@ data.visualOutput <- function(id, plottitle, Xaxis, Xlabels, Legende = TRUE, Pie
 }
 
 # SERVER =======================================================================
-DataVisual.PbType <- function(input, output, session, data, colours, beleid, datadeelbeleid) {
+DataVisual.PbBerichtAlgDag <- function(input, output, session, data, colours) {
 
-# Data ------------------------------------------------------------------------ 
+# Tabel ------------------------------------------------------------------------
 df.berichten <- reactive({
-    # Create tabel
-    berichten <- data.frame(table(data()$Beleid, data()$Soort))
-    colnames(berichten) <- c("Beleid", "Type", "Persberichten")
-    # Add missing "Type"
-    for(i in c("Activiteitenkalender", "Agendatip", "Evenementenkalender", "Persagenda", "Persbericht", "Persuitnodiging")) {
-      if(!(i %in% levels(as.factor(berichten$Type)))) {
-        temp <- data.frame(
-          Beleid = c(levels(as.factor(datadeelbeleid()$Beleid))),
-          Type = i,
-          Persberichten = 0
-        )
-        berichten <- rbind(berichten, temp)
-      }
-    }
-    # Add percentages
-    berichten <- data.frame(berichten[order(berichten$Beleid),], "Procentueel" = calc_percentages("type", berichten))
-    # Return
-    return(berichten)
+  # Create table
+  berichten <- data.frame(table(data()$Dag))
+  colnames(berichten) <- c("Dag", "Persberichten")
+  # Add percentages
+  berichten <- data.frame(berichten, "Procentueel" = calc_percentages("alg.dag", berichten))
+      
+  return(berichten)
 })
 
-# Plot -------------------------------------------------------------------------
+# Plot ----------------------------------------------------------------------
 berichten.plot <- reactive({
       plots <- list("Aantal" = NA, "Procent" = NA)
       for (inhoud in c("Aantal", "Procent")) {
     # Barplot -----------------------------------------------------------------
         if ((inhoud == "Aantal" && input$type.aantal == "Barplot") || (inhoud == "Procent" && input$type.procent == "Barplot")) {
-          plots[[inhoud]] <- simple_barplot(Id = 'type',
+          plots[[inhoud]] <- simple_barplot(Id = 'alg.dag',
                                        data = df.berichten,
-                                       Xaxis = "Beleid",
-                                       Fill = "Type",
+                                       Xaxis = "Dag",
+                                       Fill = "Dag",
                                        visual = inhoud,
                                        title = input$title,
                                        Xtitle = input$Xaxis,
@@ -86,9 +76,9 @@ berichten.plot <- reactive({
         }
     # Taartdiagram ------------------------------------------------------------
         else if ((inhoud == "Aantal" && input$type.aantal == "Taartdiagram") || (inhoud == "Procent" && input$type.procent == "Taartdiagram")) {
-          plots[[inhoud]] <- simple_piechart(Id = 'type',
+          plots[[inhoud]] <- simple_piechart(Id = 'alg.dag',
                                              data = df.berichten,
-                                             Fill = "Type",
+                                             Fill = "Dag",
                                              visual = inhoud,
                                              title = input$title,
                                              Xtitle = input$Xaxis,
@@ -101,26 +91,12 @@ berichten.plot <- reactive({
       return(plots)
 })
 
-# Create cleaner table for display ---------------------------------------------
-  # Reformat tabel -------------------------------------------------------------
+# Totaal toevoegen aan tabel ---------------------------------------------------
 berichten.tabel <- reactive({
-  berichten <- split(df.berichten(), df.berichten()$Type)
-  berichten <- data.frame(
-    Beleid = levels(df.berichten()$Beleid),
-    Activiteitenkalender = berichten$Activiteitenkalender$Persberichten,
-    Agendatip = berichten$Agendatip$Persberichten, 
-    Evenementenkalender = berichten$Evenementenkalender$Persberichten,
-    Persagenda = berichten$Persagenda$Persberichten,
-    Persbericht = berichten$Persbericht$Persberichten,
-    Persuitnodiging = berichten$Persuitnodiging$Persberichten
-  )
-  # Add Totals -----------------------------------------------------------------
   adorn_totals(df.berichten(),"row")
-  
-  return(berichten)
 })
 
-  # Return --------------------------------------------------------------------
+# Return -----------------------------------------------------------------------
 return(list(plot.aantal = reactive(berichten.plot()$Aantal), 
             plot.procent = reactive(berichten.plot()$Procent), 
             tabel = reactive(berichten.tabel()), 
