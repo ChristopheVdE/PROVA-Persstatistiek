@@ -46,94 +46,9 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
 
   # Data preparation ---------------------------------------------------------- 
     df.berichten <- reactive(
-    # Persberichten ------------------------------------------------------------
-      # Algemeen Persconferenties ----------------------------------------------
-        if (grepl("conferentie", Id)) {
-        # Data preparation -----------------------------------------------------
-          temp <- split(data(), data()$Persconferentie)
-          temp <- temp$Ja
-          for (i in colnames(temp)) {
-            if (!(i %in% c("Kwartaal", "Datum PC", "Beleid", "Persconferentie"))) {
-              temp[[i]] <- NULL
-            }
-          }
-        # Kwartaal ------------------------------------------------------------
-          if (Id == "conferentie.alg.kwartaal") {
-            # Create dummy dataframe
-            berichten <- data.frame(
-              Kwartaal = factor(c("Q1", "Q2", "Q3", "Q4"), c("Q1", "Q2", "Q3", "Q4")),
-              Persberichten = 0
-            )
-            # Create table
-            temp <- data.frame(table(temp$Kwartaal))
-            colnames(temp) <- c("Kwartaal", "Persberichten")
-            # Update values of dummy dataframe
-            for (i in temp$Kwartaal) {
-              berichten$Persberichten[grepl(i, berichten$Kwartaal)] <- temp$Persberichten[grepl(i, temp$Kwartaal)]
-            }
-            # Add percentages
-            berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
-            # Return df
-            colnames(berichten) <- c("Kwartaal", "Persconferenties", "Procentueel")
-            berichten
-          }
-        # Maand ---------------------------------------------------------------
-          else if (Id == "conferentie.alg.maand") {
-            # Maand PC toevoegen 
-            temp$Maand <- factor(format(as.Date(temp$"Datum PC"), format = "%m"), levels = c("01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"))
-            levels(temp$Maand) <- c("jan", "feb", "mrt", "apr", "mei","jun","jul","aug","sep","okt","nov","dec")
-            # Create table
-            berichten <- data.frame(table(temp$Maand))
-            colnames(berichten) <- c("Maand", "Persberichten")
-            # Add percentages
-            berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
-            # Return df
-            colnames(berichten) <- c("Maand", "Persconferenties", "Procentueel")
-            berichten
-          }
-        # Dag -----------------------------------------------------------------
-          else if (Id == "conferentie.alg.dag") {
-            # Dag Toevoegen
-            temp$Dag <- factor(format(as.Date(temp$"Datum PC"), format = "%u"), levels = c(1:7))
-            levels(temp$Dag) <- c("ma", "di", "wo", "do", "vr", "za", "zo")
-            # Create table
-            berichten <- data.frame(table(temp$Dag))
-            colnames(berichten) <- c("Dag", "Persberichten")
-            # Add percentages
-            berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
-            # Return df
-            colnames(berichten) <- c("Dag", "Persconferenties", "Procentueel")
-            berichten
-          }
-        # Week ----------------------------------------------------------------
-          else if (Id == "conferentie.alg.week") {
-            # Week toevoegen
-            temp$Week <- ISOweek(as.Date(temp$"Datum PC"))
-            # Create table
-            berichten <- data.frame(table(temp$Week))
-            colnames(berichten) <- c("Week", "Persberichten")
-            # Add percentages
-            berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
-            # Return df
-            colnames(berichten) <- c("Week", "Persconferenties", "Procentueel")
-            berichten
-          }
-        # Beleid --------------------------------------------------------------
-          else if (Id == "conferentie.alg.beleid") {
-            # Create table
-            berichten <- data.frame(table(temp$Beleid))
-            colnames(berichten) <- c("Beleid","Persberichten")
-            # Add percentages
-            berichten <- data.frame(berichten, "Procentueel" = calc_percentages(Id, berichten))
-            # Return df
-            colnames(berichten) <- c("Beleid","Persconferenties", "Procentueel")
-            berichten
-          }
-          return(berichten)
-        }
     # Persreturn --------------------------------------------------------------
       # Per beleid: Algemeen --------------------------------------------------
-        else if (Id == "return.beleid.alg") {
+        if (Id == "return.beleid.alg") {
         # Create table
           berichten <- data.frame(table(data()$Beleid, data()$Persreturn))
           colnames(berichten) <- c("Beleid", "Persreturn", "Aantal")

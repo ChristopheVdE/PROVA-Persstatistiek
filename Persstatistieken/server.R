@@ -18,7 +18,12 @@ source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/DataVisual_PbBerichtAlgdag.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/DataVisual_PbBerichtAlgWeek.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/DataVisual_PbBerichtAlgBeleid.R")
-
+# PersConferenties algemeen -------------------------------------------------------
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persconferenties/DataVisual_PbConferentieAlgKwartaal.R")
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persconferenties/DataVisual_PbConferentieAlgMaand.R")
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persconferenties/DataVisual_PbConferentieAlgdag.R")
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persconferenties/DataVisual_PbConferentieAlgWeek.R")
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persconferenties/DataVisual_PbConferentieAlgBeleid.R")
 # ------------------------------------------------------------------------------
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerBeleid/DataVisual_PbBeleidMaand.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerBeleid/DataVisual_PbBeleidDeelbeleid.R")
@@ -258,7 +263,7 @@ server <- function(input, output, session) {
             )
       # Persconferenties -------------------------------------------------------
         # Per Kwartaal ---------------------------------------------------------
-            persconferenties.alg.kwartaal <- callModule(data.visual, "conferentie.alg.kwartaal", Id = "conferentie.alg.kwartaal", data = Persstatistiek, Xaxis = "Kwartaal", Fill = "Kwartaal", colours = colours)      
+            persconferenties.alg.kwartaal <- callModule(DataVisual.PbConferentieAlgKwartaal, "conferentie.alg.kwartaal", data = Persstatistiek, colours = colours)      
           # Plot - aantal
             output$persconferenties.alg.kwartaal.plot.aantal <- renderPlot(
               persconferenties.alg.kwartaal$plot.aantal()
@@ -272,7 +277,7 @@ server <- function(input, output, session) {
               persconferenties.alg.kwartaal$tabel()
             )
         # Per Maand ------------------------------------------------------------
-            persconferenties.alg.maand <- callModule(data.visual, "conferentie.alg.maand", Id = "conferentie.alg.maand", data = Persstatistiek, Xaxis = "Maand", Fill = "Maand", colours = colours)
+            persconferenties.alg.maand <- callModule(DataVisual.PbConferentieAlgMaand, "conferentie.alg.maand", data = Persstatistiek, colours = colours)
           # Plot - aantal
             output$persconferenties.alg.maand.plot.aantal <- renderPlot(
               persconferenties.alg.maand$plot.aantal()
@@ -286,7 +291,7 @@ server <- function(input, output, session) {
               persconferenties.alg.maand$tabel()
             )
         # Per Dag --------------------------------------------------------------
-            persconferenties.alg.dag <- callModule(data.visual, "conferentie.alg.dag", Id = "conferentie.alg.dag", data = Persstatistiek, Xaxis = "Dag", Fill = "Dag", colours = colours)
+            persconferenties.alg.dag <- callModule(DataVisual.PbConferentieAlgDag, "conferentie.alg.dag", data = Persstatistiek, colours = colours)
           # Plot - aantal
             output$persconferenties.alg.dag.plot.aantal <- renderPlot(
               persconferenties.alg.dag$plot.aantal()
@@ -300,7 +305,7 @@ server <- function(input, output, session) {
               persconferenties.alg.dag$tabel()
             )
         # Per Week -------------------------------------------------------------
-            persconferenties.alg.week <- callModule(data.visual, "conferentie.alg.week", Id = "conferentie.alg.week", data = Persstatistiek, Xaxis = "Week", Fill = "Week", colours = colours)
+            persconferenties.alg.week <- callModule(DataVisual.PbConferentieAlgWeek, "conferentie.alg.week", data = Persstatistiek, colours = colours)
           # Plot - aantal
             output$persconferenties.alg.week.plot.aantal <- renderPlot(
               persconferenties.alg.week$plot.aantal()
@@ -314,7 +319,7 @@ server <- function(input, output, session) {
               persconferenties.alg.week$tabel()
             )
         # Per Beleid -----------------------------------------------------------
-            persconferenties.alg.beleid <- callModule(data.visual, "conferentie.alg.beleid", Id = "conferentie.alg.beleid", data = Persstatistiek, Xaxis = "Beleid", Fill = "Beleid", colours = colours)
+            persconferenties.alg.beleid <- callModule(DataVisual.PbConferentieAlgBeleid, "conferentie.alg.beleid", data = Persstatistiek, colours = colours)
           # Plot - aantal
             output$persconferenties.alg.beleid.plot.aantal <- renderPlot(
               persconferenties.alg.beleid$plot.aantal()
