@@ -333,7 +333,8 @@ server <- function(input, output, session) {
           )
           # Table
           output$persberichten.beleid.maand.economie.tabel <- DT::renderDataTable(
-            persberichten.beleid.maand.economie$tabel()
+            persberichten.beleid.maand.economie$tabel(),
+            rownames = FALSE
           )
         # Gouverneur -----------------------------------------------------------
         persberichten.beleid.maand.gouverneur <- callModule(DataVisual.PbBeleidMaand, "bericht.beleid.maand.plot.aantal.gouverneur", data = Persstatistiek, colours = colours, beleid = "Gouverneur")
@@ -347,7 +348,8 @@ server <- function(input, output, session) {
           )
           # Table
           output$persberichten.beleid.maand.gouverneur.tabel <- DT::renderDataTable(
-            persberichten.beleid.maand.gouverneur$tabel()
+            persberichten.beleid.maand.gouverneur$tabel(),
+            rownames = FALSE
           )
           
         # Leefmilieu -----------------------------------------------------------
@@ -362,7 +364,8 @@ server <- function(input, output, session) {
           )
           # Table
           output$persberichten.beleid.maand.leefmilieu.tabel <- DT::renderDataTable(
-            persberichten.beleid.maand.leefmilieu$tabel()
+            persberichten.beleid.maand.leefmilieu$tabel(),
+            rownames = FALSE
           )
         # Mobiliteit -----------------------------------------------------------
         persberichten.beleid.maand.mobiliteit <- callModule(DataVisual.PbBeleidMaand, "bericht.beleid.maand.plot.aantal.mobiliteit", data = Persstatistiek, colours = colours, beleid = "Mobiliteit")
@@ -376,7 +379,8 @@ server <- function(input, output, session) {
           )
           # Table
           output$persberichten.beleid.maand.mobiliteit.tabel <- DT::renderDataTable(
-            persberichten.beleid.maand.mobiliteit$tabel()
+            persberichten.beleid.maand.mobiliteit$tabel(),
+            rownames = FALSE
           )
         # Onderwijs en Educatie-------------------------------------------------
         persberichten.beleid.maand.onderwijs <- callModule(DataVisual.PbBeleidMaand, "bericht.beleid.maand.plot.aantal.onderwijs", data = Persstatistiek, colours = colours, beleid = "Onderwijs en Educatie")
@@ -390,7 +394,8 @@ server <- function(input, output, session) {
           )
           # Tabel
           output$persberichten.beleid.maand.onderwijs.tabel <- DT::renderDataTable(
-            persberichten.beleid.maand.onderwijs$tabel()
+            persberichten.beleid.maand.onderwijs$tabel(),
+            rownames = FALSE
           )
         # Provinciebestuur -----------------------------------------------------
         persberichten.beleid.maand.provinciebestuur <- callModule(DataVisual.PbBeleidMaand, "bericht.beleid.maand.plot.aantal.provinciebestuur", data = Persstatistiek, colours = colours, beleid = "Provinciebestuur")
@@ -404,7 +409,8 @@ server <- function(input, output, session) {
           )
           # Table
           output$persberichten.beleid.maand.provinciebestuur.tabel <- DT::renderDataTable(
-            persberichten.beleid.maand.provinciebestuur$tabel()
+            persberichten.beleid.maand.provinciebestuur$tabel(),
+            rownames = FALSE
           )
         # Ruimte ---------------------------------------------------------------
         persberichten.beleid.maand.ruimte <- callModule(DataVisual.PbBeleidMaand, "bericht.beleid.maand.plot.aantal.ruimte", data = Persstatistiek, colours = colours, beleid = "Ruimte")
@@ -418,7 +424,8 @@ server <- function(input, output, session) {
           )
           # Table
           output$persberichten.beleid.maand.ruimte.tabel <- DT::renderDataTable(
-            persberichten.beleid.maand.ruimte$tabel()
+            persberichten.beleid.maand.ruimte$tabel(),
+            rownames = FALSE
           )
         # Vrije Tijd -----------------------------------------------------------
         persberichten.beleid.maand.vrijetijd <- callModule(DataVisual.PbBeleidMaand, "bericht.beleid.maand.plot.aantal.vrijetijd", data = Persstatistiek, colours = colours, beleid = "Vrije Tijd")
@@ -432,7 +439,8 @@ server <- function(input, output, session) {
           )
           # Table
           output$persberichten.beleid.maand.vrijetijd.tabel <- DT::renderDataTable(
-            persberichten.beleid.maand.vrijetijd$tabel()
+            persberichten.beleid.maand.vrijetijd$tabel(),
+            rownames = FALSE
           )
 
       # Per Deelbeleid ---------------------------------------------------------
@@ -592,7 +600,8 @@ server <- function(input, output, session) {
           )
           # Tabel
           output$persberichten.verzender.maand.persdienst.tabel <- DT::renderDataTable(
-            persberichten.verzender.maand.persdienst$tabel()
+            persberichten.verzender.maand.persdienst$tabel(),
+            rownames = FALSE
           )
         # Provincie ------------------------------------------------------------
           persberichten.verzender.maand.provincie <- callModule(DataVisual.PbVerzenderMaand, "bericht.verzender.maand.provincie", Persstatistiek, colours = colours, verzender = "Provincie")
@@ -606,7 +615,8 @@ server <- function(input, output, session) {
           )
           # Tabel
           output$persberichten.verzender.maand.provincie.tabel <- DT::renderDataTable(
-            persberichten.verzender.maand.provincie$tabel()
+            persberichten.verzender.maand.provincie$tabel(),
+            rownames = FALSE
           )
         # Gouverneur -----------------------------------------------------------
           persberichten.verzender.maand.gouverneur <- callModule(DataVisual.PbVerzenderMaand, "bericht.verzender.maand.gouverneur", Persstatistiek, colours = colours, verzender = "Gouverneur")
@@ -620,7 +630,8 @@ server <- function(input, output, session) {
           )
           # Tabel
           output$persberichten.verzender.maand.gouverneur.tabel <- DT::renderDataTable(
-            persberichten.verzender.maand.gouverneur$tabel()
+            persberichten.verzender.maand.gouverneur$tabel(),
+            rownames = FALSE
           )
         # Extern ---------------------------------------------------------------
           persberichten.verzender.maand.extern <- callModule(DataVisual.PbVerzenderMaand, "bericht.verzender.maand.extern", Persstatistiek, colours = colours, verzender = "Extern")
@@ -634,7 +645,8 @@ server <- function(input, output, session) {
           )
           # Tabel
           output$persberichten.verzender.maand.extern.tabel <- DT::renderDataTable(
-            persberichten.verzender.maand.extern$tabel()
+            persberichten.verzender.maand.extern$tabel(),
+            rownames = FALSE
           )
     # PER TYPE -----------------------------------------------------------------
       persberichten.type <- callModule(DataVisual.PbType, "bericht.type", Persstatistiek, colours = colours, datadeelbeleid = reactive(AlleDeelbeleiden))

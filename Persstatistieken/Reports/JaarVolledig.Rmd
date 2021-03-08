@@ -298,7 +298,10 @@ params$Persberichten.beleid.maand$provinciebestuur.plot.procent()
 
 ###### Tabel
 ```{r "Persberichten Provinciebestuur: tabel - maand"}
-kable(params$Persberichten.beleid.maand$provinciebestuur.tabel(), caption="Persberichten: Provinciebestuur per maand")
+kable(params$Persberichten.beleid.maand$provinciebestuur.tabel()
+      , caption="Persberichten: Provinciebestuur per maand"
+      , row.names = FALSE
+      )
 ```
 
 ##### {-}
@@ -342,7 +345,9 @@ params$Persberichten.beleid.maand$economie.plot.procent()
 
 ###### Tabel
 ```{r "Persberichten Economie: tabel - maand"}
-kable(params$Persberichten.beleid.maand$economie.tabel(), caption="Persberichten: Economie per maand")
+kable(params$Persberichten.beleid.maand$economie.tabel()
+      , caption="Persberichten: Economie per maand"
+      , row.names = FALSE)
 ```
 
 ##### {-}
@@ -386,7 +391,9 @@ params$Persberichten.beleid.maand$leefmilieu.plot.procent()
 
 ###### Tabel
 ```{r "Persberichten Leefmilieu: tabel - maand"}
-kable(params$Persberichten.beleid.maand$leefmilieu.tabel(), caption="Persberichten: Leefmilieu per maand")
+kable(params$Persberichten.beleid.maand$leefmilieu.tabel()
+      , caption="Persberichten: Leefmilieu per maand"
+      , row.names = FALSE)
 ```
 
 ##### {-}
@@ -430,7 +437,9 @@ params$Persberichten.beleid.maand$mobiliteit.plot.procent()
 
 ###### Tabel
 ```{r "Persberichten Mobiliteit: tabel - maand"}
-kable(params$Persberichten.beleid.maand$mobiliteit.tabel(), caption="Persberichten: Mobiliteit per maand")
+kable(params$Persberichten.beleid.maand$mobiliteit.tabel()
+      , caption="Persberichten: Mobiliteit per maand"
+      , row.names = FALSE)
 ```
 
 ##### {-}
@@ -449,7 +458,8 @@ params$Persberichten.beleid.beleid$mobiliteit.plot.procent()
 
 ###### Tabel
 ```{r "Persberichten Mobiliteit: tabel"}
-kable(params$Persberichten.beleid.beleid$mobiliteit.tabel(), caption = "Persberichten: Mobiliteit")
+kable(params$Persberichten.beleid.beleid$mobiliteit.tabel()
+      , caption = "Persberichten: Mobiliteit")
 ```
 
 ##### {-}
@@ -474,7 +484,9 @@ params$Persberichten.beleid.maand$onderwijs.plot.procent()
 
 ###### Tabel
 ```{r "Persberichten Onderwijs en Educatie: tabel - maand"}
-kable(params$Persberichten.beleid.maand$onderwijs.tabel(), caption="Persberichten: Onderwijs en Educatie per maand")
+kable(params$Persberichten.beleid.maand$onderwijs.tabel()
+      , caption="Persberichten: Onderwijs en Educatie per maand"
+      , row.names = FALSE)
 ```
 
 ##### {-}
@@ -518,7 +530,9 @@ params$Persberichten.beleid.maand$ruimte.plot.procent()
 
 ###### Tabel
 ```{r "Persberichten Ruimte: tabel - maand"}
-kable(params$Persberichten.beleid.maand$ruimte.tabel(), caption="Persberichten: Ruimte per maand")
+kable(params$Persberichten.beleid.maand$ruimte.tabel()
+      , caption="Persberichten: Ruimte per maand"
+      , row.names = FALSE)
 ```
 
 ##### {-}
@@ -562,7 +576,9 @@ params$Persberichten.beleid.maand$vrijetijd.plot.procent()
 
 ###### Tabel
 ```{r "Persberichten Vrije Tijd: tabel - maand"}
-kable(params$Persberichten.beleid.maand$vrijetijd.tabel(), caption="Persberichten: Vrije Tijd per maand")
+kable(params$Persberichten.beleid.maand$vrijetijd.tabel()
+      , caption="Persberichten: Vrije Tijd per maand"
+      , row.names = FALSE)
 ```
 
 ##### {-}
@@ -606,7 +622,9 @@ params$Persberichten.beleid.maand$gouverneur.plot.procent()
 
 ###### Tabel
 ```{r "Persberichten Gouverneur: tabel - maand"}
-kable(params$Persberichten.beleid.maand$gouverneur.tabel(), caption="Persberichten: Gouverneur per maand")
+kable(params$Persberichten.beleid.maand$gouverneur.tabel()
+      , caption="Persberichten: Gouverneur per maand"
+      , row.names = FALSE)
 ```
 
 ##### {-}
@@ -678,7 +696,9 @@ params$Persberichten.verzender.maand$persdienst.plot.procent()
 
 ###### Tabel
 ```{r "Persberichten per verzender - persdienst: Tabel"}
-kable(params$Persberichten.verzender.maand$persdienst.tabel(), caption="Persberichten: Persdienst")
+kable(params$Persberichten.verzender.maand$persdienst.tabel()
+      , caption="Persberichten: Persdienst"
+      , row.names = FALSE)
 ```
 
 ##### {-}
@@ -702,7 +722,9 @@ params$Persberichten.verzender.maand$provincie.plot.procent()
 
 ###### Tabel
 ```{r "Persberichten per verzender - provincie: Tabel"}
-kable(params$Persberichten.verzender.maand$provincie.tabel(), caption="Persberichten: Provincie")
+kable(params$Persberichten.verzender.maand$provincie.tabel()
+      , caption="Persberichten: Provincie"
+      , row.names = FALSE)
 ```
 
 ##### {-}
@@ -726,7 +748,9 @@ params$Persberichten.verzender.maand$gouverneur.plot.procent()
 
 ###### Tabel
 ```{r "Persberichten per verzender - gouverneur: Tabel"}
-kable(params$Persberichten.verzender.maand$gouverneur.tabel(), caption="Persberichten: Gouverneur")
+kable(params$Persberichten.verzender.maand$gouverneur.tabel()
+      , caption="Persberichten: Gouverneur"
+      , row.names = FALSE)
 ```
 
 ##### {-}
@@ -750,7 +774,9 @@ params$Persberichten.verzender.maand$extern.plot.procent()
 
 ###### Tabel
 ```{r "Persberichten per verzender - extern: Tabel"}
-kable(params$Persberichten.verzender.maand$extern.tabel(), caption="Persberichten: Extern")
+kable(params$Persberichten.verzender.maand$extern.tabel()
+      , caption="Persberichten: Extern"
+      , row.names = FALSE)
 ```
 
 ##### {-}
