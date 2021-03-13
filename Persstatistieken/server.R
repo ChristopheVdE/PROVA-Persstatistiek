@@ -18,19 +18,23 @@ source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/DataVisual_PbBerichtAlgdag.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/DataVisual_PbBerichtAlgWeek.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/DataVisual_PbBerichtAlgBeleid.R")
-# PersConferenties algemeen -------------------------------------------------------
+# Persconferenties algemeen ----------------------------------------------------
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persconferenties/DataVisual_PbConferentieAlgKwartaal.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persconferenties/DataVisual_PbConferentieAlgMaand.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persconferenties/DataVisual_PbConferentieAlgdag.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persconferenties/DataVisual_PbConferentieAlgWeek.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persconferenties/DataVisual_PbConferentieAlgBeleid.R")
-# ------------------------------------------------------------------------------
+# PErsberichten per beleid------------------------------------------------------
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerBeleid/DataVisual_PbBeleidMaand.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerBeleid/DataVisual_PbBeleidDeelbeleid.R")
+# PErsberichten per verzender --------------------------------------------------
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerVerzender/DataVisual_PbVerzenderVerzender.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerVerzender/DataVisual_PbVerzenderBeleid.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerVerzender/DataVisual_PbVerzenderMaand.R")
+# Persberichten per type -------------------------------------------------------
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerType/DataVisual_PbType.R")
+# Persreturn per beleid --------------------------------------------------------
+source("./Modules/JaarOverzicht/DataVisual/Persreturn/Beleid/DataVisual_PrBeleidAlg.R")
 # ==============================================================================
 
 server <- function(input, output, session) {
@@ -680,7 +684,7 @@ server <- function(input, output, session) {
   # PERSRETURN =================================================================
     # PER BELEID ---------------------------------------------------------------
       # Algemeen ---------------------------------------------------------------
-      persreturn.beleid.alg <- callModule(data.visual, "return.beleid.alg", Id = "return.beleid.alg" , Persstatistiek, Xaxis = "Beleid", Fill = "Persreturn", colours = return.colours)
+      persreturn.beleid.alg <- callModule(DataVisual.PrBeleidAlg, "return.beleid.alg", Persstatistiek, colours = return.colours)
         # Plot - aantal
         output$persreturn.beleid.alg.plot.aantal <- renderPlot(
           persreturn.beleid.alg$plot.aantal()
@@ -691,7 +695,8 @@ server <- function(input, output, session) {
         )
         # Tabel 
         output$persreturn.beleid.alg.tabel <- DT::renderDataTable(
-          persreturn.beleid.alg$tabel()
+          persreturn.beleid.alg$tabel(),
+          rownames = FALSE
         )
       # Deelbeleid -------------------------------------------------------------
         # Economie -------------------------------------------------------------
