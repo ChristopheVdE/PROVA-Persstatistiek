@@ -95,9 +95,11 @@ berichten.tabel <- reactive({
   berichten <- data.frame(
     Beleid = levels(df.berichten()$Beleid),
     Ja = berichten$Ja$Aantal,
-    Nee = berichten$Nee$Aantal
+    'Ja%' = berichten$Ja$Procent,
+    Nee = berichten$Nee$Aantal,
+    'Nee%' = berichten$Nee$Procent
   )
-  colnames(berichten) <- c("Beleid", "Persreturn", "Geen persreturn")
+  colnames(berichten) <- c("Beleid", "Persreturn", '%', "Geen persreturn", '%')
   
   return(berichten)
 })
