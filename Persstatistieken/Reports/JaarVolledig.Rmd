@@ -849,7 +849,9 @@ params$Persreturn.beleid$algemeen.plot.procent()
 
 ##### Tabel
 ```{r "Persreturn per beleid - algemeen: tabel"}
-kable(params$Persreturn.beleid$algemeen.tabel(), caption= "Persreturn per beleid")
+kable(params$Persreturn.beleid$algemeen.tabel(), 
+        caption= "Persreturn per beleid",
+        rownames = FALSE)
 ```
 
 #### {-}
@@ -898,7 +900,9 @@ params$Persreturn.beleid$economie.plot.procent()
 
 ###### Tabel
 ```{r "Persreturn Economie: tabel"}
-kable(params$Persreturn.beleid$economie.tabel(), caption = "Persberichten: Economie")
+kable(params$Persreturn.beleid$economie.tabel(), 
+      caption = "Persberichten: Economie",
+      rownames = FALSE)
 ```
 
 ##### {-}
@@ -922,7 +926,9 @@ params$Persreturn.beleid$leefmilieu.plot.procent()
 
 ###### Tabel
 ```{r "Persreturn Leefmilieu: tabel"}
-kable(params$Persreturn.beleid$leefmilieu.tabel(), caption = "Persberichten: Leefmilieu")
+kable(params$Persreturn.beleid$leefmilieu.tabel(), 
+      caption = "Persberichten: Leefmilieu",
+      rownames = FALSE)
 ```
 
 ##### {-}
@@ -946,7 +952,9 @@ params$Persreturn.beleid$mobiliteit.plot.procent()
 
 ###### Tabel
 ```{r "Persreturn Mobiliteit: tabel"}
-kable(params$Persreturn.beleid$mobiliteit.tabel(), caption = "Persberichten: Mobiliteit")
+kable(params$Persreturn.beleid$mobiliteit.tabel(), 
+      caption = "Persberichten: Mobiliteit",
+      rownames = FALSE)
 ```
 
 ##### {-}
@@ -970,7 +978,9 @@ params$Persreturn.beleid$onderwijs.plot.procent()
 
 ###### Tabel
 ```{r "Persreturn Onderwijs en Educatie: tabel"}
-kable(params$Persreturn.beleid$onderwijs.tabel(), caption = "Persberichten: Onderwijs en Educatie")
+kable(params$Persreturn.beleid$onderwijs.tabel(), 
+      caption = "Persberichten: Onderwijs en Educatie",
+      rownames = FALSE)
 ```
 
 ##### {-}
@@ -994,7 +1004,9 @@ params$Persreturn.beleid$ruimte.plot.procent()
 
 ###### Tabel
 ```{r "Persreturn Ruimte: tabel"}
-kable(params$Persreturn.beleid$ruimte.tabel(), caption = "Persberichten: Ruimte")
+kable(params$Persreturn.beleid$ruimte.tabel(), 
+      caption = "Persberichten: Ruimte",
+      rownames = FALSE)
 ```
 
 ##### {-}
@@ -1018,7 +1030,9 @@ params$Persreturn.beleid$vrijetijd.plot.procent()
 
 ###### Tabel
 ```{r "Persreturn Vrije Tijd: tabel"}
-kable(params$Persreturn.beleid$vrijetijd.tabel(), caption = "Persberichten: Vrije Tijd")
+kable(params$Persreturn.beleid$vrijetijd.tabel(), 
+      caption = "Persberichten: Vrije Tijd",
+      rownames = FALSE)
 ```
 
 ##### {-}
@@ -1042,7 +1056,9 @@ params$Persreturn.beleid$gouverneur.plot.procent()
 
 ###### Tabel
 ```{r "Persreturn Gouverneur: tabel"}
-kable(params$Persreturn.beleid$gouverneur.tabel(), caption = "Persberichten: Gouverneur")
+kable(params$Persreturn.beleid$gouverneur.tabel(), 
+      caption = "Persberichten: Gouverneur",
+      rownames = FALSE)
 ```
 
 ##### {-}
@@ -1067,7 +1083,9 @@ params$Persreturn.medium$medium.plot.procent()
 
 #### Tabel
 ```{r "Persreturn per medium - tabel"}
-kable(params$Persreturn.medium$medium.tabel(), caption = "Persreturn per medium")
+kable(params$Persreturn.medium$medium.tabel(), 
+      caption = "Persreturn per medium",
+      rownames = FALSE)
 ```
 
 ##### {-}

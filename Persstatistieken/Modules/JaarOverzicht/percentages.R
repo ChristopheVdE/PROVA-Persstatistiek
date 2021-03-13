@@ -111,7 +111,6 @@ calc_percentages <- function(Id, data) {
       }
       column <- c(column, percentages)
     }
-    #browser()
   # Fix NA values
     for(i in 1:length(column)) {
       if (is.na(column[[i]])) {

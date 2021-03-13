@@ -47,109 +47,8 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
   # Data preparation ---------------------------------------------------------- 
     df.berichten <- reactive(
     # Persreturn --------------------------------------------------------------
-      # Per beleid: Algemeen --------------------------------------------------
-        if (Id == "return.beleid.alg") {
-        # Create table
-          berichten <- data.frame(table(data()$Beleid, data()$Persreturn))
-          colnames(berichten) <- c("Beleid", "Persreturn", "Aantal")
-        # Add percentages
-          berichten <- data.frame(berichten[order(berichten$Beleid),], "Procentueel" = calc_percentages(Id, berichten))
-        # Return
-          berichten
-        }
-      # Per beleid: Deelbeleid ------------------------------------------------
-        else if (Id == "return.beleid.beleid") {
-        # Create actual table for chose "beleid"
-          temp <- split(data(), data()$Beleid)
-          temp <- temp[[beleid]]
-          temp <- data.frame("Beleid" = beleid, table(temp$Deelbeleid, temp$Persreturn))
-          colnames(temp) <- c("Beleid", "Deelbeleid","Persreturn", "Aantal")
-          # Specify "deelbeleid" per "Beleid"
-          deelbeleid <- levels(temp[[beleid]]$"Deelbeleid")
-          if(beleid == "Economie") {
-            for (i in datadeelbeleid()) {
-              if (!(i %in% deelbeleid)) {
-                deelbeleid <- c(deelbeleid, i)
-              }
-            }
-          } else if(beleid == "Gouverneur") {
-            for (i in datadeelbeleid()) {
-              if (!(i %in% deelbeleid)) {
-                deelbeleid <- c(deelbeleid, i)
-              }
-            }
-          } else if(beleid == "Leefmilieu") {
-            for (i in datadeelbeleid()) {
-              if (!(i %in% deelbeleid)) {
-                deelbeleid <- c(deelbeleid, i)
-              }
-            }
-          } else if(beleid == "Mobiliteit") {
-            for (i in datadeelbeleid()) {
-              if (!(i %in% deelbeleid)) {
-                deelbeleid <- c(deelbeleid, i)
-              }
-            }
-          } else if(beleid == "Onderwijs en Educatie") {
-            for (i in datadeelbeleid()) {
-              if (!(i %in% deelbeleid)) {
-                deelbeleid <- c(deelbeleid, i)
-              }
-            }
-          } else if(beleid == "Provinciebestuur") {
-            for (i in datadeelbeleid()) {
-              if (!(i %in% deelbeleid)) {
-                deelbeleid <- c(deelbeleid, i)
-              }
-            }
-          } else if(beleid == "Ruimte") {
-            for (i in datadeelbeleid()) {
-              if (!(i %in% deelbeleid)) {
-                deelbeleid <- c(deelbeleid, i)
-              }
-            }
-          } else if(beleid == "Vrije Tijd") {
-            for (i in datadeelbeleid()) {
-              if (!(i %in% deelbeleid)) {
-                deelbeleid <- c(deelbeleid, i)
-              }
-            }
-          }
-        # Create dummy dataframes containing every "Deelbeleid" of the "Beleid"
-          berichten.Ja <- data.frame(
-            Beleid = beleid,
-            Deelbeleid = deelbeleid,
-            Persreturn = "Ja",
-            Aantal = 0
-          )
-          berichten.Nee <- data.frame(
-            Beleid = beleid,
-            Deelbeleid = deelbeleid,
-            Persreturn = "Nee",
-            Aantal = 0
-          )
-        # Update dummy dataframes
-          temp <- split(temp, temp$Persreturn)
-          suppressWarnings(
-            for (i in temp[["Ja"]]$Deelbeleid) {
-              berichten.Ja$Aantal[grepl(i, berichten.Ja$Deelbeleid)] <- temp[["Ja"]]$Aantal[grepl(i, temp[["Ja"]]$Deelbeleid)]
-            }
-          )
-          suppressWarnings(
-            for (i in temp[["Nee"]]$Deelbeleid) {
-              berichten.Nee$Aantal[grepl(i, berichten.Nee$Deelbeleid)] <- temp[["Nee"]]$Aantal[grepl(i, temp[["Nee"]]$Deelbeleid)]
-            }
-          )
-        # Merge dummy dataframes
-          berichten <- rbind(berichten.Ja, berichten.Nee)
-          berichten <- berichten[order(berichten$Deelbeleid),]
-        # Add percentages
-          berichten <- data.frame(berichten[order(berichten$Deelbeleid),], "Procentueel" = calc_percentages(Id, berichten))
-        # Return
-          berichten
-        }
       # Per Medium ----------------------------------------------------------
-        else if (Id == "return.medium") {
+        if (Id == "return.medium") {
         # Create table: persreturn algemeen
           Algemeen <- split(data(), data()$Persreturn)
           Algemeen <- Algemeen$Ja
@@ -219,31 +118,8 @@ data.visual <- function(input, output, session, Id, data, Xaxis, Fill, colours, 
     })
   # Table ---------------------------------------------------------------------
     tabel <- reactive(
-    # Persreturn - beleid - alg -----------------------------------------------
-      if (Id == "return.beleid.alg") {
-        temp <- split(df.berichten(), df.berichten()$Persreturn)
-        temp <- data.frame(
-          Beleid = levels(df.berichten()$Beleid),
-          Ja = temp$Ja$Aantal,
-          Nee = temp$Nee$Aantal
-        )
-        colnames(temp) <- c("Beleid", "Persreturn", "Geen persreturn")
-        temp
-      }
-    # Persreturn - beleid - deelbeleid  ---------------------------------------
-      else if (Id == "return.beleid.beleid") {
-        temp <- split(df.berichten(), df.berichten()$Persreturn)
-        temp <- data.frame(
-          Beleid = beleid,
-          Deelbeleid = levels(as.factor(datadeelbeleid())),
-          Ja = temp$Ja$Aantal,
-          Nee = temp$Nee$Aantal 
-        )
-        colnames(temp) <- c("Beleid", "Deelbeleid", "Persreturn", "Geen persreturn")
-        temp
-      }
     # Persreturn - medium -----------------------------------------------------
-      else if (Id == "return.medium") {
+      if (Id == "return.medium") {
         temp <- split(df.berichten(), df.berichten()$Medium)
         temp <- data.frame(
           Beleid = levels(df.berichten()$Beleid),
