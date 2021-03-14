@@ -27,10 +27,11 @@ source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persconferenti
 # PErsberichten per beleid------------------------------------------------------
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerBeleid/DataVisual_PbBeleidMaand.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerBeleid/DataVisual_PbBeleidDeelbeleid.R")
-# PErsberichten per verzender --------------------------------------------------
+# Persberichten per verzender --------------------------------------------------
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerVerzender/DataVisual_PbVerzenderVerzender.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerVerzender/DataVisual_PbVerzenderBeleid.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerVerzender/DataVisual_PbVerzenderMaand.R")
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerVerzender/DataVisual_PbVerzenderDeelbeleid.R")
 # Persberichten per type -------------------------------------------------------
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerType/DataVisual_PbType.R")
 # Persreturn per beleid --------------------------------------------------------
@@ -665,6 +666,119 @@ server <- function(input, output, session) {
           output$persberichten.verzender.maand.extern.tabel <- DT::renderDataTable(
             persberichten.verzender.maand.extern$tabel(),
             rownames = FALSE
+          )
+      # Per Deelbeleid ---------------------------------------------------------
+        # Economie -------------------------------------------------------------
+          persberichten.verzender.beleid.economie <- callModule(DataVisual.PbVerzenderDeelbeleid, "bericht.verzender.beleid.plot.aantal.economie", Persstatistiek, colours = colours, beleid = "Economie", datadeelbeleid = reactive(input$Economie.ActieveDeelbeleiden))
+          # Plot - aantal
+          output$persberichten.verzender.beleid.economie.plot.aantal <- renderPlot(
+            persberichten.verzender.beleid.economie$plot.aantal()
+          )
+          # Plot - procent
+          output$persberichten.verzender.beleid.economie.plot.procent <- renderPlot(
+            persberichten.verzender.beleid.economie$plot.procent()
+          )
+          # Table
+          output$persberichten.verzender.beleid.economie.tabel <- DT::renderDataTable(
+            persberichten.verzender.beleid.economie$tabel()
+          )
+        # Gouverneur -----------------------------------------------------------
+          persberichten.verzender.beleid.gouverneur <- callModule(DataVisual.PbVerzenderDeelbeleid, "bericht.verzender.beleid.plot.aantal.gouverneur", Persstatistiek, colours = colours, beleid = "Gouverneur", datadeelbeleid = reactive(input$Gouverneur.ActieveDeelbeleiden))
+          # Plot  -aantal
+          output$persberichten.verzender.beleid.gouverneur.plot.aantal <- renderPlot(
+            persberichten.verzender.beleid.gouverneur$plot.aantal()
+          )
+          # Plot  - procent
+          output$persberichten.verzender.beleid.gouverneur.plot.procent <- renderPlot(
+            persberichten.verzender.beleid.gouverneur$plot.procent()
+          )
+          # Table
+          output$persberichten.verzender.beleid.gouverneur.tabel <- DT::renderDataTable(
+            persberichten.verzender.beleid.gouverneur$tabel()
+          )
+        # Leefmilieu -----------------------------------------------------------
+          persberichten.verzender.beleid.leefmilieu <- callModule(DataVisual.PbVerzenderDeelbeleid, "bericht.verzender.beleid.plot.aantal.leefmilieu", Persstatistiek, colours = colours, beleid = "Leefmilieu", datadeelbeleid = reactive(input$Leefmilieu.ActieveDeelbeleiden))
+          # Plot -aantal
+          output$persberichten.verzender.beleid.leefmilieu.plot.aantal <- renderPlot(
+            persberichten.verzender.beleid.leefmilieu$plot.aantal()
+          )
+          # Plot - procent
+          output$persberichten.verzender.beleid.leefmilieu.plot.procent <- renderPlot(
+            persberichten.verzender.beleid.leefmilieu$plot.procent()
+          )
+          # Table
+          output$persberichten.verzender.beleid.leefmilieu.tabel <- DT::renderDataTable(
+            persberichten.verzender.beleid.leefmilieu$tabel()
+          )
+        # Mobiliteit -----------------------------------------------------------
+          persberichten.verzender.beleid.mobiliteit <- callModule(DataVisual.PbVerzenderDeelbeleid, "bericht.verzender.beleid.plot.aantal.mobiliteit", Persstatistiek, colours = colours, beleid = "Mobiliteit", datadeelbeleid = reactive(input$Mobiliteit.ActieveDeelbeleiden))
+          # Plot - aantal 
+          output$persberichten.verzender.beleid.mobiliteit.plot.aantal <- renderPlot(
+            persberichten.verzender.beleid.mobiliteit$plot.aantal()
+          )
+          # Plot  - procent
+          output$persberichten.verzender.beleid.mobiliteit.plot.procent <- renderPlot(
+            persberichten.verzender.beleid.mobiliteit$plot.procent()
+          )
+          # Table
+          output$persberichten.verzender.beleid.mobiliteit.tabel <- DT::renderDataTable(
+            persberichten.verzender.beleid.mobiliteit$tabel()
+          )
+        # Onderwijs en Educatie ------------------------------------------------
+          persberichten.verzender.beleid.onderwijs <- callModule(DataVisual.PbVerzenderDeelbeleid, "bericht.verzender.beleid.plot.aantal.onderwijs", Persstatistiek, colours = colours, beleid = "Onderwijs en Educatie", datadeelbeleid = reactive(input$Onderwijs.ActieveDeelbeleiden))
+          # Plot -aantal 
+          output$persberichten.verzender.beleid.onderwijs.plot.aantal <- renderPlot(
+            persberichten.verzender.beleid.onderwijs$plot.aantal()
+          )
+          # Plot  - procent
+          output$persberichten.verzender.beleid.onderwijs.plot.procent <- renderPlot(
+            persberichten.verzender.beleid.onderwijs$plot.procent()
+          )
+          # Tabel
+          output$persberichten.verzender.beleid.onderwijs.tabel <- DT::renderDataTable(
+            persberichten.verzender.beleid.onderwijs$tabel()
+          )
+        # Provinciebestuur -----------------------------------------------------
+          persberichten.verzender.beleid.provinciebestuur <- callModule(DataVisual.PbVerzenderDeelbeleid, "bericht.verzender.beleid.plot.aantal.provinciebestuur", Persstatistiek, colours = colours, beleid = "Provinciebestuur", datadeelbeleid = reactive(input$Provinciebestuur.ActieveDeelbeleiden))
+          # Plot  - aantal
+          output$persberichten.verzender.beleid.provinciebestuur.plot.aantal <- renderPlot(
+            persberichten.verzender.beleid.provinciebestuur$plot.aantal()
+          )
+          # Plot  - procent
+          output$persberichten.verzender.beleid.provinciebestuur.plot.procent <- renderPlot(
+            ppersberichten.verzender.beleid.provinciebestuur$plot.procent()
+          )
+          # Table
+          output$persberichten.verzender.beleid.provinciebestuur.tabel <- DT::renderDataTable(
+            persberichten.verzender.beleid.provinciebestuur$tabel()
+          )
+        # Ruimte ---------------------------------------------------------------
+          persberichten.verzender.beleid.ruimte <- callModule(DataVisual.PbVerzenderDeelbeleid, "bericht.verzender.beleid.plot.aantal.ruimte", Persstatistiek, colours = colours, beleid = "Ruimte", datadeelbeleid = reactive(input$Ruimte.ActieveDeelbeleiden))
+          # Plot  - aantal
+          output$persberichten.verzender.beleid.ruimte.plot.aantal <- renderPlot(
+            persberichten.verzender.beleid.ruimte$plot.aantal()
+          )
+          # Plot  - procent
+          output$persberichten.verzender.beleid.ruimte.plot.procent <- renderPlot(
+            persberichten.verzender.beleid.ruimte$plot.procent()
+          )
+          # Table
+          output$persberichten.verzender.beleid.ruimte.tabel <- DT::renderDataTable(
+            persberichten.verzender.beleid.ruimte$tabel()
+          )
+        # Vrije Tijd -----------------------------------------------------------
+          persberichten.verzender.beleid.vrijetijd <- callModule(DataVisual.PbVerzenderDeelbeleid, "bericht.verzender.beleid.plot.aantal.vrijetijd", Persstatistiek, colours = colours, beleid = "Vrije Tijd", datadeelbeleid = reactive(input$VrijeTijd.ActieveDeelbeleiden))
+          # Plot  - aantal
+          output$persberichten.verzender.beleid.vrijetijd.plot.aantal <- renderPlot(
+            persberichten.verzender.beleid.vrijetijd$plot.aantal()
+          )
+          # Plot  - procent
+          output$persberichten.verzender.beleid.vrijetijd.plot.procent <- renderPlot(
+            persberichten.verzender.beleid.vrijetijdd$plot.procent()
+          )
+          # Table
+          output$persberichten.verzender.beleid.vrijetijd.tabel <- DT::renderDataTable(
+            persberichten.verzender.beleid.vrijetijd$tabel()
           )
     # PER TYPE -----------------------------------------------------------------
       persberichten.type <- callModule(DataVisual.PbType, "bericht.type", Persstatistiek, colours = colours, datadeelbeleid = reactive(AlleDeelbeleiden))

@@ -13,6 +13,32 @@ library(DT)
 
 source("./Modules/JaarOverzicht/data_visualisation.R")
 
+# Persberichten algemeen -------------------------------------------------------
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/DataVisual_PbBerichtAlgKwartaal.R")
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/DataVisual_PbBerichtAlgMaand.R")
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/DataVisual_PbBerichtAlgdag.R")
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/DataVisual_PbBerichtAlgWeek.R")
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/DataVisual_PbBerichtAlgBeleid.R")
+# Persconferenties algemeen ----------------------------------------------------
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persconferenties/DataVisual_PbConferentieAlgKwartaal.R")
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persconferenties/DataVisual_PbConferentieAlgMaand.R")
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persconferenties/DataVisual_PbConferentieAlgdag.R")
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persconferenties/DataVisual_PbConferentieAlgWeek.R")
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persconferenties/DataVisual_PbConferentieAlgBeleid.R")
+# PErsberichten per beleid------------------------------------------------------
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerBeleid/DataVisual_PbBeleidMaand.R")
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerBeleid/DataVisual_PbBeleidDeelbeleid.R")
+# Persberichten per verzender --------------------------------------------------
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerVerzender/DataVisual_PbVerzenderVerzender.R")
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerVerzender/DataVisual_PbVerzenderBeleid.R")
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerVerzender/DataVisual_PbVerzenderMaand.R")
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerVerzender/DataVisual_PbVerzenderDeelbeleid.R")
+# Persberichten per type -------------------------------------------------------
+source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerType/DataVisual_PbType.R")
+# Persreturn per beleid --------------------------------------------------------
+source("./Modules/JaarOverzicht/DataVisual/Persreturn/Beleid/DataVisual_PrBeleidAlg.R")
+source("./Modules/JaarOverzicht/DataVisual/Persreturn/Beleid/DataVisual_PrBeleidDeelbeleid.R")
+
 # UI ===========================================================================
 ui <- dashboardPage(
   # TITLE ======================================================================
@@ -43,7 +69,8 @@ ui <- dashboardPage(
                  ),
                  menuItem("Per Verzender", tabName = "Persbericht-verzender", icon = icon("angle-double-right", lib = "font-awesome"),
                           menuSubItem("Algemeen", tabName = "Persbericht-verzender-algemeen"),
-                          menuSubItem("Per Maand", tabName = "Persbericht-verzender-maand")
+                          menuSubItem("Per Maand", tabName = "Persbericht-verzender-maand"),
+                          menuSubItem("Per Beleid", tabName = "Persberichten-verzender-beleid")
                  ),
                  menuSubItem("Per Type", tabName = "Persbericht-type")
         ),
@@ -561,7 +588,77 @@ ui <- dashboardPage(
                   data.visualOutput("bericht.verzender.maand.extern", plottitle = "Persberichten per Maand: Extern", Xaxis = "Maand", Xlabels = FALSE)
                 )
               )
-            ),  
+            ), 
+          # Per (Deel)Beleid ---------------------------------------------------
+           tabItem(
+             tabName = "Persberichten-verzender-beleid",
+             fluidRow(
+               tabBox(
+                 width = 6,
+                 title = "Persberichten: Economie",
+                 tabPanel("Plot - aantal", plotOutput("persberichten.verzender.beleid.economie.plot.aantal")),
+                 tabPanel("Plot - procent", plotOutput("persberichten.verzender.beleid.economie.plot.procent")),
+                 tabPanel("Tabel", DT::dataTableOutput("persberichten.verzender.beleid.economie.tabel")),
+                 DataVisual.PbVerzenderDeelbeleidlOutput("bericht.verzender.beleid.plot.aantal.economie", plottitle = "Persberichten: Verzender per deelbeleid (Economie)", Xaxis = "Deelbeleid", Xlabels = FALSE)
+               ),
+               tabBox(
+                 width = 6,
+                 title = "Persberichten: Gouverneur",
+                 tabPanel("Plot - aantal", plotOutput("persberichten.verzender.beleid.gouverneur.plot.aantal")),
+                 tabPanel("Plot - procent", plotOutput("persberichten.verzender.beleid.gouverneur.plot.procent")),
+                 tabPanel("Tabel", DT::dataTableOutput("persberichten.verzender.beleid.gouverneur.tabel")),
+                 DataVisual.PbVerzenderDeelbeleidlOutput("bericht.verzender.beleid.plot.aantal.gouverneur", plottitle = "Persberichten: Verzender per deelbeleid  (Gouverneur)", Xaxis = "Deelbeleid", Xlabels = FALSE)
+               ),
+               tabBox(
+                 width = 6,
+                 title = "Persberichten: Leefmilieu",
+                 tabPanel("Plot - aantal", plotOutput("persberichten.verzender.beleid.leefmilieu.plot.aantal")),
+                 tabPanel("Plot - procent", plotOutput("persberichten.verzender.beleid.leefmilieu.plot.procent")),
+                 tabPanel("Tabel", DT::dataTableOutput("persberichten.verzender.beleid.leefmilieu.tabel")),
+                 DataVisual.PbVerzenderDeelbeleidlOutput("bericht.verzender.beleid.plot.aantal.leefmilieu", plottitle = "Persberichten: Verzender per deelbeleid  (Leefmilieu)", Xaxis = "Deelbeleid", Xlabels = FALSE)
+               ),  
+               tabBox(
+                 width = 6,
+                 title = "Persberichten: Mobiliteit",
+                 tabPanel("Plot - aantal", plotOutput("persberichten.verzender.beleid.mobiliteit.plot.aantal")),
+                 tabPanel("Plot - procent", plotOutput("persberichten.verzender.beleid.mobiliteit.plot.procent")),
+                 tabPanel("Tabel", DT::dataTableOutput("persberichten.verzender.beleid.mobiliteit.tabel")),
+                 DataVisual.PbVerzenderDeelbeleidlOutput("bericht.verzender.beleid.plot.aantal.mobiliteit", plottitle = "Persberichten: Verzender per deelbeleid  (Mobiliteit)", Xaxis = "Deelbeleid", Xlabels = FALSE)
+               ),
+               tabBox(
+                 width = 6,
+                 title = "Persberichten: Onderwijs en Educatie",
+                 tabPanel("Plot - aantal", plotOutput("persberichten.verzender.beleid.onderwijs.plot.aantal")),
+                 tabPanel("Plot - procent", plotOutput("persberichten.verzender.beleid.onderwijs.plot.procent")),
+                 tabPanel("Tabel", DT::dataTableOutput("persberichten.verzender.beleid.onderwijs.tabel")),
+                 DataVisual.PbVerzenderDeelbeleidlOutput("bericht.verzender.beleid.plot.aantal.onderwijs", plottitle = "Persberichten: Verzender per deelbeleid (Onderwijs en Educatie)", Xaxis = "Deelbeleid", Xlabels = FALSE)
+               ),
+               tabBox(
+                 width = 6,
+                 title = "Persberichten: Provinciebestuur",
+                 tabPanel("Plot - aantal", plotOutput("persberichten.verzender.beleid.provinciebestuur.plot.aantal")),
+                 tabPanel("Plot - procent", plotOutput("persberichten.verzender.beleid.provinciebestuur.plot.procent")),
+                 tabPanel("Tabel", DT::dataTableOutput("persberichten.verzender.beleid.provinciebestuur.tabel")),
+                 DataVisual.PbVerzenderDeelbeleidlOutput("bericht.verzender.beleid.plot.aantal.provinciebestuur", plottitle = "Persberichten: Verzender per deelbeleid  (Provinciebestuur)", Xaxis = "Deelbeleid", Xlabels = FALSE)
+               ),
+               tabBox(
+                 width = 6,
+                 title = "Persberichten: Ruimte",
+                 tabPanel("Plot - aantal", plotOutput("persberichten.verzender.beleid.ruimte.plot.aantal")),
+                 tabPanel("Plot - procent", plotOutput("persberichten.verzender.beleid.ruimte.plot.procent")),
+                 tabPanel("Tabel", DT::dataTableOutput("persberichten.verzender.beleid.ruimte.tabel")),
+                 DataVisual.PbVerzenderDeelbeleidlOutput("bericht.verzender.beleid.plot.aantal.ruimte", plottitle = "Persberichten: Verzender per deelbeleid  (Ruimte)", Xaxis = "Deelbeleid", Xlabels = FALSE)
+               ),
+               tabBox(
+                 width = 6,
+                 title = "Persberichten: Vrije Tijd",
+                 tabPanel("Plot - aantal", plotOutput("persberichten.verzender.beleid.vrijetijd.plot.aantal")),
+                 tabPanel("Plot - procent", plotOutput("persberichten.verzender.beleid.vrijetijd.plot.procent")),
+                 tabPanel("Tabel", DT::dataTableOutput("persberichten.verzender.beleid.vrijetijd.tabel")),
+                 DataVisual.PbVerzenderDeelbeleidlOutput("bericht.verzender.beleid.plot.aantal.vrijetijd", plottitle = "Persberichten: Verzender per deelbeleid  (Vrije Tijd)", Xaxis = "Deelbeleid", Xlabels = FALSE)
+               )
+             )
+           ),
         # Per Type -------------------------------------------------------------
           tabItem(
             tabName = "Persbericht-type",
