@@ -60,7 +60,7 @@ df.berichten <- reactive({
         }
       }
 
-  # # Percentages ----------------------------------------------------------------
+  # # # Percentages ----------------------------------------------------------------
   #     # Split dataframe on "Deelbeleid
   #     df.split <- split(berichten, berichten$Deelbeleid)
   #     # Create empty list
@@ -74,14 +74,14 @@ df.berichten <- reactive({
   #       }
   #       column <- c(column, percentages)
   #     }
-  #     # Fix NA values
-  #     for(i in 1:length(column)) {
-  #       if (is.na(column[[i]])) {
-  #         column[[i]] <- 0
-  #       }
-  #     }
+  #     # # Fix NA values
+  #     # for(i in 1:length(column)) {
+  #     #   if (is.na(column[[i]])) {
+  #     #     column[[i]] <- 0
+  #     #   }
+  #     # }
   #     # Add percentages to table
-  #     berichten <- data.frame(berichten[order(berichten$Deelbeleid),], column)
+  #     berichten <- data.frame(berichten[order(berichten$Deelbeleid),], 'Procentueel' = column)
       
       return(berichten)
 })

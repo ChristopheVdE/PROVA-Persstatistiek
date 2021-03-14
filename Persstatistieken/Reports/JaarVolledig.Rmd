@@ -14,6 +14,7 @@ params:
   Persberichten.beleid.beleid: NA
   Persberichten.verzender.alg: NA
   Persberichten.verzender.maand: NA
+  Persberichten.verzender.beleid: NA
   Persberichten.type: NA
   Persreturn.beleid: NA
   Persreturn.medium: NA
@@ -807,6 +808,134 @@ kable(params$Persberichten.verzender.maand$extern.tabel()
 if (params$rendered_by_shiny) shiny::setProgress(23)
 ```
 
+#### 1.3.3 Per (Deel)Beleid
+##### 1.3.3.1 Economie {.tabset .tabset-fade}
+###### Plot - aantal
+```{r "Persberichten per verzender - beleid: Plot - economie"}
+params$Persberichten.verzender.beleid$economie.plot.aantal()
+```
+
+###### Tabel
+```{r "Persberichten per verzender - beleid: Tabel - economie"}
+kable(params$Persberichten.verzender.beleid$economie.tabel()
+      , caption="Persberichten: Extern"
+      , row.names = FALSE)
+```
+
+##### {-}
+`r params$Persberichten.verzender.beleid$economie.uitleg()`
+
+##### 1.3.3.2 Gouverneur {.tabset .tabset-fade}
+###### Plot - aantal
+```{r "Persberichten per verzender - beleid: Plot - gouverneur"}
+params$Persberichten.verzender.beleid$gouverneur.plot.aantal()
+```
+
+###### Tabel
+```{r "Persberichten per verzender - beleid: Tabel - gouverneur"}
+kable(params$Persberichten.verzender.beleid$gouverneur.tabel()
+      , caption="Persberichten: Extern"
+      , row.names = FALSE)
+```
+
+##### {-}
+`r params$Persberichten.verzender.beleid$gouverneur.uitleg()`
+
+##### 1.3.3.3 Leefmilieu {.tabset .tabset-fade}
+###### Plot - aantal
+```{r "Persberichten per verzender - beleid: Plot - leefmilieu"}
+params$Persberichten.verzender.beleid$leefmilieu.plot.aantal()
+```
+
+###### Tabel
+```{r "Persberichten per verzender - beleid: Tabel - leefmilieu"}
+kable(params$Persberichten.verzender.beleid$leefmilieu.tabel()
+      , caption="Persberichten: Extern"
+      , row.names = FALSE)
+```
+
+##### {-}
+`r params$Persberichten.verzender.beleid$leefmilieu.uitleg()`
+
+##### 1.3.3.4 Mobiliteit {.tabset .tabset-fade}
+###### Plot - aantal
+```{r "Persberichten per verzender - beleid: Plot - mobiliteit"}
+params$Persberichten.verzender.beleid$mobiliteit.plot.aantal()
+```
+
+###### Tabel
+```{r "Persberichten per verzender - beleid: Tabel - mobiliteit"}
+kable(params$Persberichten.verzender.beleid$mobiliteit.tabel()
+      , caption="Persberichten: Extern"
+      , row.names = FALSE)
+```
+
+##### {-}
+`r params$Persberichten.verzender.beleid$mobiliteit.uitleg()`
+
+##### 1.3.3.5 Onderwijs en Educatie {.tabset .tabset-fade}
+###### Plot - aantal
+```{r "Persberichten per verzender - beleid: Plot - onderwijs"}
+params$Persberichten.verzender.beleid$onderwijs.plot.aantal()
+```
+
+###### Tabel
+```{r "Persberichten per verzender - beleid: Tabel - onderwijs"}
+kable(params$Persberichten.verzender.beleid$onderwijs.tabel()
+      , caption="Persberichten: Extern"
+      , row.names = FALSE)
+```
+
+##### {-}
+`r params$Persberichten.verzender.beleid$onderwijs.uitleg()`
+
+##### 1.3.3.6 Provinciebestuur {.tabset .tabset-fade}
+###### Plot - aantal
+```{r "Persberichten per verzender - beleid: Plot - provinciebestuur"}
+params$Persberichten.verzender.beleid$provinciebestuur.plot.aantal()
+```
+
+###### Tabel
+```{r "Persberichten per verzender - beleid: Tabel - provinciebesturu"}
+kable(params$Persberichten.verzender.beleid$provinciebestuur.tabel()
+      , caption="Persberichten: Extern"
+      , row.names = FALSE)
+```
+
+##### {-}
+`r params$Persberichten.verzender.beleid$provinciebestuur.uitleg()`
+
+##### 1.3.3.7 Ruimte {.tabset .tabset-fade}
+###### Plot - aantal
+```{r "Persberichten per verzender - beleid: Plot - ruimte"}
+params$Persberichten.verzender.beleid$ruimte.plot.aantal()
+```
+
+###### Tabel
+```{r "Persberichten per verzender - beleid: Tabel - ruimte"}
+kable(params$Persberichten.verzender.beleid$ruimte.tabel()
+      , caption="Persberichten: Extern"
+      , row.names = FALSE)
+```
+
+##### {-}
+`r params$Persberichten.verzender.beleid$ruimte.uitleg()`
+
+##### 1.3.3.8 Vrije Tijd {.tabset .tabset-fade}
+###### Plot - aantal
+```{r "Persberichten per verzender - beleid: Plot - vrijetijd"}
+params$Persberichten.verzender.beleid$vrijetijd.plot.aantal()
+```
+
+###### Tabel
+```{r "Persberichten per verzender - beleid: Tabel - vrijetijd"}
+kable(params$Persberichten.verzender.beleid$vrijetijd.tabel()
+      , caption="Persberichten: Extern"
+      , row.names = FALSE)
+```
+
+##### {-}
+`r params$Persberichten.verzender.beleid$vrijetijd.uitleg()`
 
 ### 1.4. Type persberichten {.tabset .tabset-fade}
 #### Tabel
