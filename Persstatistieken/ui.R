@@ -38,6 +38,8 @@ source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerType/DataVisual_PbTy
 # Persreturn per beleid --------------------------------------------------------
 source("./Modules/JaarOverzicht/DataVisual/Persreturn/Beleid/DataVisual_PrBeleidAlg.R")
 source("./Modules/JaarOverzicht/DataVisual/Persreturn/Beleid/DataVisual_PrBeleidDeelbeleid.R")
+# Persreturn per medium --------------------------------------------------------
+source("./Modules/JaarOverzicht/DataVisual/Persreturn/Medium/DataVisual_PrMedium.R")
 
 # UI ===========================================================================
 ui <- dashboardPage(

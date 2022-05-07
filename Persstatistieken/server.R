@@ -37,6 +37,8 @@ source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerType/DataVisual_PbTy
 # Persreturn per beleid --------------------------------------------------------
 source("./Modules/JaarOverzicht/DataVisual/Persreturn/Beleid/DataVisual_PrBeleidAlg.R")
 source("./Modules/JaarOverzicht/DataVisual/Persreturn/Beleid/DataVisual_PrBeleidDeelbeleid.R")
+# Persreturn per medium --------------------------------------------------------
+source("./Modules/JaarOverzicht/DataVisual/Persreturn/Medium/DataVisual_PrMedium.R")
 # ==============================================================================
 
 server <- function(input, output, session) {
@@ -935,7 +937,7 @@ server <- function(input, output, session) {
             rownames = FALSE
           )
     # PER MEDIUM ---------------------------------------------------------------
-      persreturn.medium <- callModule(data.visual, "return.medium", Id = "return.medium" , Persstatistiek, Xaxis = "Beleid", Fill = "Medium", colours = colours)
+      persreturn.medium <- callModule(DataVisual.PrMedium, "return.medium" , Persstatistiek, Xaxis = "Beleid", Fill = "Medium", colours = colours)
       # Plot - aantal
       output$persreturn.medium.plot.aantal <- renderPlot(
         persreturn.medium$plot.aantal()
