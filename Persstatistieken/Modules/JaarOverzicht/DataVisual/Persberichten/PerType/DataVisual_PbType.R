@@ -50,16 +50,17 @@ df.berichten <- reactive({
     berichten <- data.frame(table(data()$Beleid, data()$Soort))
     colnames(berichten) <- c("Beleid", "Type", "Persberichten")
     # Add missing "Type"
-    for(i in c("Activiteitenkalender", "Agendatip", "Evenementenkalender", "Persagenda", "Persbericht", "Persuitnodiging")) {
-      if(!(i %in% levels(as.factor(berichten$Type)))) {
-        temp <- data.frame(
-          Beleid = c(levels(as.factor(datadeelbeleid()$Beleid))),
-          Type = i,
-          Persberichten = 0
-        )
-        berichten <- rbind(berichten, temp)
-      }
-    }
+    # for(i in c("Activiteitenkalender", "Agendatip", "Evenementenkalender", "Persagenda", "Persbericht", "Persuitnodiging")) {
+    #   if(!(i %in% levels(as.factor(berichten$Type)))) {
+    #     # browser()
+    #     temp <- data.frame(
+    #       Beleid = c(levels(as.factor(datadeelbeleid()$Beleid))),
+    #       Type = i,
+    #       Persberichten = 0
+    #     )
+    #     berichten <- rbind(berichten, temp)
+    #   }
+    # }
     # Add percentages
     berichten <- data.frame(berichten[order(berichten$Beleid),], "Procentueel" = calc_percentages("type", berichten))
     # Return
@@ -104,20 +105,22 @@ berichten.plot <- reactive({
 # Create cleaner table for display ---------------------------------------------
   # Reformat tabel -------------------------------------------------------------
 berichten.tabel <- reactive({
-  berichten <- split(df.berichten(), df.berichten()$Type)
-  berichten <- data.frame(
-    Beleid = levels(df.berichten()$Beleid),
-    Activiteitenkalender = berichten$Activiteitenkalender$Persberichten,
-    Agendatip = berichten$Agendatip$Persberichten, 
-    Evenementenkalender = berichten$Evenementenkalender$Persberichten,
-    Persagenda = berichten$Persagenda$Persberichten,
-    Persbericht = berichten$Persbericht$Persberichten,
-    Persuitnodiging = berichten$Persuitnodiging$Persberichten
-  )
-  # Add Totals -----------------------------------------------------------------
-  adorn_totals(df.berichten(),"row")
   
-  return(berichten)
+  berichten <- df.berichten()
+#   berichten <- split(df.berichten(), df.berichten()$Type)
+#   berichten <- data.frame(
+#     Beleid = levels(df.berichten()$Beleid),
+#     Activiteitenkalender = berichten$Activiteitenkalender$Persberichten,
+#     Agendatip = berichten$Agendatip$Persberichten,
+#     Evenementenkalender = berichten$Evenementenkalender$Persberichten,
+#     Persagenda = berichten$Persagenda$Persberichten,
+#     Persbericht = berichten$Persbericht$Persberichten,
+#     Persuitnodiging = berichten$Persuitnodiging$Persberichten
+#   )
+  # Add Totals -----------------------------------------------------------------
+adorn_totals(df.berichten(),"row")
+
+return(berichten)
 })
 
   # Return --------------------------------------------------------------------
