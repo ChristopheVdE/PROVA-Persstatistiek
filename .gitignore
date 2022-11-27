@@ -1,5 +1,11 @@
+*.html
+*.xlsx
+*.xls
+./Rapporten/*
+*.docx
 *.Rhistory
 *.RData
+!Persstatistiek_template.xlsx
 Persstatistieken/.Rhistory
 Persstatistieken/.RData
 Persstatistieken/.Rhistory
