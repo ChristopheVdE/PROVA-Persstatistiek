@@ -2,45 +2,6 @@
 # SHINY APP (Persstatistiek): SERVER
 ###############################################################################
 
-# PACKAGES =====================================================================
-library(knitr)
-library(RColorBrewer)
-library(ggplot2)
-library(ISOweek)
-library(DT)
-# ------------------------------------------------------------------------------
-source("./Modules/BasisData/ophalen_basisdata.R")
-source("./Modules/JaarOverzicht/data_preparation.R")
-source("./Modules/JaarOverzicht/data_visualisation.R")
-# Persberichten algemeen -------------------------------------------------------
-source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/DataVisual_PbBerichtAlgKwartaal.R")
-source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/DataVisual_PbBerichtAlgMaand.R")
-source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/DataVisual_PbBerichtAlgdag.R")
-source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/DataVisual_PbBerichtAlgWeek.R")
-source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/DataVisual_PbBerichtAlgBeleid.R")
-# Persconferenties algemeen ----------------------------------------------------
-source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persconferenties/DataVisual_PbConferentieAlgKwartaal.R")
-source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persconferenties/DataVisual_PbConferentieAlgMaand.R")
-source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persconferenties/DataVisual_PbConferentieAlgdag.R")
-source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persconferenties/DataVisual_PbConferentieAlgWeek.R")
-source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persconferenties/DataVisual_PbConferentieAlgBeleid.R")
-# PErsberichten per beleid------------------------------------------------------
-source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerBeleid/DataVisual_PbBeleidMaand.R")
-source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerBeleid/DataVisual_PbBeleidDeelbeleid.R")
-# Persberichten per verzender --------------------------------------------------
-source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerVerzender/DataVisual_PbVerzenderVerzender.R")
-source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerVerzender/DataVisual_PbVerzenderBeleid.R")
-source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerVerzender/DataVisual_PbVerzenderMaand.R")
-source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerVerzender/DataVisual_PbVerzenderDeelbeleid.R")
-# Persberichten per type -------------------------------------------------------
-source("./Modules/JaarOverzicht/DataVisual/Persberichten/PerType/DataVisual_PbType.R")
-# Persreturn per beleid --------------------------------------------------------
-source("./Modules/JaarOverzicht/DataVisual/Persreturn/Beleid/DataVisual_PrBeleidAlg.R")
-source("./Modules/JaarOverzicht/DataVisual/Persreturn/Beleid/DataVisual_PrBeleidDeelbeleid.R")
-# Persreturn per medium --------------------------------------------------------
-source("./Modules/JaarOverzicht/DataVisual/Persreturn/Medium/DataVisual_PrMedium.R")
-# ==============================================================================
-
 server <- function(input, output, session) {
   
 # INPUT PROCESSING =============================================================

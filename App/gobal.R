@@ -1,6 +1,21 @@
-# Loading packages
+# Load required R PACKAGES =====================================================
 library(shiny)
+library(shinydashboard)
+library(shinyWidgets)
+library(RColorBrewer)
+library(colourpicker)
+library(ggplot2)
+library(ISOweek)
+library(DT)
+library(knitr)
+library(scales)
+library(ggplot2)
+# ==============================================================================
 
+# Load Functions ===============================================================
+source("./Modules/BasisData/ophalen_basisdata.R")
+source("./Modules/JaarOverzicht/data_preparation.R")
+source("./Modules/JaarOverzicht/data_visualisation.R")
 # Persberichten algemeen -------------------------------------------------------
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/DataVisual_PbBerichtAlgKwartaal.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/DataVisual_PbBerichtAlgMaand.R")
@@ -28,43 +43,4 @@ source("./Modules/JaarOverzicht/DataVisual/Persreturn/Beleid/DataVisual_PrBeleid
 source("./Modules/JaarOverzicht/DataVisual/Persreturn/Beleid/DataVisual_PrBeleidDeelbeleid.R")
 # Persreturn per medium --------------------------------------------------------
 source("./Modules/JaarOverzicht/DataVisual/Persreturn/Medium/DataVisual_PrMedium.R")
-
-
-## Only run examples in interactive R sessions
-if (interactive()) {
-  
-  # basic example
-  shinyApp(
-    ui = fluidPage(
-      selectInput("variable", "Variable:",
-                  c("Cylinders" = "cyl",
-                    "Transmission" = "am",
-                    "Gears" = "gear")),
-      tableOutput("data")
-    ),
-    server = function(input, output) {
-      output$data <- renderTable({
-        mtcars[, c("mpg", input$variable), drop = FALSE]
-      }, rownames = TRUE)
-    }
-  )
-  
-  # demoing group support in the `choices` arg
-  shinyApp(
-    ui = fluidPage(
-      selectInput("state", "Choose a state:",
-                  list(`East Coast` = list("NY", "NJ", "CT"),
-                       `West Coast` = list("WA", "OR", "CA"),
-                       `Midwest` = list("MN", "WI", "IA"))
-      ),
-      textOutput("result")
-    ),
-    server = function(input, output) {
-      output$result <- renderText({
-        paste("You chose", input$state)
-      })
-    }
-  )
-}
-  )
-}
+# ==============================================================================
