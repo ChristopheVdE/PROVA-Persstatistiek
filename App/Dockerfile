@@ -8,12 +8,13 @@ RUN apt-get update -qq && \
     libssl-dev \
     make \
     pandoc \
+    nano \
     zlib1g-dev && \
   apt-get clean && \ 
   rm -rf /var/lib/apt/lists/*
-COPY shiny_renv.lock renv.lock
+COPY ./shiny_renv.lock renv.lock
 RUN Rscript -e "install.packages('renv')"
 RUN Rscript -e "renv::restore()"
-COPY E:/Documenten/GitHub/Persstatistiek/App /srv/shiny-server/
+COPY . /srv/shiny-server/
 EXPOSE 3838
 CMD ["/usr/bin/shiny-server"]
