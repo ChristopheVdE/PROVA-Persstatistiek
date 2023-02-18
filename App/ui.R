@@ -732,7 +732,7 @@ ui <- dashboardPage(
             )
           )
         ),
-   # Statistieken alle jaren ----------------------------------------------------
+   # Statistieken alle jaren ---------------------------------------------------
     tabItem(
       tabName = 'allejaren',
       fluidRow(
@@ -745,16 +745,18 @@ ui <- dashboardPage(
       )
     ),
    
-   # Download ---------------------------------------------------------------
+   # Download ------------------------------------------------------------------
       tabItem(
         tabName = "Download",
         fluidRow(
-        # Download button ------------------------------------------------------
+        # Generate & Download button -------------------------------------------
           box(
             width = 12,
-            title = "Download",
-            downloadButton("report", "Generate report")
-            
+            title = "Download Report",
+            # This is the only button that shows up when the app is loaded
+            actionButton("generate", "Generate Report"),
+            # This button appears after the report has been generated and is ready for download.
+            conditionalPanel(condition = "output.reportbuilt",downloadButton("download", "Download report"))
           )
         )
       )
