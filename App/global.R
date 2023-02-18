@@ -52,8 +52,3 @@ source("./Modules/JaarOverzicht/DataVisual/Persreturn/Beleid/DataVisual_PrBeleid
 # Persreturn per medium --------------------------------------------------------
 source("./Modules/JaarOverzicht/DataVisual/Persreturn/Medium/DataVisual_PrMedium.R")
 # ==============================================================================
-
-# Load Dockerfile functions ====================================================
-source("./Functions/GetSystemRequirements.R")
-source("./Functions/CreateDockerFile.R")
-# ==============================================================================
