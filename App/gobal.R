@@ -12,7 +12,7 @@ library(scales)
 library(ggplot2)
 # ==============================================================================
 
-# Load Functions ===============================================================
+# Load Modules =================================================================
 source("./Modules/BasisData/ophalen_basisdata.R")
 source("./Modules/JaarOverzicht/data_preparation.R")
 source("./Modules/JaarOverzicht/data_visualisation.R")
@@ -43,4 +43,9 @@ source("./Modules/JaarOverzicht/DataVisual/Persreturn/Beleid/DataVisual_PrBeleid
 source("./Modules/JaarOverzicht/DataVisual/Persreturn/Beleid/DataVisual_PrBeleidDeelbeleid.R")
 # Persreturn per medium --------------------------------------------------------
 source("./Modules/JaarOverzicht/DataVisual/Persreturn/Medium/DataVisual_PrMedium.R")
+# ==============================================================================
+
+# Load Dockerfile functions ====================================================
+source("./Functions/GetSystemRequirements.R")
+source("./Functions/CreateDockerFile.R")
 # ==============================================================================
