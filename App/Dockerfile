@@ -16,7 +16,4 @@ RUN Rscript -e "install.packages('renv')"
 RUN Rscript -e "renv::restore()"
 COPY E:/Documenten/GitHub/Persstatistiek/App /srv/shiny-server/
 EXPOSE 3838
-
-ENV SHINY_LOG_STDERR=1
-
 CMD ["/usr/bin/shiny-server"]

@@ -2,17 +2,6 @@
 # MODULE: Data visualisation (plot and table creation)
 ###############################################################################
 
-# LOAD PACKAGES ===============================================================
-library(scales)
-library(janitor)
-# =============================================================================
-
-# LOAD MODULES & FUNCTIONS ====================================================
-source("./Modules/JaarOverzicht/percentages.R")
-source("./Modules/JaarOverzicht/Plots/simple_barplot.R")
-source("./Modules/JaarOverzicht/Plots/simple_piechart.R")
-# =============================================================================
-
 # UI ==========================================================================DataVisual.
 DataVisual.PbVerzenderDeelbeleidlOutput <- function(id, plottitle, Xaxis, Xlabels, Legende = TRUE, Piechart = TRUE) {
   ns <- NS(id)

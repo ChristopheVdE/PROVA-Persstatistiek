@@ -10,7 +10,15 @@ library(DT)
 library(knitr)
 library(scales)
 library(ggplot2)
+library(janitor)
+library(readxl)
 # ==============================================================================
+
+
+source("./Modules/JaarOverzicht/percentages.R")
+source("./Modules/JaarOverzicht/Plots/simple_barplot.R")
+source("./Modules/JaarOverzicht/Plots/simple_piechart.R")
+
 
 # Load Modules =================================================================
 source("./Modules/BasisData/ophalen_basisdata.R")
