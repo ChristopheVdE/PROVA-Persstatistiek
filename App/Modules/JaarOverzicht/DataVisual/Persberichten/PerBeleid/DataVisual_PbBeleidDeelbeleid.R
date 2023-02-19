@@ -97,11 +97,8 @@ berichten.tabel <- reactive({
 
 
 # Add plots/data to corresponding Global collector -----------------------------
-
 beleidconv <- tolower(gsub(' ', '', beleid))
 if(beleidconv == 'onderwijseneducatie') {beleidconv <- 'onderwijs'}
-print(beleidconv)
-
 
 ToAppend <- list(
   plot.aantal = reactive(berichten.plot()$Aantal),
@@ -116,7 +113,6 @@ names(ToAppend) <- c(
   paste0(beleidconv, '.uitleg'))
   
 Persberichten.beleid.beleid <<- append(Persberichten.beleid.beleid, ToAppend)
-print(Persberichten.beleid.beleid)
 
 # Return -----------------------------------------------------------------------
 return(list(plot.aantal = reactive(berichten.plot()$Aantal), 
