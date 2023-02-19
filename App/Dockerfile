@@ -7,6 +7,7 @@ RUN apt-get update -qq && \
     libicu-dev \
     libssl-dev \
     make \
+    nano \
     pandoc \
     nano \
     zlib1g-dev && \
@@ -17,4 +18,5 @@ RUN Rscript -e "install.packages('renv')"
 RUN Rscript -e "renv::restore()"
 COPY . /srv/shiny-server/
 EXPOSE 3838
+ENV SHINY_LOG_STDERR=1
 CMD ["/usr/bin/shiny-server"]
