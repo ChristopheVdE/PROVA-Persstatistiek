@@ -955,32 +955,29 @@ server <- function(input, output, session) {
   
   
     # VARIABLE COLLECTION FOR MARKDOWN (HTML) ----------------------------------
-    # Persberichten ------------------------------------------------------------
-    # Algemeen -----------------------------------------------------------------
-
-    # Persconferenties ---------------------------------------------------
-      Persconferenties.alg <- list(
-      kwartaal.plot.aantal = reactive(persconferenties.alg.kwartaal$plot.aantal()),
-      kwartaal.plot.procent = reactive(persconferenties.alg.kwartaal$plot.procent()),
-      kwartaal.tabel = reactive(persconferenties.alg.kwartaal$tabel()),
-      kwartaal.uitleg = reactive(persconferenties.alg.kwartaal$uitleg()),
-      maand.plot.aantal = reactive(persconferenties.alg.maand$plot.aantal()),
-      maand.plot.procent = reactive(persconferenties.alg.maand$plot.procent()),
-      maand.tabel = reactive(persconferenties.alg.maand$tabel()),
-      maand.uitleg = reactive(persconferenties.alg.maand$uitleg()),
-      dag.plot.aantal = reactive(persconferenties.alg.dag$plot.aantal()),
-      dag.plot.procent = reactive(persconferenties.alg.dag$plot.procent()),
-      dag.tabel = reactive(persconferenties.alg.dag$tabel()),
-      dag.uitleg = reactive(persconferenties.alg.dag$uitleg()),
-      week.plot.aantal = reactive(persconferenties.alg.week$plot.aantal()),
-      week.plot.procent = reactive(persconferenties.alg.week$plot.procent()),
-      week.tabel = reactive(persconferenties.alg.week$tabel()),
-      week.uitleg = reactive(persconferenties.alg.week$uitleg()),
-      beleid.plot.aantal = reactive(persconferenties.alg.beleid$plot.aantal()),
-      beleid.plot.procent = reactive(persconferenties.alg.beleid$plot.procent()),
-      beleid.tabel = reactive(persconferenties.alg.beleid$tabel()),
-      beleid.uitleg = reactive(persconferenties.alg.beleid$uitleg())
-    )
+       # Persconferenties ---------------------------------------------------
+    #   Persconferenties.alg <- list(
+    #   kwartaal.plot.aantal = reactive(persconferenties.alg.kwartaal$plot.aantal()),
+    #   kwartaal.plot.procent = reactive(persconferenties.alg.kwartaal$plot.procent()),
+    #   kwartaal.tabel = reactive(persconferenties.alg.kwartaal$tabel()),
+    #   kwartaal.uitleg = reactive(persconferenties.alg.kwartaal$uitleg()),
+    #   maand.plot.aantal = reactive(persconferenties.alg.maand$plot.aantal()),
+    #   maand.plot.procent = reactive(persconferenties.alg.maand$plot.procent()),
+    #   maand.tabel = reactive(persconferenties.alg.maand$tabel()),
+    #   maand.uitleg = reactive(persconferenties.alg.maand$uitleg()),
+    #   dag.plot.aantal = reactive(persconferenties.alg.dag$plot.aantal()),
+    #   dag.plot.procent = reactive(persconferenties.alg.dag$plot.procent()),
+    #   dag.tabel = reactive(persconferenties.alg.dag$tabel()),
+    #   dag.uitleg = reactive(persconferenties.alg.dag$uitleg()),
+    #   week.plot.aantal = reactive(persconferenties.alg.week$plot.aantal()),
+    #   week.plot.procent = reactive(persconferenties.alg.week$plot.procent()),
+    #   week.tabel = reactive(persconferenties.alg.week$tabel()),
+    #   week.uitleg = reactive(persconferenties.alg.week$uitleg()),
+    #   beleid.plot.aantal = reactive(persconferenties.alg.beleid$plot.aantal()),
+    #   beleid.plot.procent = reactive(persconferenties.alg.beleid$plot.procent()),
+    #   beleid.tabel = reactive(persconferenties.alg.beleid$tabel()),
+    #   beleid.uitleg = reactive(persconferenties.alg.beleid$uitleg())
+    # )
     # Per beleid ---------------------------------------------------------------
     # Maand --------------------------------------------------------------
     Persberichten.beleid.maand <- list(economie.plot.aantal = reactive(persberichten.beleid.maand.economie$plot.aantal()),
