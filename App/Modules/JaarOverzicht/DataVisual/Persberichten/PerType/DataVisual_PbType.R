@@ -113,6 +113,16 @@ adorn_totals(df.berichten(),"row")
 return(berichten)
 })
 
+
+# Add plots/data to corresponding Global collector -----------------------------
+ToAppend <- list(
+  type.plot.aantal = reactive(berichten.plot()$Aantal),
+  type.plot.procent = reactive(berichten.plot()$Procent),
+  type.tabel =  reactive(berichten.tabel()), 
+  type.uitleg = reactive(input$uitleg))
+
+Persberichten.type <<- append(Persberichten.type, ToAppend)
+
   # Return --------------------------------------------------------------------
 return(list(plot.aantal = reactive(berichten.plot()$Aantal), 
             plot.procent = reactive(berichten.plot()$Procent), 

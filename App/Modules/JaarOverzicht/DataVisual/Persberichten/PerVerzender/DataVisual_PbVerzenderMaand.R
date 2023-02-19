@@ -99,6 +99,23 @@ berichten.tabel <- reactive({
   adorn_totals(df.berichten(),"row")
 })
 
+# Add plots/data to corresponding Global collector -----------------------------
+verzenderconv <- tolower(gsub(' ', '', verzender))
+
+ToAppend <- list(
+  plot.aantal = reactive(berichten.plot()$Aantal),
+  plot.procent = reactive(berichten.plot()$Procent),
+  tabel =  reactive(berichten.tabel()), 
+  uitleg = reactive(input$uitleg))
+
+names(ToAppend) <- c(
+  paste0(verzenderconv, '.plot.aantal'),
+  paste0(verzenderconv, '.plot.procent'),
+  paste0(verzenderconv, '.tabel'),
+  paste0(verzenderconv, '.uitleg'))
+
+Persberichten.verzender.maand <<- append(Persberichten.verzender.maand, ToAppend)
+
 # Return --------------------------------------------------------------------
 return(list(plot.aantal = reactive(berichten.plot()$Aantal), 
             plot.procent = reactive(berichten.plot()$Procent), 
