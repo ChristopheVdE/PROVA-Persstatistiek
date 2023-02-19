@@ -9,7 +9,6 @@ RUN apt-get update -qq && \
     make \
     nano \
     pandoc \
-    nano \
     zlib1g-dev && \
   apt-get clean && \ 
   rm -rf /var/lib/apt/lists/*
