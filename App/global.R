@@ -14,13 +14,12 @@ library(janitor)
 library(readxl)
 # ==============================================================================
 
-
+# Load Modules =================================================================
+# General ----------------------------------------------------------------------
 source("./Modules/JaarOverzicht/percentages.R")
 source("./Modules/JaarOverzicht/Plots/simple_barplot.R")
 source("./Modules/JaarOverzicht/Plots/simple_piechart.R")
-
-
-# Load Modules =================================================================
+# Data prep --------------------------------------------------------------------
 source("./Modules/BasisData/ophalen_basisdata.R")
 source("./Modules/JaarOverzicht/data_preparation.R")
 source("./Modules/JaarOverzicht/data_visualisation.R")
@@ -51,4 +50,18 @@ source("./Modules/JaarOverzicht/DataVisual/Persreturn/Beleid/DataVisual_PrBeleid
 source("./Modules/JaarOverzicht/DataVisual/Persreturn/Beleid/DataVisual_PrBeleidDeelbeleid.R")
 # Persreturn per medium --------------------------------------------------------
 source("./Modules/JaarOverzicht/DataVisual/Persreturn/Medium/DataVisual_PrMedium.R")
+# ==============================================================================
+
+# Create Global Variables ======================================================
+# Data collectors for report generation ----------------------------------------
+Persberichten.alg <- list()
+Persconferenties.alg <- list()
+Persberichten.beleid.maand <- list()
+Persberichten.beleid.beleid <- list()
+Persberichten.verzender.alg <- list()
+Persberichten.verzender.maand <- list()
+Persberichten.verzender.beleid <- list()
+Persberichten.type <- list()
+Persreturn.beleid <- list()
+Persreturn.medium <- list()
 # ==============================================================================

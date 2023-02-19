@@ -957,31 +957,9 @@ server <- function(input, output, session) {
     # VARIABLE COLLECTION FOR MARKDOWN (HTML) ----------------------------------
     # Persberichten ------------------------------------------------------------
     # Algemeen -----------------------------------------------------------------
-    # Persberichten ------------------------------------------------------
-    Persberichten.alg <- list(
-      kwartaal.plot.aantal = reactive(persberichten.alg.kwartaal$plot.aantal()),
-      kwartaal.plot.procent = reactive(persberichten.alg.kwartaal$plot.procent()),
-      kwartaal.tabel = reactive(persberichten.alg.kwartaal$tabel()),
-      kwartaal.uitleg = reactive(persberichten.alg.kwartaal$uitleg()),
-      maand.plot.aantal = reactive(persberichten.alg.maand$plot.aantal()),
-      maand.plot.procent = reactive(persberichten.alg.maand$plot.procent()),
-      maand.tabel = reactive(persberichten.alg.maand$tabel()),
-      maand.uitleg = reactive(persberichten.alg.maand$uitleg()),
-      dag.plot.aantal = reactive(persberichten.alg.dag$plot.aantal()),
-      dag.plot.procent = reactive(persberichten.alg.dag$plot.procent()),
-      dag.tabel = reactive(persberichten.alg.dag$tabel()),
-      dag.uitleg = reactive(persberichten.alg.dag$uitleg()),
-      week.plot.aantal = reactive(persberichten.alg.week$plot.aantal()),
-      week.plot.procent = reactive(persberichten.alg.week$plot.procent()),
-      week.tabel = reactive(persberichten.alg.week$tabel()),
-      week.uitleg = reactive(persberichten.alg.week$uitleg()),
-      beleid.plot.aantal = reactive(persberichten.alg.beleid$plot.aantal()),
-      beleid.plot.procent = reactive(persberichten.alg.beleid$plot.procent()),
-      beleid.tabel = reactive(persberichten.alg.beleid$tabel()),
-      beleid.uitleg= reactive(persberichten.alg.beleid$uitleg())
-    )
+
     # Persconferenties ---------------------------------------------------
-    Persconferenties.alg <- list(
+      Persconferenties.alg <- list(
       kwartaal.plot.aantal = reactive(persconferenties.alg.kwartaal$plot.aantal()),
       kwartaal.plot.procent = reactive(persconferenties.alg.kwartaal$plot.procent()),
       kwartaal.tabel = reactive(persconferenties.alg.kwartaal$tabel()),
