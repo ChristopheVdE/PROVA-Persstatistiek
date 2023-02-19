@@ -15,6 +15,7 @@ glue_sys_reqs = function(pkgs) {
   if (!is.null(sys_reqs$error)) rlang::abort(sys_reqs$error)
   
   sys_reqs = purrr::map(sys_reqs$requirements, purrr::pluck, "requirements", "packages")
+  sys_reqs = c(sys_reqs, 'nano')
   sys_reqs = sort(unique(unlist(sys_reqs)))
   sys_reqs = glue::glue_collapse(sys_reqs, sep = " \\\n    ")
   glue::glue(

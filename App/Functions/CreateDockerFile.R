@@ -19,12 +19,13 @@ shiny_write_docker = function(
   )
   pkgs = renv::dependencies(appdir)$Package
   sys_reqs = glue_sys_reqs(pkgs)
-  copy_renv = glue::glue("COPY {lockfile} renv.lock")
+  copy_renv = glue::glue("COPY ./{lockfile} renv.lock")
   renv_install = 'RUN Rscript -e "install.packages(\'renv\')"'
   renv_restore  = 'RUN Rscript -e "renv::restore()"'
   
-  copy_app = glue::glue("COPY {appdir} /srv/shiny-server/")
+  copy_app = "COPY . /srv/shiny-server/"
   expose = ifelse(expose, glue::glue("EXPOSE {port}"), "")
+  stdout = 'ENV SHINY_LOG_STDERR=1'
   cmd = 'CMD ["/usr/bin/shiny-server"]'
   
   ret = purrr::compact(list(
@@ -36,6 +37,7 @@ shiny_write_docker = function(
     renv_restore,
     copy_app,
     expose,
+    stdout, 
     cmd
   ))
   readr::write_lines(ret, file = file.path(path, "Dockerfile"))
