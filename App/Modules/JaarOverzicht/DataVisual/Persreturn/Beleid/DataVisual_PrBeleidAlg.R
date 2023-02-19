@@ -104,6 +104,15 @@ berichten.tabel <- reactive({
   return(berichten)
 })
 
+# Add plots/data to corresponding Global collector -----------------------------
+ToAppend <- list(
+  algemeen.plot.aantal = reactive(berichten.plot()$Aantal),
+  algemeen.plot.procent = reactive(berichten.plot()$Procent),
+  algemeen.tabel =  reactive(berichten.tabel()), 
+  algemeen.uitleg = reactive(input$uitleg))
+
+Persreturn.beleid <<- append(Persreturn.beleid, ToAppend)
+
 # Return -----------------------------------------------------------------------
 return(list(plot.aantal = reactive(berichten.plot()$Aantal), 
             plot.procent = reactive(berichten.plot()$Procent), 

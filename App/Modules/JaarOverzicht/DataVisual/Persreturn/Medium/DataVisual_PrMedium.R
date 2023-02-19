@@ -126,7 +126,19 @@ DataVisual.PrMedium <- function(input, output, session, data, Xaxis, Fill, colou
       return(temp)
     }
   )
-  # Return --------------------------------------------------------------------
+  
+# Add plots/data to corresponding Global collector -----------------------------
+  ToAppend <- list(
+    medium.plot.aantal = reactive(berichten.plot()$Aantal),
+    medium.plot.procent = reactive(berichten.plot()$Procent),
+    medium.tabel =  reactive(tabel()), 
+    medium.uitleg = reactive(input$uitleg))
+  
+  Persreturn.medium <<- append(Persreturn.medium, ToAppend)
+  
+  
+
+# Return -----------------------------------------------------------------------
   return(list(plot.aantal = reactive(berichten.plot()$Aantal), plot.procent = reactive(berichten.plot()$Procent), tabel = tabel, uitleg = reactive(input$uitleg)))
 }
 
