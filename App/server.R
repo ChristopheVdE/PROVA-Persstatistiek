@@ -955,29 +955,6 @@ server <- function(input, output, session) {
   
   
     # VARIABLE COLLECTION FOR MARKDOWN (HTML) ----------------------------------
-       # Persconferenties ---------------------------------------------------
-    #   Persconferenties.alg <- list(
-    #   kwartaal.plot.aantal = reactive(persconferenties.alg.kwartaal$plot.aantal()),
-    #   kwartaal.plot.procent = reactive(persconferenties.alg.kwartaal$plot.procent()),
-    #   kwartaal.tabel = reactive(persconferenties.alg.kwartaal$tabel()),
-    #   kwartaal.uitleg = reactive(persconferenties.alg.kwartaal$uitleg()),
-    #   maand.plot.aantal = reactive(persconferenties.alg.maand$plot.aantal()),
-    #   maand.plot.procent = reactive(persconferenties.alg.maand$plot.procent()),
-    #   maand.tabel = reactive(persconferenties.alg.maand$tabel()),
-    #   maand.uitleg = reactive(persconferenties.alg.maand$uitleg()),
-    #   dag.plot.aantal = reactive(persconferenties.alg.dag$plot.aantal()),
-    #   dag.plot.procent = reactive(persconferenties.alg.dag$plot.procent()),
-    #   dag.tabel = reactive(persconferenties.alg.dag$tabel()),
-    #   dag.uitleg = reactive(persconferenties.alg.dag$uitleg()),
-    #   week.plot.aantal = reactive(persconferenties.alg.week$plot.aantal()),
-    #   week.plot.procent = reactive(persconferenties.alg.week$plot.procent()),
-    #   week.tabel = reactive(persconferenties.alg.week$tabel()),
-    #   week.uitleg = reactive(persconferenties.alg.week$uitleg()),
-    #   beleid.plot.aantal = reactive(persconferenties.alg.beleid$plot.aantal()),
-    #   beleid.plot.procent = reactive(persconferenties.alg.beleid$plot.procent()),
-    #   beleid.tabel = reactive(persconferenties.alg.beleid$tabel()),
-    #   beleid.uitleg = reactive(persconferenties.alg.beleid$uitleg())
-    # )
     # Per beleid ---------------------------------------------------------------
     # Maand --------------------------------------------------------------
     Persberichten.beleid.maand <- list(economie.plot.aantal = reactive(persberichten.beleid.maand.economie$plot.aantal()),
@@ -1012,39 +989,6 @@ server <- function(input, output, session) {
                                        vrijetijd.plot.procent = reactive(persberichten.beleid.maand.vrijetijd$plot.procent()),
                                        vrijetijd.tabel = reactive(persberichten.beleid.maand.vrijetijd$tabel()),
                                        vrijetijd.uitleg = reactive(persberichten.beleid.maand.vrijetijd$uitleg()))
-    # Beleid -------------------------------------------------------------
-    Persberichten.beleid.beleid <- list(economie.plot.aantal = reactive(persberichten.beleid.beleid.economie$plot.aantal()),
-                                        economie.plot.procent = reactive(persberichten.beleid.beleid.economie$plot.procent()),
-                                        economie.tabel = reactive(persberichten.beleid.beleid.economie$tabel()),
-                                        economie.uitleg = reactive(persberichten.beleid.beleid.economie$uitleg()),
-                                        gouverneur.plot.aantal = reactive(persberichten.beleid.beleid.gouverneur$plot.aantal()),
-                                        gouverneur.plot.procent = reactive(persberichten.beleid.beleid.gouverneur$plot.procent()),
-                                        gouverneur.tabel = reactive(persberichten.beleid.beleid.gouverneur$tabel()),
-                                        gouverneur.uitleg = reactive(persberichten.beleid.beleid.gouverneur$uitleg()),
-                                        leefmilieu.plot.aantal = reactive(persberichten.beleid.beleid.leefmilieu$plot.aantal()),
-                                        leefmilieu.plot.procent = reactive(persberichten.beleid.beleid.leefmilieu$plot.procent()),
-                                        leefmilieu.tabel = reactive(persberichten.beleid.beleid.leefmilieu$tabel()),
-                                        leefmilieu.uitleg = reactive(persberichten.beleid.beleid.leefmilieu$uitleg()),
-                                        mobiliteit.plot.aantal = reactive(persberichten.beleid.beleid.mobiliteit$plot.aantal()),
-                                        mobiliteit.plot.procent = reactive(persberichten.beleid.beleid.mobiliteit$plot.procent()),
-                                        mobiliteit.tabel = reactive(persberichten.beleid.beleid.mobiliteit$tabel()),
-                                        mobiliteit.uitleg = reactive(persberichten.beleid.beleid.mobiliteit$uitleg()),
-                                        onderwijs.plot.aantal = reactive(persberichten.beleid.beleid.onderwijs$plot.aantal()),
-                                        onderwijs.plot.procent = reactive(persberichten.beleid.beleid.onderwijs$plot.procent()),
-                                        onderwijs.tabel = reactive(persberichten.beleid.beleid.onderwijs$tabel()),
-                                        onderwijs.uitleg = reactive(persberichten.beleid.beleid.onderwijs$uitleg()),
-                                        provinciebestuur.plot.aantal = reactive(persberichten.beleid.beleid.provinciebestuur$plot.aantal()),
-                                        provinciebestuur.plot.procent = reactive(persberichten.beleid.beleid.provinciebestuur$plot.procent()),
-                                        provinciebestuur.tabel = reactive(persberichten.beleid.beleid.provinciebestuur$tabel()),
-                                        provinciebestuur.uitleg = reactive(persberichten.beleid.beleid.provinciebestuur$uitleg()),
-                                        ruimte.plot.aantal = reactive(persberichten.beleid.beleid.ruimte$plot.aantal()),
-                                        ruimte.plot.procent = reactive(persberichten.beleid.beleid.ruimte$plot.procent()),
-                                        ruimte.tabel = reactive(persberichten.beleid.beleid.ruimte$tabel()),
-                                        ruimte.uitleg = reactive(persberichten.beleid.beleid.ruimte$uitleg()),
-                                        vrijetijd.plot.aantal = reactive(persberichten.beleid.beleid.vrijetijd$plot.aantal()),
-                                        vrijetijd.plot.procent = reactive(persberichten.beleid.beleid.vrijetijd$plot.procent()),
-                                        vrijetijd.tabel = reactive(persberichten.beleid.beleid.vrijetijd$tabel()),
-                                        vrijetijd.uitleg = reactive(persberichten.beleid.beleid.vrijetijd$uitleg()))
     # Verzender ----------------------------------------------------------------
     # Algemeen -----------------------------------------------------------
     Persberichten.verzender.alg <- list(totaal.plot.aantal = reactive(persberichten.verzender.alg.totaal$plot.aantal()),

@@ -94,6 +94,30 @@ berichten.tabel <- reactive({
   adorn_totals(df.berichten(),"row")
 })
 
+
+
+# Add plots/data to corresponding Global collector -----------------------------
+
+beleidconv <- tolower(gsub(' ', '', beleid))
+if(beleidconv == 'onderwijseneducatie') {beleidconv <- 'onderwijs'}
+print(beleidconv)
+
+
+ToAppend <- list(
+  plot.aantal = reactive(berichten.plot()$Aantal),
+  plot.procent = reactive(berichten.plot()$Procent),
+  tabel =  reactive(berichten.tabel()), 
+  uitleg = reactive(input$uitleg))
+  
+names(ToAppend) <- c(
+  paste0(beleidconv, '.plot.aantal'),
+  paste0(beleidconv, '.plot.procent'),
+  paste0(beleidconv, '.tabel'),
+  paste0(beleidconv, '.uitleg'))
+  
+Persberichten.beleid.beleid <<- append(Persberichten.beleid.beleid, ToAppend)
+print(Persberichten.beleid.beleid)
+
 # Return -----------------------------------------------------------------------
 return(list(plot.aantal = reactive(berichten.plot()$Aantal), 
             plot.procent = reactive(berichten.plot()$Procent), 
