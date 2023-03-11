@@ -52,6 +52,11 @@ source("./Modules/JaarOverzicht/DataVisual/Persreturn/Beleid/DataVisual_PrBeleid
 source("./Modules/JaarOverzicht/DataVisual/Persreturn/Medium/DataVisual_PrMedium.R")
 # ==============================================================================
 
+# Special settings  ============================================================
+# Allow 1Gb file upload
+options(shiny.maxRequestSize=1000*1024^2) 
+# ==============================================================================
+
 # Create Global Variables ======================================================
 # Data collectors for report generation ----------------------------------------
 Persberichten.alg <- list()
