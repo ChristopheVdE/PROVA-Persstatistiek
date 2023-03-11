@@ -22,7 +22,6 @@ source("./Modules/JaarOverzicht/Plots/simple_piechart.R")
 # Data prep --------------------------------------------------------------------
 source("./Functions/DataPrep/ophalen_basisdata.R")
 source("./Modules/JaarOverzicht/data_preparation.R")
-source("./Modules/JaarOverzicht/data_visualisation.R")
 # Persberichten algemeen -------------------------------------------------------
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/DataVisual_PbBerichtAlgKwartaal.R")
 source("./Modules/JaarOverzicht/DataVisual/Persberichten/Algemeen/Persberichten/DataVisual_PbBerichtAlgMaand.R")
