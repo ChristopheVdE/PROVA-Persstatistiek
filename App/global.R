@@ -20,7 +20,7 @@ source("./Modules/JaarOverzicht/percentages.R")
 source("./Modules/JaarOverzicht/Plots/simple_barplot.R")
 source("./Modules/JaarOverzicht/Plots/simple_piechart.R")
 # Data prep --------------------------------------------------------------------
-source("./Modules/BasisData/ophalen_basisdata.R")
+source("./Functions/DataPrep/ophalen_basisdata.R")
 source("./Modules/JaarOverzicht/data_preparation.R")
 source("./Modules/JaarOverzicht/data_visualisation.R")
 # Persberichten algemeen -------------------------------------------------------
