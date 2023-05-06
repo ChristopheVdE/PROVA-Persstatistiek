@@ -40,6 +40,7 @@ shiny_write_docker = function(
   renv_restore  = 'RUN Rscript -e "renv::restore()"'
   
   copy_app = "COPY . /srv/shiny-server/"
+  user= "USER shiny"
   expose = ifelse(expose, glue::glue("EXPOSE {port}"), "")
   stdout = 'ENV SHINY_LOG_STDERR=1'
   cmd = 'CMD ["/usr/bin/shiny-server"]'
@@ -52,6 +53,7 @@ shiny_write_docker = function(
     renv_install,
     renv_restore,
     copy_app,
+    user,
     expose,
     stdout, 
     cmd

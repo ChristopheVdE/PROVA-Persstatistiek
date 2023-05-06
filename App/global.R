@@ -1,13 +1,14 @@
 # Load required R PACKAGE ======================================================
 # Function to install and load packages ----------------------------------------
-load_packages<-function(...) {
+install_packages<-function(...) {
   libs<-unlist(list(...))
   req<-unlist(lapply(libs,require,character.only=TRUE))
   need<-libs[req==FALSE]
   if(length(need)>0){ 
-    install.packages(need)
-    lapply(need,require,character.only=TRUE)
-  }
+    if( Sys.info()["sysname"] == "windows") {
+      install.packages(need)
+    }
+    lapply(need,require,character.only=TRUE)  }
 }
 # Define required packages -----------------------------------------------------
 Packages <- c(
@@ -25,8 +26,23 @@ Packages <- c(
     "janitor",
     "readxl"
 )
+#install required packages -----------------------------------------------------
+install_packages(Packages)
+
 #Load required packages --------------------------------------------------------
-load_packages(Packages)
+library(shiny)
+library(shinydashboard)
+library(shinyWidgets)
+library(RColorBrewer)
+library(colourpicker)
+library(ggplot2)
+library(ISOweek)
+library(DT)
+library(knitr)
+library(scales)
+library(ggplot2)
+library(janitor)
+library(readxl)
 # ==============================================================================
 
 # Load Modules =================================================================
