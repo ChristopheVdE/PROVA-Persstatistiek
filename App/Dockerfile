@@ -1,4 +1,4 @@
-FROM rocker/shiny:4.2.2
+FROM rocker/shiny:4.3.0
 ENV RENV_CONFIG_REPOS_OVERRIDE https://packagemanager.rstudio.com/cran/latest
 
 RUN apt-get update -qq && \ 
