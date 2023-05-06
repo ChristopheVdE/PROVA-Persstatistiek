@@ -1,17 +1,32 @@
-# Load required R PACKAGES =====================================================
-library(shiny)
-library(shinydashboard)
-library(shinyWidgets)
-library(RColorBrewer)
-library(colourpicker)
-library(ggplot2)
-library(ISOweek)
-library(DT)
-library(knitr)
-library(scales)
-library(ggplot2)
-library(janitor)
-library(readxl)
+# Load required R PACKAGE ======================================================
+# Function to install and load packages ----------------------------------------
+load_packages<-function(...) {
+  libs<-unlist(list(...))
+  req<-unlist(lapply(libs,require,character.only=TRUE))
+  need<-libs[req==FALSE]
+  if(length(need)>0){ 
+    install.packages(need)
+    lapply(need,require,character.only=TRUE)
+  }
+}
+# Define required packages -----------------------------------------------------
+Packages <- c(
+    "shiny",
+    "shinydashboard",
+    "shinyWidgets",
+    "RColorBrewer",
+    "colourpicker",
+    "ggplot2",
+    "ISOweek",
+    "DT", 
+    "knitr",
+    "scales",
+    "ggplot2",
+    "janitor",
+    "readxl"
+)
+#Load required packages --------------------------------------------------------
+load_packages(Packages)
 # ==============================================================================
 
 # Load Modules =================================================================

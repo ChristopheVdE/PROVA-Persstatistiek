@@ -1,3 +1,23 @@
+# Load required R PACKAGE ======================================================
+# Function to install and load packages ----------------------------------------
+load_packages<-function(...) {
+  libs<-unlist(list(...))
+  req<-unlist(lapply(libs,require,character.only=TRUE))
+  need<-libs[req==FALSE]
+  if(length(need)>0){ 
+    install.packages(need)
+    lapply(need,require,character.only=TRUE)
+  }
+}
+# Define required packages -----------------------------------------------------
+Packages <- c(
+  "glue", "curl"
+)
+#Load required packages --------------------------------------------------------
+load_packages(Packages)
+# =============================================================================
+
+
 glue_sys_reqs = function(pkgs) {
   rlang::check_installed("curl")
   rspm = Sys.getenv("RSPM_ROOT", "https://packagemanager.rstudio.com")
