@@ -1,0 +1,41 @@
+---
+output: 
+  html_document:
+    number_sections: true
+---
+<!-- Document settings -->
+```{r include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, results='asis')
+```
+
+<!-- tabheader -->
+```{r}
+cat(strrep('#', level), elements$tabheader , '{.tabset .tabset-fade} \n')
+level <- level+1
+```
+
+<!-- plot amount -->
+```{r  align="center", echo=FALSE, result='asis'}
+cat(strrep('#', level), 'Plot - aantal  {.unlisted .unnumbered} \n')
+elements$amount
+```
+
+<!-- plot percentage -->
+```{r align="center", echo=FALSE, result='asis'}
+cat(strrep('#', level), 'Plot - procent {.unlisted .unnumbered} \n')
+elements$percent
+```
+
+<!-- table -->
+```{r, echo=FALSE, results='asis'}
+cat(strrep('#', level), 'Tabel {.unlisted .unnumbered} \n')
+kable( elements$table
+      , elements$tablecaption
+      , row.names = FALSE)
+```
+
+<!-- explanation -->
+```{r}
+level <- level-1
+cat(strrep('#', level), '{.unlisted .unnumbered} \n', elements$explanation, '\n')
+```

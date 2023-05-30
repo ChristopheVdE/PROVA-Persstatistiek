@@ -1,0 +1,86 @@
+---
+output: 
+  html_document:
+    number_sections: true
+---
+
+<!-- Document settings -->
+```{r include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, results='asis')
+```
+
+<!-- Section header -->
+```{r}
+cat(strrep('#', level), 'Persberichten \n')
+level <- level+1
+```
+
+<!-- Persberichten per kwartaal -->
+```{r "Persberichten per kwartaal", result='asis'}
+elements <- list(
+    tabheader = 'Persberichten per kwartaal',
+    amount = Persberichten.alg$kwartaal.plot.aantal(),
+    percent = Persberichten.alg$kwartaal.plot.procent(),
+    table = Persberichten.alg$kwartaal.tabel(),
+    table_caption = "Persberichten per kwartaal",
+    explanation = Persberichten.alg$kwartaal.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+<!-- Persberichten per maand -->
+```{r "Persberichten per maand", result='asis'}
+elements <- list(
+    tabheader = 'Persberichten per maand',
+    amount = Persberichten.alg$maand.plot.aantal(),
+    percent = Persberichten.alg$maand.plot.procent(),
+    table = Persberichten.alg$maand.tabel(),
+    table_caption = "Persberichten per maand",
+    explanation = Persberichten.alg$maand.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+<!-- Persberichten per week -->
+```{r "Persberichten per week", result='asis'}
+elements <- list(
+    tabheader = 'Persberichten per week',
+    amount = Persberichten.alg$week.plot.aantal(),
+    percent = Persberichten.alg$week.plot.procent(),
+    table = Persberichten.alg$week.tabel(),
+    table_caption = "Persberichten per week",
+    explanation = Persberichten.alg$week.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+<!-- Persberichten per dag -->
+```{r "Persberichten per dag", result='asis'}
+elements <- list(
+    tabheader = 'Persberichten per dag',
+    amount = Persberichten.alg$dag.plot.aantal(),
+    percent = Persberichten.alg$dag.plot.procent(),
+    table = Persberichten.alg$dag.tabel(),
+    table_caption = "Persberichten per dag",
+    explanation = Persberichten.alg$dag.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+<!-- Persberichten per beleid -->
+```{r "Persberichten per beleid", result='asis'}
+elements <- list(
+    tabheader = 'Persberichten per beleid',
+    amount = Persberichten.alg$beleid.plot.aantal(),
+    percent = Persberichten.alg$beleid.plot.procent(),
+    table = Persberichten.alg$beleid.tabel(),
+    table_caption = "Persberichten per beleid",
+    explanation = Persberichten.alg$beleid.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```

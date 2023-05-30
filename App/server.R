@@ -947,13 +947,13 @@ server <- function(input, output, session) {
       
   observeEvent(input$generate, {
 
-  # Copy the report file to a temporary directory before processing it, in
+  # Copy the report file/folder to a temporary directory before processing it, in
   # case we don't have write permissions to the current working dir (which
   # can happen when deployed).
-  tempReport <- file.path(tempdir(), "JaarVolledig.Rmd")
-  file.copy("./Reports/JaarVolledig.Rmd", tempReport, overwrite = TRUE)
-  
-  
+    
+  file.copy(from = "./Reports/", to = tempdir(), overwrite = TRUE, recursive = TRUE)
+  tempReport <- file.path(tempdir(), "Reports/JaarVolledig.Rmd")
+
     # Set up parameters to pass to Rmd document --------------------------------
     params <- list(titel = paste("Persstatistiek:", paste(input$jaar, input$kwartaal, sep= " - ")),
                    Persberichten.alg = Persberichten.alg,

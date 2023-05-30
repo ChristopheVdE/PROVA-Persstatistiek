@@ -25,146 +25,26 @@ title: "`r params$titel`"
 author: "Provincie Antwerpen - Persdienst"
 date: "`r format(Sys.Date(), '%d %B %Y')`"
 ---
-
-```{r "globaly disable echo", include = FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+<!-- Document settings -->
+```{r "settings", include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, results='asis')
+level <- 1
 ```
 
-# Verzonden persberichten
-## Algemeen provincie
-### Persberichten
-#### Persberichten per kwartaal {.tabset .tabset-fade}
-##### Plot - aantal {.unlisted .unnumbered}
-```{r "Persberichten algemeen: kwartaal - plot aantal", align="center"}
-params$Persberichten.alg$kwartaal.plot.aantal()
+<!-- Headers -->
+```{r}
+cat(strrep('#', level), 'Verzonden persberichten \n')
+level <- level+1
 ```
-
-##### Plot - procent {.unlisted .unnumbered}
-```{r "Persberichten algemeen: kwartaal - plot procent", align="center"}
-params$Persberichten.alg$kwartaal.plot.procent()
-```
-
-##### Tabel {.unlisted .unnumbered}
-```{r "Persberichten algemeen: kwartaal - tabel"}
-kable(params$Persberichten.alg$kwartaal.tabel()
-      , caption = "Persberichten per Beleid"
-      , row.names = FALSE)
-```
-
-#### {.unlisted .unnumbered}
-`r params$Persberichten.alg$kwartaal.uitleg()`
 
 ```{r}
-# Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(1)
+cat(strrep('#', level), 'Algemeen provincie \n')
+level <- level+1
 ```
-
-
-#### Persberichten per maand {.tabset .tabset-fade}
-##### Plot - aantal {.unlisted .unnumbered}
-```{r "Persberichten per maand - Plot - aantal"}
-params$Persberichten.alg$maand.plot.aantal()
-```
-
-##### Plot - procent {.unlisted .unnumbered}
-```{r "Persberichten per maand - Plot - procent"}
-params$Persberichten.alg$maand.plot.procent()
-```
-
-##### Tabel {.unlisted .unnumbered}
-```{r "Persberichten per maand: tabel"}
-kable(params$Persberichten.alg$maand.tabel()
-      , caption = "Persberichten per maand"
-      , row.names = FALSE)
-```
-
-#### {.unlisted .unnumbered}
-`r params$Persberichten.alg$maand.uitleg()`
 
 ```{r}
-# Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(2)
-```
-
-#### Persberichten per dag {.tabset .tabset-fade}
-##### Plot - aantal {.unlisted .unnumbered}
-```{r "Persberichten per dag - Plot - aantal"}
-params$Persberichten.alg$dag.plot.aantal()
-```
-
-##### Plot - procent {.unlisted .unnumbered}
-```{r "Persberichten per dag - Plot - procent"}
-params$Persberichten.alg$dag.plot.procent()
-```
-
-
-##### Tabel {.unlisted .unnumbered}
-```{r "Persberichten per dag: tabel"}
-kable(params$Persberichten.alg$dag.tabel()
-      , caption = "Persberichten per dag"
-      , row.names = FALSE)
-```
-
-#### {.unlisted .unnumbered}
-`r params$Persberichten.alg$dag.uitleg()`
-
-```{r}
-# Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(3)
-```
-
-#### Persberichten per week {.tabset .tabset-fade}
-##### Plot - aantal {.unlisted .unnumbered}
-```{r "Persberichten per week - Plot - aantal"}
-params$Persberichten.alg$week.plot.aantal()
-```
-
-##### Plot - procent {.unlisted .unnumbered}
-```{r "Persberichten per week - Plot - procent"}
-params$Persberichten.alg$week.plot.procent()
-```
-
-
-##### Tabel {.unlisted .unnumbered}
-```{r "Persberichten per week: tabel"}
-kable(params$Persberichten.alg$week.tabel()
-      , caption = "Persberichten per week"
-      , row.names = FALSE)
-```
-
-#### {.unlisted .unnumbered}
-`r params$Persberichten.alg$week.uitleg()`
-
-```{r}
-# Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(4)
-```
-
-
-####. Persberichten per beleid {.tabset .tabset-fade}
-##### Plot - aantal {.unlisted .unnumbered}
-```{r "Persberichten per beleid: algemeen - plot aantal", align="center"}
-params$Persberichten.alg$beleid.plot.aantal()
-```
-
-##### Plot - procent {.unlisted .unnumbered}
-```{r "Persberichten per beleid: algemeen - plot procent", align="center"}
-params$Persberichten.alg$beleid.plot.procent()
-```
-
-##### Tabel {.unlisted .unnumbered}
-```{r "Persberichten per beleid: algemeen - tabel"}
-kable(params$Persberichten.alg$beleid.tabel()
-      , caption = "Persberichten per Beleid"
-      , row.names = FALSE)
-```
-
-#### {.unlisted .unnumbered}
-`r params$Persberichten.alg$beleid.uitleg()`
-
-```{r}
-# Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(5)
+section <- knitr::knit_child('Section_Persberichten.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
 ```
 
 ## Persconferenties
