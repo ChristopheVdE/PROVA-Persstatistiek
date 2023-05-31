@@ -84,3 +84,7 @@ elements <- list(
 section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
 cat(unlist(section), sep= '\n')
 ```
+
+```{r}
+level <- level-1
+```

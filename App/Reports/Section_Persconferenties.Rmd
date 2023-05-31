@@ -4,138 +4,88 @@ output:
     number_sections: true
 ---
 
-## Persconferenties
-### Persconferenties per kwartaal {.tabset .tabset-fade}
-#### Plot - aantal {.unlisted .unnumbered}
-```{r "Persconferenties algemeen: kwartaal - plot aantal", align="center"}
-params$Persconferenties.alg$kwartaal.plot.aantal()
+<!-- Document settings -->
+```{r include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, results='asis')
 ```
 
-#### Plot - procent {.unlisted .unnumbered}
-```{r "Persconferenties algemeen: kwartaal - plot procent", align="center"}
-params$Persconferenties.alg$kwartaal.plot.procent()
+<!-- Section header -->
+```{r}
+cat(strrep('#', level), 'Persconferenties \n')
+level <- level+1
 ```
 
-#### Tabel {.unlisted .unnumbered}
-```{r "Persconferenties algemeen: kwartaal - tabel"}
-kable(params$Persconferenties.alg$kwartaal.tabel()
-      , caption = "Persconferenties per Beleid"
-      , row.names = FALSE)
+<!-- Persconferenties per kwartaal -->
+```{r "Persconferenties per kwartaal", result='asis'}
+elements <- list(
+    tabheader = 'Persconferenties per kwartaal',
+    amount = Persconferenties.alg$kwartaal.plot.aantal(),
+    percent = Persconferenties.alg$kwartaal.plot.procent(),
+    table = Persconferenties.alg$kwartaal.tabel(),
+    table_caption = "Persconferenties per kwartaal",
+    explanation = Persconferenties.alg$kwartaal.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
 ```
 
-### {.unlisted .unnumbered}
-`r params$Persconferenties.alg$kwartaal.uitleg()`
+<!-- Persconferenties per maand -->
+```{r "Persconferenties per maand", result='asis'}
+elements <- list(
+    tabheader = 'Persconferenties per maand',
+    amount = Persconferenties.alg$maand.plot.aantal(),
+    percent = Persconferenties.alg$maand.plot.procent(),
+    table = Persconferenties.alg$maand.tabel(),
+    table_caption = "Persconferenties per maand",
+    explanation = Persconferenties.alg$maand.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+<!-- Persconferenties per week -->
+```{r "Persconferenties per week", result='asis'}
+elements <- list(
+    tabheader = 'Persconferenties per week',
+    amount = Persconferenties.alg$week.plot.aantal(),
+    percent = Persconferenties.alg$week.plot.procent(),
+    table = Persconferenties.alg$week.tabel(),
+    table_caption = "Persconferenties per week",
+    explanation = Persconferenties.alg$week.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+<!-- Persconferenties per dag -->
+```{r "Persconferenties per dag", result='asis'}
+elements <- list(
+    tabheader = 'Persconferenties per dag',
+    amount = Persconferenties.alg$dag.plot.aantal(),
+    percent = Persconferenties.alg$dag.plot.procent(),
+    table = Persconferenties.alg$dag.tabel(),
+    table_caption = "Persconferenties per dag",
+    explanation = Persconferenties.alg$dag.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+<!-- Persconferenties per beleid -->
+```{r "Persconferenties per beleid", result='asis'}
+elements <- list(
+    tabheader = 'Persconferenties per beleid',
+    amount = Persconferenties.alg$beleid.plot.aantal(),
+    percent = Persconferenties.alg$beleid.plot.procent(),
+    table = Persconferenties.alg$beleid.tabel(),
+    table_caption = "Persconferenties per beleid",
+    explanation = Persconferenties.alg$beleid.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
 
 ```{r}
-# Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(6)
-```
-
-
-### Persconferenties per maand {.tabset .tabset-fade}
-#### Plot - aantal {.unlisted .unnumbered}
-```{r "Persconferenties per maand - Plot - aantal"}
-params$Persconferenties.alg$maand.plot.aantal()
-```
-
-#### Plot - procent {.unlisted .unnumbered}
-```{r "Persconferenties per maand - Plot - procent"}
-params$Persconferenties.alg$maand.plot.procent()
-```
-
-
-#### Tabel {.unlisted .unnumbered}
-```{r "Persconferenties per maand: tabel"}
-kable(params$Persconferenties.alg$maand.tabel()
-      , caption = "Persconferenties per maand"
-      , row.names = FALSE)
-```
-
-### {.unlisted .unnumbered}
-`r params$Persconferenties.alg$maand.uitleg()`
-
-```{r}
-# Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(7)
-```
-
-### Persconferenties per dag {.tabset .tabset-fade}
-#### Plot - aantal {.unlisted .unnumbered}
-```{r "Persconferenties per dag - Plot - aantal"}
-params$Persconferenties.alg$dag.plot.aantal()
-```
-
-#### Plot - procent {.unlisted .unnumbered}
-```{r "Persconferenties per dag - Plot - procent"}
-params$Persconferenties.alg$dag.plot.procent()
-```
-
-
-#### Tabel {.unlisted .unnumbered}
-```{r "Persconferenties per dag: tabel"}
-kable(params$Persconferenties.alg$dag.tabel()
-      , caption = "Persconferenties per dag"
-      , row.names = FALSE)
-```
-
-### {.unlisted .unnumbered}
-`r params$Persconferenties.alg$dag.uitleg()`
-
-```{r}
-# Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(8)
-```
-
-### Persconferenties per week {.tabset .tabset-fade}
-#### Plot - aantal {.unlisted .unnumbered}
-```{r "Persconferenties per week - Plot - aantal"}
-params$Persconferenties.alg$week.plot.aantal()
-```
-
-#### Plot - procent {.unlisted .unnumbered}
-```{r "Persconferenties per week - Plot - procent"}
-params$Persconferenties.alg$week.plot.procent()
-```
-
-#### Tabel {.unlisted .unnumbered}
-```{r "Persconferenties per week: tabel"}
-kable(params$Persconferenties.alg$week.tabel()
-      , caption = "Persconferenties per week"
-      , row.names = FALSE)
-```
-
-### {.unlisted .unnumbered}
-`r params$Persconferenties.alg$week.uitleg()`
-
-```{r}
-# Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(9)
-```
-
-
-### Persconferenties per beleid {.tabset .tabset-fade}
-#### Plot - aantal {.unlisted .unnumbered}
-```{r "Persconferenties per beleid: algemeen - plot aantal", align="center"}
-params$Persconferenties.alg$beleid.plot.aantal()
-```
-
-#### Plot - procent {.unlisted .unnumbered}
-```{r "Persconferenties per beleid: algemeen - plot procent", align="center"}
-params$Persconferenties.alg$beleid.plot.procent()
-```
-
-#### Tabel {.unlisted .unnumbered}
-```{r "Persconferenties per beleid: algemeen - tabel"}
-kable(params$Persconferenties.alg$beleid.tabel()
-      , caption = "Persconferenties per Beleid"
-      , row.names = FALSE)
-```
-
-###  {.unlisted .unnumbered}
-`r params$Persconferenties.alg$beleid.uitleg()`
-
-```{r}
-# Update progressbar
-if (params$rendered_by_shiny) shiny::setProgress(10)
+level <- level-1
 ```
 
