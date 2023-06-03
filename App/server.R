@@ -946,15 +946,7 @@ server <- function(input, output, session) {
   report <- reactiveValues(filepath = NULL) #This creates a short-term storage location for a filepath
       
   observeEvent(input$generate, {
-
-  # Copy the report file/folder to a temporary directory before processing it, in
-  # case we don't have write permissions to the current working dir (which
-  # can happen when deployed).
-    
-  file.copy(from = "./Reports/", to = tempdir(), overwrite = TRUE, recursive = TRUE)
-  tempReport <- file.path(tempdir(), "Reports/JaarVolledig.Rmd")
-
-    # Set up parameters to pass to Rmd document --------------------------------
+  # Set up parameters to pass to Rmd document --------------------------------
   params <-
     list(
       titel = paste("Persstatistiek:", paste(input$jaar, input$kwartaal, sep = " - ")),
@@ -976,6 +968,7 @@ server <- function(input, output, session) {
     # --------------------------------------------------------------------------
   
     # Render document ----------------------------------------------------------
+  tempReport <- file.path(tempdir(), "Reports/JaarVolledig.Rmd")
     tmp_file <- paste0(tempfile(), ".html") #Creating the temp where the .html is going to be stored
   
     withProgress(

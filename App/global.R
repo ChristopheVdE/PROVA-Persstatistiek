@@ -87,6 +87,13 @@ source("./Modules/JaarOverzicht/DataVisual/Persreturn/Medium/DataVisual_PrMedium
 options(shiny.maxRequestSize=1000*1024^2) 
 # ==============================================================================
 
+#  Reports =====================================================================
+# Copy the report folder to a temporary directory before processing it, in 
+# case we don't have write permissions to the current working dir (which
+# can happen when deployed).
+file.copy(from = "./Reports/", to = tempdir(), overwrite = TRUE, recursive = TRUE)
+# ==============================================================================
+
 # Create Global Variables ======================================================
 # Data collectors for report generation ----------------------------------------
 Persberichten.alg <- list()
