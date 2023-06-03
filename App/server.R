@@ -942,7 +942,7 @@ server <- function(input, output, session) {
 
    
 # FILE AANMAAK =================================================================
-
+# Settings ---------------------------------------------------------------------
   report <- reactiveValues(filepath = NULL) #This creates a short-term storage location for a filepath
       
   observeEvent(input$generate, {
@@ -955,18 +955,24 @@ server <- function(input, output, session) {
   tempReport <- file.path(tempdir(), "Reports/JaarVolledig.Rmd")
 
     # Set up parameters to pass to Rmd document --------------------------------
-    params <- list(titel = paste("Persstatistiek:", paste(input$jaar, input$kwartaal, sep= " - ")),
-                   Persberichten.alg = Persberichten.alg,
-                   Persconferenties.alg = Persconferenties.alg,
-                   Persberichten.beleid.maand = Persberichten.beleid.maand,
-                   Persberichten.beleid.beleid = Persberichten.beleid.beleid,
-                   Persberichten.verzender.alg = Persberichten.verzender.alg,
-                   Persberichten.verzender.maand = Persberichten.verzender.maand,
-                   Persberichten.verzender.beleid = Persberichten.verzender.beleid,
-                   Persberichten.type = Persberichten.type,
-                   Persreturn.beleid = Persreturn.beleid,
-                   Persreturn.medium = Persreturn.medium,
-                   rendered_by_shiny = TRUE)
+  params <-
+    list(
+      titel = paste("Persstatistiek:", paste(input$jaar, input$kwartaal, sep = " - ")),
+      # TOCDepth = input$TOCDepth,
+      ReportSections_Berichten = input$ReportSections_Berichten,
+      ReportSections_Return = input$ReportSections_Return,
+      Persberichten.alg = Persberichten.alg,
+      Persconferenties.alg = Persconferenties.alg,
+      Persberichten.beleid.maand = Persberichten.beleid.maand,
+      Persberichten.beleid.beleid = Persberichten.beleid.beleid,
+      Persberichten.verzender.alg = Persberichten.verzender.alg,
+      Persberichten.verzender.maand = Persberichten.verzender.maand,
+      Persberichten.verzender.beleid = Persberichten.verzender.beleid,
+      Persberichten.type = Persberichten.type,
+      Persreturn.beleid = Persreturn.beleid,
+      Persreturn.medium = Persreturn.medium,
+      rendered_by_shiny = TRUE
+    )
     # --------------------------------------------------------------------------
   
     # Render document ----------------------------------------------------------

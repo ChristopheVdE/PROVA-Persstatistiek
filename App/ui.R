@@ -752,11 +752,34 @@ ui <- dashboardPage(
         # Generate & Download button -------------------------------------------
           box(
             width = 12,
-            title = "Download Report",
-            # This is the only button that shows up when the app is loaded
-            actionButton("generate", "Generate Report"),
-            # This button appears after the report has been generated and is ready for download.
-            conditionalPanel(condition = "output.reportbuilt",downloadButton("download", "Download report"))
+            title = "Download Rapport: 1 Jaar",
+            box(
+              width = 12,
+              title = "Settings",
+              # textInput(inputId='TOCDepth', label="Inhoudsopgave diepte", value = 3),
+              column(
+                width = 6,
+                checkboxGroupInput(
+                  inputId = 'ReportSections_Berichten',
+                  label = 'Rapportsecties: Persberichten',
+                  choices = c("Berichten", "Conferenties", "Beleid", "Verzender", "Type"),
+                  selected = c("Berichten", "Conferenties", "Beleid", "Verzender", "Type")
+                )
+              ),
+              column(
+                width = 6,
+                checkboxGroupInput(
+                  inputId = 'ReportSections_Return',
+                  label = "Rapportsecties: Persreturn",
+                  choices = c("Beleid", "Medium"),
+                  selected = c("Beleid", "Medium")
+                )
+              ),
+            ),
+              # This is the only button that shows up when the app is loaded
+              actionButton("generate", "Generate Report"),
+              # This button appears after the report has been generated and is ready for download.
+              conditionalPanel(condition = "output.reportbuilt", downloadButton("download", "Download report"))
           )
         )
       )
