@@ -1,0 +1,148 @@
+---
+output: 
+  html_document:
+    number_sections: true
+---
+
+<!-- Document settings -->
+```{r include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, results='asis')
+```
+
+<!-- headers -->
+```{r eval="Beleid" %in% params$ReportSections_Return}
+cat(strrep('#', level), 'Persreturn per beleid \n')
+level <- level+1
+```
+
+<!-- beleid: algemeen -->
+```{r "Persreturn per beleid - algemeen", result='asis'}
+elements <- list(
+    tabheader = 'Algemeen',
+    amount = Persreturn.beleid$algemeen.plot.aantal(),
+    percent = Persreturn.beleid$algemeen.plot.procent(),
+    table = Persreturn.beleid$algemeen.tabel(),
+    table_caption = "Persreturn per beleid",
+    explanation = Persreturn.beleid$algemeen.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+<!-- Per beleid -->
+```{r eval="Beleid" %in% params$ReportSections_Return}
+cat(strrep('#', level), 'Per beleid \n')
+level <- level+1
+```
+
+```{r "Persreturn per beleid - provinciebesuur", result='asis'}
+elements <- list(
+    tabheader = 'Provinciebestuur: overkoepelend',
+    amount = Persreturn.beleid$provinciebestuur.plot.aantal(),
+    percent = Persreturn.beleid$provinciebestuur.plot.procent(),
+    table = Persreturn.beleid$provinciebestuur.tabel(),
+    table_caption = "Persreturn: Provinciebestuur",
+    explanation = Persreturn.beleid$provinciebestuur.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r "Persreturn per beleid - economie", result='asis'}
+elements <- list(
+    tabheader = 'Economie',
+    amount = Persreturn.beleid$economie.plot.aantal(),
+    percent = Persreturn.beleid$economie.plot.procent(),
+    table = Persreturn.beleid$economie.tabel(),
+    table_caption = "Persreturn: Economie",
+    explanation = Persreturn.beleid$economie.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r "Persreturn per beleid - leefmilieu", result='asis'}
+elements <- list(
+    tabheader = 'Leefmilieu',
+    amount = Persreturn.beleid$leefmilieu.plot.aantal(),
+    percent = Persreturn.beleid$leefmilieu.plot.procent(),
+    table = Persreturn.beleid$leefmilieu.tabel(),
+    table_caption = "Persreturn: Leefmilieu",
+    explanation = Persreturn.beleid$leefmilieu.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r "Persreturn per beleid - mobiliteit", result='asis'}
+elements <- list(
+    tabheader = 'Mobiliteit',
+    amount = Persreturn.beleid$mobiliteit.plot.aantal(),
+    percent = Persreturn.beleid$mobiliteit.plot.procent(),
+    table = Persreturn.beleid$mobiliteit.tabel(),
+    table_caption = "Persreturn: Mobiliteit",
+    explanation = Persreturn.beleid$mobiliteit.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r "Persreturn per beleid - onderwijs", result='asis'}
+elements <- list(
+    tabheader = 'Onderwijs en Educatie',
+    amount = Persreturn.beleid$onderwijs.plot.aantal(),
+    percent = Persreturn.beleid$onderwijs.plot.procent(),
+    table = Persreturn.beleid$onderwijs.tabel(),
+    table_caption = "Persreturn: Onderwijs en Educatie",
+    explanation = Persreturn.beleid$onderwijs.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r "Persreturn per beleid - ruimte", result='asis'}
+elements <- list(
+    tabheader = 'Ruimte',
+    amount = Persreturn.beleid$ruimte.plot.aantal(),
+    percent = Persreturn.beleid$ruimte.plot.procent(),
+    table = Persreturn.beleid$ruimte.tabel(),
+    table_caption = "Persreturn: Ruimte",
+    explanation = Persreturn.beleid$ruimte.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r "Persreturn per beleid - vrijetijd", result='asis'}
+elements <- list(
+    tabheader = 'Vrije Tijd',
+    amount = Persreturn.beleid$vrijetijd.plot.aantal(),
+    percent = Persreturn.beleid$vrijetijd.plot.procent(),
+    table = Persreturn.beleid$vrijetijd.tabel(),
+    table_caption = "Persreturn: Vrije Tijd",
+    explanation = Persreturn.beleid$vrijetijd.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r "Persreturn per beleid - gouverneur", result='asis'}
+elements <- list(
+    tabheader = 'Gouverneur',
+    amount = Persreturn.beleid$gouverneur.plot.aantal(),
+    percent = Persreturn.beleid$gouverneur.plot.procent(),
+    table = Persreturn.beleid$gouverneur.tabel(),
+    table_caption = "Persreturn: Gouverneur",
+    explanation = Persreturn.beleid$gouverneur.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r}
+level <- level-1
+```
+
+```{r}
+level <- level-1
+```

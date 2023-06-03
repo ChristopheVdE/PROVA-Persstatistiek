@@ -974,7 +974,7 @@ server <- function(input, output, session) {
     withProgress(
       message = 'Rapport samenstellen',
       min = 0,
-      max = 34,
+      max = 60,
       value = 0,
       { rmarkdown::render(tempReport, 
                           output_file = tmp_file,

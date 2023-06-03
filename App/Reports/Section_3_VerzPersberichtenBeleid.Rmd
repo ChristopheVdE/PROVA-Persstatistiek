@@ -1,0 +1,308 @@
+---
+output: 
+  html_document:
+    number_sections: true
+---
+
+<!-- Document settings -->
+```{r include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, results='asis')
+```
+
+<!-- Section header -->
+```{r}
+cat(strrep('#', level), 'Beleid en deelbeleid \n')
+level <- level+1
+```
+
+<!-- Provinciebestuur -->
+```{r}
+cat(strrep('#', level), 'Provinciebestuur \n')
+level <- level+1
+```
+
+```{r "Provinciebestuur: Per maand", result='asis'}
+elements <- list(
+    tabheader = 'Per maand',
+    amount = Persberichten.beleid.maand$provinciebestuur.plot.aantal(),
+    percent = Persberichten.beleid.maand$provinciebestuur.plot.procent(),
+    table = Persberichten.beleid.maand$provinciebestuur.tabel(),
+    table_caption = "Persberichten: Provinciebestuur per maand",
+    explanation = Persberichten.beleid.maand$provinciebestuur.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r "Provinciebestuur: Per thema", result='asis'}
+elements <- list(
+    tabheader = 'Per thema',
+    amount = Persberichten.beleid.beleid$provinciebestuur.plot.aantal(),
+    percent = Persberichten.beleid.beleid$provinciebestuur.plot.procent(),
+    table = params$Persberichten.beleid.beleid$provinciebestuur.tabel(),
+    table_caption = "Persberichten: Provinciebestuur",
+    explanation = Persberichten.beleid.beleid$provinciebestuur.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r}
+level <- level-1
+```
+
+<!-- Economie -->
+```{r}
+cat(strrep('#', level), 'Economie \n')
+level <- level+1
+```
+
+```{r "Economie: Per maand", result='asis'}
+elements <- list(
+    tabheader = 'Per maand',
+    amount = Persberichten.beleid.maand$economie.plot.aantal(),
+    percent = Persberichten.beleid.maand$economie.plot.procent(),
+    table = params$Persberichten.beleid.maand$economie.tabel(),
+    table_caption = "Persberichten: Economie per maand",
+    explanation = Persberichten.beleid.maand$economie.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r "Economie: Per deelbeleid", result='asis'}
+elements <- list(
+    tabheader = 'Deelbeleid: Economie',
+    amount = Persberichten.beleid.beleid$economie.plot.aantal(),
+    percent = Persberichten.beleid.beleid$economie.plot.procent(),
+    table = params$Persberichten.beleid.beleid$economie.tabel(),
+    table_caption = "Persberichten: Economie",
+    explanation = Persberichten.beleid.beleid$economie.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r}
+level <- level-1
+```
+
+<!-- Leefmilieu -->
+```{r}
+cat(strrep('#', level), 'Leefmilieu \n')
+level <- level+1
+```
+
+```{r "Leefmilieu: Per maand", result='asis'}
+elements <- list(
+    tabheader = 'Per maand',
+    amount = Persberichten.beleid.maand$leefmilieu.plot.aantal(),
+    percent = Persberichten.beleid.maand$leefmilieu.plot.procent(),
+    table = params$Persberichten.beleid.maand$leefmilieu.tabel(),
+    table_caption = "Persberichten: leefmilieu per maand",
+    explanation = Persberichten.beleid.maand$leefmilieu.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r "leefmilieu: Per deelbeleid", result='asis'}
+elements <- list(
+    tabheader = 'Deelbeleid: leefmilieu',
+    amount = Persberichten.beleid.beleid$leefmilieu.plot.aantal(),
+    percent = Persberichten.beleid.beleid$leefmilieu.plot.procent(),
+    table = params$Persberichten.beleid.beleid$leefmilieu.tabel(),
+    table_caption = "Persberichten: leefmilieu",
+    explanation = Persberichten.beleid.beleid$leefmilieu.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r}
+level <- level-1
+```
+
+<!-- Mobililteit -->
+```{r}
+cat(strrep('#', level), 'Mobiliteit \n')
+level <- level+1
+```
+
+```{r "mobiliteit: Per maand", result='asis'}
+elements <- list(
+    tabheader = 'Per maand',
+    amount = Persberichten.beleid.maand$mobiliteit.plot.aantal(),
+    percent = Persberichten.beleid.maand$mobiliteit.plot.procent(),
+    table = params$Persberichten.beleid.maand$mobiliteit.tabel(),
+    table_caption = "Persberichten: mobiliteit per maand",
+    explanation =Persberichten.beleid.maand$mobiliteit.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r "mobiliteit: Per deelbeleid", result='asis'}
+elements <- list(
+    tabheader = 'Deelbeleid: mobiliteit',
+    amount = Persberichten.beleid.beleid$mobiliteit.plot.aantal(),
+    percent = Persberichten.beleid.beleid$mobiliteit.plot.procent(),
+    table = params$Persberichten.beleid.beleid$mobiliteit.tabel(),
+    table_caption = "Persberichten: mobiliteit",
+    explanation = Persberichten.beleid.beleid$mobiliteit.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r}
+level <- level-1
+```
+
+<!-- Onderwijs en Educatie -->
+```{r}
+cat(strrep('#', level), 'Onderwijs en Educatie \n')
+level <- level+1
+```
+
+```{r "onderwijs: Per maand", result='asis'}
+elements <- list(
+    tabheader = 'Per maand',
+    amount = Persberichten.beleid.maand$onderwijs.plot.aantal(),
+    percent = Persberichten.beleid.maand$onderwijs.plot.procent(),
+    table = params$Persberichten.beleid.maand$onderwijs.tabel(),
+    table_caption = "Persberichten: onderwijs per maand",
+    explanation =Persberichten.beleid.maand$onderwijs.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r "onderwijs: Per deelbeleid", result='asis'}
+elements <- list(
+    tabheader = 'Deelbeleid: onderwijs',
+    amount = Persberichten.beleid.beleid$onderwijs.plot.aantal(),
+    percent = Persberichten.beleid.beleid$onderwijs.plot.procent(),
+    table = params$Persberichten.beleid.beleid$onderwijs.tabel(),
+    table_caption = "Persberichten: onderwijs",
+    explanation = Persberichten.beleid.beleid$onderwijs.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r}
+level <- level-1
+```
+
+<!-- Ruimte -->
+```{r}
+cat(strrep('#', level), 'Ruimte \n')
+level <- level+1
+```
+
+```{r "ruimte: Per maand", result='asis'}
+elements <- list(
+    tabheader = 'Per maand',
+    amount = Persberichten.beleid.maand$ruimte.plot.aantal(),
+    percent = Persberichten.beleid.maand$ruimte.plot.procent(),
+    table = params$Persberichten.beleid.maand$ruimte.tabel(),
+    table_caption = "Persberichten: ruimte per maand",
+    explanation =Persberichten.beleid.maand$ruimte.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r "ruimte: Per deelbeleid", result='asis'}
+elements <- list(
+    tabheader = 'Deelbeleid: ruimte',
+    amount = Persberichten.beleid.beleid$ruimte.plot.aantal(),
+    percent = Persberichten.beleid.beleid$ruimte.plot.procent(),
+    table = params$Persberichten.beleid.beleid$ruimte.tabel(),
+    table_caption = "Persberichten: ruimte",
+    explanation = Persberichten.beleid.beleid$ruimte.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r}
+level <- level-1
+```
+
+<!-- Vrije tijd -->
+```{r}
+cat(strrep('#', level), 'Vrije tijd \n')
+level <- level+1
+```
+
+```{r "vrijetijd: Per maand", result='asis'}
+elements <- list(
+    tabheader = 'Per maand',
+    amount = Persberichten.beleid.maand$vrijetijd.plot.aantal(),
+    percent = Persberichten.beleid.maand$vrijetijd.plot.procent(),
+    table = params$Persberichten.beleid.maand$vrijetijd.tabel(),
+    table_caption = "Persberichten: Vrije Tijd per maand",
+    explanation =Persberichten.beleid.maand$vrijetijd.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r "vrijetijd: Per deelbeleid", result='asis'}
+elements <- list(
+    tabheader = 'Deelbeleid: Vrije Tijd',
+    amount = Persberichten.beleid.beleid$vrijetijd.plot.aantal(),
+    percent = Persberichten.beleid.beleid$vrijetijd.plot.procent(),
+    table = params$Persberichten.beleid.beleid$vrijetijd.tabel(),
+    table_caption = "Persberichten: Vrije Tijd",
+    explanation = Persberichten.beleid.beleid$vrijetijd.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r}
+level <- level-1
+```
+
+<!-- Gouverneur -->
+```{r}
+cat(strrep('#', level), 'Gouverneur \n')
+level <- level+1
+```
+
+```{r "gouverneur: Per maand", result='asis', eval=FALSE}
+elements <- list(
+    tabheader = 'Per maand',
+    amount = Persberichten.beleid.maand$gouverneur.plot.aantal(),
+    percent = Persberichten.beleid.maand$gouverneur.plot.procent(),
+    table = params$Persberichten.beleid.maand$gouverneur.tabel(),
+    table_caption = "Persberichten: gouverneur per maand",
+    explanation =Persberichten.beleid.maand$gouverneur.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r "gouvereur: Per deelbeleid", result='asis', eval=FALSE}
+elements <- list(
+    tabheader = 'Deelbeleid: gouverneur',
+    amount = Persberichten.beleid.beleid$gouverneur.plot.aantal(),
+    percent = Persberichten.beleid.beleid$gouverneur.plot.procent(),
+    table = params$Persberichten.beleid.beleid$gouverneur.tabel(),
+    table_caption = "Persberichten: gouvereur",
+    explanation = Persberichten.beleid.beleid$gouverneur.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r}
+level <- level-1
+```
+
+```{r}
+level <- level-1
+```

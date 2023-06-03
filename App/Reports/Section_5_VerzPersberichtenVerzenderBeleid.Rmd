@@ -1,0 +1,132 @@
+---
+output: 
+  html_document:
+    number_sections: true
+---
+
+<!-- Document settings -->
+```{r include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, results='asis')
+```
+
+<!-- Section header -->
+```{r}
+cat(strrep('#', level), 'Per (Deel)Beleid \n')
+level <- level+1
+```
+
+<!-- Economie -->
+```{r "Persberichten per verzender - beleid: economie", result='asis'}
+elements <- list(
+    tabheader = 'Economie',
+    amount = Persberichten.verzender.beleid$economie.plot.aantal(),
+    percent = Persberichten.verzender.beleid$economie.plot.procent(),
+    table = Persberichten.verzender.beleid$economie.tabel(),
+    table_caption = "Persberichten per verzender - Economie",
+    explanation = Persberichten.verzender.beleid$economie.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+<!-- Gouverneur -->
+```{r "Persberichten per verzender - beleid: Gouverneur", result='asis'}
+elements <- list(
+    tabheader = 'Gouverneur',
+    amount = Persberichten.verzender.beleid$gouverneur.plot.aantal(),
+    percent = Persberichten.verzender.beleid$gouverneur.plot.procent(),
+    table = Persberichten.verzender.beleid$gouverneur.tabel(),
+    table_caption = "Persberichten per verzender - gouverneur",
+    explanation = Persberichten.verzender.beleid$gouverneur.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+<!-- Leefmilieu -->
+```{r "Persberichten per verzender - beleid: leefmilieu", result='asis'}
+elements <- list(
+    tabheader = 'Leefmilieu',
+    amount = Persberichten.verzender.beleid$leefmilieu.plot.aantal(),
+    percent = Persberichten.verzender.beleid$leefmilieu.plot.procent(),
+    table = Persberichten.verzender.beleid$leefmilieu.tabel(),
+    table_caption = "Persberichten per verzender - Leefmilieu",
+    explanation = Persberichten.verzender.beleid$leefmilieu.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+<!-- mobiliteit -->
+```{r "Persberichten per verzender - beleid: mobiliteit", result='asis'}
+elements <- list(
+    tabheader = 'Mobiliteit',
+    amount = Persberichten.verzender.beleid$mobiliteit.plot.aantal(),
+    percent = Persberichten.verzender.beleid$mobiliteit.plot.procent(),
+    table = Persberichten.verzender.beleid$mobiliteit.tabel(),
+    table_caption = "Persberichten per verzender - Mobiliteit",
+    explanation = Persberichten.verzender.beleid$mobiliteit.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+<!-- Onderwijs en educatie -->
+```{r "Persberichten per verzender - beleid: onderwijs", result='asis'}
+elements <- list(
+    tabheader = 'Onderwijs en Educatie',
+    amount = Persberichten.verzender.beleid$onderwijs.plot.aantal(),
+    percent = Persberichten.verzender.beleid$onderwijs.plot.procent(),
+    table = Persberichten.verzender.beleid$onderwijs.tabel(),
+    table_caption = "Persberichten per verzender - Onderwijs en Educatie",
+    explanation = Persberichten.verzender.beleid$onderwijs.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+<!-- Proviciebestuur -->
+```{r "Persberichten per verzender - beleid: provinciebestuur", result='asis'}
+elements <- list(
+    tabheader = 'Provinciebestuur',
+    amount = Persberichten.verzender.beleid$provinciebestuur.plot.aantal(),
+    percent = Persberichten.verzender.beleid$provinciebestuur.plot.procent(),
+    table = Persberichten.verzender.beleid$provinciebestuur.tabel(),
+    table_caption = "Persberichten per verzender - Provinciebestuur",
+    explanation = Persberichten.verzender.beleid$provinciebestuur.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+<!-- Ruimte -->
+```{r "Persberichten per verzender - beleid: ruimte", result='asis'}
+elements <- list(
+    tabheader = 'Ruimte',
+    amount = Persberichten.verzender.beleid$ruimte.plot.aantal(),
+    percent = Persberichten.verzender.beleid$ruimte.plot.procent(),
+    table = Persberichten.verzender.beleid$ruimte.tabel(),
+    table_caption = "Persberichten per verzender - Ruimte",
+    explanation = Persberichten.verzender.beleid$ruimte.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+<!-- Vrije tijd -->
+```{r "Persberichten per verzender - beleid: vrijetijd", result='asis'}
+elements <- list(
+    tabheader = 'Vrije Tijd',
+    amount = Persberichten.verzender.beleid$vrijetijd.plot.aantal(),
+    percent = Persberichten.verzender.beleid$vrijetijd.plot.procent(),
+    table = Persberichten.verzender.beleid$vrijetijd.tabel(),
+    table_caption = "Persberichten per verzender - Vrije Tijd",
+    explanation = Persberichten.verzender.beleid$vrijetijd.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r}
+level <- level-1
+```

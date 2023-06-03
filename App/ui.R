@@ -1554,8 +1554,9 @@ ui <- dashboardPage(
                 checkboxGroupInput(
                   inputId = 'ReportSections_Berichten',
                   label = 'Rapportsecties: Persberichten',
-                  choices = c("Berichten", "Conferenties", "Beleid", "Verzender", "Type"),
-                  selected = c("Berichten", "Conferenties", "Beleid", "Verzender", "Type")
+                  choiceNames = c("Berichten algemeen", "Persconferenties", "Berichten per Beleid", "Verzender Algemeen", "Verzender per Beleid", "Berichten per Type"),
+                  choiceValues = c("Berichten", "Conferenties", "Beleid", "VerzenderAlg", "VerzenderBeleid", "Type"),
+                  selected = c("Berichten", "Conferenties", "Beleid", "VerzenderAlg", "VerzenderBeleid", "Type")
                 )
               ),
               column(

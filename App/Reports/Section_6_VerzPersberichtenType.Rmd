@@ -1,0 +1,23 @@
+---
+output: 
+  html_document:
+    number_sections: true
+---
+
+<!-- Document settings -->
+```{r include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, results='asis')
+```
+
+```{r "Persberichten per type", result='asis'}
+elements <- list(
+    tabheader = 'Type Persberichten',
+    amount = Persberichten.type$type.plot.aantal(),
+    percent = Persberichten.type$type.plot.procent(),
+    table = Persberichten.type$type.tabel(),
+    table_caption = "Persberichten per type",
+    explanation = Persberichten.type$type.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```

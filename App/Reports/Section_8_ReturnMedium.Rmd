@@ -1,0 +1,23 @@
+---
+output: 
+  html_document:
+    number_sections: true
+---
+
+<!-- Document settings -->
+```{r include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, results='asis')
+```
+
+```{r "Persberichten per medium", result='asis'}
+elements <- list(
+    tabheader = 'Persreturn per medium',
+    amount = Persreturn.medium$medium.plot.aantal(),
+    percent = Persreturn.medium$medium.plot.procent(),
+    table = Persreturn.medium$medium.tabel(),
+    table_caption = "Persreturn per medium",
+    explanation = Persreturn.medium$medium.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```

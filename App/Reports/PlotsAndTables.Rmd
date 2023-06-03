@@ -39,3 +39,10 @@ kable( elements$table
 level <- level-1
 cat(strrep('#', level), '{.unlisted .unnumbered} \n', elements$explanation, '\n')
 ```
+
+<!-- progress -->
+```{r}
+# Update progressbar
+progress <- progress+1
+if (params$rendered_by_shiny) shiny::setProgress(progress)
+```

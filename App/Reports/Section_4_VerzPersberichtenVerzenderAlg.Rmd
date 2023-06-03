@@ -1,0 +1,86 @@
+---
+output: 
+  html_document:
+    number_sections: true
+---
+
+<!-- Document settings -->
+```{r include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE, results='asis')
+```
+
+<!-- Algemeen -->
+```{r "Persberichten per verzender: algemeen", result='asis'}
+elements <- list(
+    tabheader = 'Algemeen',
+    amount = Persberichten.verzender.alg$totaal.plot.aantal(),
+    percent = Persberichten.verzender.alg$totaal.plot.procent(),
+    table = Persberichten.verzender.alg$totaal.tabel(),
+    table_caption = "Persberichten per verzender",
+    explanation = Persberichten.verzender.alg$totaal.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+<!-- Section header -->
+```{r}
+cat(strrep('#', level), 'Per maand \n')
+level <- level+1
+```
+
+```{r "Persberichten per verzender: persdienst", result='asis'}
+elements <- list(
+    tabheader = 'Verzonden door: Persdienst',
+    amount = Persberichten.verzender.maand$persdienst.plot.aantal(),
+    percent = Persberichten.verzender.maand$persdienst.plot.procent(),
+    table = Persberichten.verzender.maand$persdienst.tabel(),
+    table_caption = "Persberichten: Persdienst",
+    explanation = Persberichten.verzender.maand$persdienst.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r "Persberichten per verzender: provincie", result='asis'}
+elements <- list(
+    tabheader = 'Verzonden door: provincie',
+    amount = Persberichten.verzender.maand$provincie.plot.aantal(),
+    percent = Persberichten.verzender.maand$provincie.plot.procent(),
+    table = Persberichten.verzender.maand$provincie.tabel(),
+    table_caption = "Persberichten: provincie",
+    explanation = Persberichten.verzender.maand$provincie.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r "Persberichten per verzender: gouverneur", result='asis'}
+elements <- list(
+    tabheader = 'Verzonden door: Gouverneur',
+    amount = Persberichten.verzender.maand$gouverneur.plot.aantal(),
+    percent = Persberichten.verzender.maand$gouverneur.plot.procent(),
+    table = Persberichten.verzender.maand$gouverneur.tabel(),
+    table_caption = "Persberichten: Gouverneur",
+    explanation = Persberichten.verzender.maand$gouverneur.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r "Persberichten per verzender: extern", result='asis'}
+elements <- list(
+    tabheader = 'Verzonden door: Extern',
+    amount = Persberichten.verzender.maand$extern.plot.aantal(),
+    percent = Persberichten.verzender.maand$extern.plot.procent(),
+    table = Persberichten.verzender.maand$extern.tabel(),
+    table_caption = "Persberichten: Extern",
+    explanation = Persberichten.verzender.maand$extern.uitleg()
+  )
+section <- knitr::knit_child('PlotsAndTables.Rmd', quiet=TRUE)
+cat(unlist(section), sep= '\n')
+```
+
+```{r}
+level <- level-1
+```
