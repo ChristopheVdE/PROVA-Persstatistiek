@@ -49,28 +49,29 @@ df.berichten <- reactive({
         }
       }
 
-  # # # Percentages ----------------------------------------------------------------
-  #     # Split dataframe on "Deelbeleid
-  #     df.split <- split(berichten, berichten$Deelbeleid)
-  #     # Create empty list
-  #     column <- NULL
-  #     # Calculate percentages
-  #     for (deelbeleid in levels(as.factor(berichten$Deelbeleid))) {
-  #       percentages <- NULL
-  #       for (i in 1:length(df.split[[deelbeleid]]$Aantal)) {
-  #         percentages <- c(percentages,
-  #                          round(as.numeric(df.split[[deelbeleid]]$Aantal[[i]] / sum(df.split[[deelbeleid]]$Aantal) * 100), digits = 2))
-  #       }
-  #       column <- c(column, percentages)
-  #     }
-  #     # # Fix NA values
-  #     # for(i in 1:length(column)) {
-  #     #   if (is.na(column[[i]])) {
-  #     #     column[[i]] <- 0
-  #     #   }
-  #     # }
-  #     # Add percentages to table
-  #     berichten <- data.frame(berichten[order(berichten$Deelbeleid),], 'Procentueel' = column)
+  # Percentages ----------------------------------------------------------------
+      # Split dataframe on "Deelbeleid
+      df.split <- split(berichten, berichten$Deelbeleid)
+      # Create empty list
+      column <- NULL
+      # Calculate percentages
+      for (deelbeleid in levels(as.factor(berichten$Deelbeleid))) {
+        percentages <- NULL
+        for (i in 1:length(df.split[[deelbeleid]]$Persberichten)) {
+          percentages <- c(percentages,
+                           round(as.numeric(df.split[[deelbeleid]]$Persberichten[[i]] / sum(df.split[[deelbeleid]]$Persberichten) * 100), digits = 2))
+        }
+        column <- c(column, percentages)
+      }
+      
+      # Fix NA values
+      for(i in 1:length(column)) {
+        if (is.na(column[[i]])) {
+          column[[i]] <- 0
+        }
+      }
+      # Add percentages to table
+      berichten <- data.frame(berichten[order(berichten$Deelbeleid),], 'Procentueel' = column)
       
       return(berichten)
 })
@@ -123,6 +124,8 @@ berichten.tabel <- reactive ({
   )
   adorn_totals(berichten, 'row')
 })
+
+berichten.tabel <- reactive({df.berichten()})
 
 # Add plots/data to corresponding Global collector -----------------------------
 beleidconv <- tolower(gsub(' ', '', beleid))
